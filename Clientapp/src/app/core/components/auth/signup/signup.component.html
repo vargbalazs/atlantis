@@ -1,0 +1,135 @@
+<div class="card">
+  <kendo-card width="320px">
+    <loading-overlay
+      [visible]="loadingOverlayVisible"
+      loadingText=""
+    ></loading-overlay>
+    <h2>Regisztráció</h2>
+    <form [formGroup]="signupForm" (ngSubmit)="submitForm()">
+      <kendo-formfield>
+        <kendo-textbox
+          placeholder="E-mail cím"
+          formControlName="email"
+          [showSuccessIcon]="signupForm.controls.email.valid"
+        >
+          <ng-template kendoTextBoxPrefixTemplate>
+            <div class="x-input-prefix">
+              <kendo-icon name="user"></kendo-icon>
+            </div>
+          </ng-template>
+          <ng-template kendoTextBoxSuffixTemplate>
+            <kendo-loader
+              *ngIf="
+                !signupForm.controls.email.errors?.required &&
+                !signupForm.controls.email.errors?.email &&
+                !signupForm.controls.email.errors?.emailIsAlreadyInUse &&
+                !signupForm.controls.email.valid
+              "
+              size="small"
+            ></kendo-loader>
+          </ng-template>
+        </kendo-textbox>
+        <kendo-formerror *ngIf="signupForm.controls.email.errors?.required"
+          >Kötelező mező</kendo-formerror
+        >
+        <kendo-formerror *ngIf="signupForm.controls.email.errors?.email"
+          >Hibás e-mail formátum</kendo-formerror
+        >
+        <kendo-formerror
+          *ngIf="signupForm.controls.email.errors?.emailIsAlreadyInUse"
+          >Ez az e-mail cím már foglalt</kendo-formerror
+        >
+      </kendo-formfield>
+      <kendo-formfield>
+        <kendo-textbox
+          placeholder="Jelszó"
+          #tbxPassword
+          formControlName="password"
+        >
+          <ng-template kendoTextBoxPrefixTemplate>
+            <div class="x-input-prefix">
+              <kendo-icon name="lock"></kendo-icon>
+            </div>
+          </ng-template>
+          <!-- <ng-template kendoTextBoxPrefixTemplate>
+            <button
+              tabindex="-1"
+              type="button"
+              id="tbxPassword"
+              kendoButton
+              icon="eye"
+              (click)="togglePass()"
+            ></button>
+          </ng-template> -->
+          <ng-template kendoTextBoxSuffixTemplate>
+            <span
+              class="k-icon k-i-eye eye-icon"
+              (click)="togglePass()"
+              *ngIf="tbxPassword.value"
+            ></span>
+            <div kendoTooltip>
+              <kendo-icon
+                class="info-icon"
+                name="info"
+                title="Min. 6 karakter, min. 1 szám, min. 1 kis- és nagybetű"
+              ></kendo-icon>
+            </div>
+          </ng-template>
+        </kendo-textbox>
+        <kendo-formerror *ngIf="signupForm.controls.password.errors?.required"
+          >Kötelező mező</kendo-formerror
+        >
+        <kendo-formerror *ngIf="signupForm.controls.password.errors?.pattern"
+          >A jelszó erőssége nem megfelelő</kendo-formerror
+        >
+      </kendo-formfield>
+      <kendo-formfield>
+        <kendo-textbox
+          placeholder="Jelszó még egyszer"
+          #tbxRepeatPassword
+          formControlName="passwordConfirm"
+        >
+          <ng-template kendoTextBoxPrefixTemplate>
+            <div class="x-input-prefix">
+              <kendo-icon name="lock"></kendo-icon>
+            </div>
+          </ng-template>
+          <ng-template
+            kendoTextBoxSuffixTemplate
+            *ngIf="tbxRepeatPassword.value"
+          >
+            <!-- <button
+              tabindex="-1"
+              type="button"
+              id="tbxRepeatPassword"
+              kendoButton
+              icon="eye"
+              (click)="togglePassRep()"
+            ></button> -->
+            <span
+              class="k-icon k-i-eye eye-icon"
+              (click)="togglePassRep()"
+            ></span>
+          </ng-template>
+        </kendo-textbox>
+        <kendo-formerror
+          *ngIf="signupForm.controls.passwordConfirm.errors?.required"
+          >Kötelező mező</kendo-formerror
+        >
+      </kendo-formfield>
+      <kendo-formerror
+        class="pwd-match-error"
+        *ngIf="signupForm.errors?.notMatching"
+        >A két jelszó nem egyezik</kendo-formerror
+      >
+      <button class="btn x-btn-primary click-primary" type="submit" kendoButton>
+        ÚJ FIÓK LÉTREHOZÁSA
+      </button>
+      <div class="link">
+        <span>Már van fiókod? </span>
+        <a href="#" (click)="backToLogin()">Jelentkezz be</a>
+      </div>
+    </form>
+  </kendo-card>
+  <lang-selector></lang-selector>
+</div>

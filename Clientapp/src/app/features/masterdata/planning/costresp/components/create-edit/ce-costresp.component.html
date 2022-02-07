@@ -1,0 +1,199 @@
+<kendo-dialog *ngIf="active" [width]="400" [height]="490" (close)="closeForm()">
+  <kendo-dialog-titlebar class="x-bg-primary x-font">
+    {{ isNew ? "Új költséghelyfelelős" : "Szerkesztés" }}
+  </kendo-dialog-titlebar>
+  <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
+    <fieldset class="k-form-fieldset">
+      <legend class="k-form-legend">Szervezet</legend>
+      <kendo-formfield>
+        <kendo-textbox hidden formControlName="id"></kendo-textbox>
+      </kendo-formfield>
+      <kendo-formfield>
+        <kendo-label [for]="company" text="Gazdasági egység"></kendo-label>
+        <kendo-combobox
+          #company
+          formControlName="company"
+          [data]="companies"
+          textField="name"
+          valueField="id"
+          [kendoDropDownFilter]="{ operator: 'contains' }"
+          (valueChange)="companyChange($event)"
+          class="x-combobox-sm"
+        >
+          <ng-template kendoComboBoxNoDataTemplate>
+            Nincs megjelenítendő adat
+          </ng-template>
+        </kendo-combobox>
+        <kendo-formerror>Kötelező mező</kendo-formerror>
+      </kendo-formfield>
+      <kendo-formfield>
+        <kendo-label [for]="plant" text="Gyár"></kendo-label>
+        <kendo-combobox
+          #plant
+          formControlName="plant"
+          [data]="filteredPlants"
+          textField="code"
+          valueField="id"
+          [kendoDropDownFilter]="{ operator: 'contains' }"
+          (valueChange)="plantChange($event)"
+          class="x-combobox-sm"
+        >
+          <ng-template kendoComboBoxNoDataTemplate>
+            Nincs megjelenítendő adat
+          </ng-template>
+        </kendo-combobox>
+        <kendo-formerror>Kötelező mező</kendo-formerror>
+      </kendo-formfield>
+      <kendo-textbox
+        hidden
+        formControlName="depId"
+        value="form.controls.department.value?.id"
+      ></kendo-textbox>
+      <kendo-formfield>
+        <kendo-label [for]="department" text="Részleg"></kendo-label>
+        <kendo-combobox
+          #department
+          formControlName="department"
+          [data]="filteredDepartments"
+          textField="name"
+          valueField="id"
+          [kendoDropDownFilter]="{ operator: 'contains' }"
+          (valueChange)="departmentChange($event)"
+          class="x-combobox-sm"
+        >
+          <ng-template kendoComboBoxNoDataTemplate>
+            Nincs megjelenítendő adat
+          </ng-template>
+        </kendo-combobox>
+        <kendo-formerror>Kötelező mező</kendo-formerror>
+      </kendo-formfield>
+      <kendo-textbox
+        hidden
+        formControlName="jobId"
+        value="form.controls.job.value?.id"
+      ></kendo-textbox>
+      <kendo-formfield>
+        <kendo-label [for]="job" text="Munkakör"></kendo-label>
+        <kendo-combobox
+          #job
+          formControlName="job"
+          [data]="filteredJobs"
+          textField="name"
+          valueField="id"
+          [kendoDropDownFilter]="{ operator: 'contains' }"
+          (valueChange)="jobChange($event)"
+          class="x-combobox-sm"
+        >
+          <ng-template kendoComboBoxNoDataTemplate>
+            Nincs megjelenítendő adat
+          </ng-template>
+        </kendo-combobox>
+        <kendo-formerror>Kötelező mező</kendo-formerror>
+      </kendo-formfield>
+    </fieldset>
+    <fieldset class="k-form-fieldset">
+      <legend class="k-form-legend">Felelős</legend>
+      <kendo-textbox
+        hidden
+        formControlName="costCenterId"
+        value="form.controls.costCenter.value?.id"
+      ></kendo-textbox>
+      <kendo-formfield>
+        <kendo-label [for]="costCenter" text="Költséghely"></kendo-label>
+        <kendo-multicolumncombobox
+          #costCenter
+          formControlName="costCenter"
+          [data]="filteredCostCenters"
+          textField="code"
+          valueField="id"
+          [kendoDropDownFilter]="{ operator: 'contains' }"
+          (valueChange)="costCenterChange($event)"
+          class="x-combobox-sm"
+        >
+          <kendo-combobox-column field="code" title="Költséghely" [width]="100">
+          </kendo-combobox-column>
+          <kendo-combobox-column field="name" title="Megnevezés" [width]="200">
+          </kendo-combobox-column>
+          <ng-template kendoMultiColumnComboBoxNoDataTemplate>
+            Nincs megjelenítendő adat
+          </ng-template>
+        </kendo-multicolumncombobox>
+        <kendo-formerror>Kötelező mező</kendo-formerror>
+      </kendo-formfield>
+      <kendo-formfield>
+        <kendo-label [for]="name" text="Felelős"></kendo-label>
+        <kendo-textbox
+          #name
+          formControlName="name"
+          class="x-textbox-sm"
+        ></kendo-textbox>
+        <kendo-formerror>Kötelező mező</kendo-formerror>
+      </kendo-formfield>
+      <kendo-formfield>
+        <kendo-label [for]="email" text="E-mail"></kendo-label>
+        <kendo-textbox
+          #email
+          formControlName="email"
+          class="x-textbox-sm"
+        ></kendo-textbox>
+        <kendo-formerror *ngIf="form.controls.email.errors?.required"
+          >Kötelező mező</kendo-formerror
+        >
+        <kendo-formerror *ngIf="form.controls.email.errors?.email"
+          >Hibás e-mail formátum</kendo-formerror
+        >
+      </kendo-formfield>
+      <kendo-formfield>
+        <kendo-textbox
+          hidden
+          formControlName="langId"
+          value="form.controls.lang.value?.id"
+        ></kendo-textbox>
+      </kendo-formfield>
+      <kendo-formfield>
+        <kendo-label [for]="lang" text="Nyelv"></kendo-label>
+        <kendo-multicolumncombobox
+          #lang
+          formControlName="lang"
+          [data]="languages"
+          textField="isoCode"
+          valueField="id"
+          [kendoDropDownFilter]="{ operator: 'contains' }"
+          (valueChange)="langChange($event)"
+          class="x-combobox-sm"
+        >
+          <kendo-combobox-column field="isoCode" title="ISO kód" [width]="100">
+          </kendo-combobox-column>
+          <kendo-combobox-column field="name" title="Nyelv" [width]="200">
+          </kendo-combobox-column>
+          <ng-template kendoMultiColumnComboBoxNoDataTemplate>
+            Nincs megjelenítendő adat
+          </ng-template>
+        </kendo-multicolumncombobox>
+        <kendo-formerror>Kötelező mező</kendo-formerror>
+      </kendo-formfield>
+    </fieldset>
+    <!-- hidden submit button in order to get work the submit event on enter -->
+    <button type="submit" hidden></button>
+  </form>
+  <kendo-dialog-actions>
+    <button
+      type="button"
+      kendoButton
+      icon="cancel"
+      (click)="onCancel()"
+      class="x-btn-light click-light"
+    >
+      Mégsem
+    </button>
+    <button
+      type="submit"
+      kendoButton
+      icon="save"
+      class="x-btn-primary click-primary"
+      (click)="onSave()"
+    >
+      Mentés
+    </button>
+  </kendo-dialog-actions>
+</kendo-dialog>

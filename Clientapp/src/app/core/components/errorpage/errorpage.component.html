@@ -1,0 +1,29 @@
+<div class="component-header error">Hiba történt!</div>
+<table *ngIf="isHttpError">
+  <tr>
+    <td>Hibaüzenet:</td>
+    <td>{{ error.message }}</td>
+  </tr>
+  <tr>
+    <td>Státuszkód:</td>
+    <td>{{ error.status }}</td>
+  </tr>
+  <tr>
+    <td>Státusz:</td>
+    <td>{{ error.statusText }}</td>
+  </tr>
+  <tr>
+    <td>Url:</td>
+    <td>{{ error.url }}</td>
+  </tr>
+</table>
+<table *ngIf="!isHttpError">
+  <tr>
+    <td>Hibaüzenet:</td>
+    <td>{{ error.message }}</td>
+  </tr>
+  <tr>
+    <td>Stack:</td>
+    <td>{{ error.stack }}</td>
+  </tr>
+</table>

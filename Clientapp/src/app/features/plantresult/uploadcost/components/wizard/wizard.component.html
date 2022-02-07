@@ -1,0 +1,54 @@
+<div class="component-header">Gyári költségek feltöltése</div>
+<kendo-dialog [width]="550" [height]="470">
+  <kendo-dialog-titlebar class="x-bg-primary x-font">
+    Gyári költségek feltöltése
+  </kendo-dialog-titlebar>
+  <kendo-stepper
+    #stepper
+    [steps]="steps"
+    stepType="full"
+    [(currentStep)]="currentStep"
+    [style.width.px]="520"
+  >
+  </kendo-stepper>
+  <form class="k-form" [formGroup]="form" style="margin-top: 2rem">
+    <entity
+      *ngIf="currentStep === 0"
+      [entity]="currentGroup"
+      [formPassed]="entityFormPassed"
+    >
+    </entity>
+    <file *ngIf="currentStep === 1" [file]="currentGroup"> </file>
+    <overview *ngIf="currentStep === 2" [form]="form"></overview>
+    <upload-file *ngIf="currentStep === 3" [form]="form"></upload-file>
+  </form>
+  <kendo-dialog-actions layout="normal">
+    <button
+      kendoButton
+      class="x-btn-light click-light"
+      *ngIf="currentStep !== 0"
+      (click)="prev()"
+    >
+      Vissza
+    </button>
+    <button
+      kendoButton
+      [primary]="true"
+      class="x-btn-primary click-primary"
+      (click)="next()"
+      *ngIf="currentStep !== 3"
+    >
+      Következő
+    </button>
+    <button
+      kendoButton
+      [primary]="true"
+      class="x-btn-primary click-primary"
+      (click)="submit()"
+      *ngIf="currentStep === 3"
+    >
+      Feltöltés
+    </button>
+  </kendo-dialog-actions>
+</kendo-dialog>
+<div kendoDialogContainer></div>

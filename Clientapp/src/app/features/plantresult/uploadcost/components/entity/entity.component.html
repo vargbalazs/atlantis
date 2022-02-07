@@ -1,0 +1,73 @@
+<ng-container [formGroup]="entity">
+  <kendo-formfield>
+    <kendo-textbox
+      hidden
+      formControlName="companyId"
+      value="form.controls.company.value?.id"
+    ></kendo-textbox>
+  </kendo-formfield>
+  <kendo-formfield>
+    <kendo-label [for]="company" text="Gazdasági egység"></kendo-label>
+    <kendo-combobox
+      #company
+      formControlName="company"
+      [data]="companies"
+      textField="name"
+      valueField="id"
+      [kendoDropDownFilter]="{ operator: 'contains' }"
+      (valueChange)="companyChange($event)"
+      class="x-combobox-sm"
+    >
+      <ng-template kendoComboBoxNoDataTemplate>
+        Nincs megjelenítendő adat
+      </ng-template>
+    </kendo-combobox>
+    <kendo-formerror>Kötelező mező</kendo-formerror>
+  </kendo-formfield>
+  <kendo-formfield>
+    <kendo-textbox
+      hidden
+      formControlName="plantId"
+      value="form.controls.plant.value?.id"
+    ></kendo-textbox>
+  </kendo-formfield>
+  <kendo-formfield>
+    <kendo-label [for]="plant" text="Gyár"></kendo-label>
+    <kendo-combobox
+      #plant
+      formControlName="plant"
+      [data]="filteredPlants"
+      textField="code"
+      valueField="id"
+      [kendoDropDownFilter]="{ operator: 'contains' }"
+      (valueChange)="plantChange($event)"
+      class="x-combobox-sm"
+    >
+      <ng-template kendoComboBoxNoDataTemplate>
+        Nincs megjelenítendő adat
+      </ng-template>
+    </kendo-combobox>
+    <kendo-formerror>Kötelező mező</kendo-formerror>
+  </kendo-formfield>
+  <kendo-formfield>
+    <kendo-label [for]="month" text="Év/hónap"></kendo-label>
+    <kendo-datepicker
+      #month
+      formControlName="month"
+      activeView="year"
+      bottomView="year"
+      format="yyyy.MM"
+      [formatPlaceholder]="{
+        year: 'Év',
+        month: 'Hónap',
+        day: '',
+        hour: '',
+        minute: '',
+        second: ''
+      }"
+      class="x-datepicker-sm"
+    >
+    </kendo-datepicker>
+    <kendo-formerror>Kötelező mező</kendo-formerror>
+  </kendo-formfield>
+</ng-container>

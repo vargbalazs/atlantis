@@ -1,0 +1,54 @@
+<div class="component-header">FRC</div>
+<div class="x-toolbar">
+  <button
+    kendoButton
+    icon="filter"
+    class="x-btn-primary click-primary"
+    (click)="showFilterForm()"
+  >
+    Szűrés
+  </button>
+  <button
+    kendoButton
+    icon="file"
+    *ngIf="listWasFiltered"
+    class="x-btn-primary click-primary"
+    (click)="addHandler()"
+  >
+    Új FRC
+  </button>
+</div>
+<frc-card
+  class="flex-layout"
+  [frcs]="gridData.data"
+  (onEditFrc)="editHandler({ dataItem: $event })"
+  (onDeleteFrc)="removeHandler({ dataItem: $event })"
+></frc-card>
+<filter
+  [model]="filterEntity"
+  [frc]="true"
+  (save)="saveFilterForm($event)"
+  (cancel)="cancelFilterForm()"
+></filter>
+<ce-frc
+  [model]="editDataItem"
+  [isNew]="isNew"
+  [company]="company"
+  [plant]="plant"
+  [costAccType]="costAccType"
+  [year]="year"
+  (save)="saveHandler($event)"
+  (cancel)="cancelHandler()"
+></ce-frc>
+<div
+  class="x-dialog-container"
+  confirmdialog-style
+  [isMsgDialog]="isMsgDialog"
+  [dialogType]="dialogType"
+>
+  <div kendoDialogContainer></div>
+</div>
+<loading-overlay
+  [visible]="loadingOverlayVisible"
+  loadingText=""
+></loading-overlay>

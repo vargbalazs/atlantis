@@ -1,0 +1,35 @@
+.user-header {
+  background-color: #00b0ff;
+  color: white;
+  height: 60px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host::ng-deep .k-menu:not(.k-context-menu) {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.875rem;
+}
+
+:host::ng-deep .k-menu:not(.k-context-menu) > .k-item {
+  color: #3e5569;
+}
+
+:host::ng-deep .k-menu:not(.k-context-menu) > .k-item:hover,
+.k-menu:not(.k-context-menu) > .k-item.k-state-hover {
+  background-color: #e9ecef;
+}
+
+:host::ng-deep .k-menu-link .k-icon.k-i-user {
+  color: #2962ff;
+}
+
+:host::ng-deep .k-menu-link .k-icon.k-i-gear {
+  color: #ee9d01;
+}
+
+:host::ng-deep .k-menu-link .k-icon.k-i-logout {
+  color: #f64e60;
+}

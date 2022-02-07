@@ -1,0 +1,78 @@
+import { SalesProduct } from '../../models/salesproduct.model';
+
+export const salesProducts: SalesProduct[] = [
+  {
+    id: 1,
+    name: 'AU536PA BMP',
+    capGroupId: undefined,
+    capGroup: {},
+    unitId: 2,
+    unit: {
+      id: 2,
+      unit: 'db',
+      name: 'darab',
+      companyId: 1,
+      plantId: 1,
+    },
+    companyId: 1,
+    company: {
+      id: 1,
+      name: 'company 1 long name',
+      shortName: 'company 1',
+    },
+    plantId: 1,
+    plant: {
+      id: 1,
+      code: '1H0',
+    },
+    year: 2021,
+    yearDate: new Date(2021, 0, 1),
+  },
+  {
+    id: 2,
+    name: 'AU326 LDM',
+    capGroupId: 2,
+    capGroup: {
+      id: 2,
+      capGroup: '1H2K10',
+      capTypeId: 3,
+      capName: 'AU326 LDM',
+      capUnitId: 2,
+      capUnit: {
+        id: 2,
+        unit: 'db',
+        name: 'darab',
+        companyId: 1,
+        plantId: 1,
+      },
+      invNr: 'K10',
+      normalCap: 561760,
+      fixRate: 0.66,
+      capYear: 2021,
+      capYearDate: new Date(2021, 0, 1),
+      companyId: 1,
+      plantId: 1,
+    },
+    unitId: 2,
+    unit: {
+      id: 2,
+      unit: 'db',
+      name: 'darab',
+      companyId: 1,
+      plantId: 1,
+    },
+    companyId: 1,
+    company: {
+      id: 1,
+      name: 'company 1 long name',
+      shortName: 'company 1',
+    },
+    plantId: 1,
+    plant: {
+      id: 1,
+      code: '1H0',
+    },
+    year: 2021,
+    yearDate: new Date(2021, 0, 1),
+  },
+];

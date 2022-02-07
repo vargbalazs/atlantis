@@ -1,0 +1,48 @@
+<kendo-dialog
+  *ngIf="formVisible"
+  [width]="500"
+  [height]="480"
+  (close)="closeForm()"
+>
+  <kendo-dialog-titlebar class="x-bg-primary x-font"
+    >Verziók</kendo-dialog-titlebar
+  >
+  <kendo-card
+    *ngFor="let version of provkVersions; index as i"
+    class="card"
+    width="100%"
+    (mouseover)="cardOverOut(version)"
+    (mouseout)="cardOverOut(version)"
+    (click)="cardClick(version)"
+  >
+    <div class="k-hstack">
+      <div class="side-bar" [ngClass]="{ hovered: version.hovered }"></div>
+      <kendo-card-header class="k-hstack">
+        <h1 kendoCardTitle class="k-hstack">
+          Verzió
+          <div class="spacer"></div>
+          <h1 kendoCardTitle class="bold">{{ version.version }}</h1>
+        </h1>
+        <div class="spacer"></div>
+        <div class="bold">{{ version.year }} / {{ version.month }}</div>
+      </kendo-card-header>
+    </div>
+    <div class="k-hstack">
+      <div class="side-bar" [ngClass]="{ hovered: version.hovered }"></div>
+      <kendo-card-body class="k-hstack">
+        <h2 class="ba">BA</h2>
+        <div class="ba-value">
+          <h2
+            class="ba"
+            [ngClass]="{
+              'ba-negative': version.ba! < 0,
+              'ba-positive': version.ba! >= 0
+            }"
+          >
+            {{ version.ba | number }} €
+          </h2>
+        </div>
+      </kendo-card-body>
+    </div>
+  </kendo-card>
+</kendo-dialog>

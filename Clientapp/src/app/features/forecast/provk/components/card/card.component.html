@@ -1,0 +1,73 @@
+<kendo-card
+  width="230px"
+  *ngFor="let provk of provks"
+  (mouseover)="cardOverOut(provk)"
+  (mouseout)="cardOverOut(provk)"
+>
+  <div class="top-bar" [ngClass]="{ hovered: provk.hovered }"></div>
+  <kendo-card-header class="k-hstack space-between">
+    <div>
+      <h1 kendoCardTitle>PROVK</h1>
+      <p kendoCardSubtitle>{{ provk.company!.shortName! }}</p>
+    </div>
+    <div class="year-month">{{ provk.year }} / {{ provk.month }}</div>
+  </kendo-card-header>
+  <kendo-card-body>
+    <table>
+      <tr>
+        <td style="padding-right: 8.8rem">Gyár</td>
+        <td class="td-data">{{ provk.plant?.code }}</td>
+      </tr>
+      <tr>
+        <td>Verziók</td>
+        <td class="td-data">{{ provk.versions }}</td>
+      </tr>
+      <tr>
+        <td>Mentett verziók</td>
+        <td class="td-data">1</td>
+      </tr>
+    </table>
+  </kendo-card-body>
+  <hr
+    kendoCardSeparator
+    [ngClass]="{
+      'actions-visible': provk.hovered,
+      'actions-hidden': !provk.hovered
+    }"
+  />
+  <kendo-card-actions
+    orientation="horizontal"
+    layout="start"
+    [ngClass]="{
+      'actions-visible': provk.hovered,
+      'actions-hidden': !provk.hovered
+    }"
+  >
+    <button
+      kendoButton
+      icon="file"
+      look="flat"
+      (click)="addNewVersion(provk)"
+    ></button>
+    <button
+      kendoButton
+      icon="edit"
+      look="flat"
+      (click)="editProvk(provk)"
+    ></button>
+    <button
+      kendoButton
+      icon="delete"
+      look="flat"
+      (click)="deleteProvk(provk)"
+    ></button>
+    <button
+      kendoButton
+      class="x-btn-light-primary x-text-primary click-primary x-flat"
+      (click)="onShowVersionsClick(provk)"
+    >
+      <span class="k-icon k-i-more-vertical"></span>
+      Verziók
+    </button>
+  </kendo-card-actions>
+</kendo-card>

@@ -1,0 +1,125 @@
+<kendo-dialog *ngIf="active" [width]="300" [height]="490" (close)="closeForm()">
+  <kendo-dialog-titlebar class="x-bg-primary x-font">
+    {{ isNew ? "Új költségcsoport" : "Szerkesztés" }}
+  </kendo-dialog-titlebar>
+  <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
+    <kendo-formfield>
+      <kendo-textbox hidden formControlName="id"></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-textbox
+        hidden
+        formControlName="companyId"
+        value="form.controls.company.value?.id"
+      ></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="company" text="Gazdasági egység"></kendo-label>
+      <kendo-combobox
+        #company
+        formControlName="company"
+        [data]="companies"
+        textField="name"
+        valueField="id"
+        [kendoDropDownFilter]="{ operator: 'contains' }"
+        (valueChange)="companyChange($event)"
+        class="x-combobox-sm"
+      >
+        <ng-template kendoComboBoxNoDataTemplate>
+          Nincs megjelenítendő adat
+        </ng-template>
+      </kendo-combobox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="name" text="Költségcsoport"></kendo-label>
+      <kendo-textbox
+        #name
+        formControlName="name"
+        class="x-textbox-sm"
+      ></kendo-textbox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="rowIndex" text="Pozíció"></kendo-label>
+      <kendo-textbox
+        #rowIndex
+        formControlName="rowIndex"
+        class="x-textbox-sm"
+      ></kendo-textbox>
+      <kendo-formerror *ngIf="form.controls.rowIndex.errors?.required"
+        >Kötelező mező</kendo-formerror
+      >
+      <kendo-formerror *ngIf="form.controls.rowIndex.errors?.pattern"
+        >Csak számokat tartalmazhat</kendo-formerror
+      >
+    </kendo-formfield>
+    <kendo-formfield>
+      <div class="k-checkbox-wrap">
+        <input
+          type="checkbox"
+          #usedForPersPlanning
+          formControlName="usedForPersPlanning"
+          kendoCheckBox
+        />
+        <kendo-label
+          class="k-checkbox-label"
+          [for]="usedForPersPlanning"
+          text="Létszámtervezésnél használt"
+        ></kendo-label>
+      </div>
+    </kendo-formfield>
+    <kendo-formfield>
+      <div class="k-checkbox-wrap">
+        <input
+          type="checkbox"
+          #ohterPlantCost
+          formControlName="ohterPlantCost"
+          kendoCheckBox
+        />
+        <kendo-label
+          class="k-checkbox-label"
+          [for]="ohterPlantCost"
+          text="Egyéb gyári költség"
+        ></kendo-label>
+      </div>
+    </kendo-formfield>
+    <kendo-formfield>
+      <div class="k-checkbox-wrap">
+        <input
+          type="checkbox"
+          #directWagesCost
+          formControlName="directWagesCost"
+          kendoCheckBox
+        />
+        <kendo-label
+          class="k-checkbox-label"
+          [for]="directWagesCost"
+          text="Operátori bérköltség"
+        ></kendo-label>
+      </div>
+    </kendo-formfield>
+    <!-- hidden submit button in order to get work the submit event on enter -->
+    <button type="submit" hidden></button>
+  </form>
+  <kendo-dialog-actions>
+    <button
+      type="button"
+      kendoButton
+      icon="cancel"
+      (click)="onCancel()"
+      class="x-btn-light click-light"
+    >
+      Mégsem
+    </button>
+    <button
+      type="submit"
+      kendoButton
+      icon="save"
+      class="x-btn-primary click-primary"
+      (click)="onSave()"
+    >
+      Mentés
+    </button>
+  </kendo-dialog-actions>
+</kendo-dialog>

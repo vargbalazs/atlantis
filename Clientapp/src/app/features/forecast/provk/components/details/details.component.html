@@ -1,0 +1,65 @@
+<div class="component-header">PROVK verzió</div>
+<!-- <kendo-toolbar>
+  <kendo-toolbar-button
+    text="Vissza"
+    showText="both"
+    icon="arrow-60-left"
+    showIcon="both"
+    [primary]="true"
+    (click)="goBack()"
+  >
+  </kendo-toolbar-button>
+  
+</kendo-toolbar> -->
+<div class="x-toolbar">
+  <button
+    kendoButton
+    icon="arrow-60-left"
+    class="x-btn-primary click-primary"
+    (click)="goBack()"
+  >
+    Vissza
+  </button>
+  <toolbar-text [caption]="'Gazdasági egység'" [value]="company"></toolbar-text>
+  <toolbar-text [caption]="'Gyár'" [value]="plant"></toolbar-text>
+  <toolbar-text [caption]="'Év'" [value]="year"></toolbar-text>
+  <toolbar-text [caption]="'Hónap'" [value]="month"></toolbar-text>
+  <toolbar-text [caption]="'Verzió'" [value]="version"></toolbar-text>
+</div>
+<div class="container">
+  <kendo-panelbar
+    [items]="items"
+    class="panelbar"
+    (stateChange)="onPanelChange($event)"
+  ></kendo-panelbar>
+  <div class="grid-container">
+    <captype-grid
+      [provkDetails]="provkDetails"
+      [selectedCapTypeId]="selectedCapTypeId"
+      (switchEditMode)="inEditMode($event)"
+      *ngIf="!salesProductsVisible && items.length"
+    ></captype-grid>
+    <salesdetails
+      [salesDetails]="salesDetails"
+      [selectedCapTypeId]="selectedCapTypeId"
+      (switchEditMode)="inEditMode($event)"
+      *ngIf="salesProductsVisible"
+    ></salesdetails>
+    <loading-overlay
+      [visible]="loadingOverlayVisibleGrid"
+      loadingText=""
+    ></loading-overlay>
+  </div>
+</div>
+<div
+  class="x-dialog-container"
+  confirmdialog-style
+  [isMsgDialog]="isMsgDialog"
+  [dialogType]="dialogType"
+>
+  <div kendoDialogContainer></div>
+</div>
+<loading-overlay
+  [visible]="loadingOverlayVisible"
+  loadingText=""
+></loading-overlay>

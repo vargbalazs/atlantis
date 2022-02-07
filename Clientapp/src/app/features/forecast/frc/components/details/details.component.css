@@ -1,0 +1,17 @@
+:host::ng-deep .k-panelbar > .k-item > .k-link {
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  margin: 1rem 1rem;
+}
+
+.grid-container {
+  position: relative;
+}
+
+:host::ng-deep .k-validator-tooltip {
+  width: 110px;
+  margin-left: 0.2rem;
+}

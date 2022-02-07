@@ -1,0 +1,77 @@
+<div class="component-header">Tervverziók</div>
+<div class="grid">
+  <kendo-grid
+    [kendoGridBinding]="gridData.data"
+    [filterable]="true"
+    [sortable]="true"
+    (add)="addHandler()"
+  >
+    <ng-template kendoGridToolbarTemplate>
+      <button kendoGridAddCommand [primary]="true" icon="file">Új</button>
+    </ng-template>
+    <kendo-grid-column
+      [hidden]="true"
+      field="id"
+      title="ID"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="year"
+      title="Év"
+      format="d"
+      filter="numeric"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="costAccType.name"
+      title="Költségszámítási típus"
+    ></kendo-grid-column>
+    <kendo-grid-column field="descr" title="Leírás"></kendo-grid-column>
+    <kendo-grid-column field="plant.code" title="Gyár"></kendo-grid-column>
+    <kendo-grid-column
+      field="company.name"
+      title="Gazdasági egység"
+    ></kendo-grid-column>
+    <kendo-grid-column field="status" title="Státusz">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{ dataItem.status === 1 ? "Lezárt" : "Aktív" }}
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-command-column [width]="70">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <kendo-icon
+          class="command-icon"
+          themeColor="primary"
+          name="edit"
+          (click)="editHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+        <kendo-icon
+          class="command-icon"
+          themeColor="secondary"
+          name="lock"
+          (click)="changeStatus({ dataItem: dataItem })"
+          *ngIf="dataItem.status === 0"
+        ></kendo-icon>
+        <kendo-icon
+          class="command-icon"
+          themeColor="secondary"
+          name="unlock"
+          (click)="changeStatus({ dataItem: dataItem })"
+          *ngIf="dataItem.status === 1"
+        ></kendo-icon>
+      </ng-template>
+    </kendo-grid-command-column>
+    <ng-template kendoGridNoRecordsTemplate>
+      Nincs megjelenítendő adat
+    </ng-template>
+  </kendo-grid>
+</div>
+<ce-version
+  [model]="editDataItem"
+  [isNew]="isNew"
+  (save)="saveHandler($event)"
+  (cancel)="cancelHandler()"
+></ce-version>
+<div kendoDialogContainer></div>
+<loading-overlay
+  [visible]="loadingOverlayVisible"
+  loadingText=""
+></loading-overlay>

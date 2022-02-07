@@ -1,0 +1,70 @@
+<div class="component-header">Kapacitástípusok</div>
+<div class="grid">
+  <kendo-grid
+    [kendoGridBinding]="gridData.data"
+    [filterable]="true"
+    [sortable]="true"
+    (add)="addHandler()"
+  >
+    <ng-template kendoGridToolbarTemplate>
+      <button
+        kendoGridAddCommand
+        class="x-btn-primary click-primary"
+        icon="file"
+      >
+        Új
+      </button>
+    </ng-template>
+    <kendo-grid-column
+      [hidden]="true"
+      field="id"
+      title="ID"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="capType"
+      title="Kapacitástípus"
+    ></kendo-grid-column>
+    <kendo-grid-column field="plant.code" title="Gyár"></kendo-grid-column>
+    <kendo-grid-column
+      field="company.name"
+      title="Gazdasági egység"
+    ></kendo-grid-column>
+    <kendo-grid-command-column [width]="70">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <kendo-icon
+          class="command-icon"
+          themeColor="primary"
+          name="edit"
+          (click)="editHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+        <kendo-icon
+          class="command-icon"
+          themeColor="secondary"
+          name="delete"
+          (click)="removeHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+      </ng-template>
+    </kendo-grid-command-column>
+    <ng-template kendoGridNoRecordsTemplate>
+      Nincs megjelenítendő adat
+    </ng-template>
+  </kendo-grid>
+</div>
+<ce-captype
+  [model]="editDataItem"
+  [isNew]="isNew"
+  (save)="saveHandler($event)"
+  (cancel)="cancelHandler()"
+></ce-captype>
+<div
+  class="x-dialog-container"
+  confirmdialog-style
+  [isMsgDialog]="isMsgDialog"
+  [dialogType]="dialogType"
+>
+  <div kendoDialogContainer></div>
+</div>
+<loading-overlay
+  [visible]="loadingOverlayVisible"
+  loadingText=""
+></loading-overlay>

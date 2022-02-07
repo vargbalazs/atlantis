@@ -1,0 +1,111 @@
+<kendo-grid class="grid" [kendoGridBinding]="provkDetails" #grid>
+  <ng-template kendoGridToolbarTemplate>
+    <button
+      kendoButton
+      class="x-btn-primary click-primary"
+      icon="edit"
+      (click)="editAllRows()"
+      *ngIf="!isInEditMode"
+    >
+      Szerkesztés
+    </button>
+    <button
+      kendoButton
+      class="x-btn-primary click-primary"
+      icon="save"
+      (click)="saveChanges()"
+      *ngIf="isInEditMode"
+    >
+      Mentés
+    </button>
+  </ng-template>
+  <kendo-grid-column field="id" title="ID" [hidden]="true"></kendo-grid-column>
+  <kendo-grid-column
+    field="capGroup.capGroup"
+    title="Kap. csop."
+    [editable]="false"
+  ></kendo-grid-column>
+  <kendo-grid-column
+    field="capGroup.capName"
+    title="Kap. név"
+    [editable]="false"
+  ></kendo-grid-column>
+  <kendo-grid-column
+    field="capGroup.invNr"
+    title="Leltári szám"
+    [editable]="false"
+  ></kendo-grid-column>
+  <kendo-grid-column
+    field="capGroup.capUnit.unit"
+    title="Kap. egys."
+    [editable]="false"
+  ></kendo-grid-column>
+  <kendo-grid-column
+    field="value"
+    title="Előrejelzés"
+    [editable]="true"
+    [class]="'k-text-right'"
+  >
+    <ng-template
+      kendoGridEditTemplate
+      let-column="column"
+      let-formGroup="formGroup"
+      let-rowIndex="rowIndex"
+    >
+      <kendo-numerictextbox
+        [spinners]="false"
+        format="n0"
+        #p="popupAnchor"
+        popupAnchor
+        [formControl]="formGroup.get(column.field)"
+        (valueChange)="capValueChange($event, rowIndex)"
+      >
+      </kendo-numerictextbox>
+      <kendo-popup
+        [anchor]="$any(p.element)"
+        [anchorAlign]="{ horizontal: 'right', vertical: 'top' }"
+        [popupAlign]="{ horizontal: 'left', vertical: 'top' }"
+        *ngIf="
+          formGroup.get(column.field).invalid &&
+          !formGroup.get(column.field).untouched
+        "
+        popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
+      >
+        Kötelező mező
+      </kendo-popup>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column
+    field="capGroup.normalCap"
+    title="Normál éves kapacitás"
+    filter="numeric"
+    [editable]="false"
+    [class]="'k-text-right'"
+  ></kendo-grid-column>
+  <kendo-grid-column
+    field="capGroup.fixRate"
+    title="Fix egységdíj"
+    filter="numeric"
+    [editable]="false"
+    [class]="'k-text-right'"
+  ></kendo-grid-column>
+  <kendo-grid-column
+    field="ba"
+    title="BA"
+    [editable]="false"
+    format="{0:n0}"
+    [class]="'k-text-right'"
+    [footerClass]="'k-text-right'"
+  >
+    <ng-template kendoGridFooterTemplate>
+      Összesen: {{ sumBa | number: "1.0-0" }}
+    </ng-template>
+  </kendo-grid-column>
+  <ng-template kendoGridNoRecordsTemplate>
+    Nincs megjelenítendő adat
+  </ng-template>
+</kendo-grid>
+<loading-overlay
+  [visible]="loadingOverlayVisible"
+  loadingText=""
+></loading-overlay>

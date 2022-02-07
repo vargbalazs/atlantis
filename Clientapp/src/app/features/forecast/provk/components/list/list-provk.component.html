@@ -1,0 +1,77 @@
+<div class="component-header">PROVK</div>
+<!-- <kendo-toolbar>
+  <kendo-toolbar-button
+    text="Szűrés"
+    showText="both"
+    icon="filter"
+    showIcon="both"
+    class="x-btn-primary click-primary"
+    (click)="showFilterForm()"
+  >
+  </kendo-toolbar-button>
+  <kendo-toolbar-button
+    text="Új PROVK"
+    showText="both"
+    icon="file"
+    showIcon="both"
+    class="x-btn-primary click-primary"
+    *ngIf="listWasFiltered"
+    (click)="addHandler()"
+  >
+  </kendo-toolbar-button>
+</kendo-toolbar> -->
+<div class="x-toolbar">
+  <button
+    kendoButton
+    icon="filter"
+    class="x-btn-primary click-primary"
+    (click)="showFilterForm()"
+  >
+    Szűrés
+  </button>
+  <button
+    kendoButton
+    icon="file"
+    *ngIf="listWasFiltered"
+    class="x-btn-primary click-primary"
+    (click)="addHandler()"
+  >
+    Új PROVK
+  </button>
+</div>
+<provk-card
+  class="flex-layout"
+  [provks]="gridData.data"
+  (versionSelectorShow)="showVersionSelector($event)"
+  (onEditProvk)="editHandler({ dataItem: $event })"
+  (onDeleteProvk)="removeHandler({ dataItem: $event })"
+  (onAddNewVersion)="addNewVersion($event)"
+></provk-card>
+<filter
+  [model]="filterEntity"
+  (save)="saveFilterForm($event)"
+  (cancel)="cancelFilterForm()"
+></filter>
+<version-selector [versions]="provkVersions"></version-selector>
+<ce-provk
+  [model]="editDataItem"
+  [isNew]="isNew"
+  [company]="company"
+  [plant]="plant"
+  [minDate]="minDate"
+  [maxDate]="maxDate"
+  (save)="saveHandler($event)"
+  (cancel)="cancelHandler()"
+></ce-provk>
+<div
+  class="x-dialog-container"
+  confirmdialog-style
+  [isMsgDialog]="isMsgDialog"
+  [dialogType]="dialogType"
+>
+  <div kendoDialogContainer></div>
+</div>
+<loading-overlay
+  [visible]="loadingOverlayVisible"
+  loadingText=""
+></loading-overlay>

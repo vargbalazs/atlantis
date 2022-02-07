@@ -1,0 +1,97 @@
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  background-color: #eef5f9;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+kendo-textbox {
+  margin-top: 1.25rem;
+  width: 18.3em;
+}
+
+.k-button.k-button-icon {
+  font-size: 0.9rem;
+}
+
+.k-icon {
+  font-size: 1.25rem;
+  color: rgba(62, 85, 105, 0.9);
+}
+
+.k-svg-icon {
+  padding-left: 0.625rem;
+}
+
+#empty-div {
+  width: 0.5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  background-color: #eef5f9;
+}
+
+.k-card {
+  height: 420px;
+  box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 10%);
+}
+
+h2 {
+  text-align: left;
+  margin: 2rem 0 0 2rem;
+}
+
+.remember-me {
+  align-self: flex-start;
+  margin: 1rem 0 0 2rem;
+}
+
+.btn {
+  align-self: stretch;
+  margin: 2rem 2rem 0 2rem;
+  letter-spacing: 1.5px;
+}
+
+.link {
+  margin-top: 1rem;
+  color: #00b0ff;
+}
+
+a {
+  color: #00b0ff;
+}
+
+.forgotpwd-descr {
+  text-align: justify;
+  margin: 0.5rem 2rem;
+}
+
+.pwd-match-error {
+  align-self: flex-start;
+  margin-left: 2rem;
+}
+
+.info-icon {
+  margin-right: 0.25rem;
+}
+
+.eye-icon {
+  cursor: pointer;
+}

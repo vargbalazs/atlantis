@@ -1,0 +1,159 @@
+<div class="component-header">Létszámtervezés</div>
+<div class="grid">
+  <kendo-grid
+    [kendoGridBinding]="gridData.data"
+    [sortable]="true"
+    [resizable]="true"
+    (add)="addHandler()"
+    [group]="groups"
+    (cellClick)="onCellClick($event)"
+    #grid
+  >
+    <ng-template kendoGridToolbarTemplate>
+      <button
+        kendoButton
+        class="x-btn-primary click-primary"
+        icon="filter"
+        (click)="showFilterForm()"
+      >
+        Költséghely választás
+      </button>
+      <button
+        kendoGridAddCommand
+        class="x-btn-primary click-primary"
+        icon="file"
+        *ngIf="filtered"
+      >
+        Új
+      </button>
+      <button
+        kendoGridExcelCommand
+        class="x-btn-primary click-primary"
+        icon="excel"
+        *ngIf="filtered"
+      ></button>
+    </ng-template>
+    <kendo-grid-column
+      field="id"
+      title="ID"
+      [hidden]="true"
+      [width]="1"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="costGroup.name"
+      title="Költségcsoport"
+      [width]="150"
+    ></kendo-grid-column>
+    <kendo-grid-column field="job.name" title="Munkakör" [width]="150">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <div class="item-name-container">
+          <span>{{ dataItem.job.name }}</span>
+          <div class="badge comment" *ngIf="dataItem.comment">
+            <span>C</span>
+          </div>
+          <div class="badge task" *ngIf="dataItem.task">
+            <span>T</span>
+          </div>
+          <div class="badge cost-assigned" *ngIf="dataItem.costAssigned">
+            <span>$</span>
+          </div>
+        </div>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="job.department.name"
+      title="Részleg"
+      [width]="150"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      *ngFor="let period of periods; index as i"
+      field="p{{ i + 1 }}"
+      title="{{ i + 1 }}"
+      format="{0:n0}"
+      [style]="{ 'text-align': 'right' }"
+      [headerStyle]="{ 'text-align': 'right' }"
+      [width]="30"
+    >
+      <ng-template
+        kendoGridGroupFooterTemplate
+        let-group="group"
+        let-aggregates
+        let-field="field"
+      >
+        <span style="display: flex; justify-content: end">{{
+          aggregates[field].sum | number: "1.0-0"
+        }}</span>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-command-column [width]="70">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <kendo-icon
+          class="command-icon"
+          themeColor="primary"
+          name="edit"
+          (click)="editHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+        <kendo-icon
+          class="command-icon"
+          themeColor="secondary"
+          name="delete"
+          (click)="removeHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+      </ng-template>
+    </kendo-grid-command-column>
+    <ng-template kendoGridNoRecordsTemplate>
+      Nincs megjelenítendő adat
+    </ng-template>
+    <kendo-grid-excel
+      fileName="Items.xlsx"
+      [collapsible]="true"
+    ></kendo-grid-excel>
+  </kendo-grid>
+</div>
+<filter
+  [model]="filterEntity"
+  [planning]="true"
+  (save)="saveFilterForm($event)"
+  (cancel)="cancelFilterForm()"
+></filter>
+<ce-planningitem
+  [model]="editDataItem"
+  [isNew]="isNew"
+  [costGroups]="costGroups"
+  [jobs]="jobs"
+  [filterEntity]="filterEntityInput"
+  (save)="saveHandler($event)"
+  (cancel)="cancelHandler()"
+></ce-planningitem>
+<ce-task
+  [model]="task"
+  [isNew]="isNew"
+  (save)="saveTaskForm($event)"
+  (cancel)="cancelTaskForm()"
+  (taskDone)="taskDone($event)"
+></ce-task>
+<costassign
+  [model]="costAssigns"
+  [hcPlanningItem]="contextItem"
+  [costAccounts]="costAccounts"
+  (save)="saveCostAssign($event)"
+  (cancel)="cancelCostAssign()"
+></costassign>
+<div
+  class="x-dialog-container"
+  confirmdialog-style
+  [isMsgDialog]="isMsgDialog"
+  [dialogType]="dialogType"
+>
+  <div kendoDialogContainer></div>
+</div>
+<loading-overlay
+  [visible]="loadingOverlayVisible"
+  loadingText=""
+></loading-overlay>
+<kendo-contextmenu
+  #gridmenu
+  [items]="contextMenuItems"
+  (select)="onContextMenuItemSelect($event)"
+>
+</kendo-contextmenu>

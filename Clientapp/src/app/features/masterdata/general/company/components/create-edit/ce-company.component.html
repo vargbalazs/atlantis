@@ -1,0 +1,49 @@
+<kendo-dialog *ngIf="active" [width]="300" [height]="450" (close)="closeForm()">
+  <kendo-dialog-titlebar class="x-bg-primary x-font">
+    {{ isNew ? "Új gazdasági egység" : "Szerkesztés" }}
+  </kendo-dialog-titlebar>
+  <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
+    <kendo-formfield>
+      <kendo-textbox hidden formControlName="id"></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="name" text="Név"></kendo-label>
+      <kendo-textbox #name formControlName="name" class="x-textbox-sm">
+      </kendo-textbox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="shortName" text="Rövid név"></kendo-label>
+      <kendo-textbox
+        #shortName
+        formControlName="shortName"
+        class="x-textbox-sm"
+      >
+      </kendo-textbox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <!-- hidden submit button in order to get work the submit event on enter -->
+    <button type="submit" hidden></button>
+  </form>
+  <kendo-dialog-actions>
+    <button
+      type="button"
+      kendoButton
+      icon="cancel"
+      (click)="onCancel()"
+      class="x-btn-light click-light"
+    >
+      Mégsem
+    </button>
+    <button
+      type="submit"
+      kendoButton
+      icon="save"
+      [primary]="true"
+      (click)="onSave()"
+      class="x-btn-primary click-primary"
+    >
+      Mentés
+    </button>
+  </kendo-dialog-actions>
+</kendo-dialog>

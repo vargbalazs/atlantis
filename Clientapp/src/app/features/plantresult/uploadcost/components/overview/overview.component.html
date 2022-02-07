@@ -1,0 +1,32 @@
+<kendo-label [for]="company" text="Gazdasági egység"></kendo-label>
+<kendo-textbox
+  #company
+  class="x-textbox-sm x-readonly"
+  [readonly]="true"
+  [value]="form.get('entity.company')?.value.name"
+>
+</kendo-textbox>
+<kendo-label [for]="plant" text="Gyár"></kendo-label>
+<kendo-textbox
+  #plant
+  class="x-textbox-sm x-readonly"
+  [readonly]="true"
+  [value]="form.get('entity.plant')?.value.code"
+>
+</kendo-textbox>
+<kendo-label [for]="month" text="Év/hónap"></kendo-label>
+<kendo-textbox
+  #month
+  class="x-textbox-sm x-readonly"
+  [readonly]="true"
+  [value]="monthValue"
+>
+</kendo-textbox>
+<kendo-label [for]="fileName" text="Fájl"></kendo-label>
+<kendo-textbox
+  #fileName
+  class="x-textbox-sm x-readonly"
+  [readonly]="true"
+  [value]="form.get('file.fileName')?.value[0].name"
+>
+</kendo-textbox>

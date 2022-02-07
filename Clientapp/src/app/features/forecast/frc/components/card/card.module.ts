@@ -1,0 +1,14 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FrcCardComponent } from './card.component';
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { IconsModule } from '@progress/kendo-angular-icons';
+import { LayoutModule } from '@progress/kendo-angular-layout';
+
+@NgModule({
+  declarations: [FrcCardComponent],
+  imports: [CommonModule, LayoutModule, ButtonsModule, IconsModule],
+  providers: [],
+  exports: [FrcCardComponent],
+})
+export class FrcCardModule {}

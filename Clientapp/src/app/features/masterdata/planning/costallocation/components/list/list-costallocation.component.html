@@ -1,0 +1,131 @@
+<div class="component-header">Költségátterhelések</div>
+<div class="grid">
+  <kendo-grid
+    [kendoGridBinding]="gridData.data"
+    [filterable]="true"
+    [sortable]="true"
+    (add)="addHandler()"
+  >
+    <ng-template kendoGridToolbarTemplate>
+      <button
+        kendoGridAddCommand
+        class="x-btn-primary click-primary"
+        icon="file"
+      >
+        Új
+      </button>
+      <kendo-grid-spacer width="1px"></kendo-grid-spacer>
+      <button
+        kendoButton
+        icon="copy"
+        (click)="showCopyForm()"
+        class="x-btn-light-primary x-text-primary click-primary"
+      >
+        Másolás
+      </button>
+    </ng-template>
+    <kendo-grid-column
+      [hidden]="true"
+      field="id"
+      title="ID"
+    ></kendo-grid-column>
+    <kendo-grid-column field="level" title="Szint"></kendo-grid-column>
+    <kendo-grid-column field="name" title="Megnevezés"></kendo-grid-column>
+    <kendo-grid-column
+      field="allocCostCenter.code"
+      title="Felosztandó költséghely"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="allocCostCenter.name"
+      title="Megnevezés"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="costAccount.accountNumber"
+      title="Főkönyvi szám"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="costAccount.name"
+      title="Költségnem"
+    ></kendo-grid-column>
+    <kendo-grid-column field="year" title="Év" filter="numeric" format="d">
+      <!-- <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+        <kendo-grid-date-filter-cell
+          [showOperators]="false"
+          [column]="column"
+          [filter]="filter"
+          activeView="decade"
+          bottomView="decade"
+          format="yyyy"
+          [formatPlaceholder]="{
+            year: ' ',
+            month: '',
+            day: '',
+            hour: '',
+            minute: '',
+            second: ''
+          }"
+        >
+        </kendo-grid-date-filter-cell> </ng-template -->
+      ></kendo-grid-column
+    >
+    <kendo-grid-column field="plant.code" title="Gyár"></kendo-grid-column>
+    <kendo-grid-column
+      field="company.name"
+      title="Gazdasági egység"
+    ></kendo-grid-column>
+    <kendo-grid-command-column [width]="90">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <kendo-icon
+          class="command-icon"
+          themeColor="primary"
+          name="edit"
+          (click)="editHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+        <kendo-icon
+          class="command-icon"
+          themeColor="secondary"
+          name="group"
+          (click)="showAllocationDetails({ dataItem: dataItem })"
+        ></kendo-icon>
+        <kendo-icon
+          class="command-icon"
+          themeColor="secondary"
+          name="delete"
+          (click)="removeHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+      </ng-template>
+    </kendo-grid-command-column>
+    <ng-template kendoGridNoRecordsTemplate>
+      Nincs megjelenítendő adat
+    </ng-template>
+  </kendo-grid>
+</div>
+<ce-costallocation
+  [model]="editDataItem"
+  [isNew]="isNew"
+  (save)="saveHandler($event)"
+  (cancel)="cancelHandler()"
+></ce-costallocation>
+<copy-entity
+  [model]="copyAllocation"
+  (save)="saveHandlerCopyAllocation($event)"
+  (cancel)="cancelHandlerCopyAllocation()"
+></copy-entity>
+<allocation-details
+  [model]="selectedCostAllocationDetails"
+  [costAllocation]="selectedCostAllocation"
+  [recCostCenters]="recCostCenters"
+  (cancel)="cancelAllocationDetails()"
+></allocation-details>
+<div
+  class="x-dialog-container"
+  confirmdialog-style
+  [isMsgDialog]="isMsgDialog"
+  [dialogType]="dialogType"
+>
+  <div kendoDialogContainer></div>
+</div>
+<loading-overlay
+  [visible]="loadingOverlayVisible"
+  loadingText=""
+></loading-overlay>

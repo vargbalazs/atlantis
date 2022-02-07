@@ -1,0 +1,137 @@
+<div style="position: relative">
+  <div class="x-toolbar" style="margin-bottom: 1rem">
+    <span class="k-label">Részleg</span>
+    <kendo-combobox
+      #department
+      [data]="departments"
+      textField="name"
+      valueField="id"
+      [kendoDropDownFilter]="{ operator: 'contains' }"
+      (valueChange)="departmentChange($event)"
+      class="x-combobox-sm"
+    >
+      <ng-template kendoComboBoxNoDataTemplate>
+        Nincs megjelenítendő adat
+      </ng-template>
+    </kendo-combobox>
+  </div>
+  <kendo-grid
+    [kendoGridReactiveEditing]="createFormGroup"
+    [kendoGridBinding]="gridData.data"
+    [sortable]="true"
+    [group]="groups"
+    #grid
+  >
+    <kendo-grid-column
+      field="id"
+      title="ID"
+      [hidden]="true"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="hcPlanningItem.job.department.name"
+      title="Részleg"
+      [width]="130"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="hcPlanningItem.costGroup.name"
+      title="Költségcsoport"
+      [width]="150"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="hcPlanningItem.job.name"
+      title="Munkakör"
+      [width]="130"
+    >
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="hcPlanningItem.costCenter.code"
+      title="Költséghely"
+      [width]="100"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      *ngFor="let period of periods; index as i"
+      field="p{{ i + 1 }}"
+      title="{{ i + 1 }}"
+      format="{0:n0}"
+      [style]="{ 'text-align': 'right' }"
+      [headerStyle]="{ 'text-align': 'right' }"
+    >
+      <ng-template
+        kendoGridEditTemplate
+        let-column="column"
+        let-formGroup="formGroup"
+        let-rowIndex="rowIndex"
+      >
+        <kendo-textbox
+          #p="popupAnchor"
+          popupAnchor
+          [formControl]="formGroup.get(column.field)"
+        >
+        </kendo-textbox>
+        <kendo-popup
+          [anchor]="$any(p.element)"
+          *ngIf="
+            formGroup.get(column.field).invalid &&
+            !formGroup.get(column.field).untouched
+          "
+          popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
+        >
+          Kötelező mező
+        </kendo-popup>
+      </ng-template>
+      <ng-template
+        kendoGridGroupFooterTemplate
+        let-group="group"
+        let-aggregates
+        let-field="field"
+      >
+        <span style="display: flex; justify-content: end">{{
+          aggregates[field].sum | number: "1.0-0"
+        }}</span>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-command-column [width]="70">
+      <ng-template
+        kendoGridCellTemplate
+        let-dataItem="dataItem"
+        let-rowIndex="rowIndex"
+        let-isNew="isNew"
+      >
+        <kendo-icon
+          *ngIf="isNew || (editing && rowIndex === editedRowIndex)"
+          class="command-icon"
+          themeColor="primary"
+          name="save"
+          (click)="saveHandler({ sender: grid, rowIndex: rowIndex })"
+        ></kendo-icon>
+        <kendo-icon
+          *ngIf="!isNew && !editing"
+          class="command-icon"
+          themeColor="primary"
+          name="edit"
+          (click)="
+            editHandler({
+              sender: grid,
+              rowIndex: rowIndex,
+              dataItem: dataItem
+            })
+          "
+        ></kendo-icon>
+        <kendo-icon
+          *ngIf="isNew || (editing && rowIndex === editedRowIndex)"
+          class="command-icon"
+          themeColor="secondary"
+          name="cancel"
+          (click)="cancelHandler({ sender: grid, rowIndex: rowIndex })"
+        ></kendo-icon>
+      </ng-template>
+    </kendo-grid-command-column>
+    <ng-template kendoGridNoRecordsTemplate>
+      Nincs megjelenítendő adat
+    </ng-template>
+  </kendo-grid>
+  <loading-overlay
+    [visible]="loadingOverlayVisible"
+    loadingText=""
+  ></loading-overlay>
+</div>

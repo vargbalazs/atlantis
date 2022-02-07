@@ -1,0 +1,189 @@
+<div style="position: relative">
+  <kendo-grid
+    [kendoGridReactiveEditing]="createFormGroup"
+    [kendoGridBinding]="gridData.data"
+    [sortable]="true"
+    #grid
+  >
+    <kendo-grid-column
+      field="id"
+      title="ID"
+      [hidden]="true"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="salesProduct.capGroup.capType.capType"
+      title="Kap. típ."
+      [editable]="false"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="salesProduct.capGroup.capGroup"
+      title="Kap. csop."
+      [editable]="false"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="salesProduct.name"
+      title="Név"
+      [editable]="false"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="salesProduct.unit.unit"
+      title="Egys."
+      [editable]="false"
+    ></kendo-grid-column>
+    <kendo-grid-column-group title="Tény">
+      <kendo-grid-column
+        *ngFor="let actPeriod of actPeriods; index as i"
+        field="p{{ i + 1 }}"
+        title="{{ actPeriod }}"
+        format="{0:n0}"
+        [style]="{ 'text-align': 'right' }"
+        [headerStyle]="{ 'text-align': 'right' }"
+      >
+        <ng-template
+          kendoGridEditTemplate
+          let-column="column"
+          let-formGroup="formGroup"
+          let-rowIndex="rowIndex"
+        >
+          <kendo-numerictextbox
+            [spinners]="false"
+            format="n0"
+            #p="popupAnchor"
+            popupAnchor
+            [formControl]="formGroup.get(column.field)"
+            (valueChange)="periodValueChange($event, rowIndex, column.field)"
+          >
+          </kendo-numerictextbox>
+          <kendo-popup
+            [anchor]="$any(p.element)"
+            *ngIf="
+              formGroup.get(column.field).invalid &&
+              !formGroup.get(column.field).untouched
+            "
+            popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
+          >
+            Kötelező mező
+          </kendo-popup>
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid-column-group>
+    <kendo-grid-column-group title="PROVK">
+      <kendo-grid-column
+        *ngFor="let provkPeriod of provkPeriods; index as i"
+        field="p{{ i + 1 + actPeriodCount }}"
+        title="{{ provkPeriod }}"
+        format="{0:n0}"
+        [style]="{ 'text-align': 'right' }"
+        [headerStyle]="{ 'text-align': 'right' }"
+      >
+        <ng-template
+          kendoGridEditTemplate
+          let-column="column"
+          let-formGroup="formGroup"
+        >
+          <kendo-numerictextbox
+            [spinners]="false"
+            format="n0"
+            #p="popupAnchor"
+            popupAnchor
+            [formControl]="formGroup.get(column.field)"
+          >
+          </kendo-numerictextbox>
+          <kendo-popup
+            [anchor]="$any(p.element)"
+            *ngIf="
+              formGroup.get(column.field).invalid &&
+              !formGroup.get(column.field).untouched
+            "
+            popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
+          >
+            Kötelező mező
+          </kendo-popup>
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid-column-group>
+    <kendo-grid-column-group title="FRC">
+      <kendo-grid-column
+        *ngFor="let frcPeriod of frcPeriods; index as i"
+        field="p{{ i + 1 + actPeriodCount + provkPeriodCount }}"
+        title="{{ frcPeriod }}"
+        format="{0:n0}"
+        [style]="{ 'text-align': 'right' }"
+        [headerStyle]="{ 'text-align': 'right' }"
+      >
+        <ng-template
+          kendoGridEditTemplate
+          let-column="column"
+          let-formGroup="formGroup"
+        >
+          <kendo-numerictextbox
+            [spinners]="false"
+            format="n0"
+            #p="popupAnchor"
+            popupAnchor
+            [formControl]="formGroup.get(column.field)"
+          >
+          </kendo-numerictextbox>
+          <kendo-popup
+            [anchor]="$any(p.element)"
+            *ngIf="
+              formGroup.get(column.field).invalid &&
+              !formGroup.get(column.field).untouched
+            "
+            popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
+          >
+            Kötelező mező
+          </kendo-popup>
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid-column-group>
+    <kendo-grid-column
+      field="total"
+      title="Összesen"
+      [editable]="false"
+      [style]="{ 'text-align': 'right', 'font-weight': '700' }"
+    ></kendo-grid-column>
+    <kendo-grid-command-column [width]="70">
+      <ng-template
+        kendoGridCellTemplate
+        let-dataItem="dataItem"
+        let-rowIndex="rowIndex"
+      >
+        <kendo-icon
+          *ngIf="editing && rowIndex === editedRowIndex"
+          class="command-icon"
+          themeColor="primary"
+          name="save"
+          (click)="saveHandler({ sender: grid, rowIndex: rowIndex })"
+        ></kendo-icon>
+        <kendo-icon
+          *ngIf="!editing"
+          class="command-icon"
+          themeColor="primary"
+          name="edit"
+          (click)="
+            editHandler({
+              sender: grid,
+              rowIndex: rowIndex,
+              dataItem: dataItem
+            })
+          "
+        ></kendo-icon>
+        <kendo-icon
+          *ngIf="editing && rowIndex === editedRowIndex"
+          class="command-icon"
+          themeColor="secondary"
+          name="cancel"
+          (click)="cancelHandler({ sender: grid, rowIndex: rowIndex })"
+        ></kendo-icon>
+      </ng-template>
+    </kendo-grid-command-column>
+    <ng-template kendoGridNoRecordsTemplate>
+      Nincs megjelenítendő adat
+    </ng-template>
+  </kendo-grid>
+  <loading-overlay
+    [visible]="loadingOverlayVisible"
+    loadingText=""
+  ></loading-overlay>
+</div>

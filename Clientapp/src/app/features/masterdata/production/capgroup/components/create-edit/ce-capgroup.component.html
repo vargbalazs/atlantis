@@ -1,0 +1,210 @@
+<kendo-dialog *ngIf="active" [width]="300" [height]="600" (close)="closeForm()">
+  <kendo-dialog-titlebar class="x-bg-primary x-font">
+    {{ isNew ? "Új kapacitáscsoport" : "Szerkesztés" }}
+  </kendo-dialog-titlebar>
+  <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
+    <kendo-formfield>
+      <kendo-textbox hidden formControlName="id"></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-textbox
+        hidden
+        formControlName="companyId"
+        value="form.controls.company.value?.id"
+      ></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="company" text="Gazdasági egység"></kendo-label>
+      <kendo-combobox
+        #company
+        formControlName="company"
+        [data]="companies"
+        textField="name"
+        valueField="id"
+        [kendoDropDownFilter]="{ operator: 'contains' }"
+        (valueChange)="companyChange($event)"
+        class="x-combobox-sm"
+      >
+        <ng-template kendoComboBoxNoDataTemplate>
+          Nincs megjelenítendő adat
+        </ng-template>
+      </kendo-combobox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-textbox
+        hidden
+        formControlName="plantId"
+        value="form.controls.plant.value?.id"
+      ></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="plant" text="Gyár"></kendo-label>
+      <kendo-combobox
+        #plant
+        formControlName="plant"
+        [data]="filteredPlants"
+        textField="code"
+        valueField="id"
+        [kendoDropDownFilter]="{ operator: 'contains' }"
+        (valueChange)="plantChange($event)"
+        class="x-combobox-sm"
+      >
+        <ng-template kendoComboBoxNoDataTemplate>
+          Nincs megjelenítendő adat
+        </ng-template>
+      </kendo-combobox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-textbox
+        hidden
+        formControlName="capYear"
+        value="form.controls.capYearDate.value?.getFullYear()"
+      ></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="capYearDate" text="Év"></kendo-label>
+      <kendo-datepicker
+        #capYearDate
+        formControlName="capYearDate"
+        activeView="decade"
+        bottomView="decade"
+        format="yyyy"
+        [formatPlaceholder]="{
+          year: 'Év',
+          month: '',
+          day: '',
+          hour: '',
+          minute: '',
+          second: ''
+        }"
+        (valueChange)="yearChange($event)"
+        class="x-datepicker-sm"
+      >
+      </kendo-datepicker>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="capGroup" text="Kapacitáscsoport"></kendo-label>
+      <kendo-textbox
+        #capGroup
+        formControlName="capGroup"
+        class="x-textbox-sm"
+      ></kendo-textbox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-textbox
+        hidden
+        formControlName="capTypeId"
+        value="form.controls.capType.value?.id"
+      ></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="capType" text="Kapacitástípus"></kendo-label>
+      <kendo-combobox
+        #capType
+        formControlName="capType"
+        [data]="filteredCapTypes"
+        textField="capType"
+        valueField="id"
+        [kendoDropDownFilter]="{ operator: 'contains' }"
+        (valueChange)="capTypeChange($event)"
+        class="x-combobox-sm"
+      >
+        <ng-template kendoComboBoxNoDataTemplate>
+          Nincs megjelenítendő adat
+        </ng-template>
+      </kendo-combobox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="capName" text="Kapacitásnév"></kendo-label>
+      <kendo-textbox
+        #capName
+        formControlName="capName"
+        class="x-textbox-sm"
+      ></kendo-textbox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-textbox
+        hidden
+        formControlName="capUnitId"
+        value="form.controls.capUnit.value?.id"
+      ></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="capUnit" text="Kapacitásegység"></kendo-label>
+      <kendo-combobox
+        #capUnit
+        formControlName="capUnit"
+        [data]="filteredCapUnits"
+        textField="unit"
+        valueField="id"
+        [kendoDropDownFilter]="{ operator: 'contains' }"
+        (valueChange)="capUnitChange($event)"
+        class="x-combobox-sm"
+      >
+        <ng-template kendoComboBoxNoDataTemplate>
+          Nincs megjelenítendő adat
+        </ng-template>
+      </kendo-combobox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="invNr" text="Leltári szám"></kendo-label>
+      <kendo-textbox
+        #invNr
+        formControlName="invNr"
+        class="x-textbox-sm"
+      ></kendo-textbox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="normalCap" text="Normál éves kapacitás"></kendo-label>
+      <kendo-numerictextbox
+        #normalCap
+        formControlName="normalCap"
+        [spinners]="false"
+        class="x-numerictextbox-sm"
+      >
+      </kendo-numerictextbox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="fixRate" text="Fix egységdíj"></kendo-label>
+      <kendo-numerictextbox
+        #fixRate
+        formControlName="fixRate"
+        [spinners]="false"
+        class="x-numerictextbox-sm"
+      >
+      </kendo-numerictextbox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <!-- hidden submit button in order to get work the submit event on enter -->
+    <button type="submit" hidden></button>
+  </form>
+  <kendo-dialog-actions>
+    <button
+      type="button"
+      kendoButton
+      icon="cancel"
+      (click)="onCancel()"
+      class="x-btn-light click-light"
+    >
+      Mégsem
+    </button>
+    <button
+      type="submit"
+      kendoButton
+      icon="save"
+      class="x-btn-primary click-primary"
+      (click)="onSave()"
+    >
+      Mentés
+    </button>
+  </kendo-dialog-actions>
+</kendo-dialog>

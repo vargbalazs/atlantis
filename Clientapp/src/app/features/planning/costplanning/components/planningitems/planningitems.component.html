@@ -1,0 +1,178 @@
+<div class="component-header">Költségtervezés</div>
+<div class="grid">
+  <kendo-grid
+    [kendoGridBinding]="gridData.data"
+    [sortable]="true"
+    [groupable]="true"
+    [resizable]="true"
+    (add)="addHandler()"
+    [group]="groups"
+    (cellClick)="onCellClick($event)"
+    #grid
+  >
+    <ng-template kendoGridToolbarTemplate>
+      <button
+        kendoButton
+        class="x-btn-primary click-primary"
+        icon="filter"
+        (click)="showFilterForm()"
+      >
+        Költséghely választás
+      </button>
+      <button
+        kendoGridAddCommand
+        class="x-btn-primary click-primary"
+        icon="file"
+        *ngIf="filtered"
+      >
+        Új
+      </button>
+      <button
+        kendoGridExcelCommand
+        class="x-btn-primary click-primary"
+        icon="excel"
+        *ngIf="filtered"
+      ></button>
+    </ng-template>
+    <kendo-grid-column
+      field="id"
+      title="ID"
+      [hidden]="true"
+      [width]="1"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="costGroup.name"
+      title="Költségcsoport"
+      [width]="65"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="costAccount.accountNumber"
+      title="Főkönyvi szám"
+      [width]="65"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="costAccount.name"
+      title="Megnevezés"
+      [width]="65"
+    ></kendo-grid-column>
+    <kendo-grid-column field="itemName" title="Tervtétel" [width]="65">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <div class="item-name-container">
+          <span>{{ dataItem.itemName }}</span>
+          <div class="badge comment" *ngIf="dataItem.comment">
+            <span>C</span>
+          </div>
+          <div class="badge task" *ngIf="dataItem.task">
+            <span>T</span>
+          </div>
+        </div>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="amountInCurrency"
+      title="Összeg id. pnem-ben"
+      format="{0:n0}"
+      [style]="{ 'text-align': 'right' }"
+      [width]="65"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="currency.isoCode"
+      title="Pénznem"
+      [width]="65"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="amount"
+      title="Összeg váll. pnem-ben"
+      format="{0:n0}"
+      [style]="{ 'text-align': 'right' }"
+      [width]="65"
+    >
+      <ng-template
+        kendoGridGroupFooterTemplate
+        let-group="group"
+        let-aggregates
+      >
+        <span style="display: flex; justify-content: end">{{
+          aggregates.amount.sum | number: "1.0-0"
+        }}</span>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="distribution" title="Elosztás" [width]="65">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{ dataItem.distribution ? "Egyéni" : "Egyenlő" }}
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      *ngFor="let period of periods; index as i"
+      field="p{{ i + 1 }}"
+      title="{{ i + 1 }}"
+      format="{0:n0}"
+      [style]="{ 'text-align': 'right' }"
+      [headerStyle]="{ 'text-align': 'right' }"
+      [width]="65"
+    >
+    </kendo-grid-column>
+    <kendo-grid-command-column [width]="70">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <kendo-icon
+          class="command-icon"
+          themeColor="primary"
+          name="edit"
+          (click)="editHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+        <kendo-icon
+          class="command-icon"
+          themeColor="secondary"
+          name="delete"
+          (click)="removeHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+      </ng-template>
+    </kendo-grid-command-column>
+    <ng-template kendoGridNoRecordsTemplate>
+      Nincs megjelenítendő adat
+    </ng-template>
+    <kendo-grid-excel
+      fileName="Items.xlsx"
+      [collapsible]="true"
+    ></kendo-grid-excel>
+  </kendo-grid>
+</div>
+<filter
+  [model]="filterEntity"
+  [planning]="true"
+  (save)="saveFilterForm($event)"
+  (cancel)="cancelFilterForm()"
+></filter>
+<ce-planningitem
+  [model]="editDataItem"
+  [isNew]="isNew"
+  [costAccounts]="costAccounts"
+  [filterEntity]="filterEntityInput"
+  (save)="saveHandler($event)"
+  (cancel)="cancelHandler()"
+></ce-planningitem>
+<ce-task
+  [model]="task"
+  [isNew]="isNew"
+  (save)="saveTaskForm($event)"
+  (cancel)="cancelTaskForm()"
+  (taskDone)="taskDone($event)"
+></ce-task>
+<div
+  class="x-dialog-container"
+  confirmdialog-style
+  [isMsgDialog]="isMsgDialog"
+  [dialogType]="dialogType"
+>
+  <div kendoDialogContainer></div>
+</div>
+<loading-overlay
+  [visible]="loadingOverlayVisible"
+  loadingText=""
+></loading-overlay>
+<kendo-contextmenu
+  #gridmenu
+  [items]="contextMenuItems"
+  (select)="onContextMenuItemSelect($event)"
+>
+</kendo-contextmenu>

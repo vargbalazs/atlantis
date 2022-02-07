@@ -1,0 +1,136 @@
+<div class="component-header">Költségnemek</div>
+<div class="grid">
+  <kendo-grid
+    [kendoGridBinding]="gridData.data"
+    [filterable]="true"
+    [sortable]="true"
+    (add)="addHandler()"
+  >
+    <ng-template kendoGridToolbarTemplate>
+      <button
+        kendoGridAddCommand
+        class="x-btn-primary click-primary"
+        icon="file"
+      >
+        Új
+      </button>
+      <kendo-grid-spacer width="1px"></kendo-grid-spacer>
+      <button
+        kendoButton
+        icon="copy"
+        (click)="showCopyForm()"
+        class="x-btn-light-primary x-text-primary click-primary"
+      >
+        Másolás
+      </button>
+    </ng-template>
+    <kendo-grid-column
+      [hidden]="true"
+      field="id"
+      title="ID"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="accountNumber"
+      title="Főkönyvi szám"
+    ></kendo-grid-column>
+    <kendo-grid-column field="name" title="Megnevezés"></kendo-grid-column>
+    <kendo-grid-column
+      field="fixRate"
+      title="Fix"
+      format="p2"
+      filter="numeric"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="varRate"
+      title="Változó"
+      format="p2"
+      filter="numeric"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="usedForPersPlanning"
+      title="Létszámterv. haszn."
+      filter="boolean"
+    >
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <div style="text-align: center">
+          <input
+            type="checkbox"
+            disabled
+            [checked]="dataItem.usedForPersPlanning"
+          />
+        </div>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="year" title="Év" filter="numeric" format="d">
+      <!-- <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+        <kendo-grid-date-filter-cell
+          [showOperators]="false"
+          [column]="column"
+          [filter]="filter"
+          activeView="decade"
+          bottomView="decade"
+          format="yyyy"
+          [formatPlaceholder]="{
+            year: ' ',
+            month: '',
+            day: '',
+            hour: '',
+            minute: '',
+            second: ''
+          }"
+        >
+        </kendo-grid-date-filter-cell>
+      </ng-template> -->
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="costGroup.name"
+      title="Költségcsoport"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="company.name"
+      title="Gazdasági egység"
+    ></kendo-grid-column>
+    <kendo-grid-command-column [width]="70">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <kendo-icon
+          class="command-icon"
+          themeColor="primary"
+          name="edit"
+          (click)="editHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+        <kendo-icon
+          class="command-icon"
+          themeColor="secondary"
+          name="delete"
+          (click)="removeHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+      </ng-template>
+    </kendo-grid-command-column>
+    <ng-template kendoGridNoRecordsTemplate>
+      Nincs megjelenítendő adat
+    </ng-template>
+  </kendo-grid>
+</div>
+<ce-costaccount
+  [model]="editDataItem"
+  [isNew]="isNew"
+  (save)="saveHandler($event)"
+  (cancel)="cancelHandler()"
+></ce-costaccount>
+<copy-entity
+  [model]="copyCostAccount"
+  (save)="saveHandlerCopyCostAccount($event)"
+  (cancel)="cancelHandlerCopyCostAccount()"
+></copy-entity>
+<div
+  class="x-dialog-container"
+  confirmdialog-style
+  [isMsgDialog]="isMsgDialog"
+  [dialogType]="dialogType"
+>
+  <div kendoDialogContainer></div>
+</div>
+<loading-overlay
+  [visible]="loadingOverlayVisible"
+  loadingText=""
+></loading-overlay>

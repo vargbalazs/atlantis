@@ -1,0 +1,54 @@
+<kendo-appbar position="top" positionsMode="sticky">
+  <kendo-appbar-section>
+    <button
+      kendoButton
+      icon="menu"
+      (click)="onDrawerToggleBtnClick()"
+      class="appbar-btn"
+    ></button>
+    <kendo-appbar-spacer width="1rem"></kendo-appbar-spacer>
+    <span class="app-title">Atlantis</span>
+  </kendo-appbar-section>
+  <kendo-appbar-spacer width="2rem"></kendo-appbar-spacer>
+  <kendo-appbar-section>
+    <kendo-textbox
+      placeholder="Keresés..."
+      (valueChange)="onSearchBoxValueChange($event)"
+      #searchBox
+    >
+      <ng-template kendoTextBoxPrefixTemplate>
+        <kendo-icon name="search"></kendo-icon>
+      </ng-template>
+    </kendo-textbox>
+  </kendo-appbar-section>
+  <kendo-appbar-spacer width="2rem"></kendo-appbar-spacer>
+  <kendo-appbar-spacer></kendo-appbar-spacer>
+  <kendo-appbar-section>
+    <button
+      kendoButton
+      icon="home"
+      (click)="goToHome()"
+      class="appbar-btn"
+    ></button>
+    <button
+      kendoButton
+      icon="user"
+      #popupAnchor
+      (click)="togglePopup()"
+      class="appbar-btn"
+    ></button>
+    <kendo-popup
+      [anchor]="$any(popupAnchor)"
+      *ngIf="showPopup"
+      [animate]="animateSettings"
+      [anchorAlign]="anchorAlign"
+      [popupAlign]="popupAlign"
+      [margin]="margin"
+      class="user-popup"
+      #popup
+    >
+      <user-menu></user-menu>
+    </kendo-popup>
+    <button kendoButton icon="info" class="appbar-btn"></button>
+  </kendo-appbar-section>
+</kendo-appbar>

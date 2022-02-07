@@ -1,0 +1,74 @@
+<div class="card">
+  <kendo-card width="320px">
+    <loading-overlay
+      [visible]="loadingOverlayVisible"
+      loadingText=""
+    ></loading-overlay>
+    <h2>Bejelentkezés</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+      <kendo-formfield>
+        <kendo-textbox placeholder="E-mail cím" formControlName="email">
+          <ng-template kendoTextBoxPrefixTemplate>
+            <div class="x-input-prefix">
+              <kendo-icon name="user"></kendo-icon>
+            </div>
+          </ng-template>
+        </kendo-textbox>
+        <kendo-formerror *ngIf="loginForm.controls.email.errors?.required"
+          >Kötelező mező</kendo-formerror
+        >
+        <kendo-formerror *ngIf="loginForm.controls.email.errors?.email"
+          >Hibás e-mail formátum</kendo-formerror
+        >
+      </kendo-formfield>
+      <kendo-formfield>
+        <kendo-textbox
+          placeholder="Jelszó"
+          #tbxPassword
+          formControlName="password"
+        >
+          <ng-template kendoTextBoxPrefixTemplate>
+            <div class="x-input-prefix">
+              <kendo-icon name="lock"></kendo-icon>
+            </div>
+          </ng-template>
+          <ng-template kendoTextBoxSuffixTemplate *ngIf="tbxPassword.value">
+            <!-- <button
+              tabindex="-1"
+              type="button"
+              kendoButton
+              icon="eye"
+              (click)="togglePass()"
+            ></button> -->
+            <span class="k-icon k-i-eye eye-icon" (click)="togglePass()"></span>
+          </ng-template>
+        </kendo-textbox>
+        <kendo-formerror>Kötelező mező</kendo-formerror>
+      </kendo-formfield>
+      <div class="remember-me">
+        <input type="checkbox" #rememberMe kendoCheckBox />
+        <kendo-label
+          class="k-checkbox-label"
+          [for]="rememberMe"
+          text="Jegyezd meg"
+        ></kendo-label>
+      </div>
+      <button type="submit" kendoButton class="btn x-btn-primary click-primary">
+        BEJELENTKEZÉS
+      </button>
+      <a class="link" href="#" (click)="showForgotPwdForm()"
+        >Elfelejtettem a jelszót</a
+      >
+      <button
+        type="button"
+        kendoButton
+        class="btn x-btn-outline-primary"
+        click-primary
+        (click)="showCreateAccountForm()"
+      >
+        REGISZTRÁCIÓ
+      </button>
+    </form>
+  </kendo-card>
+  <lang-selector></lang-selector>
+</div>

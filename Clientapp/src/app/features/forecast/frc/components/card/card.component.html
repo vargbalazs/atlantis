@@ -1,0 +1,70 @@
+<kendo-card
+  width="230px"
+  *ngFor="let frc of frcs"
+  (mouseover)="cardOverOut(frc)"
+  (mouseout)="cardOverOut(frc)"
+>
+  <div class="top-bar" [ngClass]="{ hovered: frc.hovered }"></div>
+  <kendo-card-header class="k-hstack space-between">
+    <div>
+      <h1 kendoCardTitle>FRC</h1>
+      <p kendoCardSubtitle>{{ frc.company!.shortName! }}</p>
+    </div>
+    <div class="version">{{ frc.year }} / {{ frc.version }}</div>
+  </kendo-card-header>
+  <kendo-card-body>
+    <table>
+      <tr>
+        <td style="padding-right: 8.8rem">Gyár</td>
+        <td class="td-data">{{ frc.plant?.code }}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td class="td-data"></td>
+      </tr>
+      <tr>
+        <td>VA</td>
+        <td class="td-data">{{ frc.va }}</td>
+      </tr>
+      <tr>
+        <td>BA</td>
+        <td class="td-data">{{ frc.ba }}</td>
+      </tr>
+      <tr>
+        <td>EBIT</td>
+        <td class="td-data">{{ frc.va! + frc.ba! }}</td>
+      </tr>
+    </table>
+  </kendo-card-body>
+  <hr
+    kendoCardSeparator
+    [ngClass]="{
+      'actions-visible': frc.hovered,
+      'actions-hidden': !frc.hovered
+    }"
+  />
+  <kendo-card-actions
+    orientation="horizontal"
+    layout="start"
+    [ngClass]="{
+      'actions-visible': frc.hovered,
+      'actions-hidden': !frc.hovered
+    }"
+  >
+    <button kendoButton icon="edit" look="flat" (click)="editFrc(frc)"></button>
+    <button
+      kendoButton
+      icon="delete"
+      look="flat"
+      (click)="deleteFrc(frc)"
+    ></button>
+    <button
+      kendoButton
+      class="x-btn-light-primary x-text-primary click-primary x-flat"
+      (click)="onShowFrcClick(frc)"
+    >
+      <span class="k-icon k-i-more-vertical"></span>
+      Részletek
+    </button>
+  </kendo-card-actions>
+</kendo-card>

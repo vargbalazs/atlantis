@@ -1,0 +1,229 @@
+<kendo-dialog
+  *ngIf="showAllocationDetailsDialog"
+  [width]="800"
+  [height]="600"
+  (close)="closeForm()"
+>
+  <kendo-dialog-titlebar class="x-bg-primary x-font"
+    >Terhelendő költséghelyek</kendo-dialog-titlebar
+  >
+  <kendo-grid
+    [kendoGridReactiveEditing]="createFormGroup"
+    [kendoGridBinding]="costAllocationDetails"
+    #grid
+  >
+    <ng-template kendoGridToolbarTemplate>
+      <button kendoGridAddCommand class="x-btn-primary click-primary">
+        Új tétel
+      </button>
+    </ng-template>
+    <kendo-grid-column
+      field="id"
+      title="ID"
+      [hidden]="true"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="index"
+      title="index"
+      [hidden]="true"
+    ></kendo-grid-column>
+    <kendo-grid-column field="recCostCenterId" title="Költséghely">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{ getCostCenter(dataItem.recCostCenterId)?.code }}
+      </ng-template>
+      <ng-template
+        kendoGridEditTemplate
+        let-column="column"
+        let-formGroup="formGroup"
+        let-isNew="isNew"
+      >
+        <kendo-multicolumncombobox
+          #recCostCenter="popupAnchor"
+          popupAnchor
+          [data]="recCostCenters"
+          textField="code"
+          valueField="id"
+          [valuePrimitive]="true"
+          [formControl]="formGroup.get('recCostCenterId')"
+          (valueChange)="recCostCenterChange($event)"
+        >
+          <kendo-combobox-column field="code" title="Költséghely" [width]="100">
+          </kendo-combobox-column>
+          <kendo-combobox-column field="name" title="Megnevezés" [width]="200">
+          </kendo-combobox-column>
+        </kendo-multicolumncombobox>
+        <kendo-popup
+          [anchor]="$any(recCostCenter.element)"
+          *ngIf="
+            formGroup.get(column.field).invalid &&
+            !(isNew && formGroup.get(column.field).untouched)
+          "
+          popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
+        >
+          Kötelező mező
+        </kendo-popup>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="recCostCenterName"
+      title="Megnevezés"
+      [editable]="false"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="capacity"
+      title="Teljesítmény"
+      editor="numeric"
+      [editable]="costAllocation.allocCapacity!"
+      [style]="{ 'text-align': 'right' }"
+      [footerStyle]="{ 'text-align': 'right' }"
+      format="{0:n2}"
+    >
+      <ng-template
+        kendoGridEditTemplate
+        let-column="column"
+        let-formGroup="formGroup"
+        let-isNew="isNew"
+      >
+        <kendo-numerictextbox
+          #capacity="popupAnchor"
+          popupAnchor
+          [formControl]="formGroup.get('capacity')"
+          (valueChange)="capacityChange($event)"
+        >
+        </kendo-numerictextbox>
+        <kendo-popup
+          [anchor]="$any(capacity.element)"
+          *ngIf="
+            formGroup.get(column.field).invalid &&
+            !(isNew && formGroup.get(column.field).untouched)
+          "
+          popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
+        >
+          Kötelező mező
+        </kendo-popup>
+      </ng-template>
+      <ng-template
+        kendoGridFooterTemplate
+        *ngIf="costAllocation.allocCapacity!"
+      >
+        Összesen: {{ sumCapacity | number: "1.2-2" }} Felosztandó:
+        {{ costAllocation.totalCapacity | number: "1.2-2" }}
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="percent"
+      title="Százalék"
+      [editable]="!costAllocation.allocCapacity!"
+      [style]="{ 'text-align': 'right' }"
+      [footerStyle]="{ 'text-align': 'right' }"
+      format="{0:n2}"
+    >
+      <ng-template
+        kendoGridEditTemplate
+        let-column="column"
+        let-formGroup="formGroup"
+        let-isNew="isNew"
+      >
+        <kendo-numerictextbox
+          #percent="popupAnchor"
+          popupAnchor
+          [formControl]="formGroup.get('percent')"
+        >
+        </kendo-numerictextbox>
+        <kendo-popup
+          [anchor]="$any(percent.element)"
+          *ngIf="
+            formGroup.get(column.field).invalid &&
+            !(isNew && formGroup.get(column.field).untouched)
+          "
+          popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
+        >
+          Kötelező mező
+        </kendo-popup>
+      </ng-template>
+      <ng-template kendoGridFooterTemplate>
+        Összesen: {{ sumPercent | number: "1.2-2" }}
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-command-column [width]="90">
+      <ng-template
+        kendoGridCellTemplate
+        let-dataItem="dataItem"
+        let-isNew="isNew"
+        let-rowIndex="rowIndex"
+      >
+        <kendo-icon
+          *ngIf="isNew || (editing && rowIndex === editedRowIndex)"
+          class="command-icon"
+          themeColor="primary"
+          name="save"
+          (click)="
+            saveHandler({ sender: grid, rowIndex: rowIndex, isNew: isNew })
+          "
+        ></kendo-icon>
+        <kendo-icon
+          *ngIf="!isNew && !editing"
+          class="command-icon"
+          themeColor="primary"
+          name="edit"
+          (click)="
+            editHandler({
+              sender: grid,
+              rowIndex: rowIndex,
+              dataItem: dataItem
+            })
+          "
+        ></kendo-icon>
+        <kendo-icon
+          *ngIf="!isNew && !editing"
+          class="command-icon"
+          themeColor="secondary"
+          name="delete"
+          (click)="removeHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+        <kendo-icon
+          *ngIf="isNew || (editing && rowIndex === editedRowIndex)"
+          class="command-icon"
+          themeColor="secondary"
+          name="cancel"
+          (click)="cancelHandler({ sender: grid, rowIndex: rowIndex })"
+        ></kendo-icon>
+      </ng-template>
+    </kendo-grid-command-column>
+    <ng-template kendoGridNoRecordsTemplate>
+      Nincs megjelenítendő adat
+    </ng-template>
+  </kendo-grid>
+  <kendo-dialog-actions layout="normal">
+    <button
+      type="button"
+      kendoButton
+      icon="cancel"
+      (click)="closeForm()"
+      class="x-btn-light click-light"
+    >
+      Mégsem
+    </button>
+    <button
+      type="submit"
+      kendoButton
+      icon="save"
+      class="x-btn-primary click-primary"
+      (click)="onSave()"
+    >
+      Mentés
+    </button>
+    <loading-overlay
+      [visible]="loadingOverlayVisible"
+      loadingText=""
+    ></loading-overlay>
+  </kendo-dialog-actions>
+</kendo-dialog>
+<div
+  class="x-dialog-container"
+  confirmdialog-style
+  [isMsgDialog]="isMsgDialog"
+  [dialogType]="dialogType"
+>
+  <div kendoDialogContainer></div>
+</div>

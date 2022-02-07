@@ -1,0 +1,107 @@
+<div class="component-header">Költséghelyek</div>
+<div class="grid">
+  <kendo-grid
+    [kendoGridBinding]="gridData.data"
+    [filterable]="true"
+    [sortable]="true"
+    (add)="addHandler()"
+  >
+    <ng-template kendoGridToolbarTemplate>
+      <button
+        kendoGridAddCommand
+        class="x-btn-primary click-primary"
+        icon="file"
+      >
+        Új
+      </button>
+      <kendo-grid-spacer width="1px"></kendo-grid-spacer>
+      <button
+        kendoButton
+        class="x-btn-light-primary x-text-primary click-primary"
+        icon="copy"
+        (click)="showCopyForm()"
+      >
+        Másolás
+      </button>
+    </ng-template>
+    <kendo-grid-column
+      [hidden]="true"
+      field="id"
+      title="ID"
+    ></kendo-grid-column>
+    <kendo-grid-column field="code" title="Költséghely"></kendo-grid-column>
+    <kendo-grid-column field="name" title="Megnevezés"></kendo-grid-column>
+    <kendo-grid-column field="year" title="Év" format="d" filter="numeric">
+      <!-- <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+        <kendo-grid-date-filter-cell
+          [showOperators]="false"
+          [column]="column"
+          [filter]="filter"
+          activeView="decade"
+          bottomView="decade"
+          format="yyyy"
+          [formatPlaceholder]="{
+            year: ' ',
+            month: '',
+            day: '',
+            hour: '',
+            minute: '',
+            second: ''
+          }"
+        >
+        </kendo-grid-date-filter-cell>
+      </ng-template> -->
+    </kendo-grid-column>
+    <kendo-grid-column field="plant.code" title="Gyár"></kendo-grid-column>
+    <kendo-grid-column
+      field="plantArea.code"
+      title="Gyáregység"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="company.name"
+      title="Gazdasági egység"
+    ></kendo-grid-column>
+    <kendo-grid-command-column [width]="70">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <kendo-icon
+          class="command-icon"
+          themeColor="primary"
+          name="edit"
+          (click)="editHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+        <kendo-icon
+          class="command-icon"
+          themeColor="secondary"
+          name="delete"
+          (click)="removeHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+      </ng-template>
+    </kendo-grid-command-column>
+    <ng-template kendoGridNoRecordsTemplate>
+      Nincs megjelenítendő adat
+    </ng-template>
+  </kendo-grid>
+</div>
+<ce-costcenter
+  [model]="editDataItem"
+  [isNew]="isNew"
+  (save)="saveHandler($event)"
+  (cancel)="cancelHandler()"
+></ce-costcenter>
+<copy-entity
+  [model]="copyCostCenter"
+  (save)="saveHandlerCopyCostCenter($event)"
+  (cancel)="cancelHandlerCopyCostCenter()"
+></copy-entity>
+<div
+  class="x-dialog-container"
+  confirmdialog-style
+  [isMsgDialog]="isMsgDialog"
+  [dialogType]="dialogType"
+>
+  <div kendoDialogContainer></div>
+</div>
+<loading-overlay
+  [visible]="loadingOverlayVisible"
+  loadingText=""
+></loading-overlay>

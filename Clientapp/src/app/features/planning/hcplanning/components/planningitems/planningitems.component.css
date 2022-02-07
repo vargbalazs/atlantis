@@ -1,0 +1,26 @@
+.item-name-container {
+  display: flex;
+}
+
+.badge {
+  margin-left: 0.5rem;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.comment {
+  background-color: #3e80ed;
+}
+
+.task {
+  background-color: #fdce3e;
+}
+
+.cost-assigned {
+  background-color: green;
+}

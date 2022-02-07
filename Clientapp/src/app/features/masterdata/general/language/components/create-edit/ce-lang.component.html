@@ -1,0 +1,59 @@
+<kendo-dialog *ngIf="active" [width]="300" [height]="450" (close)="closeForm()">
+  <kendo-dialog-titlebar class="x-bg-primary x-font">
+    {{ isNew ? "Új nyelv" : "Szerkesztés" }}
+  </kendo-dialog-titlebar>
+  <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
+    <kendo-formfield>
+      <kendo-textbox hidden formControlName="id"></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="isoCode" text="ISO kód"></kendo-label>
+      <kendo-textbox #isoCode formControlName="isoCode" class="x-textbox-sm">
+      </kendo-textbox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="name" text="Nyelv"></kendo-label>
+      <kendo-textbox #name formControlName="name" class="x-textbox-sm">
+      </kendo-textbox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <div class="k-checkbox-wrap">
+        <input
+          type="checkbox"
+          #defaultLang
+          formControlName="defaultLang"
+          kendoCheckBox
+        />
+        <kendo-label
+          class="k-checkbox-label"
+          [for]="defaultLang"
+          text="Alapértelmezett"
+        ></kendo-label>
+      </div>
+    </kendo-formfield>
+    <!-- hidden submit button in order to get work the submit event on enter -->
+    <button type="submit" hidden></button>
+  </form>
+  <kendo-dialog-actions>
+    <button
+      type="button"
+      kendoButton
+      icon="cancel"
+      (click)="onCancel()"
+      class="x-btn-light click-light"
+    >
+      Mégsem
+    </button>
+    <button
+      type="submit"
+      kendoButton
+      icon="save"
+      class="x-btn-primary click-primary"
+      (click)="onSave()"
+    >
+      Mentés
+    </button>
+  </kendo-dialog-actions>
+</kendo-dialog>

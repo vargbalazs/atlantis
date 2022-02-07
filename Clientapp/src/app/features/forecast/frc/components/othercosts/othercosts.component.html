@@ -1,0 +1,220 @@
+<div style="position: relative">
+  <kendo-grid
+    [kendoGridReactiveEditing]="createFormGroup"
+    [kendoGridBinding]="gridData.data"
+    [sortable]="true"
+    #grid
+  >
+    <ng-template kendoGridToolbarTemplate>
+      <button kendoGridAddCommand class="x-btn-primary click-primary">
+        Új tétel
+      </button>
+    </ng-template>
+    <kendo-grid-column
+      field="id"
+      title="ID"
+      [hidden]="true"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="costAccId"
+      title="Főkönyvi szám"
+      [editable]="true"
+      [autoSize]="true"
+    >
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{ getCostAccount(dataItem.costAccId)?.accountNumber }}
+      </ng-template>
+      <ng-template
+        kendoGridEditTemplate
+        let-column="column"
+        let-formGroup="formGroup"
+        let-isNew="isNew"
+      >
+        <kendo-multicolumncombobox
+          #costAccount="popupAnchor"
+          popupAnchor
+          [data]="costAccounts"
+          textField="accountNumber"
+          valueField="id"
+          [valuePrimitive]="true"
+          [formControl]="formGroup.get('costAccId')"
+          [kendoDropDownFilter]="{
+            operator: 'contains',
+            fields: ['accountNumber', 'name']
+          }"
+          (valueChange)="costAccountChange($event)"
+        >
+          <kendo-combobox-column
+            field="accountNumber"
+            title="Főkönyvi szám"
+            [width]="100"
+          >
+          </kendo-combobox-column>
+          <kendo-combobox-column field="name" title="Megnevezés" [width]="200">
+          </kendo-combobox-column>
+        </kendo-multicolumncombobox>
+        <kendo-popup
+          [anchor]="$any(costAccount.element)"
+          *ngIf="
+            formGroup.get(column.field).invalid &&
+            !(isNew && formGroup.get(column.field).untouched)
+          "
+          popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
+        >
+          Kötelező mező
+        </kendo-popup>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="costAccName"
+      title="Megnevezés"
+      [editable]="false"
+    ></kendo-grid-column>
+    <kendo-grid-column field="costEffect" title="Tétel" [editable]="true">
+      <ng-template
+        kendoGridEditTemplate
+        let-column="column"
+        let-formGroup="formGroup"
+        let-isNew="isNew"
+      >
+        <kendo-textbox
+          #costEffect="popupAnchor"
+          popupAnchor
+          [formControl]="formGroup.get('costEffect')"
+        ></kendo-textbox>
+        <kendo-popup
+          [anchor]="$any(costEffect.element)"
+          *ngIf="
+            formGroup.get(column.field).invalid &&
+            !(isNew && formGroup.get(column.field).untouched)
+          "
+          popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
+        >
+          Kötelező mező
+        </kendo-popup>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="costCenterId"
+      title="Költséghely"
+      [editable]="true"
+      [autoSize]="true"
+    >
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{ getCostCenter(dataItem.costCenterId)?.code }}
+      </ng-template>
+      <ng-template
+        kendoGridEditTemplate
+        let-column="column"
+        let-formGroup="formGroup"
+        let-isNew="isNew"
+      >
+        <kendo-multicolumncombobox
+          #costCenter="popupAnchor"
+          popupAnchor
+          [data]="costCenters"
+          textField="code"
+          valueField="id"
+          [valuePrimitive]="true"
+          [formControl]="formGroup.get('costCenterId')"
+          (valueChange)="costCenterChange($event)"
+        >
+          <kendo-combobox-column field="code" title="Költséghely" [width]="100">
+          </kendo-combobox-column>
+          <kendo-combobox-column field="name" title="Megnevezés" [width]="200">
+          </kendo-combobox-column>
+        </kendo-multicolumncombobox>
+        <kendo-popup
+          [anchor]="$any(costCenter.element)"
+          *ngIf="
+            formGroup.get(column.field).invalid &&
+            !(isNew && formGroup.get(column.field).untouched)
+          "
+          popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
+        >
+          Kötelező mező
+        </kendo-popup>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      *ngFor="let period of periods; index as i"
+      field="p{{ i + 1 }}"
+      title="{{ period }}"
+      format="{0:n0}"
+      [style]="{ 'text-align': 'right' }"
+      [headerStyle]="{ 'text-align': 'right' }"
+    >
+      <ng-template
+        kendoGridEditTemplate
+        let-column="column"
+        let-formGroup="formGroup"
+        let-rowIndex="rowIndex"
+        let-isNew="isNew"
+      >
+        <kendo-numerictextbox
+          [spinners]="false"
+          format="n0"
+          #p="popupAnchor"
+          popupAnchor
+          [formControl]="formGroup.get(column.field)"
+        >
+        </kendo-numerictextbox>
+        <kendo-popup
+          [anchor]="$any(p.element)"
+          *ngIf="
+            formGroup.get(column.field).invalid &&
+            !(isNew && formGroup.get(column.field).untouched)
+          "
+          popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
+        >
+          Kötelező mező
+        </kendo-popup>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-command-column [width]="70">
+      <ng-template
+        kendoGridCellTemplate
+        let-dataItem="dataItem"
+        let-rowIndex="rowIndex"
+        let-isNew="isNew"
+      >
+        <kendo-icon
+          *ngIf="isNew || (editing && rowIndex === editedRowIndex)"
+          class="command-icon"
+          themeColor="primary"
+          name="save"
+          (click)="
+            saveHandler({ sender: grid, rowIndex: rowIndex, isNew: isNew })
+          "
+        ></kendo-icon>
+        <kendo-icon
+          *ngIf="!isNew && !editing"
+          class="command-icon"
+          themeColor="primary"
+          name="edit"
+          (click)="
+            editHandler({
+              sender: grid,
+              rowIndex: rowIndex,
+              dataItem: dataItem
+            })
+          "
+        ></kendo-icon>
+        <kendo-icon
+          *ngIf="isNew || (editing && rowIndex === editedRowIndex)"
+          class="command-icon"
+          themeColor="secondary"
+          name="cancel"
+          (click)="cancelHandler({ sender: grid, rowIndex: rowIndex })"
+        ></kendo-icon>
+      </ng-template>
+    </kendo-grid-command-column>
+    <ng-template kendoGridNoRecordsTemplate>
+      Nincs megjelenítendő adat
+    </ng-template>
+  </kendo-grid>
+  <loading-overlay
+    [visible]="loadingOverlayVisible"
+    loadingText=""
+  ></loading-overlay>
+</div>

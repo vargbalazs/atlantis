@@ -1,0 +1,14 @@
+a {
+  color: #00b0ff;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+img {
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+.container {
+  margin-top: 2rem;
+}

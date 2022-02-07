@@ -1,0 +1,141 @@
+<kendo-dialog
+  *ngIf="formVisible"
+  [width]="300"
+  [height]="520"
+  (close)="closeForm()"
+>
+  <kendo-dialog-titlebar class="x-bg-primary x-font"
+    >Másolás</kendo-dialog-titlebar
+  >
+  <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
+    <kendo-formfield>
+      <kendo-textbox
+        hidden
+        formControlName="companyId"
+        value="form.controls.company.value?.id"
+      ></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="company" text="Gazdasági egység"></kendo-label>
+      <kendo-combobox
+        #company
+        formControlName="company"
+        [data]="companies"
+        textField="name"
+        valueField="id"
+        [kendoDropDownFilter]="{ operator: 'contains' }"
+        (valueChange)="companyChange($event)"
+        class="x-combobox-sm"
+      >
+        <ng-template kendoComboBoxNoDataTemplate>
+          Nincs megjelenítendő adat
+        </ng-template>
+      </kendo-combobox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-textbox
+        hidden
+        formControlName="plantId"
+        value="form.controls.plant.value?.id"
+      ></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="plant" text="Gyár"></kendo-label>
+      <kendo-combobox
+        #plant
+        formControlName="plant"
+        [data]="filteredPlants"
+        textField="code"
+        valueField="id"
+        [kendoDropDownFilter]="{ operator: 'contains' }"
+        (valueChange)="plantChange($event)"
+        class="x-combobox-sm"
+      >
+        <ng-template kendoComboBoxNoDataTemplate>
+          Nincs megjelenítendő adat
+        </ng-template>
+      </kendo-combobox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label
+        [for]="sourceYear"
+        text="Másolás ebből az évből"
+      ></kendo-label>
+      <kendo-datepicker
+        #sourceYear
+        formControlName="sourceYear"
+        activeView="decade"
+        bottomView="decade"
+        format="yyyy"
+        [formatPlaceholder]="{
+          year: 'Forrásév',
+          month: '',
+          day: '',
+          hour: '',
+          minute: '',
+          second: ''
+        }"
+        class="x-datepicker-sm"
+      >
+      </kendo-datepicker>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="targetYear" text="Másolás ebbe az évbe"></kendo-label>
+      <kendo-datepicker
+        #targetYear
+        formControlName="targetYear"
+        activeView="decade"
+        bottomView="decade"
+        format="yyyy"
+        [formatPlaceholder]="{
+          year: 'Célév',
+          month: '',
+          day: '',
+          hour: '',
+          minute: '',
+          second: ''
+        }"
+        class="x-datepicker-sm"
+      >
+      </kendo-datepicker>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <!-- hidden submit button in order to get work the submit event on enter -->
+    <button type="submit" hidden></button>
+    <div class="info x-font">
+      Másolás csak akkor lehetséges, ha a cél évben az adott gyár alatt még egy
+      másolandó objektum sem lett létrehozva.
+    </div>
+  </form>
+  <kendo-dialog-actions>
+    <button
+      type="button"
+      kendoButton
+      icon="cancel"
+      (click)="onCancel()"
+      class="x-btn-light click-light"
+    >
+      Mégsem
+    </button>
+    <button
+      type="submit"
+      kendoButton
+      icon="save"
+      class="x-btn-primary click-primary"
+      (click)="onSave()"
+    >
+      Másolás
+    </button>
+  </kendo-dialog-actions>
+</kendo-dialog>
+<div
+  class="x-dialog-container"
+  confirmdialog-style
+  [isMsgDialog]="isMsgDialog"
+  [dialogType]="dialogType"
+>
+  <div kendoDialogContainer></div>
+</div>

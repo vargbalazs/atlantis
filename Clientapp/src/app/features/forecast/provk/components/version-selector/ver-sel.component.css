@@ -1,0 +1,53 @@
+.k-card-header {
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.k-card {
+  margin-bottom: 1rem;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.spacer {
+  width: 1rem;
+}
+
+:host ::ng-deep .k-window-content {
+  background-color: whitesmoke;
+}
+
+.card {
+  cursor: pointer;
+}
+
+.side-bar {
+  width: 5px;
+}
+
+.ba {
+  margin: 0;
+  font-weight: normal;
+}
+
+.ba-value {
+  flex-grow: 1;
+  text-align: right;
+  font-weight: bold;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ba-negative {
+  color: red;
+}
+
+.ba-positive {
+  color: green;
+}
+
+.hovered {
+  background-color: #00b0ff;
+}

@@ -1,0 +1,15 @@
+.app-title {
+  font-size: 1.5rem;
+}
+
+.avatar {
+  cursor: pointer;
+}
+
+.user-popup {
+  width: 200px;
+}
+
+:host::ng-deep .k-popup {
+  border-style: none;
+}

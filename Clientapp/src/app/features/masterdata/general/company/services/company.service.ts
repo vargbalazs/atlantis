@@ -1,0 +1,21 @@
+import { Injectable } from '@angular/core';
+import { Company } from '../models/company.model';
+import { HttpClient } from '@angular/common/http';
+import { IRepository } from 'src/app/shared/interfaces/repository.interface';
+
+@Injectable()
+export class CompanyService implements IRepository<Company> {
+  constructor(private http: HttpClient) {}
+
+  add(company: Company) {
+    return this.http.post<number>('/api/masterdata/general/company', company);
+  }
+
+  update(company: Company) {
+    return this.http.patch<number>('/api/masterdata/general/company', company);
+  }
+
+  delete(id: number) {
+    return this.http.delete<number>(`/api/masterdata/general/company/${id}`);
+  }
+}

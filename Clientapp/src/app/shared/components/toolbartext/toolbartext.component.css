@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  margin-right: 1rem;
+}
+
+.caption {
+  margin-right: 0.5rem;
+  color: #3e5569;
+}
+
+.value {
+  color: #00b0ff;
+  font-weight: bold;
+}

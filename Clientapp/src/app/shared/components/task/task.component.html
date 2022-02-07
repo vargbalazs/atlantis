@@ -1,0 +1,63 @@
+<kendo-dialog *ngIf="active" [width]="400" [height]="250" (close)="closeForm()">
+  <kendo-dialog-titlebar class="x-bg-primary x-font">
+    {{ isNew ? "Új feladat" : "Szerkesztés" }}
+  </kendo-dialog-titlebar>
+  <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
+    <kendo-formfield>
+      <kendo-textbox hidden formControlName="id"></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-textbox hidden formControlName="itemId"></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-textbox hidden formControlName="year"></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-textbox hidden formControlName="type"></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-textbox hidden formControlName="status"></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="task" text="Feladat"></kendo-label>
+      <kendo-textbox
+        #task
+        formControlName="task"
+        class="x-textbox-sm"
+      ></kendo-textbox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <!-- hidden submit button in order to get work the submit event on enter -->
+    <button type="submit" hidden></button>
+  </form>
+  <kendo-dialog-actions>
+    <button
+      type="button"
+      kendoButton
+      icon="cancel"
+      (click)="onCancel()"
+      class="x-btn-light click-light"
+    >
+      Mégsem
+    </button>
+    <button
+      type="submit"
+      kendoButton
+      icon="save"
+      class="x-btn-primary click-primary"
+      (click)="onSave()"
+    >
+      Mentés
+    </button>
+    <button
+      type="submit"
+      kendoButton
+      icon="check"
+      *ngIf="!isNew"
+      (click)="onTaskDone()"
+      class="x-btn-outline-primary click-primary"
+    >
+      Elintézve
+    </button>
+  </kendo-dialog-actions>
+</kendo-dialog>

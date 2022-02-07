@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container .k-form-field {
+  flex: 0 0 200px;
+  margin-right: 1rem;
+}
