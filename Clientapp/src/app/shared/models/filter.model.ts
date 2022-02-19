@@ -14,6 +14,7 @@ export class FilterEntity {
     public costAccTypeId?: number,
     public costAccType?: CostAccountingType,
     public costCenterId?: number,
-    public costCenter?: CostCenter
+    public costCenter?: CostCenter,
+    public allCostCenter?: boolean
   ) {}
 }

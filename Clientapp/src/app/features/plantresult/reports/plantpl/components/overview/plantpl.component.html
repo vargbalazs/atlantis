@@ -1,0 +1,278 @@
+<div class="component-header">Gyári eredménykimutatás</div>
+<div class="grid">
+  <kendo-grid [kendoGridBinding]="gridData.data" [group]="groups" #grid>
+    <ng-template kendoGridToolbarTemplate>
+      <button
+        kendoButton
+        class="x-btn-primary click-primary"
+        icon="filter"
+        (click)="showFilterForm()"
+      >
+        Szűrés
+      </button>
+      <button
+        kendoGridExcelCommand
+        class="x-btn-primary click-primary"
+        icon="excel"
+        *ngIf="filtered"
+      ></button>
+      <div kendoTooltip>
+        <button
+          kendoButton
+          class="x-btn-primary click-primary"
+          [icon]="collapsed ? 'arrow-60-down' : 'arrow-60-right'"
+          *ngIf="filtered"
+          title="Kibontás / összezárás"
+          (click)="toggleGroupState()"
+        ></button>
+      </div>
+    </ng-template>
+    <kendo-grid-column-group title="Tétel">
+      <kendo-grid-column
+        field="costGroup.rowIndex"
+        title="rowIndex"
+        [hidden]="true"
+      >
+        <ng-template
+          kendoGridGroupHeaderTemplate
+          let-group="group"
+          let-aggregates="aggregates"
+          let-value="value"
+        >
+          {{ getCostGroupName(value) }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="costGroup.name" title="Költségcsoport">
+      </kendo-grid-column>
+      <kendo-grid-column
+        field="costAccount.accountNumber"
+        title="Főkönyvi szám"
+        [width]="120"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <a
+            [routerLink]="['bookings']"
+            [skipLocationChange]="true"
+            [state]="{
+              costAccount: dataItem.costAccount,
+              filterEntity: filterEntityInput,
+              origin: 'plantpl'
+            }"
+            class="x-link"
+            >{{ dataItem.costAccount.accountNumber }}</a
+          >
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+        field="costAccount.name"
+        title="Megnevezés"
+      ></kendo-grid-column>
+    </kendo-grid-column-group>
+    <kendo-grid-column-group
+      [title]="reportMonths.actMonth ? reportMonths.actMonth : 'Év/hónap'"
+    >
+      <kendo-grid-column
+        field="budget"
+        title="Budget"
+        format="{0:n0}"
+        [style]="{ 'text-align': 'right' }"
+        [footerStyle]="{ 'text-align': 'right' }"
+        [width]="100"
+      >
+        <ng-template
+          kendoGridGroupHeaderColumnTemplate
+          let-group="group"
+          let-aggregates="aggregates"
+        >
+          <span style="display: flex; justify-content: end">{{
+            aggregates.budget.sum | number: "1.0-0"
+          }}</span>
+        </ng-template>
+        <ng-template kendoGridFooterTemplate>
+          {{ sums.sumBudget | number: "1.0-0" }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+        field="actual"
+        title="Tény"
+        format="{0:n0}"
+        [style]="{ 'text-align': 'right' }"
+        [footerStyle]="{ 'text-align': 'right' }"
+        [width]="100"
+      >
+        <ng-template
+          kendoGridGroupHeaderColumnTemplate
+          let-group="group"
+          let-aggregates="aggregates"
+        >
+          <span style="display: flex; justify-content: end">{{
+            aggregates.actual.sum | number: "1.0-0"
+          }}</span>
+        </ng-template>
+        <ng-template kendoGridFooterTemplate>
+          {{ sums.sumActual | number: "1.0-0" }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+        field="monthDiff"
+        title="Eltérés"
+        format="{0:n0}"
+        [style]="{ 'text-align': 'right' }"
+        [footerStyle]="{ 'text-align': 'right' }"
+        [width]="100"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <cond-format [value]="dataItem.monthDiff"></cond-format>
+        </ng-template>
+        <ng-template
+          kendoGridGroupHeaderColumnTemplate
+          let-group="group"
+          let-aggregates="aggregates"
+        >
+          <span style="display: flex; justify-content: end">
+            <cond-format [value]="aggregates.monthDiff.sum"></cond-format>
+          </span>
+        </ng-template>
+        <ng-template kendoGridFooterTemplate>
+          <cond-format [value]="sums.sumMonthDiff"></cond-format>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+        field="frc"
+        title="FRC"
+        format="{0:n0}"
+        [style]="{ 'text-align': 'right' }"
+        [footerStyle]="{ 'text-align': 'right' }"
+        [width]="100"
+      >
+        <ng-template
+          kendoGridGroupHeaderColumnTemplate
+          let-group="group"
+          let-aggregates="aggregates"
+        >
+          <span style="display: flex; justify-content: end">{{
+            aggregates.frc.sum | number: "1.0-0"
+          }}</span>
+        </ng-template>
+        <ng-template kendoGridFooterTemplate>
+          {{ sums.sumFrc | number: "1.0-0" }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+        field="monthFrcDiff"
+        title="Eltérés"
+        format="{0:n0}"
+        [style]="{ 'text-align': 'right' }"
+        [footerStyle]="{ 'text-align': 'right' }"
+        [width]="100"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <cond-format [value]="dataItem.monthFrcDiff"></cond-format>
+        </ng-template>
+        <ng-template
+          kendoGridGroupHeaderColumnTemplate
+          let-group="group"
+          let-aggregates="aggregates"
+        >
+          <span style="display: flex; justify-content: end">
+            <cond-format [value]="aggregates.monthFrcDiff.sum"></cond-format>
+          </span>
+        </ng-template>
+        <ng-template kendoGridFooterTemplate>
+          <cond-format [value]="sums.sumMonthFrcDiff"></cond-format>
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid-column-group>
+    <kendo-grid-column-group
+      [title]="reportMonths.cumMonth ? reportMonths.cumMonth : 'Halmozott'"
+    >
+      <kendo-grid-column
+        field="cumBudget"
+        title="Budget"
+        format="{0:n0}"
+        [style]="{ 'text-align': 'right' }"
+        [footerStyle]="{ 'text-align': 'right' }"
+        [width]="100"
+      >
+        <ng-template
+          kendoGridGroupHeaderColumnTemplate
+          let-group="group"
+          let-aggregates="aggregates"
+        >
+          <span style="display: flex; justify-content: end">{{
+            aggregates.cumBudget.sum | number: "1.0-0"
+          }}</span>
+        </ng-template>
+        <ng-template kendoGridFooterTemplate>
+          {{ sums.sumCumBudget | number: "1.0-0" }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+        field="cumActual"
+        title="Tény"
+        format="{0:n0}"
+        [style]="{ 'text-align': 'right' }"
+        [footerStyle]="{ 'text-align': 'right' }"
+        [width]="100"
+      >
+        <ng-template
+          kendoGridGroupHeaderColumnTemplate
+          let-group="group"
+          let-aggregates="aggregates"
+        >
+          <span style="display: flex; justify-content: end">{{
+            aggregates.cumActual.sum | number: "1.0-0"
+          }}</span>
+        </ng-template>
+        <ng-template kendoGridFooterTemplate>
+          {{ sums.sumCumActual | number: "1.0-0" }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+        field="cumDiff"
+        title="Eltérés"
+        format="{0:n0}"
+        [style]="{ 'text-align': 'right' }"
+        [footerStyle]="{ 'text-align': 'right' }"
+        [width]="100"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <cond-format [value]="dataItem.cumDiff"></cond-format>
+        </ng-template>
+        <ng-template
+          kendoGridGroupHeaderColumnTemplate
+          let-group="group"
+          let-aggregates="aggregates"
+        >
+          <span style="display: flex; justify-content: end">
+            <cond-format [value]="aggregates.cumDiff.sum"></cond-format>
+          </span>
+        </ng-template>
+        <ng-template kendoGridFooterTemplate>
+          <cond-format [value]="sums.sumCumDiff"></cond-format>
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid-column-group>
+    <ng-template kendoGridNoRecordsTemplate>
+      Nincs megjelenítendő adat
+    </ng-template>
+    <kendo-grid-excel
+      fileName="Items.xlsx"
+      [collapsible]="true"
+    ></kendo-grid-excel>
+  </kendo-grid>
+</div>
+<filter
+  [model]="filterEntity"
+  [keepData]="true"
+  [firstClicked]="filterFirst"
+  [frc]="true"
+  [monthOverview]="true"
+  (save)="saveFilterForm($event)"
+  (cancel)="cancelFilterForm()"
+></filter>
+<div kendoDialogContainer></div>
+<loading-overlay
+  [visible]="loadingOverlayVisible"
+  loadingText=""
+></loading-overlay>

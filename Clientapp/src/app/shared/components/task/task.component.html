@@ -4,25 +4,19 @@
   </kendo-dialog-titlebar>
   <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
     <kendo-formfield>
-      <kendo-textbox hidden formControlName="id"></kendo-textbox>
+      <kendo-textbox hidden formControlName="planningItemId"></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-textbox hidden formControlName="itemId"></kendo-textbox>
+      <kendo-textbox hidden formControlName="taskType"></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-textbox hidden formControlName="year"></kendo-textbox>
-    </kendo-formfield>
-    <kendo-formfield>
-      <kendo-textbox hidden formControlName="type"></kendo-textbox>
-    </kendo-formfield>
-    <kendo-formfield>
-      <kendo-textbox hidden formControlName="status"></kendo-textbox>
+      <kendo-textbox hidden formControlName="taskStatus"></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
       <kendo-label [for]="task" text="Feladat"></kendo-label>
       <kendo-textbox
         #task
-        formControlName="task"
+        formControlName="taskName"
         class="x-textbox-sm"
       ></kendo-textbox>
       <kendo-formerror>Kötelező mező</kendo-formerror>

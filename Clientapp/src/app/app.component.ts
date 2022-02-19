@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     //this.router.navigate(['/auth/login'], { skipLocationChange: true });
-    this.router.navigate(['/plantresult/uploadcost'], {
+    this.router.navigate(['/plantresult/plantpl'], {
       skipLocationChange: true,
     });
   }

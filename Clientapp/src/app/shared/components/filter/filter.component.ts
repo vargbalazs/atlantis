@@ -10,6 +10,7 @@ import { CostAccountingType } from 'src/app/features/masterdata/planning/costacc
 import { CostCenter } from 'src/app/features/masterdata/planning/costcenter/models/costcenter.model';
 import { costAccTypes } from 'src/app/features/masterdata/planning/costacctype/components/list/sampledata';
 import { costcenters } from 'src/app/features/masterdata/planning/costcenter/components/list/sampledata';
+import { CalendarView } from '@progress/kendo-angular-dateinputs';
 
 @Component({
   selector: 'filter',
@@ -26,10 +27,17 @@ export class FilterComponent
   costAccTypes: CostAccountingType[] = [];
   costCenters: CostCenter[] = [];
   filteredCostCenters: CostCenter[] = [];
+  decadeView: CalendarView = 'decade';
+  yearView: CalendarView = 'year';
 
   formVisible = false;
+  comboBoxValueChange = false;
+
   @Input() planning = false;
   @Input() frc = false;
+  @Input() monthOverview = false;
+  @Input() showAllCostCenter = false;
+  @Input() firstClicked = false;
 
   form: FormGroup = new FormGroup({
     year: new FormControl(this.formData.year, [Validators.required]),
@@ -41,6 +49,7 @@ export class FilterComponent
     costAccType: new FormControl(this.formData.costAccType),
     costCenterId: new FormControl(this.formData.costCenterId),
     costCenter: new FormControl(this.formData.costCenter),
+    allCostCenter: new FormControl(this.formData.allCostCenter),
   });
 
   ngOnInit() {
@@ -53,14 +62,22 @@ export class FilterComponent
       this.costAccTypes = costAccTypes;
     }
     if (this.planning) {
-      this.form.controls.costCenterId.setValidators(Validators.required);
-      this.form.controls.costCenter.setValidators(Validators.required);
+      this.costCenterRequired(true);
       this.costCenters = costcenters;
     }
   }
 
   ngOnChanges() {
     this.formVisible = this.visible;
+    if (!this.firstClicked) {
+      this.comboBoxValueChange = true;
+      this.companyChange(this.form.get('company')?.value);
+      this.plantChange(this.form.get('plant')?.value);
+      this.yearChange(this.form.get('year')?.value);
+      this.comboBoxValueChange = false;
+      if (this.planning)
+        this.changeCostCenterState(this.form.get('allCostCenter')?.value);
+    }
   }
 
   companyChange(company: Company) {
@@ -71,11 +88,12 @@ export class FilterComponent
       );
       this.changeControlState(['plant'], true);
     } else {
-      this.resetState();
+      this.setDefaults();
     }
-    this.form.patchValue({ plant: undefined });
-    this.form.patchValue({ year: undefined });
-    this.form.patchValue({ costCenter: undefined });
+    if (!this.comboBoxValueChange) this.form.patchValue({ plant: undefined });
+    if (!this.comboBoxValueChange) this.form.patchValue({ year: undefined });
+    if (!this.comboBoxValueChange)
+      this.form.patchValue({ costCenter: undefined });
   }
 
   plantChange(plant: Plant) {
@@ -85,8 +103,9 @@ export class FilterComponent
     } else {
       this.changeControlState(['year', 'costCenter'], false);
     }
-    this.form.patchValue({ year: undefined });
-    this.form.patchValue({ costCenter: undefined });
+    if (!this.comboBoxValueChange) this.form.patchValue({ year: undefined });
+    if (!this.comboBoxValueChange)
+      this.form.patchValue({ costCenter: undefined });
   }
 
   yearChange(value: Date) {
@@ -96,24 +115,63 @@ export class FilterComponent
           costCenter.plantId === +this.form.get('plantId')!.value &&
           costCenter.year === value.getFullYear()
       );
-      this.changeControlState(['costCenter'], true);
+      this.changeControlState(
+        ['costCenter'],
+        !this.form.get('allCostCenter')?.value
+      );
     } else {
       this.changeControlState(['costCenter'], false);
     }
-    this.form.patchValue({ costCenter: undefined });
+    if (!this.comboBoxValueChange)
+      this.form.patchValue({ costCenter: undefined });
   }
 
   costAccTypeChange(value: CostAccountingType) {
-    this.form.patchValue({ costAccTypeId: value.id });
+    if (value) this.form.patchValue({ costAccTypeId: value.id });
   }
 
   costCenterChange(value: CostCenter) {
-    this.form.patchValue({ costCenterId: value.id });
+    if (value) this.form.patchValue({ costCenterId: value.id });
+  }
+
+  allCostCenterChange(e: any) {
+    const value = e.target ? e.target.checked : e;
+    this.changeCostCenterState(value);
   }
 
   resetState() {
+    if (!this.keepData) {
+      this.setDefaults();
+    }
+    if (this.firstClicked) {
+      this.setDefaults();
+    }
+  }
+
+  setDefaults() {
     this.changeControlState(['plant', 'year', 'costCenter'], false);
     this.filteredPlants = [];
     this.filteredCostCenters = [];
+  }
+
+  changeCostCenterState(value: boolean) {
+    if (value) {
+      this.changeControlState(['costCenter', 'costCenterId'], false);
+      this.form.patchValue({ costCenter: undefined });
+      this.form.patchValue({ costCenterId: undefined });
+    } else {
+      this.changeControlState(['costCenter', 'costCenterId'], true);
+      this.costCenterRequired(!value);
+    }
+  }
+
+  costCenterRequired(value: boolean) {
+    if (value) {
+      this.form.controls.costCenterId.setValidators(Validators.required);
+      this.form.controls.costCenter.setValidators(Validators.required);
+    } else {
+      this.form.controls.costCenterId.clearValidators();
+      this.form.controls.costCenter.clearValidators();
+    }
   }
 }

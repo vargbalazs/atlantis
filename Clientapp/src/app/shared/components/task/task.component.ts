@@ -12,12 +12,14 @@ export class CreateEditTaskComponent extends CreateEditComponent<Task> {
   @Output() taskDone: EventEmitter<Task> = new EventEmitter();
 
   form: FormGroup = new FormGroup({
-    id: new FormControl(this.formData.id),
-    itemId: new FormControl(this.formData.itemId, [Validators.required]),
-    task: new FormControl(this.formData.task, [Validators.required]),
-    year: new FormControl(this.formData.year, [Validators.required]),
-    type: new FormControl(this.formData.type, [Validators.required]),
-    status: new FormControl(this.formData.status, [Validators.required]),
+    planningItemId: new FormControl(this.formData.planningItemId, [
+      Validators.required,
+    ]),
+    taskName: new FormControl(this.formData.taskName, [Validators.required]),
+    taskType: new FormControl(this.formData.taskType, [Validators.required]),
+    taskStatus: new FormControl(this.formData.taskStatus, [
+      Validators.required,
+    ]),
   });
 
   onTaskDone() {

@@ -1,0 +1,191 @@
+<div class="component-header">Könyvelési adatok tallózása</div>
+<kendo-breadcrumb
+  [items]="navItems"
+  (itemClick)="onNavItemClick($event)"
+  *ngIf="state?.filterEntity"
+></kendo-breadcrumb>
+<div class="grid">
+  <kendo-grid
+    [kendoGridBinding]="gridData.data"
+    [filterable]="true"
+    [resizable]="true"
+    #grid
+  >
+    <ng-template kendoGridToolbarTemplate>
+      <button
+        kendoButton
+        class="x-btn-primary click-primary"
+        icon="filter"
+        (click)="showFilterForm()"
+        *ngIf="!state?.filterEntity"
+      >
+        Szűrés
+      </button>
+      <button
+        kendoGridExcelCommand
+        class="x-btn-primary click-primary"
+        icon="excel"
+        *ngIf="filtered"
+      ></button>
+    </ng-template>
+    <kendo-grid-column
+      field="costCenter"
+      title="Költséghely"
+      [width]="110"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="accountNumber"
+      title="Főkönyvi szám"
+      [width]="120"
+    ></kendo-grid-column>
+    <kendo-grid-column field="accountName" title="Megnevezés" [width]="170">
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="amount"
+      title="Bizonylatösszeg"
+      format="{0:n2}"
+      [width]="130"
+      [style]="{ 'text-align': 'right' }"
+      filter="numeric"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="currency"
+      title="Pénznem"
+      [width]="85"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="transAmount"
+      title="Tranz. tösszeg"
+      format="{0:n2}"
+      [width]="115"
+      [style]="{ 'text-align': 'right' }"
+      filter="numeric"
+    ></kendo-grid-column>
+    <kendo-grid-column field="transCur" title="Trans. pnem" [width]="100">
+    </kendo-grid-column>
+    <kendo-grid-column field="bookingNr" title="Könyvelési szám" [width]="125">
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="refNr"
+      title="Bizonylatszám"
+      [width]="120"
+    ></kendo-grid-column>
+    <kendo-grid-column field="partnerObj" title="Partnerobjektum" [width]="130">
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="partnerObjName"
+      title="Partnerobj. megnevezés"
+      [width]="170"
+    >
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="contAccNumber"
+      title="Ellenkönyv. számla"
+      [width]="140"
+    >
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="contAccName"
+      title="Ellenkönyv. szla. megnev."
+      [width]="180"
+    >
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="period"
+      title="Periódus"
+      [width]="85"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="bookingDate"
+      title="Könyvelési dátum"
+      format="yyyy.MM.dd"
+      [width]="165"
+      filter="date"
+    >
+      <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+        <kendo-grid-date-filter-cell
+          [column]="column"
+          [filter]="filter"
+          [formatPlaceholder]="{
+            year: 'Év',
+            month: 'Hónap',
+            day: 'Nap',
+            hour: '',
+            minute: '',
+            second: ''
+          }"
+        >
+        </kendo-grid-date-filter-cell>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="docDate"
+      title="Bizonylatdátum"
+      format="yyyy.MM.dd"
+      [width]="165"
+    >
+      <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+        <kendo-grid-date-filter-cell
+          [column]="column"
+          [filter]="filter"
+          [formatPlaceholder]="{
+            year: 'Év',
+            month: 'Hónap',
+            day: 'Nap',
+            hour: '',
+            minute: '',
+            second: ''
+          }"
+        >
+        </kendo-grid-date-filter-cell>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="postingDate"
+      title="Rögzítve"
+      format="yyyy.MM.dd"
+      [width]="165"
+    >
+      <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+        <kendo-grid-date-filter-cell
+          [column]="column"
+          [filter]="filter"
+          [formatPlaceholder]="{
+            year: 'Év',
+            month: 'Hónap',
+            day: 'Nap',
+            hour: '',
+            minute: '',
+            second: ''
+          }"
+        >
+        </kendo-grid-date-filter-cell>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="user"
+      title="Felhasználó"
+      [width]="105"
+    ></kendo-grid-column>
+    <ng-template kendoGridNoRecordsTemplate>
+      Nincs megjelenítendő adat
+    </ng-template>
+    <kendo-grid-excel
+      fileName="Items.xlsx"
+      [collapsible]="true"
+    ></kendo-grid-excel>
+  </kendo-grid>
+</div>
+<filter
+  [model]="filterEntity"
+  [keepData]="true"
+  [monthOverview]="true"
+  [firstClicked]="filterFirst"
+  (save)="saveFilterForm($event)"
+  (cancel)="cancelFilterForm()"
+></filter>
+<div kendoDialogContainer></div>
+<loading-overlay
+  [visible]="loadingOverlayVisible"
+  loadingText=""
+></loading-overlay>

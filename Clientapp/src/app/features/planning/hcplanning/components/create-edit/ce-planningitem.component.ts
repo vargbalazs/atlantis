@@ -5,6 +5,7 @@ import { CreateEditComponent } from 'src/app/shared/components/create-edit/creat
 import { CostGroup } from 'src/app/features/masterdata/planning/costgroup/models/costgroup.model';
 import { Job } from 'src/app/features/masterdata/general/job/models/job.model';
 import { FilterEntity } from 'src/app/shared/models/filter.model';
+import { Task } from 'src/app/shared/models/task.model';
 
 @Component({
   selector: 'ce-planningitem',
@@ -57,7 +58,7 @@ export class CreateEditPlanningItemComponent
     p12: new FormControl(this.formData.p12, [Validators.required]),
     comment: new FormControl(this.formData.comment),
     task: new FormControl(this.formData.task),
-    taskId: new FormControl(this.formData.taskId),
+    costAssigned: new FormControl(this.formData.costAssigned),
   });
 
   periods: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -68,6 +69,9 @@ export class CreateEditPlanningItemComponent
       // if the value is changed programmatically
       this.costGroupChange(this.form.get('costGroup')?.value);
       this.jobChange(this.form.get('job')?.value);
+    } else {
+      this.form.patchValue({ task: new Task(0, 0, '', 0, 0) });
+      this.form.patchValue({ costAssigned: false });
     }
   }
 

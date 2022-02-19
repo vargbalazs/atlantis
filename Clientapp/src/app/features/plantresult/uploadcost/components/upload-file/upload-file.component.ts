@@ -7,14 +7,11 @@ import { FileInfo } from '@progress/kendo-angular-upload';
   templateUrl: './upload-file.component.html',
 })
 export class UploadFileComponent implements OnInit {
-  fileArray!: FileInfo[];
+  @Input() form!: FormGroup;
 
-  @Input() set form(formGroup: FormGroup) {
-    this.fileArray = formGroup.get('file.fileName')?.value;
-  }
+  fileArray: FileInfo[] = [];
 
   ngOnInit() {
-    // this.fileArray = this.form.get('file.fileName')?.value;
-    // console.log(this.fileArray);
+    this.fileArray.push(this.form.get('file.fileName')?.value[0]);
   }
 }

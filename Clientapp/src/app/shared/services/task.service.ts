@@ -31,10 +31,9 @@ export class TaskService implements IRepository<Task> {
     isNew: boolean
   ): Task {
     if (isNew) {
-      task.itemId = planningItem.id;
-      task.year = planningItem.year;
-      task.type = 0;
-      task.status = 0;
+      task.planningItemId = planningItem.id;
+      task.taskType = 0;
+      task.taskStatus = 0;
     }
     return task;
   }

@@ -42,7 +42,6 @@ export class CostPlanningItem {
     public p10?: number,
     public p11?: number,
     public p12?: number,
-    public taskId?: number,
     public task?: Task
   ) {}
 }

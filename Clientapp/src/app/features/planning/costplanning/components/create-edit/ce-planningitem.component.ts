@@ -7,6 +7,7 @@ import { Currency } from '../../models/currency.model';
 import { currencies } from '../planningitems/currencies';
 import { CostGroup } from 'src/app/features/masterdata/planning/costgroup/models/costgroup.model';
 import { FilterEntity } from 'src/app/shared/models/filter.model';
+import { Task } from 'src/app/shared/models/task.model';
 
 @Component({
   selector: 'ce-planningitem',
@@ -75,7 +76,6 @@ export class CreateEditPlanningItemComponent
     p12: new FormControl(this.formData.p12, [Validators.required]),
     comment: new FormControl(this.formData.comment),
     task: new FormControl(this.formData.task),
-    taskId: new FormControl(this.formData.taskId),
   });
 
   periods: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -88,6 +88,7 @@ export class CreateEditPlanningItemComponent
       this.costAccountChange(this.form.get('costAccount')?.value);
     } else {
       this.form.patchValue({ distribution: 0 });
+      this.form.patchValue({ task: new Task(0, 0, '', 0, 0) });
     }
   }
 

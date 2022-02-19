@@ -79,7 +79,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
 
   onSelect(e: DrawerSelectEvent): void {
     this.item = e.item;
-    const text = e.item.text;
+    const id = e.item.id;
 
     // if the drawer is collapsed and we click on one of the icons, we expand it
     if (!this.drawerExpanded) {
@@ -108,7 +108,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
     // we set the 'selected' property on the clicked item to true (only parents should have the 'selected' property)
     // but before do it, we clear all selection
     // it has the effect, that the parent items have the '.k-state-selected' class too (background color set to primary)
-    const index = this.newItems.findIndex((item) => item.text === text);
+    const index = this.newItems.findIndex((item) => item.id === id);
     this.SideBarService.clearSelection(this.newItems);
     this.newItems[index].selected = true;
 

@@ -161,9 +161,9 @@ export class HcPlanningItemsComponent
       const planningItem = <HcPlanningItem>e.dataItem;
       this.contextItem = planningItem;
       // adding new task
-      this.contextMenuItems[0].disabled = this.contextItem.task;
+      this.contextMenuItems[0].disabled = this.contextItem.task?.taskName;
       // editing an existing task
-      this.contextMenuItems[1].disabled = !this.contextItem.task;
+      this.contextMenuItems[1].disabled = !this.contextItem.task?.taskName;
       this.gridContextMenu.show({
         left: originalEvent.pageX,
         top: originalEvent.pageY,
@@ -247,10 +247,7 @@ export class HcPlanningItemsComponent
       setTimeout(() => {
         this.loadingOverlayVisible = false;
         this.gridData.data.forEach((item: HcPlanningItem) => {
-          // in this sample case we assign the next id to the taskId manually
-          if (item.id === task.itemId) {
-            item.taskId = 2;
-            task.id = 2;
+          if (item.id === task.planningItemId) {
             item.task = task;
           }
         });
@@ -268,7 +265,7 @@ export class HcPlanningItemsComponent
       setTimeout(() => {
         this.loadingOverlayVisible = false;
         this.gridData.data.forEach((item: HcPlanningItem) => {
-          if (item.id === task.itemId) item.task = task;
+          if (item.id === task.planningItemId) item.task = task;
         });
         this.showNotification(
           'A feladat sikeresen módosítva lett',
@@ -296,9 +293,9 @@ export class HcPlanningItemsComponent
     // });
     setTimeout(() => {
       this.gridData.data.forEach((item: HcPlanningItem) => {
-        if (item.taskId === task.id) {
-          item.taskId = undefined;
-          item.task = undefined;
+        if (item.id === task.planningItemId) {
+          item.task!.taskStatus = 1;
+          item.task!.taskName = '';
         }
       });
       this.loadingOverlayVisible = false;

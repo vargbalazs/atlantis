@@ -1,0 +1,11 @@
+<span [ngClass]="value >= 0 ? 'positive' : 'negative'" class="x-font-medium">{{
+  value | number: "1.0-0"
+}}</span>
+<span
+  *ngIf="value > 0"
+  class="k-icon k-i-kpi-trend-increase marker positive"
+></span>
+<span
+  *ngIf="value < 0"
+  class="k-icon k-i-kpi-trend-decrease marker negative"
+></span>

@@ -59,16 +59,19 @@
       <kendo-formerror>Kötelező mező</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="year" text="Év"></kendo-label>
+      <kendo-label
+        [for]="year"
+        text="{{ monthOverview ? 'Év/hónap' : 'Év' }}"
+      ></kendo-label>
       <kendo-datepicker
         #year
         formControlName="year"
-        activeView="decade"
-        bottomView="decade"
-        format="yyyy"
+        [activeView]="monthOverview ? yearView : decadeView"
+        [bottomView]="monthOverview ? yearView : decadeView"
+        format="{{ monthOverview ? 'yyyy.MM' : 'yyyy' }}"
         [formatPlaceholder]="{
           year: 'Év',
-          month: '',
+          month: monthOverview ? 'Hónap' : '',
           day: '',
           hour: '',
           minute: '',
@@ -107,6 +110,22 @@
         </ng-template>
       </kendo-combobox>
       <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield *ngIf="showAllCostCenter">
+      <div class="k-checkbox-wrap">
+        <input
+          type="checkbox"
+          #all
+          formControlName="allCostCenter"
+          kendoCheckBox
+          (change)="allCostCenterChange($event)"
+        />
+        <kendo-label
+          class="k-checkbox-label"
+          [for]="all"
+          text="Összes költséghely"
+        ></kendo-label>
+      </div>
     </kendo-formfield>
     <kendo-formfield *ngIf="planning">
       <kendo-textbox

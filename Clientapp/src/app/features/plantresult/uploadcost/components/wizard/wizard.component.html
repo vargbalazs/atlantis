@@ -1,5 +1,18 @@
 <div class="component-header">Gyári költségek feltöltése</div>
-<kendo-dialog [width]="550" [height]="470">
+<button
+  kendoButton
+  [primary]="true"
+  class="x-btn-primary click-primary start-wizard"
+  (click)="start()"
+>
+  Varázsló indítása
+</button>
+<kendo-dialog
+  [width]="550"
+  [height]="470"
+  *ngIf="started"
+  (close)="closeWizard()"
+>
   <kendo-dialog-titlebar class="x-bg-primary x-font">
     Gyári költségek feltöltése
   </kendo-dialog-titlebar>

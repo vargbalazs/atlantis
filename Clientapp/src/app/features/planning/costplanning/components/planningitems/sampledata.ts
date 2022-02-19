@@ -60,14 +60,12 @@ export const costPlanningItems: CostPlanningItem[] = [
     p10: 10000,
     p11: 10000,
     p12: 10000,
-    taskId: 1,
     task: {
-      id: 1,
-      itemId: 1,
-      type: 0,
-      status: 0,
-      year: 2021,
-      task: 'feladat',
+      id: undefined,
+      planningItemId: 1,
+      taskType: 0,
+      taskStatus: 0,
+      taskName: 'feladat',
     },
   },
   {
@@ -129,5 +127,12 @@ export const costPlanningItems: CostPlanningItem[] = [
     p10: 120000,
     p11: 0,
     p12: 0,
+    task: {
+      id: undefined,
+      planningItemId: 0,
+      taskType: 0,
+      taskStatus: 0,
+      taskName: '',
+    },
   },
 ];

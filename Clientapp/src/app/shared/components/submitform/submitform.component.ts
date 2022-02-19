@@ -18,6 +18,8 @@ export class SubmitFormComponent<T> {
     this.visible = entity !== undefined;
   }
 
+  @Input() keepData!: boolean;
+
   @Output() save: EventEmitter<T> = new EventEmitter();
   @Output() cancel: EventEmitter<any> = new EventEmitter();
 
@@ -38,7 +40,7 @@ export class SubmitFormComponent<T> {
       // if everything is right, then save
       if (saveCheckResults.every((valid) => valid)) {
         this.save.emit(this.form.value);
-        this.resetState();
+        if (!this.keepData) this.resetState();
       }
     }
   }

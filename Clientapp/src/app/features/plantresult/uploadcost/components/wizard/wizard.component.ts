@@ -14,8 +14,9 @@ import { uploadCost } from '../../models/uploadcost.model';
 export class WizardComponent {
   currentStep = 0;
   entityFormPassed = false;
+  started = false;
 
-  @ViewChild('stepper', { static: true }) stepper!: StepperComponent;
+  @ViewChild('stepper') stepper!: StepperComponent;
 
   isStepValid = (index: number): boolean => {
     return this.getGroupAt(index).valid || this.currentGroup.untouched;
@@ -67,6 +68,17 @@ export class WizardComponent {
   }
 
   constructor() {}
+
+  start() {
+    this.started = true;
+  }
+
+  closeWizard() {
+    this.started = false;
+    this.form.reset();
+    this.currentStep = 0;
+    this.entityFormPassed = false;
+  }
 
   next() {
     if (this.currentGroup) {

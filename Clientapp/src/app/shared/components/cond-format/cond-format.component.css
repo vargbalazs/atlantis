@@ -1,0 +1,11 @@
+.positive {
+  color: green !important;
+}
+
+.negative {
+  color: red !important;
+}
+
+.marker {
+  margin-top: -3px;
+}

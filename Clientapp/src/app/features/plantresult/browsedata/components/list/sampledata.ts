@@ -1,0 +1,30 @@
+import { Booking } from '../../models/booking.model';
+
+export const bookings: Booking[] = [
+  {
+    id: 1,
+    companyId: 1,
+    plantId: 1,
+    year: 2021,
+    month: 1,
+    costCenter: '1H3300',
+    accountNumber: '60040000',
+    accountName: 'anyagköltség',
+    amount: 1000,
+    currency: 'EUR',
+    transAmount: 1000,
+    transCur: 'EUR',
+    bookingNr: '1111111',
+    refNr: '2222222',
+    bookingText: 'test',
+    partnerObj: '',
+    partnerObjName: '',
+    contAccNumb: '48500000',
+    contAccName: 'cont acc',
+    period: 1,
+    bookingDate: new Date(2021, 0, 1),
+    docDate: new Date(2021, 0, 1),
+    postingDate: new Date(2021, 0, 1),
+    user: 'VARGBAL',
+  },
+];
