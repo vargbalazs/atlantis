@@ -6,6 +6,7 @@ import { FilterEntity } from 'src/app/shared/models/filter.model';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { CapPlanningService } from '../../services/capplanning.service';
 import { capPlanningItems } from './sampledata';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'cap-planningitems',
@@ -15,7 +16,7 @@ import { capPlanningItems } from './sampledata';
 export class CapPlanningItemsComponent implements OnInit {
   filterEntity!: FilterEntity;
   gridData!: GridDataResult;
-  loadingOverlayVisible = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
   periods: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   editing = false;
   editedRowIndex!: number;
@@ -24,7 +25,8 @@ export class CapPlanningItemsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private capPlanningService: CapPlanningService,
-    private notificationService: CustomNotificationService
+    private notificationService: CustomNotificationService,
+    private loaderService: LoaderService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -72,7 +74,6 @@ export class CapPlanningItemsComponent implements OnInit {
 
   saveFilterForm(filterEntity: FilterEntity) {
     this.filterEntity = undefined!;
-    this.loadingOverlayVisible = true;
     // this.actProdDataService
     //   .getActualData(
     //     filterEntity.companyId!,
@@ -85,7 +86,6 @@ export class CapPlanningItemsComponent implements OnInit {
     //   });
 
     setTimeout(() => {
-      this.loadingOverlayVisible = false;
       const filteredData = capPlanningItems.filter(
         (item) =>
           item.companyId === filterEntity.companyId &&
@@ -106,7 +106,6 @@ export class CapPlanningItemsComponent implements OnInit {
     rowIndex: number;
   }) {
     if (this.formGroup.valid) {
-      this.loadingOverlayVisible = true;
       // this.actProdDataService.update(this.formGroup.value).subscribe(() => {
       //   this.editing = false;
       //   sender.closeRow(rowIndex);
@@ -118,7 +117,6 @@ export class CapPlanningItemsComponent implements OnInit {
       //   );
       // });
       setTimeout(() => {
-        this.loadingOverlayVisible = false;
         this.gridData.data = (<CapPlanningItem[]>this.gridData.data).map(
           (item) =>
             item.id === this.formGroup.get('id')?.value

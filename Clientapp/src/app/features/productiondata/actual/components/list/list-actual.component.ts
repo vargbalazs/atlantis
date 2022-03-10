@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
 import { ActProdData } from 'src/app/features/productiondata/actual/models/act-prod-data.model';
 import { FilterEntity } from 'src/app/shared/models/filter.model';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { ActProdDataService } from '../../services/act-prod-data.service';
 import { actualProdData } from './sampledata';
@@ -18,7 +19,7 @@ import { actualProdData } from './sampledata';
 export class ActProdDataComponent implements OnInit {
   filterEntity!: FilterEntity;
   gridData!: GridDataResult;
-  loadingOverlayVisible = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
   periods: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   editing = false;
   editedRowIndex!: number;
@@ -27,7 +28,8 @@ export class ActProdDataComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private actProdDataService: ActProdDataService,
-    private notificationService: CustomNotificationService
+    private notificationService: CustomNotificationService,
+    private loaderService: LoaderService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -75,7 +77,6 @@ export class ActProdDataComponent implements OnInit {
 
   saveFilterForm(filterEntity: FilterEntity) {
     this.filterEntity = undefined!;
-    this.loadingOverlayVisible = true;
     // this.actProdDataService
     //   .getActualData(
     //     filterEntity.companyId!,
@@ -88,7 +89,6 @@ export class ActProdDataComponent implements OnInit {
     //   });
 
     setTimeout(() => {
-      this.loadingOverlayVisible = false;
       const filteredData = actualProdData.filter(
         (item) =>
           item.companyId === filterEntity.companyId &&
@@ -109,7 +109,6 @@ export class ActProdDataComponent implements OnInit {
     rowIndex: number;
   }) {
     if (this.formGroup.valid) {
-      this.loadingOverlayVisible = true;
       // this.actProdDataService.update(this.formGroup.value).subscribe(() => {
       //   this.editing = false;
       //   sender.closeRow(rowIndex);
@@ -121,7 +120,6 @@ export class ActProdDataComponent implements OnInit {
       //   );
       // });
       setTimeout(() => {
-        this.loadingOverlayVisible = false;
         this.gridData.data = (<ActProdData[]>this.gridData.data).map((item) =>
           item.id === this.formGroup.get('id')?.value
             ? this.formGroup.value

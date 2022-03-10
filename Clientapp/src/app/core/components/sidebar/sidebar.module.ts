@@ -12,6 +12,7 @@ import { ProductionDataRoutingModule } from 'src/app/features/productiondata/pro
 import { ForecastRoutingModule } from 'src/app/features/forecast/forecast-routing.module';
 import { PlanningRoutingModule } from 'src/app/features/planning/planning-routing.module';
 import { PlantResultRoutingModule } from 'src/app/features/plantresult/plantresult-routing.module';
+import { AdminRoutingModule } from '../admin/admin-routing.module';
 
 @NgModule({
   declarations: [SideBarComponent, HighlightSearch],
@@ -27,6 +28,7 @@ import { PlantResultRoutingModule } from 'src/app/features/plantresult/plantresu
     ForecastRoutingModule,
     PlanningRoutingModule,
     PlantResultRoutingModule,
+    AdminRoutingModule,
   ],
   providers: [],
   exports: [SideBarComponent],

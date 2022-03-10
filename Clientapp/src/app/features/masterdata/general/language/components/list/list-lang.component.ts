@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Language } from 'src/app/features/masterdata/general/language/models/language.model';
 import { Crud } from 'src/app/shared/classes/crud.class';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { LanguageService } from '../../services/language.service';
 import { languages } from './sampledata';
@@ -17,9 +18,15 @@ export class LanguageComponent extends Crud<Language> implements OnInit {
   constructor(
     protected msgDialogService: MsgDialogService,
     notificationService: NotificationService,
-    protected languageService: LanguageService
+    protected languageService: LanguageService,
+    loaderService: LoaderService
   ) {
-    super(msgDialogService, notificationService, languageService);
+    super(
+      msgDialogService,
+      notificationService,
+      languageService,
+      loaderService
+    );
   }
 
   ngOnInit() {

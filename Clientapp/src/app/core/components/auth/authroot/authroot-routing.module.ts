@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FirstLoginComponent } from '../firstlogin/firstlogin.component';
 import { ForgotPwdComponent } from '../forgotpwd/forgotpwd.component';
 import { LoginComponent } from '../login/login.component';
 import { SignUpComponent } from '../signup/signup.component';
@@ -24,6 +25,11 @@ const routes: Routes = [
         path: 'forgotpwd',
         component: ForgotPwdComponent,
         data: { animationState: 'ForgotPwd' },
+      },
+      {
+        path: 'firstlogin',
+        component: FirstLoginComponent,
+        data: { animationState: 'FirstLogin' },
       },
     ],
   },

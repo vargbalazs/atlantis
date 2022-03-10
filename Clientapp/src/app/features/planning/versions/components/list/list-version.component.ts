@@ -6,6 +6,7 @@ import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { PlanningVersionService } from '../../services/version.service';
 import { versions } from './sampledata';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'versions',
@@ -20,9 +21,10 @@ export class PlanningVersionComponent
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     protected versionService: PlanningVersionService,
+    loaderService: LoaderService,
     private customNotificationService: CustomNotificationService
   ) {
-    super(msgDialogService, notificationService, versionService);
+    super(msgDialogService, notificationService, versionService, loaderService);
   }
 
   ngOnInit() {
@@ -39,7 +41,6 @@ export class PlanningVersionComponent
       .result.subscribe((result) => {
         const dialogResult = JSON.parse(JSON.stringify(result));
         if (dialogResult.primary) {
-          this.loadingOverlayVisible = true;
           // this.versionService.changeStatus(+!dataItem.status).subscribe(() => {
           //   this.customNotificationService.showNotification(
           //     'A státusz sikeresen módosításra került',
@@ -57,7 +58,6 @@ export class PlanningVersionComponent
               3000,
               'success'
             );
-            this.loadingOverlayVisible = false;
           }, 1500);
         }
       });

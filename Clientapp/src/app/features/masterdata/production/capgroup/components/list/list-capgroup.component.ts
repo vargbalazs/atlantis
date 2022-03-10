@@ -7,6 +7,7 @@ import { CopyEntity } from '../../../../../../shared/models/copy.model';
 import { CopyService } from '../../services/copy.service';
 import { CapGroupService } from '../../services/capgroup.service';
 import { capGroups } from './sampledata';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'production-capgroup',
@@ -20,9 +21,15 @@ export class CapGroupComponent extends Crud<CapGroup> implements OnInit {
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     capGroupService: CapGroupService,
+    loaderService: LoaderService,
     private copyService: CopyService
   ) {
-    super(msgDialogService, notificationService, capGroupService);
+    super(
+      msgDialogService,
+      notificationService,
+      capGroupService,
+      loaderService
+    );
   }
 
   ngOnInit() {
@@ -62,9 +69,7 @@ export class CapGroupComponent extends Crud<CapGroup> implements OnInit {
     //       });
     //     }
     //   });
-    this.loadingOverlayVisible = true;
     setTimeout(() => {
-      this.loadingOverlayVisible = false;
       console.log('finished');
       this.showNotification('A másolás sikeresen megtörtént', 3000, 'success');
     }, 1500);

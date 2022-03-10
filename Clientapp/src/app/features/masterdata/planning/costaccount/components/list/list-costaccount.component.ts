@@ -3,6 +3,7 @@ import { NotificationService } from '@progress/kendo-angular-notification';
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
 import { Crud } from 'src/app/shared/classes/crud.class';
 import { CopyEntity } from 'src/app/shared/models/copy.model';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { CopyService } from '../../services/copy.service';
 import { CostAccountService } from '../../services/costaccount.service';
@@ -20,9 +21,15 @@ export class CostAccountComponent extends Crud<CostAccount> implements OnInit {
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     costaccountService: CostAccountService,
-    private copyService: CopyService
+    private copyService: CopyService,
+    loaderService: LoaderService
   ) {
-    super(msgDialogService, notificationService, costaccountService);
+    super(
+      msgDialogService,
+      notificationService,
+      costaccountService,
+      loaderService
+    );
   }
 
   ngOnInit() {
@@ -62,9 +69,7 @@ export class CostAccountComponent extends Crud<CostAccount> implements OnInit {
     //       });
     //     }
     //   });
-    this.loadingOverlayVisible = true;
     setTimeout(() => {
-      this.loadingOverlayVisible = false;
       console.log('finished');
       this.showNotification('A másolás sikeresen megtörtént', 3000, 'success');
     }, 1500);

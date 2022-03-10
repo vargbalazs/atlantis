@@ -12,6 +12,7 @@ import { map } from 'rxjs/operators';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { CostAccountingType } from 'src/app/features/masterdata/planning/costacctype/models/costacctype.model';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'list-frc',
@@ -20,7 +21,6 @@ import { CostAccountingType } from 'src/app/features/masterdata/planning/costacc
 })
 export class FrcComponent extends Crud<Frc> implements OnInit {
   filterEntity!: FilterEntity;
-  loadingOverlayVisible = false;
   frcs!: Frc[];
   listWasFiltered = false;
   companyId!: number;
@@ -36,10 +36,11 @@ export class FrcComponent extends Crud<Frc> implements OnInit {
     private frcService: FrcService,
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
+    loaderService: LoaderService,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    super(msgDialogService, notificationService, frcService);
+    super(msgDialogService, notificationService, frcService, loaderService);
   }
 
   ngOnInit() {
@@ -87,7 +88,6 @@ export class FrcComponent extends Crud<Frc> implements OnInit {
     year: number,
     costAccTypeId: number
   ) {
-    this.loadingOverlayVisible = true;
     // this.frcService
     //   .getFrcs(companyId!, plantId!, year!, costAccTypeId!)
     //   .subscribe((result) => {
@@ -111,7 +111,6 @@ export class FrcComponent extends Crud<Frc> implements OnInit {
       );
       this.frcs.forEach((frc) => (frc.hovered = false));
       this.gridData = { data: this.frcs, total: this.frcs.length };
-      this.loadingOverlayVisible = false;
       this.listWasFiltered = true;
       this.year = year;
       this.company = this.frcs[0].company!;

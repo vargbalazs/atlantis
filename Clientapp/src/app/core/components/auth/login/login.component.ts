@@ -1,18 +1,26 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TextBoxComponent } from '@progress/kendo-angular-inputs';
 
 import { userIcon } from '@progress/kendo-svg-icons';
 import { AuthService } from '../../../services/auth.service';
-import { LoginUserData } from './loginuser.type';
+import { User } from '../../../models/user.model';
+import { HeaderType } from 'src/app/core/enums/header-type.enum';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'auth-login',
   templateUrl: './login.component.html',
   styleUrls: ['../authroot/authroot.component.css'],
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('tbxPassword')
   tbxPassword!: TextBoxComponent;
 
@@ -21,22 +29,29 @@ export class LoginComponent implements OnInit, AfterViewInit {
   };
 
   loginForm!: FormGroup;
-  formData: LoginUserData = {
-    email: '',
-    password: '',
-  };
+  formData!: User;
 
-  loadingOverlayVisible: boolean = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private loaderService: LoaderService
+  ) {}
 
   ngOnInit() {
-    this.initLoginForm();
+    if (this.authService.isUserLoggedIn()) {
+      this.router.navigate(['/home'], { skipLocationChange: true });
+    } else {
+      this.initLoginForm();
+    }
   }
 
   ngAfterViewInit() {
     this.tbxPassword.input.nativeElement.type = 'password';
   }
+
+  ngOnDestroy() {}
 
   togglePass() {
     this.authService.togglePass(this.tbxPassword);
@@ -53,11 +68,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   initLoginForm() {
+    this.formData = new User();
     this.loginForm = new FormGroup({
-      email: new FormControl(this.formData.email, [
-        Validators.required,
-        Validators.email,
-      ]),
+      userName: new FormControl(this.formData.userName, [Validators.required]),
       password: new FormControl(this.formData.password, [Validators.required]),
     });
   }
@@ -65,12 +78,21 @@ export class LoginComponent implements OnInit, AfterViewInit {
   submitForm() {
     this.loginForm.markAllAsTouched();
     if (this.loginForm.valid) {
-      // simulate the login, need to be changed later
-      this.loadingOverlayVisible = true;
-      setTimeout(() => {
-        this.router.navigate(['/home'], { skipLocationChange: true });
-        this.loadingOverlayVisible = false;
-      }, 1500);
+      const user = <User>this.loginForm.value;
+      this.authService.login(user).subscribe((res) => {
+        const token = res.headers.get(HeaderType.JWT_TOKEN);
+        this.authService.saveToken(token!);
+        this.authService.addUserToLocalCache(res.body!);
+        if (res.body?.isFirstLogin) {
+          this.authService.loginSub.next(user.userName!);
+          this.router.navigate(['/auth/firstlogin'], {
+            skipLocationChange: true,
+            state: { userName: user.userName },
+          });
+        } else {
+          this.router.navigate(['/home'], { skipLocationChange: true });
+        }
+      });
     }
   }
 }

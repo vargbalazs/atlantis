@@ -9,6 +9,7 @@ import { frcHc } from './sampledata';
 import { FrcHc } from '../../models/frc-hc.model';
 import { cloneable } from 'src/app/shared/classes/cloneable.class';
 import { GroupDescriptor } from '@progress/kendo-data-query';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'hc',
@@ -20,7 +21,7 @@ export class HcComponent implements OnInit {
   editing = false;
   editedRowIndex!: number;
   formGroup!: FormGroup;
-  loadingOverlayVisible = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
   departments: Department[] = [];
   periods: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   originalFrcHc!: FrcHc;
@@ -33,7 +34,8 @@ export class HcComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private frcService: FrcService,
-    private notificationService: CustomNotificationService
+    private notificationService: CustomNotificationService,
+    private loaderService: LoaderService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -47,9 +49,7 @@ export class HcComponent implements OnInit {
     this.groups = [
       { field: 'hcPlanningItem.costGroup.name', aggregates: this.aggregates },
     ];
-    this.loadingOverlayVisible = true;
     setTimeout(() => {
-      this.loadingOverlayVisible = false;
       this.departments = departments.filter(
         (dep) => dep.plantId === this.plantId
       );
@@ -89,7 +89,6 @@ export class HcComponent implements OnInit {
     rowIndex: number;
   }) {
     if (this.formGroup.valid) {
-      this.loadingOverlayVisible = true;
       setTimeout(() => {
         this.gridData.data = (<FrcHc[]>this.gridData.data).map((item) =>
           item.id === this.formGroup.get('id')?.value
@@ -99,7 +98,6 @@ export class HcComponent implements OnInit {
         this.editing = false;
         sender.closeRow(rowIndex);
         console.log('finished');
-        this.loadingOverlayVisible = false;
         this.notificationService.showNotification(
           'Adatok sikeresen mentve',
           3000,
@@ -147,9 +145,7 @@ export class HcComponent implements OnInit {
 
   departmentChange(value: Department) {
     if (value) {
-      this.loadingOverlayVisible = true;
       setTimeout(() => {
-        this.loadingOverlayVisible = false;
         this.gridData.data = frcHc.filter(
           (item) => item.hcPlanningItem?.job?.depId === value.id
         );

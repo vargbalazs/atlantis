@@ -5,6 +5,7 @@ import { AuthRootComponent } from './authroot.component';
 import { LoginModule } from '../login/login.module';
 import { SignUpModule } from '../signup/signup.module';
 import { ForgotPwdModule } from '../forgotpwd/forgotpwd.module';
+import { FirstLoginModule } from '../firstlogin/firstlogin.module';
 
 @NgModule({
   declarations: [AuthRootComponent],
@@ -14,6 +15,7 @@ import { ForgotPwdModule } from '../forgotpwd/forgotpwd.module';
     LoginModule,
     SignUpModule,
     ForgotPwdModule,
+    FirstLoginModule,
   ],
   providers: [],
   exports: [AuthRootComponent],

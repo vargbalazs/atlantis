@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -6,55 +6,42 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TextBoxComponent } from '@progress/kendo-angular-inputs';
 
 import { userIcon } from '@progress/kendo-svg-icons';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/core/models/user.model';
+import { LoaderService } from 'src/app/shared/services/loader.service';
+import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { AuthService } from '../../../services/auth.service';
-import { SignupValidation } from './signup.validators';
-import { SignupUserData } from './signupuser.type';
 
 @Component({
   selector: 'auth-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['../authroot/authroot.component.css'],
 })
-export class SignUpComponent implements OnInit, AfterViewInit {
-  @ViewChild('tbxPassword')
-  tbxPassword!: TextBoxComponent;
-  @ViewChild('tbxRepeatPassword') tbxRepeatPassword!: TextBoxComponent;
-
+export class SignUpComponent implements OnInit {
   icons = {
     user: userIcon,
   };
 
   signupForm!: FormGroup;
-  formData: SignupUserData = {
-    email: '',
-    password: '',
-    passwordConfirm: '',
-  };
+  formData!: User;
 
-  loadingOverlayVisible: boolean = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private customNotificationService: CustomNotificationService,
+    private loaderService: LoaderService
+  ) {}
 
   ngOnInit() {
-    this.initSignupForm();
-  }
-
-  ngAfterViewInit() {
-    this.tbxPassword.input.nativeElement.type = 'password';
-    this.tbxRepeatPassword.input.nativeElement.type = 'password';
-  }
-
-  togglePass() {
-    this.authService.togglePass(this.tbxPassword);
-    return false;
-  }
-
-  togglePassRep() {
-    this.authService.togglePass(this.tbxRepeatPassword);
-    return false;
+    if (this.authService.isUserLoggedIn()) {
+      this.router.navigate(['/home'], { skipLocationChange: true });
+    } else {
+      this.initSignupForm();
+    }
   }
 
   backToLogin() {
@@ -63,34 +50,61 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   }
 
   initSignupForm() {
-    this.signupForm = new FormGroup(
-      {
-        email: new FormControl(
-          this.formData.email,
-          [Validators.required, Validators.email],
-          SignupValidation.checkEmail
-        ),
-        password: new FormControl(this.formData.password, [
-          Validators.required,
-          Validators.pattern('(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,}'),
-        ]),
-        passwordConfirm: new FormControl(this.formData.passwordConfirm, [
-          Validators.required,
-        ]),
-      },
-      { validators: [SignupValidation.match('password', 'passwordConfirm')] }
-    );
+    this.formData = new User();
+    this.signupForm = new FormGroup({
+      userName: new FormControl(
+        this.formData.userName,
+        [Validators.required],
+        this.checkUserName.bind(this)
+      ),
+      firstName: new FormControl(this.formData.firstName, [
+        Validators.required,
+      ]),
+      lastName: new FormControl(this.formData.lastName, [Validators.required]),
+      email: new FormControl(
+        this.formData.email,
+        [Validators.required, Validators.email],
+        this.checkUserEmail.bind(this)
+      ),
+    });
   }
 
   submitForm() {
     this.signupForm.markAllAsTouched();
     if (this.signupForm.valid) {
-      // simulate the sign up, need to be changed later
-      this.loadingOverlayVisible = true;
-      setTimeout(() => {
-        this.router.navigate(['/home'], { skipLocationChange: true });
-        this.loadingOverlayVisible = false;
-      }, 1500);
+      const user = <User>this.signupForm.value;
+      this.authService.register(user).subscribe((resp: User) => {
+        this.customNotificationService.showNotification(
+          `Az új fiók sikeresen létre lett hozva. A bejelentkezési jelszót elküldtük email-ben.`,
+          5000,
+          'success'
+        );
+        this.backToLogin();
+      });
     }
+  }
+
+  checkUserName(control: AbstractControl): Promise<any> | Observable<any> {
+    return new Promise((resolve, reject) => {
+      this.authService.userNameExists(control.value).subscribe((res) => {
+        if (res) {
+          resolve({ userNameIsAlreadyInUse: res });
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  }
+
+  checkUserEmail(control: AbstractControl): Promise<any> | Observable<any> {
+    return new Promise((resolve, reject) => {
+      this.authService.emailExists(control.value).subscribe((res) => {
+        if (res) {
+          resolve({ userEmailIsAlreadyInUse: res });
+        } else {
+          resolve(null);
+        }
+      });
+    });
   }
 }

@@ -1,0 +1,89 @@
+<div class="component-header">Regisztrált felhasználók</div>
+<div class="grid">
+  <kendo-grid [kendoGridBinding]="gridData.data" [sortable]="true">
+    <kendo-grid-column
+      field="userId"
+      title="Felhasználó ID"
+    ></kendo-grid-column>
+    <kendo-grid-column field="firstName" title="Keresztnév"></kendo-grid-column>
+    <kendo-grid-column field="lastName" title="Vezetéknév"></kendo-grid-column>
+    <kendo-grid-column
+      field="userName"
+      title="Felhasználónév"
+    ></kendo-grid-column>
+    <kendo-grid-column field="email" title="E-mail"></kendo-grid-column>
+    <kendo-grid-column field="role" title="Jogosultság"></kendo-grid-column>
+    <kendo-grid-column field="isActive" title="Státusz">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <div class="badge-container">
+          <div
+            [ngClass]="dataItem.isActive ? 'active' : 'inactive'"
+            class="badge"
+          >
+            {{ dataItem.isActive ? "Aktív" : "Inaktív" }}
+          </div>
+          <div
+            [ngClass]="!dataItem.isNotLocked ? 'inactive' : 'hidden'"
+            class="badge"
+          >
+            {{ !dataItem.isNotLocked ? "Zárolt" : "" }}
+          </div>
+        </div>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-command-column [width]="110">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <kendo-icon
+          class="command-icon"
+          themeColor="primary"
+          name="preview"
+          (click)="showDetails({ dataItem: dataItem })"
+        ></kendo-icon>
+        <kendo-icon
+          class="command-icon"
+          themeColor="primary"
+          name="edit"
+          (click)="editHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+        <kendo-icon
+          class="command-icon"
+          themeColor="secondary"
+          name="delete"
+          (click)="removeHandler({ dataItem: dataItem })"
+        ></kendo-icon>
+        <kendo-svg-icon
+          [icon]="passwordIcon"
+          class="command-icon"
+          themeColor="primary"
+          (click)="resetPwd({ dataItem: dataItem })"
+        ></kendo-svg-icon>
+      </ng-template>
+    </kendo-grid-command-column>
+    <ng-template kendoGridNoRecordsTemplate>
+      Nincs megjelenítendő adat
+    </ng-template>
+  </kendo-grid>
+</div>
+<userdetails
+  [model]="userDetails"
+  [user]="userDetails"
+  (cancel)="userDetailsCancel()"
+></userdetails>
+<edit
+  [model]="editDataItem"
+  [isNew]="isNew"
+  (save)="saveHandler($event)"
+  (cancel)="cancelHandler()"
+></edit>
+<div
+  class="x-dialog-container"
+  confirmdialog-style
+  [isMsgDialog]="isMsgDialog"
+  [dialogType]="dialogType"
+>
+  <div kendoDialogContainer></div>
+</div>
+<loading-overlay
+  [visible]="loadingOverlayVisible | async"
+  loadingText=""
+></loading-overlay>

@@ -9,13 +9,15 @@ import { StartLayoutModule } from './core/components/start-layout/start-layout.m
 import { RouteReuseStrategy } from '@angular/router';
 import { MasterDataModule } from './features/masterdata/masterdata.module';
 import { CustomRouteReuseStrategy } from './core/utils/custom-route-strategy.class';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GlobalErrorHandler } from './core/error/global-error-handler';
 import { ErrorPageModule } from './core/components/errorpage/errorpage.module';
 import { ProductionDataModule } from './features/productiondata/productiondata.module';
 import { ForecastModule } from './features/forecast/forecast.module';
 import { PlanningModule } from './features/planning/planning.module';
 import { PlantResultModule } from './features/plantresult/plantresult.module';
+import { AdminModule } from './core/components/admin/admin.module';
+import { HttpErrorInterceptor } from './core/interceptor/http-error.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +28,7 @@ import { PlantResultModule } from './features/plantresult/plantresult.module';
     HttpClientModule,
     ErrorPageModule,
     AuthModule,
+    AdminModule,
     StartLayoutModule,
     MasterDataModule,
     ProductionDataModule,
@@ -35,6 +38,7 @@ import { PlantResultModule } from './features/plantresult/plantresult.module';
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
   ],
   bootstrap: [AppComponent],

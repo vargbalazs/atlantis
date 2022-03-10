@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Company } from '../models/company.model';
 import { HttpClient } from '@angular/common/http';
 import { IRepository } from 'src/app/shared/interfaces/repository.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class CompanyService implements IRepository<Company> {
@@ -12,7 +13,10 @@ export class CompanyService implements IRepository<Company> {
   }
 
   update(company: Company) {
-    return this.http.patch<number>('/api/masterdata/general/company', company);
+    return this.http.patch<number>(
+      `${environment.apiUrl}/api/masterdata/general/company`,
+      company
+    );
   }
 
   delete(id: number) {

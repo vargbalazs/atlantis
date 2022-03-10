@@ -10,6 +10,7 @@ import { CostCenter } from 'src/app/features/masterdata/planning/costcenter/mode
 import { costcenters } from 'src/app/features/masterdata/planning/costcenter/components/list/sampledata';
 import { costAccounts } from 'src/app/features/masterdata/planning/costaccount/components/list/sampledata';
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'othercosts',
@@ -22,7 +23,7 @@ export class OtherCostsComponent implements OnInit {
   editing = false;
   editedRowIndex!: number;
   formGroup!: FormGroup;
-  loadingOverlayVisible = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
   otherCosts: FrcOtherCost[] = [];
   originalOtherCost: FrcOtherCost = new FrcOtherCost();
   costCenters: CostCenter[] = [];
@@ -36,7 +37,8 @@ export class OtherCostsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private frcService: FrcService,
-    private notificationService: CustomNotificationService
+    private notificationService: CustomNotificationService,
+    private loaderService: LoaderService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -46,7 +48,6 @@ export class OtherCostsComponent implements OnInit {
       data: [],
       total: 0,
     };
-    this.loadingOverlayVisible = true;
     setTimeout(() => {
       this.otherCosts = otherCosts.filter((item) => item.frcId === this.frcId);
       this.gridData = {
@@ -59,7 +60,6 @@ export class OtherCostsComponent implements OnInit {
       this.costAccounts = costAccounts.filter(
         (item) => item.companyId === this.companyId && item.year === this.year
       );
-      this.loadingOverlayVisible = false;
     }, 1500);
   }
 
@@ -122,7 +122,6 @@ export class OtherCostsComponent implements OnInit {
   }) {
     this.formGroup.patchValue({ frcId: this.frcId });
     if (this.formGroup.valid) {
-      this.loadingOverlayVisible = true;
       setTimeout(() => {
         if (isNew) {
           this.gridData.data.push(this.formGroup.value);
@@ -137,7 +136,6 @@ export class OtherCostsComponent implements OnInit {
         }
         sender.closeRow(rowIndex);
         console.log('finished');
-        this.loadingOverlayVisible = false;
         this.notificationService.showNotification(
           'Adatok sikeresen mentve',
           3000,

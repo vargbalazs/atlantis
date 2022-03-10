@@ -15,6 +15,7 @@ import { GroupDescriptor } from '@progress/kendo-data-query';
 import { ContextMenuComponent } from '@progress/kendo-angular-menu';
 import { Task } from '../../../../../shared/models/task.model';
 import { TaskService } from '../../../../../shared/services/task.service';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'cost-planningitems',
@@ -62,9 +63,15 @@ export class CostPlanningItemsComponent
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     costPlanningService: CostPlanningService,
+    loaderService: LoaderService,
     private taskService: TaskService
   ) {
-    super(msgDialogService, notificationService, costPlanningService);
+    super(
+      msgDialogService,
+      notificationService,
+      costPlanningService,
+      loaderService
+    );
   }
 
   ngOnInit() {
@@ -83,7 +90,6 @@ export class CostPlanningItemsComponent
   saveFilterForm(filterEntity: FilterEntity) {
     this.filterEntity = undefined!;
     this.filterEntityInput = filterEntity;
-    this.loadingOverlayVisible = true;
     // this.actProdDataService
     //   .getActualData(
     //     filterEntity.companyId!,
@@ -101,7 +107,6 @@ export class CostPlanningItemsComponent
     //   });
 
     setTimeout(() => {
-      this.loadingOverlayVisible = false;
       const filteredData = costPlanningItems.filter(
         (item) =>
           item.companyId === filterEntity.companyId &&
@@ -198,7 +203,6 @@ export class CostPlanningItemsComponent
 
   saveTaskForm(task: Task) {
     this.task = undefined!;
-    this.loadingOverlayVisible = true;
     // if (this.isNew) {
     //   this.taskService.add(task).subscribe((result) => {
     //     this.loadingOverlayVisible = false;
@@ -236,7 +240,6 @@ export class CostPlanningItemsComponent
     // }
     if (this.isNew) {
       setTimeout(() => {
-        this.loadingOverlayVisible = false;
         this.gridData.data.forEach((item: CostPlanningItem) => {
           if (item.id === task.planningItemId) {
             item.task = task;
@@ -254,7 +257,6 @@ export class CostPlanningItemsComponent
       }, 1500);
     } else {
       setTimeout(() => {
-        this.loadingOverlayVisible = false;
         this.gridData.data.forEach((item: CostPlanningItem) => {
           if (item.id === task.planningItemId) item.task = task;
         });
@@ -273,7 +275,6 @@ export class CostPlanningItemsComponent
   }
 
   taskDone(task: Task) {
-    this.loadingOverlayVisible = true;
     // this.taskService.done(task.id!).subscribe(() => {
     //   this.loadingOverlayVisible = false;
     //   this.showNotification(
@@ -289,7 +290,6 @@ export class CostPlanningItemsComponent
           item.task!.taskName = '';
         }
       });
-      this.loadingOverlayVisible = false;
       this.showNotification(
         'A feladat sikeresen módosítva lett',
         3000,

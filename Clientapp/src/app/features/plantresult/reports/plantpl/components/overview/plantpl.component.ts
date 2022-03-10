@@ -10,6 +10,7 @@ import { PlantPlOverview } from '../../models/plantploverview.model';
 import { plantPlOverview } from './sampledata';
 import { costGroups } from 'src/app/features/masterdata/planning/costgroup/components/list/sampledata';
 import { CostGroup } from 'src/app/features/masterdata/planning/costgroup/models/costgroup.model';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'plantpl',
@@ -24,7 +25,7 @@ export class PlantPlOverviewComponent implements OnInit {
   filterEntityInput!: FilterEntity;
   gridData!: GridDataResult;
   filtered = false;
-  loadingOverlayVisible = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
   filterFirst = false;
   reportMonths: IReportMonth = { actMonth: '', cumMonth: '' };
   sums: IReportSum = {
@@ -46,14 +47,16 @@ export class PlantPlOverviewComponent implements OnInit {
 
   @ViewChild('grid') grid!: GridComponent;
 
-  constructor(private router: Router, private reportService: ReportService) {
+  constructor(
+    private router: Router,
+    private reportService: ReportService,
+    private loaderService: LoaderService
+  ) {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state) {
-      this.loadingOverlayVisible = true;
       const filterEntity = <FilterEntity>state.filterEntity;
       this.filterEntityInput = filterEntity;
       setTimeout(() => {
-        this.loadingOverlayVisible = false;
         this.filterCostGroups(filterEntity);
         const filteredData = this.loadPlantPlOverview(
           filterEntity.plantId!,
@@ -101,9 +104,7 @@ export class PlantPlOverviewComponent implements OnInit {
   saveFilterForm(filterEntity: FilterEntity) {
     this.filterEntity = undefined!;
     this.filterEntityInput = filterEntity;
-    this.loadingOverlayVisible = true;
     setTimeout(() => {
-      this.loadingOverlayVisible = false;
       this.filterCostGroups(filterEntity);
       const filteredData = this.loadPlantPlOverview(
         filterEntity.plantId!,

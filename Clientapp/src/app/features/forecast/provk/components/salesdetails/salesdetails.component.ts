@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GridComponent } from '@progress/kendo-angular-grid';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { SalesDetail } from '../../models/salesdetail.model';
 import { ProvkService } from '../../services/provk.service';
@@ -21,7 +22,7 @@ import { ProvkService } from '../../services/provk.service';
 export class SalesDetailsComponent implements OnInit, OnChanges {
   detailsForm!: FormGroup;
   isInEditMode = false;
-  loadingOverlayVisible = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
 
   @Input() salesDetails: SalesDetail[] = [];
   @Input() selectedCapTypeId!: string;
@@ -42,7 +43,8 @@ export class SalesDetailsComponent implements OnInit, OnChanges {
   constructor(
     private formBuilder: FormBuilder,
     private notificationService: CustomNotificationService,
-    private provkService: ProvkService
+    private provkService: ProvkService,
+    private loaderService: LoaderService
   ) {}
 
   ngOnInit() {
@@ -86,7 +88,6 @@ export class SalesDetailsComponent implements OnInit, OnChanges {
     if (this.detailsForm.invalid) {
       return;
     }
-    this.loadingOverlayVisible = true;
     // this.provkService.updateSalesDetails(this.salesDetails).subscribe(() => {
     //   this.closeAllRows();
     //   this.isInEditMode = false;
@@ -108,7 +109,6 @@ export class SalesDetailsComponent implements OnInit, OnChanges {
         editMode: this.isInEditMode,
         selectedCapTypeId: this.selectedCapTypeId,
       });
-      this.loadingOverlayVisible = false;
       this.notificationService.showNotification(
         'Az adatok sikeresen mentésre kerültek',
         3000,

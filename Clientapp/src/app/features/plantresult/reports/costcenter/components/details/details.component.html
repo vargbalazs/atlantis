@@ -127,6 +127,6 @@
   </kendo-grid>
 </div>
 <loading-overlay
-  [visible]="loadingOverlayVisible"
+  [visible]="loadingOverlayVisible | async"
   loadingText=""
 ></loading-overlay>

@@ -6,6 +6,7 @@ import { CustomNotificationService } from 'src/app/shared/services/notification.
 import { FrcService } from '../../services/frc.service';
 import { frcCapacityItems } from './sampledata';
 import { cloneable } from 'src/app/shared/classes/cloneable.class';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'capacity',
@@ -23,7 +24,7 @@ export class CapacityComponent implements OnInit {
   editing = false;
   editedRowIndex!: number;
   formGroup!: FormGroup;
-  loadingOverlayVisible = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
   frcCapacity: FrcCapacity[] = [];
   originalFrcCapacity: FrcCapacity = new FrcCapacity();
 
@@ -33,7 +34,8 @@ export class CapacityComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private frcService: FrcService,
-    private notificationService: CustomNotificationService
+    private notificationService: CustomNotificationService,
+    private loaderService: LoaderService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -53,7 +55,6 @@ export class CapacityComponent implements OnInit {
         data: [],
         total: 0,
       };
-      this.loadingOverlayVisible = true;
       setTimeout(() => {
         this.frcCapacity = frcCapacityItems.filter(
           (item) => item.frcId === this.frcId
@@ -62,7 +63,6 @@ export class CapacityComponent implements OnInit {
           data: this.frcCapacity,
           total: this.frcCapacity.length,
         };
-        this.loadingOverlayVisible = false;
       }, 1500);
     }
   }
@@ -101,7 +101,6 @@ export class CapacityComponent implements OnInit {
     rowIndex: number;
   }) {
     if (this.formGroup.valid) {
-      this.loadingOverlayVisible = true;
       setTimeout(() => {
         this.gridData.data = (<FrcCapacity[]>this.gridData.data).map((item) =>
           item.id === this.formGroup.get('id')?.value
@@ -111,7 +110,6 @@ export class CapacityComponent implements OnInit {
         this.editing = false;
         sender.closeRow(rowIndex);
         console.log('finished');
-        this.loadingOverlayVisible = false;
         this.notificationService.showNotification(
           'Adatok sikeresen mentve',
           3000,

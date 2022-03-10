@@ -4,14 +4,15 @@ import { GridDataResult } from '@progress/kendo-angular-grid';
 import { MsgDialogService } from '../services/msgdialog.service';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { IRepository } from '../interfaces/repository.interface';
-import { forkJoin, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
+import { LoaderService } from '../services/loader.service';
 
 export abstract class Crud<T extends { id?: number }> {
   gridData!: GridDataResult;
   // we don't want this to initialize in the constructor, because the visibility of the dialog depends on it
   editDataItem!: T;
   isNew: boolean;
-  loadingOverlayVisible: boolean;
+  loadingOverlayVisible: BehaviorSubject<boolean>;
   checkFunctionsOnSave: ((entity: T) => Observable<boolean>)[] = [];
   checkFunctionsOnDelete: ((entity: T) => Observable<boolean>)[] = [];
   isMsgDialog = false;
@@ -20,10 +21,11 @@ export abstract class Crud<T extends { id?: number }> {
   constructor(
     protected msgDialogService: MsgDialogService,
     protected notificationService: NotificationService,
-    protected repositoryService: IRepository<T>
+    protected repositoryService: IRepository<T>,
+    protected loaderService: LoaderService
   ) {
     this.isNew = false;
-    this.loadingOverlayVisible = false;
+    this.loadingOverlayVisible = this.loaderService.isLoading;
   }
 
   addHandler() {
@@ -32,7 +34,7 @@ export abstract class Crud<T extends { id?: number }> {
   }
 
   saveHandler(entity: T) {
-    this.loadingOverlayVisible = true;
+    // this.loadingOverlayVisible = true;
     // if we have check functions
     if (this.checkFunctionsOnSave.length > 0) {
       // stores the observables in an array and pass it to forkJoin
@@ -45,7 +47,7 @@ export abstract class Crud<T extends { id?: number }> {
         if (result.every((valid) => valid)) {
           this.save(entity);
         } else {
-          this.loadingOverlayVisible = false;
+          // this.loadingOverlayVisible = false;
         }
       });
     } else {
@@ -68,7 +70,7 @@ export abstract class Crud<T extends { id?: number }> {
       //   );
       // });
       setTimeout(() => {
-        this.loadingOverlayVisible = false;
+        // this.loadingOverlayVisible = false;
         console.log('finished');
         this.gridData.data = [...this.gridData.data, entity];
         this.showNotification(
@@ -79,20 +81,7 @@ export abstract class Crud<T extends { id?: number }> {
       }, 1500);
       console.log('saving...');
     } else {
-      // this.repositoryService.update(entity).subscribe((id) => {
-      //   this.loadingOverlayVisible = false;
-      //   console.log('finished');
-      //   this.gridData.data = this.gridData.data.map((item) =>
-      //     item.id === entity.id ? entity : item
-      //   );
-      //   this.showNotification(
-      //     'A módosítások sikeresen mentésre kerültek',
-      //     3000,
-      //     'success'
-      //   );
-      // });
-      setTimeout(() => {
-        this.loadingOverlayVisible = false;
+      this.repositoryService.update!(entity).subscribe((id) => {
         console.log('finished');
         this.gridData.data = this.gridData.data.map((item) =>
           item.id === entity.id ? entity : item
@@ -102,7 +91,7 @@ export abstract class Crud<T extends { id?: number }> {
           3000,
           'success'
         );
-      }, 1500);
+      });
       console.log('saving...');
     }
   }
@@ -125,7 +114,7 @@ export abstract class Crud<T extends { id?: number }> {
         // the properties on the result are not direct accessible, that's why this hack
         const dialogResult = JSON.parse(JSON.stringify(result));
         if (dialogResult.primary) {
-          this.loadingOverlayVisible = true;
+          // this.loadingOverlayVisible = true;
           // if we have check functions
           if (this.checkFunctionsOnDelete.length > 0) {
             // stores the observables in an array and pass it to forkJoin
@@ -138,7 +127,7 @@ export abstract class Crud<T extends { id?: number }> {
               if (result.every((valid) => valid)) {
                 this.remove(dataItem);
               } else {
-                this.loadingOverlayVisible = false;
+                // this.loadingOverlayVisible = false;
               }
             });
           } else {
@@ -150,21 +139,8 @@ export abstract class Crud<T extends { id?: number }> {
 
   remove(entity: T) {
     // call a service to remove the item
-    // this.repositoryService.delete(dataItem.id!).subscribe((id) => {
-    //   this.loadingOverlayVisible = false;
-    //   console.log('finished');
-    //   // remove the item from grid
-    //   this.gridData.data = this.gridData.data.filter(
-    //     (item) => item.id !== dataItem.id
-    //   );
-    //   this.showNotification(
-    //     'A kiválasztott elem sikeresen törölve lett',
-    //     3000,
-    //     'success'
-    //   );
-    // });
-    setTimeout(() => {
-      this.loadingOverlayVisible = false;
+    this.repositoryService.delete!(entity.id!).subscribe((id) => {
+      // this.loadingOverlayVisible = false;
       console.log('finished');
       // remove the item from grid
       this.gridData.data = this.gridData.data.filter(
@@ -175,7 +151,7 @@ export abstract class Crud<T extends { id?: number }> {
         3000,
         'success'
       );
-    }, 1500);
+    });
     console.log('deleting...');
   }
 

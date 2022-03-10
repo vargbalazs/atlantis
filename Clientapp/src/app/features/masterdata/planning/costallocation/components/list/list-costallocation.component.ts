@@ -3,6 +3,7 @@ import { NotificationService } from '@progress/kendo-angular-notification';
 import { CostAllocation } from 'src/app/features/masterdata/planning/costallocation/models/costallocation.model';
 import { Crud } from 'src/app/shared/classes/crud.class';
 import { CopyEntity } from 'src/app/shared/models/copy.model';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { costcenters } from '../../../costcenter/components/list/sampledata';
 import { CostCenter } from '../../../costcenter/models/costcenter.model';
@@ -30,9 +31,15 @@ export class CostAllocationComponent
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     costallocationService: CostAllocationService,
+    loaderService: LoaderService,
     private copyService: CopyService
   ) {
-    super(msgDialogService, notificationService, costallocationService);
+    super(
+      msgDialogService,
+      notificationService,
+      costallocationService,
+      loaderService
+    );
   }
 
   ngOnInit() {
@@ -72,7 +79,6 @@ export class CostAllocationComponent
 
   saveHandlerCopyAllocation(copyAllocation: CopyEntity) {
     this.copyAllocation = undefined!;
-    this.loadingOverlayVisible = true;
     // this.copyService
     //   .allocationsAlreadyExist(copyAllocation)
     //   .subscribe((result) => {
@@ -95,9 +101,7 @@ export class CostAllocationComponent
     //       });
     //     }
     //   });
-    this.loadingOverlayVisible = true;
     setTimeout(() => {
-      this.loadingOverlayVisible = false;
       console.log('finished');
       this.showNotification('A másolás sikeresen megtörtént', 3000, 'success');
     }, 1500);

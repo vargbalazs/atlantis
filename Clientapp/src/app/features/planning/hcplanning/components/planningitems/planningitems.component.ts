@@ -21,6 +21,7 @@ import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/mo
 import { costAccounts } from 'src/app/features/masterdata/planning/costaccount/components/list/sampledata';
 import { CostAssign } from '../../models/costassign.model';
 import { costAssigns } from './costassigns';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'hc-planningitems',
@@ -79,9 +80,15 @@ export class HcPlanningItemsComponent
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     hcPlanningService: HcPlanningService,
+    loaderService: LoaderService,
     private taskService: TaskService
   ) {
-    super(msgDialogService, notificationService, hcPlanningService);
+    super(
+      msgDialogService,
+      notificationService,
+      hcPlanningService,
+      loaderService
+    );
   }
 
   ngOnInit() {
@@ -101,7 +108,6 @@ export class HcPlanningItemsComponent
   saveFilterForm(filterEntity: FilterEntity) {
     this.filterEntity = undefined!;
     this.filterEntityInput = filterEntity;
-    this.loadingOverlayVisible = true;
     // this.actProdDataService
     //   .getActualData(
     //     filterEntity.companyId!,
@@ -119,7 +125,6 @@ export class HcPlanningItemsComponent
     //   });
 
     setTimeout(() => {
-      this.loadingOverlayVisible = false;
       const filteredData = hcPlanningItems.filter(
         (item) =>
           item.companyId === filterEntity.companyId &&
@@ -185,10 +190,8 @@ export class HcPlanningItemsComponent
         break;
       }
       case 'costAssign': {
-        this.loadingOverlayVisible = true;
         // call the service, if the backend is ready
         setTimeout(() => {
-          this.loadingOverlayVisible = false;
           this.costAssigns = costAssigns.filter(
             (costAssign) => costAssign.hcPlanningItemId === this.contextItem.id
           );
@@ -207,7 +210,6 @@ export class HcPlanningItemsComponent
 
   saveTaskForm(task: Task) {
     this.task = undefined!;
-    this.loadingOverlayVisible = true;
     // if (this.isNew) {
     //   this.taskService.add(task).subscribe((result) => {
     //     this.loadingOverlayVisible = false;
@@ -245,7 +247,6 @@ export class HcPlanningItemsComponent
     // }
     if (this.isNew) {
       setTimeout(() => {
-        this.loadingOverlayVisible = false;
         this.gridData.data.forEach((item: HcPlanningItem) => {
           if (item.id === task.planningItemId) {
             item.task = task;
@@ -263,7 +264,6 @@ export class HcPlanningItemsComponent
       }, 1500);
     } else {
       setTimeout(() => {
-        this.loadingOverlayVisible = false;
         this.gridData.data.forEach((item: HcPlanningItem) => {
           if (item.id === task.planningItemId) item.task = task;
         });
@@ -282,7 +282,6 @@ export class HcPlanningItemsComponent
   }
 
   taskDone(task: Task) {
-    this.loadingOverlayVisible = true;
     // this.taskService.done(task.id!).subscribe(() => {
     //   this.loadingOverlayVisible = false;
     //   this.showNotification(
@@ -298,7 +297,6 @@ export class HcPlanningItemsComponent
           item.task!.taskName = '';
         }
       });
-      this.loadingOverlayVisible = false;
       this.showNotification(
         'A feladat sikeresen módosítva lett',
         3000,

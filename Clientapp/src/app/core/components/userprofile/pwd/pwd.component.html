@@ -1,0 +1,39 @@
+<kendo-dialog
+  *ngIf="visible"
+  [width]="300"
+  [height]="350"
+  (close)="closeForm()"
+>
+  <kendo-dialog-titlebar class="x-bg-primary x-font">
+    {{ "Jelszó módosítása" }}
+  </kendo-dialog-titlebar>
+  <changepwd [fromProfile]="fromProfile"></changepwd>
+  <kendo-dialog-actions layout="stretched">
+    <button
+      type="button"
+      kendoButton
+      icon="cancel"
+      (click)="closeForm()"
+      class="x-btn-light click-light"
+    >
+      Mégsem
+    </button>
+    <button
+      type="submit"
+      kendoButton
+      icon="save"
+      [primary]="true"
+      (click)="onSave()"
+      class="x-btn-primary click-primary"
+    >
+      Módosítás
+    </button>
+    <loading-overlay
+      [ngStyle]="{
+        display: (loadingOverlayVisible | async) ? 'block' : 'none'
+      }"
+      [visible]="loadingOverlayVisible | async"
+      loadingText=""
+    ></loading-overlay>
+  </kendo-dialog-actions>
+</kendo-dialog>

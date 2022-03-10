@@ -10,7 +10,10 @@ import { Router } from '@angular/router';
 import { TextBoxComponent } from '@progress/kendo-angular-inputs';
 import { Align } from '@progress/kendo-angular-popup';
 import { Subscription } from 'rxjs';
+import { User } from '../../models/user.model';
+import { AuthService } from '../../services/auth.service';
 import { LayoutService } from '../../services/start-layout.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-bar',
@@ -18,7 +21,9 @@ import { LayoutService } from '../../services/start-layout.service';
   styleUrls: ['./appbar.component.css'],
 })
 export class AppBarComponent implements OnInit, OnDestroy {
-  showPopup: boolean = false;
+  showPopup = false;
+  adminUser = false;
+  user!: User;
 
   animateSettings: any = {
     type: 'fade',
@@ -35,17 +40,29 @@ export class AppBarComponent implements OnInit, OnDestroy {
   @ViewChild('searchBox') searchBox!: TextBoxComponent;
 
   private searchBoxSub!: Subscription;
+  private profileUpdatedSub!: Subscription;
 
-  constructor(private LayoutService: LayoutService, private router: Router) {}
+  constructor(
+    private layoutService: LayoutService,
+    private authService: AuthService,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.searchBoxSub = this.LayoutService.clearSearchBox.subscribe(() => {
+    this.searchBoxSub = this.layoutService.clearSearchBox.subscribe(() => {
       this.searchBox.clearValue();
     });
+    this.profileUpdatedSub = this.userService.profielUpdated.subscribe(() => {
+      this.showPopup = false;
+    });
+    this.adminUser =
+      this.authService.getUserFromLocalCache().role === 'ROLE_SUPER_USER';
   }
 
   ngOnDestroy() {
     this.searchBoxSub.unsubscribe();
+    this.profileUpdatedSub.unsubscribe();
   }
 
   @HostListener('document:click', ['$event'])
@@ -67,15 +84,19 @@ export class AppBarComponent implements OnInit, OnDestroy {
   }
 
   onDrawerToggleBtnClick() {
-    this.LayoutService.drawerToggleBtnClicked.next();
+    this.layoutService.drawerToggleBtnClicked.next();
   }
 
   onSearchBoxValueChange(value: string) {
-    this.LayoutService.searchBoxValueChanged.next(value);
+    this.layoutService.searchBoxValueChanged.next(value);
   }
 
   goToHome() {
     this.router.navigate(['/home'], { skipLocationChange: true });
     //this.LayoutService.drawerToggleBtnClicked.next();
+  }
+
+  showAdminArea() {
+    this.router.navigate(['/admin/userlist'], { skipLocationChange: true });
   }
 }

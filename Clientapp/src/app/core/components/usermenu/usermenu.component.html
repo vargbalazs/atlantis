@@ -1,6 +1,15 @@
-<div class="user-header x-font">[Logged in user name]</div>
+<div class="user-header x-font">{{ userName }}</div>
 <kendo-menu [vertical]="true" (select)="onSelectItem($event)">
   <kendo-menu-item text="Profil" icon="user"></kendo-menu-item>
   <kendo-menu-item text="Beállítások" icon="gear"></kendo-menu-item>
   <kendo-menu-item text="Kijelentkezés" icon="logout"></kendo-menu-item>
 </kendo-menu>
+<userprofile
+  [model]="loggedInUser"
+  (save)="saveUserHandler($event)"
+  (cancel)="cancelUserHandler()"
+></userprofile>
+<loading-overlay
+  [visible]="loadingOverlayVisible | async"
+  loadingText=""
+></loading-overlay>

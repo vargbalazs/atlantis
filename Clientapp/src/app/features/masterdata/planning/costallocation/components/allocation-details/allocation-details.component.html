@@ -214,7 +214,7 @@
       Mentés
     </button>
     <loading-overlay
-      [visible]="loadingOverlayVisible"
+      [visible]="loadingOverlayVisible | async"
       loadingText=""
     ></loading-overlay>
   </kendo-dialog-actions>

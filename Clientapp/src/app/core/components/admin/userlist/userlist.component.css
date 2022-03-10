@@ -1,0 +1,26 @@
+.badge {
+  border-radius: 4px;
+  color: white;
+  text-align: center;
+  width: fit-content;
+  padding: 0 1rem;
+  /* margin: 0 auto; */
+}
+
+.active {
+  background-color: #0bb7af;
+}
+
+.inactive {
+  background-color: #f64e60;
+}
+
+.badge-container {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
+}

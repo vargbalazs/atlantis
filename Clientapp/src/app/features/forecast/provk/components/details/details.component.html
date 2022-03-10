@@ -60,6 +60,6 @@
   <div kendoDialogContainer></div>
 </div>
 <loading-overlay
-  [visible]="loadingOverlayVisible"
+  [visible]="loadingOverlayVisible | async"
   loadingText=""
 ></loading-overlay>

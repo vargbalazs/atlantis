@@ -4,6 +4,7 @@ import { GridDataResult } from '@progress/kendo-angular-grid';
 import { IReportMonth } from 'src/app/shared/interfaces/reportmonth.interface';
 import { IReportSum } from 'src/app/shared/interfaces/reportsum.interface';
 import { FilterEntity } from 'src/app/shared/models/filter.model';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { ReportService } from 'src/app/shared/services/report.service';
 import { CostOverview } from '../../models/costoverview.model';
 import { costOverview } from './sampledata';
@@ -18,7 +19,7 @@ export class CostCenterOverviewComponent implements OnInit {
   filterEntityInput!: FilterEntity;
   gridData!: GridDataResult;
   filtered = false;
-  loadingOverlayVisible = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
   filterFirst = false;
   reportMonths: IReportMonth = { actMonth: '', cumMonth: '' };
   sums: IReportSum = {
@@ -34,14 +35,16 @@ export class CostCenterOverviewComponent implements OnInit {
     sumCumFrcDiff: 0,
   };
 
-  constructor(private router: Router, private reportService: ReportService) {
+  constructor(
+    private router: Router,
+    private reportService: ReportService,
+    private loaderService: LoaderService
+  ) {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state) {
-      this.loadingOverlayVisible = true;
       const filterEntity = <FilterEntity>state.filterEntity;
       this.filterEntityInput = filterEntity;
       setTimeout(() => {
-        this.loadingOverlayVisible = false;
         const filteredData = this.loadCostCenterOverview(
           filterEntity.plantId!,
           filterEntity.costAccTypeId!,
@@ -76,9 +79,7 @@ export class CostCenterOverviewComponent implements OnInit {
   saveFilterForm(filterEntity: FilterEntity) {
     this.filterEntity = undefined!;
     this.filterEntityInput = filterEntity;
-    this.loadingOverlayVisible = true;
     setTimeout(() => {
-      this.loadingOverlayVisible = false;
       const filteredData = this.loadCostCenterOverview(
         filterEntity.plantId!,
         filterEntity.costAccTypeId!,

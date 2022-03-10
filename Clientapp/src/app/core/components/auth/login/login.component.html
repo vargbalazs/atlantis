@@ -1,25 +1,20 @@
 <div class="card">
   <kendo-card width="320px">
     <loading-overlay
-      [visible]="loadingOverlayVisible"
+      [visible]="loadingOverlayVisible | async"
       loadingText=""
     ></loading-overlay>
     <h2>Bejelentkezés</h2>
     <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
       <kendo-formfield>
-        <kendo-textbox placeholder="E-mail cím" formControlName="email">
+        <kendo-textbox placeholder="Felhasználónév" formControlName="userName">
           <ng-template kendoTextBoxPrefixTemplate>
             <div class="x-input-prefix">
               <kendo-icon name="user"></kendo-icon>
             </div>
           </ng-template>
         </kendo-textbox>
-        <kendo-formerror *ngIf="loginForm.controls.email.errors?.required"
-          >Kötelező mező</kendo-formerror
-        >
-        <kendo-formerror *ngIf="loginForm.controls.email.errors?.email"
-          >Hibás e-mail formátum</kendo-formerror
-        >
+        <kendo-formerror>Kötelező mező</kendo-formerror>
       </kendo-formfield>
       <kendo-formfield>
         <kendo-textbox
@@ -33,13 +28,6 @@
             </div>
           </ng-template>
           <ng-template kendoTextBoxSuffixTemplate *ngIf="tbxPassword.value">
-            <!-- <button
-              tabindex="-1"
-              type="button"
-              kendoButton
-              icon="eye"
-              (click)="togglePass()"
-            ></button> -->
             <span class="k-icon k-i-eye eye-icon" (click)="togglePass()"></span>
           </ng-template>
         </kendo-textbox>

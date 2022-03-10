@@ -1,0 +1,37 @@
+.item-container {
+  display: flex;
+  margin: 1rem 0.5rem;
+}
+
+.header {
+  display: flex;
+  margin: 1rem 0.5rem;
+  justify-content: space-between;
+}
+
+.item-icon {
+  color: #6c757d;
+  margin-right: 0.5rem;
+}
+
+.lock {
+  color: #f64e60;
+}
+
+.unlock {
+  color: #0bb7af;
+}
+
+.date {
+  color: darkgray;
+}
+
+.status {
+  align-self: start;
+  margin: unset;
+}
+
+.actions {
+  margin-top: 0.5rem;
+  display: flex;
+}

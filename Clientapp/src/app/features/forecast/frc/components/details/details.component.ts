@@ -6,6 +6,7 @@ import { frcCapacityItems } from '../capacity/sampledata';
 import { FrcCapacity } from '../../models/frc-capacity.model';
 import { SelectEvent } from '@progress/kendo-angular-layout';
 import { FrcSalesProduct } from '../../models/frc-salesproduct.model';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'frc-details',
@@ -16,7 +17,7 @@ import { FrcSalesProduct } from '../../models/frc-salesproduct.model';
   ],
 })
 export class FrcDetailsComponent implements OnInit {
-  loadingOverlayVisible = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
   loadingOverlayVisibleGrid = false;
   isInEditMode = false;
   company!: string;
@@ -37,7 +38,8 @@ export class FrcDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private frcService: FrcService,
-    private msgDialogService: MsgDialogService
+    private msgDialogService: MsgDialogService,
+    private loaderService: LoaderService
   ) {}
 
   ngOnInit() {
@@ -52,13 +54,11 @@ export class FrcDetailsComponent implements OnInit {
       +this.route.snapshot.queryParamMap.get('costAccTypeId')!;
 
     // load the first tab (capacity)
-    this.loadingOverlayVisible = true;
     setTimeout(() => {
       this.frcCapacity = frcCapacityItems.filter(
         (item) => item.frcId === this.frcId
       );
       this.showCapacity = true;
-      this.loadingOverlayVisible = false;
     }, 1500);
   }
 

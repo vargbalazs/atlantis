@@ -13,6 +13,7 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'list-provk',
@@ -22,7 +23,6 @@ import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.mo
 export class ProvkComponent extends Crud<Provk> implements OnInit {
   filterEntity!: FilterEntity;
   provkVersions!: ProvkVersion[];
-  loadingOverlayVisible = false;
   provks!: Provk[];
   versionSelectorVisible = false;
   listWasFiltered = false;
@@ -39,10 +39,11 @@ export class ProvkComponent extends Crud<Provk> implements OnInit {
     private provkService: ProvkService,
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
+    loaderService: LoaderService,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    super(msgDialogService, notificationService, provkService);
+    super(msgDialogService, notificationService, provkService, loaderService);
   }
 
   ngOnInit() {
@@ -78,7 +79,6 @@ export class ProvkComponent extends Crud<Provk> implements OnInit {
   }
 
   showVersionSelector(selectedProvk: Provk) {
-    this.loadingOverlayVisible = true;
     // this.provkService
     //   .getProvkVersions(selectedProvk.id!)
     //   .subscribe((versions) => {
@@ -108,11 +108,9 @@ export class ProvkComponent extends Crud<Provk> implements OnInit {
           'A kiválasztott PROVK-hoz nem tartozik egy verzió sem',
           [{ text: 'Ok', primary: true }]
         );
-        this.loadingOverlayVisible = false;
         return;
       }
       this.provkVersions = new Array<ProvkVersion>(...filteredVersion);
-      this.loadingOverlayVisible = false;
     }, 1500);
   }
 
@@ -169,7 +167,6 @@ export class ProvkComponent extends Crud<Provk> implements OnInit {
   }
 
   filterProvks(companyId: number, plantId: number, year: number) {
-    this.loadingOverlayVisible = true;
     // this.provkService
     //   .getProvks(companyId!, plantId!, year!)
     //   .subscribe((result) => {
@@ -192,7 +189,6 @@ export class ProvkComponent extends Crud<Provk> implements OnInit {
           provk.year === year
       );
       this.gridData = { data: this.provks, total: this.provks.length };
-      this.loadingOverlayVisible = false;
       this.listWasFiltered = true;
       this.year = year;
       this.minDate = new Date(this.year, 0, 1);

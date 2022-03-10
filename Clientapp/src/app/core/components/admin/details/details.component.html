@@ -1,0 +1,75 @@
+<kendo-dialog *ngIf="active" [width]="370" [height]="410" (close)="closeForm()">
+  <kendo-dialog-titlebar class="x-bg-primary x-font">
+    {{ user.firstName }} {{ user.lastName }}
+  </kendo-dialog-titlebar>
+  <kendo-listview [data]="listItems">
+    <ng-template kendoListViewHeaderTemplate>
+      <div class="header">
+        <div>
+          <div class="x-font-medium">
+            {{ user.firstName }} {{ user.lastName }}
+          </div>
+          <div>{{ user.userName }}</div>
+          <div class="date">
+            Regisztrált:
+            {{ user.joinDate | date: "yyyy.MM.dd HH:mm:ss" }}
+          </div>
+          <div class="date">
+            Utoljára bejelentkezett:
+            {{
+              lastLoginDateDisplay
+                ? (lastLoginDateDisplay | date: "yyyy.MM.dd HH:mm:ss")
+                : ""
+            }}
+          </div>
+        </div>
+        <div
+          [ngClass]="user.isActive ? 'active' : 'inactive'"
+          class="badge status"
+        >
+          {{ user.isActive ? "Aktív" : "Inaktív" }}
+        </div>
+      </div>
+    </ng-template>
+    <ng-template kendoListViewItemTemplate let-dataItem="dataItem">
+      <div class="item-container">
+        <span
+          class="k-icon k-i-{{ dataItem.icon }} item-icon {{ dataItem.icon }}"
+        ></span>
+        <div>{{ dataItem.item }}</div>
+      </div>
+    </ng-template>
+  </kendo-listview>
+  <div class="actions">
+    <button
+      type="button"
+      kendoButton
+      class="x-btn-light-secondary click-secondary"
+      (click)="showAccessRightsForm()"
+    >
+      Jogosultságok
+    </button>
+  </div>
+  <kendo-dialog-actions layout="normal">
+    <button
+      type="button"
+      kendoButton
+      (click)="onCancel()"
+      class="x-btn-primary click-primary"
+    >
+      Bezár
+    </button>
+    <loading-overlay
+      [visible]="loadingOverlayVisible | async"
+      loadingText=""
+    ></loading-overlay>
+  </kendo-dialog-actions>
+</kendo-dialog>
+<div
+  class="x-dialog-container"
+  confirmdialog-style
+  [isMsgDialog]="isMsgDialog"
+  [dialogType]="dialogType"
+>
+  <div kendoDialogContainer></div>
+</div>

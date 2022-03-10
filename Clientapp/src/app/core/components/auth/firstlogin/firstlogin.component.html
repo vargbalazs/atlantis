@@ -1,0 +1,18 @@
+<div class="card">
+  <kendo-card width="320px" class="first-login-card">
+    <loading-overlay
+      [visible]="loadingOverlayVisible | async"
+      loadingText=""
+    ></loading-overlay>
+    <h2>Jelszó megváltoztatása</h2>
+    <changepwd></changepwd>
+    <button
+      class="btn"
+      kendoButton
+      class="btn x-btn-primary click-primary"
+      (click)="changePwd()"
+    >
+      JELSZÓ MEGVÁLTOZTATÁSA
+    </button>
+  </kendo-card>
+</div>

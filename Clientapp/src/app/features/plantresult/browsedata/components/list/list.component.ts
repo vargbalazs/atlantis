@@ -5,6 +5,7 @@ import { BreadCrumbItem } from '@progress/kendo-angular-navigation';
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
 import { CostCenter } from 'src/app/features/masterdata/planning/costcenter/models/costcenter.model';
 import { FilterEntity } from 'src/app/shared/models/filter.model';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { Booking } from '../../models/booking.model';
 import { bookings } from './sampledata';
 
@@ -18,7 +19,7 @@ export class BrowseDataComponent implements OnInit {
   filterEntityInput!: FilterEntity;
   gridData!: GridDataResult;
   filtered = false;
-  loadingOverlayVisible = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
   filterFirst = false;
   state: any;
   costCenter!: CostCenter;
@@ -36,7 +37,7 @@ export class BrowseDataComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private loaderService: LoaderService) {
     this.state = this.router.getCurrentNavigation()?.extras.state;
     if (this.state) {
       this.routedFilterEntity = <FilterEntity>this.state.filterEntity;
@@ -60,9 +61,7 @@ export class BrowseDataComponent implements OnInit {
   ngOnInit() {
     this.gridData = { data: [], total: 0 };
     if (this.state) {
-      this.loadingOverlayVisible = true;
       setTimeout(() => {
-        this.loadingOverlayVisible = false;
         let filteredData: Booking[] = [];
         if (this.state.origin === 'costcenter') {
           filteredData = bookings.filter(
@@ -101,9 +100,7 @@ export class BrowseDataComponent implements OnInit {
   saveFilterForm(filterEntity: FilterEntity) {
     this.filterEntity = undefined!;
     this.filterEntityInput = filterEntity;
-    this.loadingOverlayVisible = true;
     setTimeout(() => {
-      this.loadingOverlayVisible = false;
       const filteredData = bookings.filter(
         (booking) =>
           booking.plantId === filterEntity.plantId &&

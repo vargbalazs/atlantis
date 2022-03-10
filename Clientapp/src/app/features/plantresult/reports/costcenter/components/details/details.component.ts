@@ -6,6 +6,7 @@ import { CostCenter } from 'src/app/features/masterdata/planning/costcenter/mode
 import { IReportMonth } from 'src/app/shared/interfaces/reportmonth.interface';
 import { IReportSum } from 'src/app/shared/interfaces/reportsum.interface';
 import { FilterEntity } from 'src/app/shared/models/filter.model';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { ReportService } from 'src/app/shared/services/report.service';
 import { CostCenterView } from '../../models/costcenterview.model';
 import { costCenterView } from './sampledata';
@@ -17,7 +18,7 @@ import { costCenterView } from './sampledata';
 })
 export class CostCenterDetailsComponent implements OnInit {
   gridData!: GridDataResult;
-  loadingOverlayVisible = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
   reportMonths: IReportMonth = { actMonth: '', cumMonth: '' };
   sums: IReportSum = {
     sumBudget: 0,
@@ -43,7 +44,11 @@ export class CostCenterDetailsComponent implements OnInit {
   costCenter!: CostCenter;
   filterEntity!: FilterEntity;
 
-  constructor(private router: Router, private reportService: ReportService) {
+  constructor(
+    private router: Router,
+    private reportService: ReportService,
+    private loaderService: LoaderService
+  ) {
     this.state = this.router.getCurrentNavigation()?.extras.state;
     this.costCenter = <CostCenter>this.state.costCenter;
     this.filterEntity = <FilterEntity>this.state.filterEntity;
@@ -53,9 +58,7 @@ export class CostCenterDetailsComponent implements OnInit {
   ngOnInit() {
     this.gridData = { data: [], total: 0 };
     this.reportMonths = this.reportService.setMonthHeader(this.filterEntity);
-    this.loadingOverlayVisible = true;
     setTimeout(() => {
-      this.loadingOverlayVisible = false;
       const filteredData = this.loadCostCenterDetails(this.costCenter.id!);
       this.gridData = { data: filteredData, total: filteredData.length };
       this.sums = this.reportService.calculateSums(filteredData);

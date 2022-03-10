@@ -1,7 +1,7 @@
 <div class="card">
   <kendo-card width="320px">
     <loading-overlay
-      [visible]="loadingOverlayVisible"
+      [visible]="loadingOverlayVisible | async"
       loadingText=""
     ></loading-overlay>
     <h2>Jelszó visszaállítása</h2>

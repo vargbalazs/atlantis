@@ -1,0 +1,96 @@
+<kendo-dialog *ngIf="active" [width]="300" [height]="450" (close)="closeForm()">
+  <kendo-dialog-titlebar class="x-bg-primary x-font">
+    {{ "Szerkesztés" }}
+  </kendo-dialog-titlebar>
+  <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
+    <kendo-formfield>
+      <kendo-textbox hidden formControlName="id"></kendo-textbox>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="firstName" text="Keresztnév"></kendo-label>
+      <kendo-textbox
+        #firstName
+        formControlName="firstName"
+        class="x-textbox-sm"
+      >
+      </kendo-textbox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="lastName" text="Vezetéknév"></kendo-label>
+      <kendo-textbox #lastName formControlName="lastName" class="x-textbox-sm">
+      </kendo-textbox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="userName" text="Felhasználónév"></kendo-label>
+      <kendo-textbox #userName formControlName="userName" class="x-textbox-sm">
+      </kendo-textbox>
+      <kendo-formerror>Kötelező mező</kendo-formerror>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="email" text="E-mail cím"></kendo-label>
+      <kendo-textbox #email formControlName="email" class="x-textbox-sm">
+      </kendo-textbox>
+      <kendo-formerror *ngIf="form.controls.email.errors?.required"
+        >Kötelező mező</kendo-formerror
+      >
+      <kendo-formerror *ngIf="form.controls.email.errors?.email"
+        >Hibás e-mail formátum</kendo-formerror
+      >
+    </kendo-formfield>
+    <kendo-formfield>
+      <div class="k-checkbox-wrap">
+        <input
+          type="checkbox"
+          #active
+          formControlName="isActive"
+          kendoCheckBox
+        />
+        <kendo-label
+          class="k-checkbox-label"
+          [for]="active"
+          text="Aktív"
+        ></kendo-label>
+      </div>
+    </kendo-formfield>
+    <kendo-formfield>
+      <div class="k-checkbox-wrap">
+        <input
+          type="checkbox"
+          #notLocked
+          formControlName="isNotLocked"
+          kendoCheckBox
+        />
+        <kendo-label
+          class="k-checkbox-label"
+          [for]="notLocked"
+          text="Nem zárolt"
+        ></kendo-label>
+      </div>
+    </kendo-formfield>
+    <!-- hidden submit button in order to get work the submit event on enter -->
+    <button type="submit" hidden></button>
+  </form>
+  <kendo-dialog-actions>
+    <button
+      type="button"
+      kendoButton
+      icon="cancel"
+      (click)="onCancel()"
+      class="x-btn-light click-light"
+    >
+      Mégsem
+    </button>
+    <button
+      type="submit"
+      kendoButton
+      icon="save"
+      [primary]="true"
+      (click)="onSave()"
+      class="x-btn-primary click-primary"
+    >
+      Mentés
+    </button>
+  </kendo-dialog-actions>
+</kendo-dialog>

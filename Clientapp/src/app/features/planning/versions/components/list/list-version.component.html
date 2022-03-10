@@ -72,6 +72,6 @@
 ></ce-version>
 <div kendoDialogContainer></div>
 <loading-overlay
-  [visible]="loadingOverlayVisible"
+  [visible]="loadingOverlayVisible | async"
   loadingText=""
 ></loading-overlay>

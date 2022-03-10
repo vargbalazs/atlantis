@@ -75,6 +75,6 @@
   </ng-template>
 </kendo-grid>
 <loading-overlay
-  [visible]="loadingOverlayVisible"
+  [visible]="loadingOverlayVisible | async"
   loadingText=""
 ></loading-overlay>

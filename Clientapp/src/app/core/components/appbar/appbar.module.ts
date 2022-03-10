@@ -8,6 +8,8 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
 import { PopupModule } from '@progress/kendo-angular-popup';
 import { UserMenuModule } from '../usermenu/usermenu.module';
 import { InputsModule } from '@progress/kendo-angular-inputs';
+import { TooltipModule } from '@progress/kendo-angular-tooltip';
+import { UserProfileModule } from '../userprofile/userprofile.module';
 
 @NgModule({
   declarations: [AppBarComponent],
@@ -20,6 +22,8 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
     PopupModule,
     UserMenuModule,
     InputsModule,
+    TooltipModule,
+    UserProfileModule,
   ],
   providers: [],
   exports: [AppBarComponent],

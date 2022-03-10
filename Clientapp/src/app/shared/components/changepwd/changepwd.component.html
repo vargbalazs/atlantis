@@ -1,0 +1,80 @@
+<form [formGroup]="changePwdForm" (ngSubmit)="submitForm()">
+  <kendo-formfield>
+    <kendo-textbox
+      placeholder="Aktuális jelszó"
+      #tbxActualPassword
+      formControlName="oldPassword"
+    >
+      <ng-template kendoTextBoxPrefixTemplate>
+        <div class="x-input-prefix">
+          <kendo-icon name="lock"></kendo-icon>
+        </div>
+      </ng-template>
+      <ng-template kendoTextBoxSuffixTemplate *ngIf="tbxActualPassword.value">
+        <span class="k-icon k-i-eye eye-icon" (click)="togglePassAct()"></span>
+      </ng-template>
+    </kendo-textbox>
+    <kendo-formerror *ngIf="changePwdForm.controls.oldPassword.errors?.required"
+      >Kötelező mező</kendo-formerror
+    >
+  </kendo-formfield>
+  <kendo-formfield>
+    <kendo-textbox
+      placeholder="Jelszó"
+      #tbxPassword
+      formControlName="newPassword"
+    >
+      <ng-template kendoTextBoxPrefixTemplate>
+        <div class="x-input-prefix">
+          <kendo-icon name="lock"></kendo-icon>
+        </div>
+      </ng-template>
+      <ng-template kendoTextBoxSuffixTemplate>
+        <span
+          class="k-icon k-i-eye eye-icon"
+          (click)="togglePass()"
+          *ngIf="tbxPassword.value"
+        ></span>
+        <div kendoTooltip>
+          <kendo-icon
+            class="info-icon"
+            name="info"
+            title="Min. 6 karakter, min. 1 szám, min. 1 kis- és nagybetű"
+          ></kendo-icon>
+        </div>
+      </ng-template>
+    </kendo-textbox>
+    <kendo-formerror *ngIf="changePwdForm.controls.newPassword.errors?.required"
+      >Kötelező mező</kendo-formerror
+    >
+    <kendo-formerror *ngIf="changePwdForm.controls.newPassword.errors?.pattern"
+      >A jelszó erőssége nem megfelelő</kendo-formerror
+    >
+  </kendo-formfield>
+  <kendo-formfield>
+    <kendo-textbox
+      placeholder="Jelszó még egyszer"
+      #tbxRepeatPassword
+      formControlName="confirmPassword"
+    >
+      <ng-template kendoTextBoxPrefixTemplate>
+        <div class="x-input-prefix">
+          <kendo-icon name="lock"></kendo-icon>
+        </div>
+      </ng-template>
+      <ng-template kendoTextBoxSuffixTemplate *ngIf="tbxRepeatPassword.value">
+        <span class="k-icon k-i-eye eye-icon" (click)="togglePassRep()"></span>
+      </ng-template>
+    </kendo-textbox>
+    <kendo-formerror
+      *ngIf="changePwdForm.controls.confirmPassword.errors?.required"
+      >Kötelező mező</kendo-formerror
+    >
+  </kendo-formfield>
+  <kendo-formerror
+    class="pwd-match-error"
+    *ngIf="changePwdForm.errors?.notMatching"
+    >A két jelszó nem egyezik</kendo-formerror
+  >
+  <button type="submit" hidden (click)="hiddenSubmit()"></button>
+</form>

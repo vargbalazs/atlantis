@@ -10,6 +10,7 @@ import { ProvkService } from '../../services/provk.service';
 import { provkDetails } from './sampledata';
 import { salesDetails } from '../salesdetails/sampledata';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'provk-details',
@@ -20,7 +21,7 @@ import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
   ],
 })
 export class ProvkDetailsComponent implements OnInit {
-  loadingOverlayVisible = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
   loadingOverlayVisibleGrid = false;
   salesProductsVisible = false;
   isInEditMode = false;
@@ -45,7 +46,8 @@ export class ProvkDetailsComponent implements OnInit {
     private router: Router,
     private capTypeService: CapTypeService,
     private provkService: ProvkService,
-    private msgDialogService: MsgDialogService
+    private msgDialogService: MsgDialogService,
+    private loaderService: LoaderService
   ) {}
 
   ngOnInit() {
@@ -57,8 +59,6 @@ export class ProvkDetailsComponent implements OnInit {
     this.provkId = +this.route.snapshot.queryParamMap.get('provkId')!;
     this.plantId = +this.route.snapshot.queryParamMap.get('plantId')!;
     this.companyId = +this.route.snapshot.queryParamMap.get('companyId')!;
-
-    this.loadingOverlayVisible = true;
 
     // this.capTypeService.getCapTypes(this.plantId).subscribe((capTypes) => {
     //   this.items = capTypes.map((item) => {
@@ -116,7 +116,6 @@ export class ProvkDetailsComponent implements OnInit {
       );
       this.items[0].selected = true;
       this.selectedCapTypeId = this.items[0].id;
-      this.loadingOverlayVisible = false;
     }, 1500);
   }
 

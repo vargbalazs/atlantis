@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NotificationService } from '@progress/kendo-angular-notification';
 
 import { userIcon } from '@progress/kendo-svg-icons';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { LoaderService } from 'src/app/shared/services/loader.service';
+import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
   selector: 'forgot-pwd',
@@ -20,11 +22,13 @@ export class ForgotPwdComponent implements OnInit {
     email: '',
   };
 
-  loadingOverlayVisible: boolean = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
 
   constructor(
     private router: Router,
-    private notificationService: NotificationService
+    private customNotificationService: CustomNotificationService,
+    private loaderService: LoaderService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -48,20 +52,15 @@ export class ForgotPwdComponent implements OnInit {
   submitForm() {
     this.forgotPwdForm.markAllAsTouched();
     if (this.forgotPwdForm.valid) {
-      // simulate the e-mail sending, need to be changed later
-      this.loadingOverlayVisible = true;
-      setTimeout(() => {
-        this.notificationService.show({
-          content:
-            'Lépj be az email fiókodba és kövesd az elküldött levélben szereplő utasításokat',
-          hideAfter: 5000,
-          position: { horizontal: 'center', vertical: 'top' },
-          animation: { type: 'fade', duration: 400 },
-          type: { style: 'success', icon: true },
-        });
+      const email = <string>this.forgotPwdForm.get('email')?.value;
+      this.authService.forgotPassword(email).subscribe(() => {
+        this.customNotificationService.showNotification(
+          'Lépj be az email fiókodba és kövesd az elküldött levélben szereplő utasításokat',
+          3000,
+          'success'
+        );
         this.router.navigate(['/auth/login'], { skipLocationChange: true });
-        this.loadingOverlayVisible = false;
-      }, 1500);
+      });
     }
   }
 }

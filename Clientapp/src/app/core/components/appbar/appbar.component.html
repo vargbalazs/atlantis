@@ -24,19 +24,35 @@
   <kendo-appbar-spacer width="2rem"></kendo-appbar-spacer>
   <kendo-appbar-spacer></kendo-appbar-spacer>
   <kendo-appbar-section>
-    <button
-      kendoButton
-      icon="home"
-      (click)="goToHome()"
-      class="appbar-btn"
-    ></button>
-    <button
-      kendoButton
-      icon="user"
-      #popupAnchor
-      (click)="togglePopup()"
-      class="appbar-btn"
-    ></button>
+    <div kendoTooltip>
+      <button
+        *ngIf="adminUser"
+        kendoButton
+        icon="tell-a-friend"
+        (click)="showAdminArea()"
+        class="appbar-btn"
+        title="Admin felület"
+      ></button>
+    </div>
+    <div kendoTooltip>
+      <button
+        kendoButton
+        icon="home"
+        (click)="goToHome()"
+        class="appbar-btn"
+        title="Kezdőlap"
+      ></button>
+    </div>
+    <div kendoTooltip>
+      <button
+        kendoButton
+        icon="user"
+        #popupAnchor
+        (click)="togglePopup()"
+        class="appbar-btn"
+        title="Felhasználó"
+      ></button>
+    </div>
     <kendo-popup
       [anchor]="$any(popupAnchor)"
       *ngIf="showPopup"
@@ -49,6 +65,13 @@
     >
       <user-menu></user-menu>
     </kendo-popup>
-    <button kendoButton icon="info" class="appbar-btn"></button>
+    <div kendoTooltip>
+      <button
+        kendoButton
+        icon="info"
+        class="appbar-btn"
+        title="Névjegy"
+      ></button>
+    </div>
   </kendo-appbar-section>
 </kendo-appbar>

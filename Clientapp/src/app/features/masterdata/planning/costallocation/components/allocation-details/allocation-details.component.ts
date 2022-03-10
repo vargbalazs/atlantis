@@ -7,6 +7,7 @@ import { CostAllocationDetail } from '../../models/costallocationdetail.model';
 import { MsgDialogService } from '../../../../../../shared/services/msgdialog.service';
 import { CostAllocationService } from '../../services/costallocation.service';
 import { NotificationService } from '@progress/kendo-angular-notification';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'allocation-details',
@@ -25,7 +26,7 @@ export class AllocationDetailsComponent {
   editedRowIndex!: number;
   sumPercent!: number;
   sumCapacity!: number;
-  loadingOverlayVisible = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
   isMsgDialog = true;
   dialogType = 'danger';
   editRecCostCenterId!: number;
@@ -45,7 +46,8 @@ export class AllocationDetailsComponent {
     private formBuilder: FormBuilder,
     private msgDialogService: MsgDialogService,
     private costAllocationService: CostAllocationService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private loaderService: LoaderService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -262,7 +264,6 @@ export class AllocationDetailsComponent {
           }
         });
     } else {
-      this.loadingOverlayVisible = true;
       // this.costAllocationService
       //   .saveAllocationDetails(this.costAllocationDetails)
       //   .subscribe(() => {
@@ -277,7 +278,6 @@ export class AllocationDetailsComponent {
       //     });
       //   });
       setTimeout(() => {
-        this.loadingOverlayVisible = false;
         console.log('finished');
         this.closeForm();
         this.notificationService.show({

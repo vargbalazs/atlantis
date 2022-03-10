@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GridComponent } from '@progress/kendo-angular-grid';
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { CostAssign } from '../../models/costassign.model';
@@ -24,7 +25,7 @@ export class CostAssignComponent {
   editing = false;
   editedRowIndex!: number;
   sumAmount!: number;
-  loadingOverlayVisible = false;
+  loadingOverlayVisible = this.loaderService.isLoading;
 
   @Input() set model(costAssigns: CostAssign[]) {
     this.showCostAssignDialog = costAssigns !== undefined;
@@ -44,7 +45,8 @@ export class CostAssignComponent {
     private formBuilder: FormBuilder,
     private msgDialogService: MsgDialogService,
     private hcPlanningService: HcPlanningService,
-    private customNotificationService: CustomNotificationService
+    private customNotificationService: CustomNotificationService,
+    private loaderService: LoaderService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -183,7 +185,6 @@ export class CostAssignComponent {
   }
 
   onSave() {
-    this.loadingOverlayVisible = true;
     // this.hcPlanningService.saveCostAssigns(this.costAssigns).subscribe(() => {
     //   console.log('finished');
     //   this.closeForm();
@@ -194,7 +195,6 @@ export class CostAssignComponent {
     //   );
     // });
     setTimeout(() => {
-      this.loadingOverlayVisible = false;
       console.log('finished');
       this.closeForm();
       this.customNotificationService.showNotification(

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { CostCenter } from 'src/app/features/masterdata/planning/costcenter/models/costcenter.model';
 import { Crud } from 'src/app/shared/classes/crud.class';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { CopyEntity } from '../../../../../../shared/models/copy.model';
 import { CopyService } from '../../services/copy.service';
@@ -20,9 +21,15 @@ export class CostCenterComponent extends Crud<CostCenter> implements OnInit {
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     costcenterService: CostCenterService,
+    loaderService: LoaderService,
     private copyService: CopyService
   ) {
-    super(msgDialogService, notificationService, costcenterService);
+    super(
+      msgDialogService,
+      notificationService,
+      costcenterService,
+      loaderService
+    );
   }
 
   ngOnInit() {
@@ -62,9 +69,7 @@ export class CostCenterComponent extends Crud<CostCenter> implements OnInit {
     //       });
     //     }
     //   });
-    this.loadingOverlayVisible = true;
     setTimeout(() => {
-      this.loadingOverlayVisible = false;
       console.log('finished');
       this.showNotification('A másolás sikeresen megtörtént', 3000, 'success');
     }, 1500);
