@@ -45,7 +45,10 @@ export class CreateEditPlanningItemComponent
     costGroupId: new FormControl(this.formData.costGroupId, [
       Validators.required,
     ]),
-    costGroupName: new FormControl(
+    costGroupName: new FormControl(this.formData.costGroup?.name, [
+      Validators.required,
+    ]),
+    costGroupNameDisabled: new FormControl(
       { value: this.formData.costGroup?.name, disabled: true },
       [Validators.required]
     ),
@@ -105,6 +108,11 @@ export class CreateEditPlanningItemComponent
       });
       this.form.patchValue({
         costGroupName: value.costGroup ? value.costGroup?.name : costGroup.name,
+      });
+      this.form.patchValue({
+        costGroupNameDisabled: value.costGroup
+          ? value.costGroup?.name
+          : costGroup.name,
       });
       this.form.patchValue({ companyId: this.filterEntity.companyId });
       this.form.patchValue({ plantId: this.filterEntity.plantId });

@@ -61,7 +61,7 @@
       </ng-template>
     </kendo-grid-column>
     <kendo-grid-column
-      field="job.department.name"
+      field="departmentName"
       title="Részleg"
       [width]="150"
     ></kendo-grid-column>
@@ -115,6 +115,8 @@
   [planning]="true"
   (save)="saveFilterForm($event)"
   (cancel)="cancelFilterForm()"
+  [keepData]="true"
+  [firstClicked]="filterFirst"
 ></filter>
 <ce-planningitem
   [model]="editDataItem"

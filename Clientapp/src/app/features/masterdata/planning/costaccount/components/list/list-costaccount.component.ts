@@ -7,7 +7,6 @@ import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { CopyService } from '../../services/copy.service';
 import { CostAccountService } from '../../services/costaccount.service';
-import { costAccounts } from './sampledata';
 
 @Component({
   selector: 'general-costaccount',
@@ -20,7 +19,7 @@ export class CostAccountComponent extends Crud<CostAccount> implements OnInit {
   constructor(
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
-    costaccountService: CostAccountService,
+    private costaccountService: CostAccountService,
     private copyService: CopyService,
     loaderService: LoaderService
   ) {
@@ -33,7 +32,14 @@ export class CostAccountComponent extends Crud<CostAccount> implements OnInit {
   }
 
   ngOnInit() {
-    this.gridData = { data: costAccounts, total: costAccounts.length };
+    this.gridData = { data: [], total: 0 };
+    this.costaccountService.getCostAccounts().subscribe((costAccounts) => {
+      costAccounts.forEach(
+        (costAccount) =>
+          (costAccount.yearDate = new Date(costAccount.yearDate!))
+      );
+      this.gridData = { data: costAccounts, total: costAccounts.length };
+    });
   }
 
   showCopyForm() {

@@ -6,6 +6,7 @@ import { NotificationService } from '@progress/kendo-angular-notification';
 import { IRepository } from '../interfaces/repository.interface';
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { LoaderService } from '../services/loader.service';
+import { first } from 'rxjs/operators';
 
 export abstract class Crud<T extends { id?: number }> {
   gridData!: GridDataResult;
@@ -34,21 +35,16 @@ export abstract class Crud<T extends { id?: number }> {
   }
 
   saveHandler(entity: T) {
-    // this.loadingOverlayVisible = true;
     // if we have check functions
     if (this.checkFunctionsOnSave.length > 0) {
       // stores the observables in an array and pass it to forkJoin
       const checkObservables: Observable<boolean>[] = [];
       this.checkFunctionsOnSave.forEach((fn) => {
-        checkObservables.push(fn.call(this, entity));
+        checkObservables.push(fn.call(this, entity).pipe(first()));
       });
       forkJoin(checkObservables).subscribe((result) => {
         // saves only if all checks are valid
-        if (result.every((valid) => valid)) {
-          this.save(entity);
-        } else {
-          // this.loadingOverlayVisible = false;
-        }
+        if (result.every((valid) => valid)) this.save(entity);
       });
     } else {
       this.save(entity);
@@ -58,27 +54,16 @@ export abstract class Crud<T extends { id?: number }> {
 
   save(entity: T) {
     if (this.isNew) {
-      // this.repositoryService.add(entity).subscribe((id) => {
-      //   this.loadingOverlayVisible = false;
-      //   console.log('finished');
-      //   entity.id = id;
-      //   this.gridData.data = [...this.gridData.data, entity];
-      //   this.showNotification(
-      //     'Az új elem sikeresen rögzítve lett',
-      //     3000,
-      //     'success'
-      //   );
-      // });
-      setTimeout(() => {
-        // this.loadingOverlayVisible = false;
+      this.repositoryService.add!(entity).subscribe((id) => {
         console.log('finished');
+        entity.id = id;
         this.gridData.data = [...this.gridData.data, entity];
         this.showNotification(
           'Az új elem sikeresen rögzítve lett',
           3000,
           'success'
         );
-      }, 1500);
+      });
       console.log('saving...');
     } else {
       this.repositoryService.update!(entity).subscribe((id) => {
@@ -114,21 +99,16 @@ export abstract class Crud<T extends { id?: number }> {
         // the properties on the result are not direct accessible, that's why this hack
         const dialogResult = JSON.parse(JSON.stringify(result));
         if (dialogResult.primary) {
-          // this.loadingOverlayVisible = true;
           // if we have check functions
           if (this.checkFunctionsOnDelete.length > 0) {
             // stores the observables in an array and pass it to forkJoin
             const checkObservables: Observable<boolean>[] = [];
             this.checkFunctionsOnDelete.forEach((fn) => {
-              checkObservables.push(fn.call(this, dataItem));
+              checkObservables.push(fn.call(this, dataItem).pipe(first()));
             });
             forkJoin(checkObservables).subscribe((result) => {
               // deletes only if all checks are valid
-              if (result.every((valid) => valid)) {
-                this.remove(dataItem);
-              } else {
-                // this.loadingOverlayVisible = false;
-              }
+              if (result.every((valid) => valid)) this.remove(dataItem);
             });
           } else {
             this.remove(dataItem);
@@ -140,7 +120,6 @@ export abstract class Crud<T extends { id?: number }> {
   remove(entity: T) {
     // call a service to remove the item
     this.repositoryService.delete!(entity.id!).subscribe((id) => {
-      // this.loadingOverlayVisible = false;
       console.log('finished');
       // remove the item from grid
       this.gridData.data = this.gridData.data.filter(

@@ -143,7 +143,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     routePath: 'masterdata/production/salesproduct',
   },
   {
-    text: 'Kapacitástípusk',
+    text: 'Kapacitástípusok',
     level: 2,
     id: '0.3.3',
     parentId: '0.3',

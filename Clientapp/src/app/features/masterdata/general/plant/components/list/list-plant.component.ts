@@ -5,7 +5,6 @@ import { Crud } from 'src/app/shared/classes/crud.class';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { PlantService } from '../../services/plant.service';
-import { plants } from './sampledata';
 
 @Component({
   selector: 'general-plant',
@@ -16,13 +15,16 @@ export class PlantComponent extends Crud<Plant> implements OnInit {
   constructor(
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
-    plantService: PlantService,
+    private plantService: PlantService,
     loaderService: LoaderService
   ) {
     super(msgDialogService, notificationService, plantService, loaderService);
   }
 
   ngOnInit() {
-    this.gridData = { data: plants, total: plants.length };
+    this.gridData = { data: [], total: 0 };
+    this.plantService.getPlants().subscribe((plants) => {
+      this.gridData = { data: plants, total: plants.length };
+    });
   }
 }

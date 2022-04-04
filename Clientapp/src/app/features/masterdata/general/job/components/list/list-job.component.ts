@@ -16,13 +16,16 @@ export class JobComponent extends Crud<Job> implements OnInit {
   constructor(
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
-    jobService: JobService,
+    private jobService: JobService,
     loaderService: LoaderService
   ) {
     super(msgDialogService, notificationService, jobService, loaderService);
   }
 
   ngOnInit() {
-    this.gridData = { data: jobs, total: jobs.length };
+    this.gridData = { data: [], total: 0 };
+    this.jobService.getJobs().subscribe((jobs) => {
+      this.gridData = { data: jobs, total: jobs.length };
+    });
   }
 }

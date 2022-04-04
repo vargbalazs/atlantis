@@ -1,16 +1,4 @@
 <div class="component-header">PROVK verzió</div>
-<!-- <kendo-toolbar>
-  <kendo-toolbar-button
-    text="Vissza"
-    showText="both"
-    icon="arrow-60-left"
-    showIcon="both"
-    [primary]="true"
-    (click)="goBack()"
-  >
-  </kendo-toolbar-button>
-  
-</kendo-toolbar> -->
 <div class="x-toolbar">
   <button
     kendoButton
@@ -60,6 +48,6 @@
   <div kendoDialogContainer></div>
 </div>
 <loading-overlay
-  [visible]="loadingOverlayVisible | async"
+  [visible]="loadingOverlayVisible"
   loadingText=""
 ></loading-overlay>

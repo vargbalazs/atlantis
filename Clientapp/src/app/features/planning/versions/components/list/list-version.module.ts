@@ -8,6 +8,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
 import { CreateEditPlanningVersionModule } from '../create-edit/ce-version.module';
 import { PlanningVersionService } from '../../services/version.service';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
 
 @NgModule({
   declarations: [PlanningVersionComponent],
@@ -19,6 +20,7 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
     ButtonsModule,
     CreateEditPlanningVersionModule,
     LoadingOverlayModule,
+    ConfirmDialogStyleModule,
   ],
   providers: [PlanningVersionService],
   exports: [PlanningVersionComponent],

@@ -142,6 +142,8 @@
   [planning]="true"
   (save)="saveFilterForm($event)"
   (cancel)="cancelFilterForm()"
+  [keepData]="true"
+  [firstClicked]="filterFirst"
 ></filter>
 <ce-planningitem
   [model]="editDataItem"

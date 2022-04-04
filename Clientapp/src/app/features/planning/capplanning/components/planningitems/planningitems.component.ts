@@ -21,6 +21,7 @@ export class CapPlanningItemsComponent implements OnInit {
   editing = false;
   editedRowIndex!: number;
   formGroup!: FormGroup;
+  costAccTypeId!: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,8 +33,6 @@ export class CapPlanningItemsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // on init no data load, because we will filter the data
-    //this.gridData = { data: actualProdData, total: actualProdData.length };
     this.gridData = { data: [], total: 0 };
   }
 
@@ -41,11 +40,12 @@ export class CapPlanningItemsComponent implements OnInit {
     const item = <CapPlanningItem>args.dataItem;
 
     this.formGroup = this.formBuilder.group({
-      id: [item.id, Validators.required],
+      id: [item.id],
       capGroup: [item.capGroup, Validators.required],
       capGroupId: [item.capGroupId, Validators.required],
       companyId: [item.companyId, Validators.required],
       plantId: [item.plantId, Validators.required],
+      costAccTypeId: [item.costAccTypeId, Validators.required],
       year: [item.year, Validators.required],
       p1: [item.p1, Validators.required],
       p2: [item.p2, Validators.required],
@@ -74,27 +74,16 @@ export class CapPlanningItemsComponent implements OnInit {
 
   saveFilterForm(filterEntity: FilterEntity) {
     this.filterEntity = undefined!;
-    // this.actProdDataService
-    //   .getActualData(
-    //     filterEntity.companyId!,
-    //     filterEntity.plantId!,
-    //     filterEntity.year?.getFullYear()!
-    //   )
-    //   .subscribe((result) => {
-    //     this.loadingOverlayVisible = false;
-    //     this.gridData = { data: result, total: result.length };
-    //   });
-
-    setTimeout(() => {
-      const filteredData = capPlanningItems.filter(
-        (item) =>
-          item.companyId === filterEntity.companyId &&
-          item.plantId === filterEntity.plantId &&
-          item.year === filterEntity.year?.getFullYear()
-      );
-      this.gridData = { data: filteredData, total: filteredData.length };
+    this.loadData(
+      filterEntity.companyId!,
+      filterEntity.plantId!,
+      filterEntity.year?.getFullYear()!,
+      filterEntity.costAccTypeId!
+    ).subscribe((planningItems) => {
+      this.gridData = { data: planningItems, total: planningItems.length };
+      this.costAccTypeId = filterEntity.costAccTypeId!;
       console.log('finished');
-    }, 1500);
+    });
     console.log('filtering...');
   }
 
@@ -105,33 +94,26 @@ export class CapPlanningItemsComponent implements OnInit {
     sender: GridComponent;
     rowIndex: number;
   }) {
+    this.formGroup.patchValue({ costAccTypeId: this.costAccTypeId });
     if (this.formGroup.valid) {
-      // this.actProdDataService.update(this.formGroup.value).subscribe(() => {
-      //   this.editing = false;
-      //   sender.closeRow(rowIndex);
-      //   console.log('finished');
-      //   this.notificationService.showNotification(
-      //     'Adatok sikeresen mentve',
-      //     3000,
-      //     'success'
-      //   );
-      // });
-      setTimeout(() => {
-        this.gridData.data = (<CapPlanningItem[]>this.gridData.data).map(
-          (item) =>
-            item.id === this.formGroup.get('id')?.value
-              ? this.formGroup.value
-              : item
-        );
+      this.capPlanningService.update(this.formGroup.value).subscribe(() => {
         this.editing = false;
         sender.closeRow(rowIndex);
-        console.log('finished');
-        this.notificationService.showNotification(
-          'Adatok sikeresen mentve',
-          3000,
-          'success'
-        );
-      }, 1500);
+        this.loadData(
+          this.formGroup.get('companyId')!.value,
+          this.formGroup.get('plantId')!.value,
+          this.formGroup.get('year')!.value,
+          this.costAccTypeId
+        ).subscribe((planningItems) => {
+          this.gridData = { data: planningItems, total: planningItems.length };
+          console.log('finished');
+          this.notificationService.showNotification(
+            'Adatok sikeresen mentve',
+            3000,
+            'success'
+          );
+        });
+      });
       console.log('saving...');
     }
   }
@@ -167,5 +149,19 @@ export class CapPlanningItemsComponent implements OnInit {
     grid.closeRow(rowIndex);
     this.editedRowIndex = undefined!;
     this.formGroup = undefined!;
+  }
+
+  private loadData(
+    companyId: number,
+    plantId: number,
+    year: number,
+    costAccTypeId: number
+  ) {
+    return this.capPlanningService.getCapPlanningItems(
+      companyId,
+      plantId,
+      year,
+      costAccTypeId
+    );
   }
 }

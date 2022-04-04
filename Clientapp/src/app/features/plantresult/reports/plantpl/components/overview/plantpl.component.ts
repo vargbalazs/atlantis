@@ -11,6 +11,7 @@ import { plantPlOverview } from './sampledata';
 import { costGroups } from 'src/app/features/masterdata/planning/costgroup/components/list/sampledata';
 import { CostGroup } from 'src/app/features/masterdata/planning/costgroup/models/costgroup.model';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { CostGroupService } from 'src/app/features/masterdata/planning/costgroup/services/costgroup.service';
 
 @Component({
   selector: 'plantpl',
@@ -50,7 +51,8 @@ export class PlantPlOverviewComponent implements OnInit {
   constructor(
     private router: Router,
     private reportService: ReportService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private costGroupService: CostGroupService
   ) {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state) {

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { companies } from 'src/app/features/masterdata/general/company/components/list/sampledata';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { CreateEditComponent } from 'src/app/shared/components/create-edit/createedit.component';
+import { CompanyService } from '../../../company/services/company.service';
 
 @Component({
   selector: 'ce-plant',
@@ -24,8 +24,14 @@ export class CreateEditPlantComponent
     companyId: new FormControl(this.formData.companyId, [Validators.required]),
   });
 
+  constructor(private companyService: CompanyService) {
+    super();
+  }
+
   ngOnInit() {
-    this.companies = companies;
+    this.companyService.getCompanies().subscribe((companies) => {
+      this.companies = companies;
+    });
   }
 
   companyChange(value: Company) {

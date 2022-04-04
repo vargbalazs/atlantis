@@ -5,11 +5,11 @@ import { StartLayoutComponent } from './core/components/start-layout/start-layou
 import { HomeComponent } from './features/home/components/home.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/auth/login',
-    pathMatch: 'full',
-  },
+  // {
+  //   path: '',
+  //   redirectTo: '/auth/login',
+  //   pathMatch: 'full',
+  // },
   {
     path: 'home',
     component: StartLayoutComponent,

@@ -7,7 +7,13 @@
     (add)="addHandler()"
   >
     <ng-template kendoGridToolbarTemplate>
-      <button kendoGridAddCommand [primary]="true" icon="file">Új</button>
+      <button
+        kendoGridAddCommand
+        class="x-btn-primary click-primary"
+        icon="file"
+      >
+        Új
+      </button>
     </ng-template>
     <kendo-grid-column
       [hidden]="true"
@@ -70,7 +76,14 @@
   (save)="saveHandler($event)"
   (cancel)="cancelHandler()"
 ></ce-version>
-<div kendoDialogContainer></div>
+<div
+  class="x-dialog-container"
+  confirmdialog-style
+  [isMsgDialog]="isMsgDialog"
+  [dialogType]="dialogType"
+>
+  <div kendoDialogContainer></div>
+</div>
 <loading-overlay
   [visible]="loadingOverlayVisible | async"
   loadingText=""

@@ -5,7 +5,6 @@ import { Crud } from 'src/app/shared/classes/crud.class';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { CapUnitService } from '../../services/capunit.service';
-import { capUnits } from './sampledata';
 
 @Component({
   selector: 'production-capunit',
@@ -16,7 +15,7 @@ export class CapUnitComponent extends Crud<CapUnit> implements OnInit {
   constructor(
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
-    capGroupService: CapUnitService,
+    private capGroupService: CapUnitService,
     loaderService: LoaderService
   ) {
     super(
@@ -28,6 +27,9 @@ export class CapUnitComponent extends Crud<CapUnit> implements OnInit {
   }
 
   ngOnInit() {
-    this.gridData = { data: capUnits, total: capUnits.length };
+    this.gridData = { data: [], total: 0 };
+    this.capGroupService.getCapUnits().subscribe((capUnits) => {
+      this.gridData = { data: capUnits, total: capUnits.length };
+    });
   }
 }

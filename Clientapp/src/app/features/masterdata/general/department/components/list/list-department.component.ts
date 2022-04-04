@@ -16,7 +16,7 @@ export class DepartmentComponent extends Crud<Department> implements OnInit {
   constructor(
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
-    departmentService: DepartmentService,
+    private departmentService: DepartmentService,
     loaderService: LoaderService
   ) {
     super(
@@ -28,6 +28,9 @@ export class DepartmentComponent extends Crud<Department> implements OnInit {
   }
 
   ngOnInit() {
-    this.gridData = { data: departments, total: departments.length };
+    this.gridData = { data: [], total: 0 };
+    this.departmentService.getDepartments().subscribe((depts) => {
+      this.gridData = { data: depts, total: depts.length };
+    });
   }
 }

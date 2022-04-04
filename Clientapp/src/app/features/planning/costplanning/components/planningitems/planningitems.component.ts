@@ -2,20 +2,21 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
 import { CostPlanningItem } from '../../models/costplanningitem.model';
 import { FilterEntity } from 'src/app/shared/models/filter.model';
-import { costPlanningItems } from './sampledata';
 import { Crud } from 'src/app/shared/classes/crud.class';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { CostPlanningService } from '../../services/costplanning.service';
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
-import { costAccounts } from 'src/app/features/masterdata/planning/costaccount/components/list/sampledata';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { forkJoin, Observable, of } from 'rxjs';
+import { first, map } from 'rxjs/operators';
 import { GroupDescriptor } from '@progress/kendo-data-query';
 import { ContextMenuComponent } from '@progress/kendo-angular-menu';
 import { Task } from '../../../../../shared/models/task.model';
 import { TaskService } from '../../../../../shared/services/task.service';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { CostAccountService } from 'src/app/features/masterdata/planning/costaccount/services/costaccount.service';
+import { TaskType } from 'src/app/shared/enums/taskType.enum';
+import { TaskStatus } from 'src/app/shared/enums/taskstatus.enum';
 
 @Component({
   selector: 'cost-planningitems',
@@ -35,6 +36,7 @@ export class CostPlanningItemsComponent
   gridData!: GridDataResult;
   periods: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   filtered = false;
+  filterFirst = false;
   costAccounts!: CostAccount[];
   aggregates: any[] = [{ field: 'amount', aggregate: 'sum' }];
   groups: GroupDescriptor[] = [
@@ -62,9 +64,10 @@ export class CostPlanningItemsComponent
   constructor(
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
-    costPlanningService: CostPlanningService,
+    private costPlanningService: CostPlanningService,
     loaderService: LoaderService,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private costAccountService: CostAccountService
   ) {
     super(
       msgDialogService,
@@ -80,42 +83,30 @@ export class CostPlanningItemsComponent
   }
 
   showFilterForm() {
-    this.filterEntity = new FilterEntity();
+    this.filterEntity = this.filterEntityInput
+      ? this.filterEntityInput
+      : new FilterEntity();
+    this.filterFirst = !this.filterEntityInput;
   }
 
   cancelFilterForm() {
     this.filterEntity = undefined!;
+    this.filterFirst = !this.filterEntityInput;
   }
 
   saveFilterForm(filterEntity: FilterEntity) {
     this.filterEntity = undefined!;
     this.filterEntityInput = filterEntity;
-    // this.actProdDataService
-    //   .getActualData(
-    //     filterEntity.companyId!,
-    //     filterEntity.plantId!,
-    //     filterEntity.year?.getFullYear()!
-    //   )
-    //   .subscribe((result) => {
-    //     this.loadingOverlayVisible = false;
-    //     this.gridData = { data: result, total: result.length };
-    //     // filter the accounts
-    //     setTimeout(() => {
-    //       this.grid.autoFitColumns();
-    //     }, 0);
-    //     this.filtered = true;
-    //   });
-
-    setTimeout(() => {
-      const filteredData = costPlanningItems.filter(
-        (item) =>
-          item.companyId === filterEntity.companyId &&
-          item.plantId === filterEntity.plantId &&
-          item.year === filterEntity.year?.getFullYear() &&
-          item.costAccTypeId === filterEntity.costAccTypeId &&
-          item.costCenterId === filterEntity.costCenterId
-      );
-      this.gridData = { data: filteredData, total: filteredData.length };
+    forkJoin({
+      costPlanningItems: this.costPlanningService
+        .getItems(filterEntity.costCenterId!, filterEntity.costAccTypeId!)
+        .pipe(first()),
+      costAccounts: this.costAccountService.getCostAccounts().pipe(first()),
+    }).subscribe(({ costPlanningItems, costAccounts }) => {
+      this.gridData = {
+        data: costPlanningItems,
+        total: costPlanningItems.length,
+      };
       this.costAccounts = costAccounts.filter(
         (account) =>
           account.companyId === filterEntity.companyId &&
@@ -126,7 +117,7 @@ export class CostPlanningItemsComponent
       }, 0);
       this.filtered = true;
       console.log('finished');
-    }, 1500);
+    });
     console.log('filtering...');
   }
 
@@ -194,7 +185,12 @@ export class CostPlanningItemsComponent
   }
 
   showTaskForm(planningItem: CostPlanningItem, task: Task) {
-    this.task = this.taskService.initTaskForm(planningItem, task, this.isNew);
+    this.task = this.taskService.initTaskForm(
+      planningItem,
+      task,
+      this.isNew,
+      TaskType.COSTPLANNING
+    );
   }
 
   cancelTaskForm() {
@@ -203,90 +199,37 @@ export class CostPlanningItemsComponent
 
   saveTaskForm(task: Task) {
     this.task = undefined!;
-    // if (this.isNew) {
-    //   this.taskService.add(task).subscribe((result) => {
-    //     this.loadingOverlayVisible = false;
-    //     this.gridData.data.forEach((item: CostPlanningItem) => {
-    //       if (item.id === task.itemId) {
-    //         item.taskId = result;
-    //         task.id = result;
-    //         item.task = task;
-    //       }
-    //     });
-    //     setTimeout(() => {
-    //       this.grid.autoFitColumns();
-    //     }, 0);
-    //     this.showNotification(
-    //       'Az új feladat sikeresen rögzítve lett',
-    //       3000,
-    //       'success'
-    //     );
-    //   });
-    // } else {
-    //   this.taskService.update(task).subscribe(() => {
-    //     this.loadingOverlayVisible = false;
-    //     this.gridData.data.forEach((item: CostPlanningItem) => {
-    //       if (item.id === task.itemId) item.task = task;
-    //     });
-    //     setTimeout(() => {
-    //       this.grid.autoFitColumns();
-    //     }, 0);
-    //     this.showNotification(
-    //       'A feladat sikeresen módosítva lett',
-    //       3000,
-    //       'success'
-    //     );
-    //   });
-    // }
-    if (this.isNew) {
+    this.taskService.update(task).subscribe(() => {
+      this.gridData.data.forEach((item: CostPlanningItem) => {
+        if (item.id === task.planningItemId) {
+          item.task = task;
+        }
+      });
       setTimeout(() => {
-        this.gridData.data.forEach((item: CostPlanningItem) => {
-          if (item.id === task.planningItemId) {
-            item.task = task;
-          }
-        });
+        this.grid.autoFitColumns();
+      }, 0);
+      if (this.isNew) {
         this.showNotification(
           'Az új feladat sikeresen rögzítve lett',
           3000,
           'success'
         );
-        setTimeout(() => {
-          this.grid.autoFitColumns();
-        }, 0);
-        console.log('task saved');
-      }, 1500);
-    } else {
-      setTimeout(() => {
-        this.gridData.data.forEach((item: CostPlanningItem) => {
-          if (item.id === task.planningItemId) item.task = task;
-        });
+      } else {
         this.showNotification(
           'A feladat sikeresen módosítva lett',
           3000,
           'success'
         );
-        setTimeout(() => {
-          this.grid.autoFitColumns();
-        }, 0);
-        console.log('task saved');
-      }, 1500);
-    }
+      }
+    });
     console.log('task saving...');
   }
 
   taskDone(task: Task) {
-    // this.taskService.done(task.id!).subscribe(() => {
-    //   this.loadingOverlayVisible = false;
-    //   this.showNotification(
-    //     'A feladat sikeresen módosítva lett',
-    //     3000,
-    //     'success'
-    //   );
-    // });
-    setTimeout(() => {
+    this.taskService.update(task).subscribe(() => {
       this.gridData.data.forEach((item: CostPlanningItem) => {
         if (item.id === task.planningItemId) {
-          item.task!.taskStatus = 1;
+          item.task!.taskStatus = TaskStatus.CLOSED;
           item.task!.taskName = '';
         }
       });
@@ -295,6 +238,6 @@ export class CostPlanningItemsComponent
         3000,
         'success'
       );
-    }, 1500);
+    });
   }
 }

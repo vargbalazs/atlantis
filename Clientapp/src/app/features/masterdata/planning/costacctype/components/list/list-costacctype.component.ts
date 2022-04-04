@@ -5,7 +5,6 @@ import { Crud } from 'src/app/shared/classes/crud.class';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { CostAccountingTypeService } from '../../services/costacctype.service';
-import { costAccTypes } from './sampledata';
 
 @Component({
   selector: 'general-costacctype',
@@ -19,7 +18,7 @@ export class CostAccountingTypeComponent
   constructor(
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
-    costacctypeService: CostAccountingTypeService,
+    private costacctypeService: CostAccountingTypeService,
     loaderService: LoaderService
   ) {
     super(
@@ -31,6 +30,9 @@ export class CostAccountingTypeComponent
   }
 
   ngOnInit() {
-    this.gridData = { data: costAccTypes, total: costAccTypes.length };
+    this.gridData = { data: [], total: 0 };
+    this.costacctypeService.getCostAccTypes().subscribe((costAccTypes) => {
+      this.gridData = { data: costAccTypes, total: costAccTypes.length };
+    });
   }
 }

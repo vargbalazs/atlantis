@@ -7,7 +7,6 @@ import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { CopyEntity } from '../../../../../../shared/models/copy.model';
 import { CopyService } from '../../services/copy.service';
 import { CostCenterService } from '../../services/costcenter.service';
-import { costcenters } from './sampledata';
 
 @Component({
   selector: 'general-costcenter',
@@ -20,7 +19,7 @@ export class CostCenterComponent extends Crud<CostCenter> implements OnInit {
   constructor(
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
-    costcenterService: CostCenterService,
+    private costcenterService: CostCenterService,
     loaderService: LoaderService,
     private copyService: CopyService
   ) {
@@ -33,7 +32,13 @@ export class CostCenterComponent extends Crud<CostCenter> implements OnInit {
   }
 
   ngOnInit() {
-    this.gridData = { data: costcenters, total: costcenters.length };
+    this.gridData = { data: [], total: 0 };
+    this.costcenterService.getCostCenters().subscribe((costcenters) => {
+      costcenters.forEach((costCenter) => {
+        costCenter.yearDate = new Date(costCenter.yearDate!);
+      });
+      this.gridData = { data: costcenters, total: costcenters.length };
+    });
   }
 
   showCopyForm() {

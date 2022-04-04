@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CostResp } from '../models/costresp.model';
 import { HttpClient } from '@angular/common/http';
 import { IRepository } from 'src/app/shared/interfaces/repository.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class CostRespService implements IRepository<CostResp> {
@@ -9,19 +10,27 @@ export class CostRespService implements IRepository<CostResp> {
 
   add(costresp: CostResp) {
     return this.http.post<number>(
-      '/api/masterdata/planning/costresp',
+      `${environment.apiUrl}/api/masterdata/planning/costresp`,
       costresp
     );
   }
 
   update(costresp: CostResp) {
     return this.http.patch<number>(
-      '/api/masterdata/planning/costresp',
+      `${environment.apiUrl}/api/masterdata/planning/costresp`,
       costresp
     );
   }
 
   delete(id: number) {
-    return this.http.delete<number>(`/api/masterdata/planning/costresp/${id}`);
+    return this.http.delete<number>(
+      `${environment.apiUrl}/api/masterdata/planning/costresp/${id}`
+    );
+  }
+
+  getCostResps() {
+    return this.http.get<CostResp[]>(
+      `${environment.apiUrl}/api/masterdata/planning/costresp`
+    );
   }
 }

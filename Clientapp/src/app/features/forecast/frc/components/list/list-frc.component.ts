@@ -88,36 +88,18 @@ export class FrcComponent extends Crud<Frc> implements OnInit {
     year: number,
     costAccTypeId: number
   ) {
-    // this.frcService
-    //   .getFrcs(companyId!, plantId!, year!, costAccTypeId!)
-    //   .subscribe((result) => {
-    //     this.frcs = result;
-    //     this.gridData = { data: this.frcs, total: this.frcs.length };
-    //     this.loadingOverlayVisible = false;
-    //     this.listWasFiltered = true;
-    //     this.year = year!;
-    //     this.company = this.frcs[0].company!;
-    //     this.plant = this.frcs[0].plant!;
-    //     this.costAccType=this.frcs[0].costAccType!;
-    //   });
-
-    setTimeout(() => {
-      this.frcs = frcs.filter(
-        (frc) =>
-          frc.companyId === companyId &&
-          frc.plantId === plantId &&
-          frc.year === year &&
-          frc.costAccTypeId === costAccTypeId
-      );
-      this.frcs.forEach((frc) => (frc.hovered = false));
-      this.gridData = { data: this.frcs, total: this.frcs.length };
-      this.listWasFiltered = true;
-      this.year = year;
-      this.company = this.frcs[0].company!;
-      this.plant = this.frcs[0].plant!;
-      this.costAccType = this.frcs[0].costAccType!;
-      console.log('finished');
-    }, 1500);
+    this.frcService
+      .getFrcs(companyId!, plantId!, year!, costAccTypeId!)
+      .subscribe((result) => {
+        this.frcs = result;
+        this.gridData = { data: this.frcs, total: this.frcs.length };
+        this.listWasFiltered = true;
+        this.year = year!;
+        this.company = this.frcs[0].company!;
+        this.plant = this.frcs[0].plant!;
+        this.costAccType = this.frcs[0].costAccType!;
+        console.log('finished');
+      });
     console.log('filtering...');
   }
 }

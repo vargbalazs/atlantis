@@ -1,13 +1,15 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { companies } from 'src/app/features/masterdata/general/company/components/list/sampledata';
-import { plants } from '../../../../general/plant/components/list/sampledata';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { CostCenter } from '../../models/costcenter.model';
 import { CreateEditComponent } from 'src/app/shared/components/create-edit/createedit.component';
 import { PlantArea } from 'src/app/features/masterdata/general/plantarea/models/plantarea.model';
-import { plantareas } from 'src/app/features/masterdata/general/plantarea/components/list/sampledata';
+import { CompanyService } from 'src/app/features/masterdata/general/company/services/company.service';
+import { PlantService } from 'src/app/features/masterdata/general/plant/services/plant.service';
+import { PlantAreaService } from 'src/app/features/masterdata/general/plantarea/services/plantarea.service';
+import { forkJoin } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'ce-costcenter',
@@ -40,10 +42,24 @@ export class CreateEditCostCenterComponent
     ]),
   });
 
+  constructor(
+    private companyService: CompanyService,
+    private plantService: PlantService,
+    private plantAreaService: PlantAreaService
+  ) {
+    super();
+  }
+
   ngOnInit() {
-    this.companies = companies;
-    this.plants = plants;
-    this.plantAreas = plantareas;
+    forkJoin({
+      companies: this.companyService.getCompanies().pipe(first()),
+      plants: this.plantService.getPlants().pipe(first()),
+      plantareas: this.plantAreaService.getPlantAreas().pipe(first()),
+    }).subscribe(({ companies, plants, plantareas }) => {
+      this.companies = companies;
+      this.plants = plants;
+      this.plantAreas = plantareas;
+    });
     this.changeControlState(['plant', 'plantArea'], false);
   }
 

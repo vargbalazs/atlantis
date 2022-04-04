@@ -1,5 +1,3 @@
-import { CapGroup } from 'src/app/features/masterdata/production/capgroup/models/capgroup.model';
-
 export class ProvkDetail {
   constructor(
     public id?: number,
@@ -9,7 +7,13 @@ export class ProvkDetail {
     public version?: number,
     public capGroupId?: number,
     public value?: number,
-    public capGroup?: CapGroup,
+    public capGroup?: string,
+    public capName?: string,
+    public fixRate?: number,
+    public invNr?: string,
+    public normalCap?: number,
+    public unit?: string,
+    public capTypeId?: number,
     public ba?: number
   ) {}
 }

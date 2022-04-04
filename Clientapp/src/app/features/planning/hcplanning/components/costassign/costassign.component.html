@@ -60,6 +60,9 @@
           </kendo-combobox-column>
           <kendo-combobox-column field="name" title="Megnevezés" [width]="150">
           </kendo-combobox-column>
+          <ng-template kendoMultiColumnComboBoxNoDataTemplate>
+            Nincs megjelenítendő adat
+          </ng-template>
         </kendo-multicolumncombobox>
         <kendo-popup
           [anchor]="$any(costAccount.element)"
@@ -122,7 +125,7 @@
         let-rowIndex="rowIndex"
       >
         <kendo-icon
-          *ngIf="isNew || editing"
+          *ngIf="isNew || (editing && rowIndex === editedRowIndex)"
           class="command-icon"
           themeColor="primary"
           name="save"
@@ -151,7 +154,7 @@
           (click)="removeHandler({ dataItem: dataItem })"
         ></kendo-icon>
         <kendo-icon
-          *ngIf="isNew || editing"
+          *ngIf="isNew || (editing && rowIndex === editedRowIndex)"
           class="command-icon"
           themeColor="secondary"
           name="cancel"

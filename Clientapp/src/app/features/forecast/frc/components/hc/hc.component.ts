@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { FrcService } from '../../services/frc.service';
-import { departments } from 'src/app/features/masterdata/general/department/components/list/sampledata';
 import { Department } from 'src/app/features/masterdata/general/department/models/department.model';
 import { frcHc } from './sampledata';
 import { FrcHc } from '../../models/frc-hc.model';
@@ -22,7 +21,6 @@ export class HcComponent implements OnInit {
   editedRowIndex!: number;
   formGroup!: FormGroup;
   loadingOverlayVisible = this.loaderService.isLoading;
-  departments: Department[] = [];
   periods: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   originalFrcHc!: FrcHc;
   aggregates!: any[];
@@ -30,6 +28,7 @@ export class HcComponent implements OnInit {
 
   @Input() frcId!: number;
   @Input() plantId!: number;
+  @Input() departments!: Department[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,11 +48,6 @@ export class HcComponent implements OnInit {
     this.groups = [
       { field: 'hcPlanningItem.costGroup.name', aggregates: this.aggregates },
     ];
-    setTimeout(() => {
-      this.departments = departments.filter(
-        (dep) => dep.plantId === this.plantId
-      );
-    }, 1500);
   }
 
   public createFormGroup(args: any): FormGroup {

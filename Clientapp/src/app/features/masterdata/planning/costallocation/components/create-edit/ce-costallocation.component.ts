@@ -1,15 +1,17 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { companies } from 'src/app/features/masterdata/general/company/components/list/sampledata';
-import { plants } from '../../../../general/plant/components/list/sampledata';
-import { costcenters } from '../../../costcenter/components/list/sampledata';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { CostAllocation } from '../../models/costallocation.model';
 import { CreateEditComponent } from 'src/app/shared/components/create-edit/createedit.component';
 import { CostCenter } from '../../../costcenter/models/costcenter.model';
 import { CostAccount } from '../../../costaccount/models/costaccount.model';
-import { costAccounts } from '../../../costaccount/components/list/sampledata';
+import { CompanyService } from 'src/app/features/masterdata/general/company/services/company.service';
+import { PlantService } from 'src/app/features/masterdata/general/plant/services/plant.service';
+import { CostCenterService } from '../../../costcenter/services/costcenter.service';
+import { CostAccountService } from '../../../costaccount/services/costaccount.service';
+import { forkJoin } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'ce-costallocation',
@@ -65,11 +67,28 @@ export class CreateEditCostAllocationComponent
     ]),
   });
 
+  constructor(
+    private companyService: CompanyService,
+    private plantService: PlantService,
+    private costCenterService: CostCenterService,
+    private costAccountService: CostAccountService
+  ) {
+    super();
+  }
+
   ngOnInit() {
-    this.companies = companies;
-    this.plants = plants;
-    this.allocCostCenters = costcenters;
-    this.costAccounts = costAccounts;
+    forkJoin({
+      companies: this.companyService.getCompanies().pipe(first()),
+      plants: this.plantService.getPlants().pipe(first()),
+      allocCostCenters: this.costCenterService.getCostCenters().pipe(first()),
+      costAccounts: this.costAccountService.getCostAccounts().pipe(first()),
+    }).subscribe(({ companies, plants, allocCostCenters, costAccounts }) => {
+      this.companies = companies;
+      this.plants = plants;
+      this.allocCostCenters = allocCostCenters;
+      this.costAccounts = costAccounts;
+    });
+
     this.changeControlState(
       [
         'plant',
@@ -196,13 +215,15 @@ export class CreateEditCostAllocationComponent
   }
 
   capacityCheckChange(e: any) {
-    this.capacityChecked = e.target ? e.target.checked : e;
-    this.changeControlState(
-      ['capacityUnit', 'totalCapacity'],
-      this.capacityChecked
-    );
-    if (!this.capacityChecked) {
-      this.form.patchValue({ totalCapacity: null, capacityUnit: '' });
+    if (e) {
+      this.capacityChecked = e.target ? e.target.checked : e;
+      this.changeControlState(
+        ['capacityUnit', 'totalCapacity'],
+        this.capacityChecked
+      );
+      if (!this.capacityChecked) {
+        this.form.patchValue({ totalCapacity: null, capacityUnit: '' });
+      }
     }
   }
 }

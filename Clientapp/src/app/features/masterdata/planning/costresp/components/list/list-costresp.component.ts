@@ -5,7 +5,6 @@ import { Crud } from 'src/app/shared/classes/crud.class';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { CostRespService } from '../../services/costresp.service';
-import { costresps } from './sampledata';
 
 @Component({
   selector: 'general-costresp',
@@ -16,7 +15,7 @@ export class CostRespComponent extends Crud<CostResp> implements OnInit {
   constructor(
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
-    costrespService: CostRespService,
+    private costrespService: CostRespService,
     loaderService: LoaderService
   ) {
     super(
@@ -28,6 +27,9 @@ export class CostRespComponent extends Crud<CostResp> implements OnInit {
   }
 
   ngOnInit() {
-    this.gridData = { data: costresps, total: costresps.length };
+    this.gridData = { data: [], total: 0 };
+    this.costrespService.getCostResps().subscribe((costresps) => {
+      this.gridData = { data: costresps, total: costresps.length };
+    });
   }
 }

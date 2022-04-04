@@ -1,6 +1,3 @@
-import { CapGroup } from 'src/app/features/masterdata/production/capgroup/models/capgroup.model';
-import { SalesProduct } from 'src/app/features/masterdata/production/salesproduct/models/salesproduct.model';
-
 export class SalesDetail {
   constructor(
     public id?: number,
@@ -9,9 +6,11 @@ export class SalesDetail {
     public month?: number,
     public version?: number,
     public capGroupId?: number,
+    public capGroup?: string,
+    public capName?: string,
     public value?: number,
-    public capGroup?: CapGroup,
     public salesProductId?: number,
-    public salesProduct?: SalesProduct
+    public name?: string,
+    public unit?: string
   ) {}
 }

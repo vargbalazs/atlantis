@@ -1,6 +1,5 @@
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,6 +17,11 @@ import { PlanningModule } from './features/planning/planning.module';
 import { PlantResultModule } from './features/plantresult/plantresult.module';
 import { AdminModule } from './core/components/admin/admin.module';
 import { HttpErrorInterceptor } from './core/interceptor/http-error.interceptor';
+import { ConfirmDialogStyleModule } from './shared/directives/confirmdialog/confirmdialog-style.module';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { IntlModule } from '@progress/kendo-angular-intl';
+import { LocaleProvider } from './core/providers/locale.provider';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,11 +39,16 @@ import { HttpErrorInterceptor } from './core/interceptor/http-error.interceptor'
     ForecastModule,
     PlanningModule,
     PlantResultModule,
+    ConfirmDialogStyleModule,
+    DialogModule,
+    IntlModule,
+    TranslateModule.forRoot(),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    LocaleProvider,
   ],
   bootstrap: [AppComponent],
 })

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CapType } from '../models/captype.model';
 import { HttpClient } from '@angular/common/http';
 import { IRepository } from 'src/app/shared/interfaces/repository.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class CapTypeService implements IRepository<CapType> {
@@ -9,25 +10,36 @@ export class CapTypeService implements IRepository<CapType> {
 
   add(captype: CapType) {
     return this.http.post<number>(
-      '/api/masterdata/production/captype',
+      `${environment.apiUrl}/api/masterdata/production/captype`,
       captype
     );
   }
 
   update(captype: CapType) {
     return this.http.patch<number>(
-      '/api/masterdata/production/captype',
+      `${environment.apiUrl}/api/masterdata/production/captype`,
       captype
     );
   }
 
   delete(id: number) {
-    return this.http.delete<number>(`/api/masterdata/production/captype/${id}`);
+    return this.http.delete<number>(
+      `${environment.apiUrl}/api/masterdata/production/captype/${id}`
+    );
   }
 
-  getCapTypes(plantId: number) {
-    return this.http.get<CapType[]>('/api/masterdata/production/captypes', {
-      params: { plantId: plantId },
-    });
+  getCapTypesByPlantId(plantId: number) {
+    return this.http.get<CapType[]>(
+      `${environment.apiUrl}/api/masterdata/production/captype`,
+      {
+        params: { plantId: plantId },
+      }
+    );
+  }
+
+  getCapTypes() {
+    return this.http.get<CapType[]>(
+      `${environment.apiUrl}/api/masterdata/production/captype`
+    );
   }
 }

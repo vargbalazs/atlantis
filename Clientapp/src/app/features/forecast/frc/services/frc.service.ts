@@ -2,21 +2,30 @@ import { Injectable } from '@angular/core';
 import { Frc } from '../models/frc.model';
 import { HttpClient } from '@angular/common/http';
 import { IRepository } from 'src/app/shared/interfaces/repository.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class FrcService implements IRepository<Frc> {
   constructor(private http: HttpClient) {}
 
   add(frc: Frc) {
-    return this.http.post<number>('/api/forecast/frc', frc);
+    return this.http.post<number>(
+      `${environment.apiUrl}/api/forecast/frc`,
+      frc
+    );
   }
 
   update(frc: Frc) {
-    return this.http.patch<number>('/api/forecast/frc', frc);
+    return this.http.patch<number>(
+      `${environment.apiUrl}/api/forecast/frc`,
+      frc
+    );
   }
 
   delete(id: number) {
-    return this.http.delete<number>(`/api/forecast/frc/${id}`);
+    return this.http.delete<number>(
+      `${environment.apiUrl}/api/forecast/frc/${id}`
+    );
   }
 
   getFrcs(
@@ -31,7 +40,7 @@ export class FrcService implements IRepository<Frc> {
       year: year,
       costAccTypeId: costAccTypeId,
     };
-    return this.http.get<Frc[]>('/api/forecast/frc', {
+    return this.http.get<Frc[]>(`${environment.apiUrl}/api/forecast/frc`, {
       params: filterCrit,
     });
   }

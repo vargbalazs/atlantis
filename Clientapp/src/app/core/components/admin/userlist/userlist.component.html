@@ -1,6 +1,10 @@
 <div class="component-header">Regisztrált felhasználók</div>
 <div class="grid">
-  <kendo-grid [kendoGridBinding]="gridData.data" [sortable]="true">
+  <kendo-grid
+    [kendoGridBinding]="gridData.data"
+    [sortable]="true"
+    [style.maxHeight.vh]="77.9"
+  >
     <kendo-grid-column
       field="userId"
       title="Felhasználó ID"

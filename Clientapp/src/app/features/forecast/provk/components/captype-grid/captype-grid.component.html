@@ -21,28 +21,29 @@
   </ng-template>
   <kendo-grid-column field="id" title="ID" [hidden]="true"></kendo-grid-column>
   <kendo-grid-column
-    field="capGroup.capGroup"
+    field="capGroup"
     title="Kap. csop."
     [editable]="false"
   ></kendo-grid-column>
   <kendo-grid-column
-    field="capGroup.capName"
+    field="capName"
     title="Kap. név"
     [editable]="false"
   ></kendo-grid-column>
   <kendo-grid-column
-    field="capGroup.invNr"
+    field="invNr"
     title="Leltári szám"
     [editable]="false"
   ></kendo-grid-column>
   <kendo-grid-column
-    field="capGroup.capUnit.unit"
+    field="unit"
     title="Kap. egys."
     [editable]="false"
   ></kendo-grid-column>
   <kendo-grid-column
     field="value"
     title="Előrejelzés"
+    format="{0:n0}"
     [editable]="true"
     [class]="'k-text-right'"
   >
@@ -76,24 +77,28 @@
     </ng-template>
   </kendo-grid-column>
   <kendo-grid-column
-    field="capGroup.normalCap"
+    field="normalCap"
     title="Normál éves kapacitás"
     filter="numeric"
+    format="{0:n0}"
     [editable]="false"
     [class]="'k-text-right'"
-  ></kendo-grid-column>
+  >
+  </kendo-grid-column>
   <kendo-grid-column
-    field="capGroup.fixRate"
+    field="fixRate"
     title="Fix egységdíj"
     filter="numeric"
+    format="{0:n2}"
     [editable]="false"
     [class]="'k-text-right'"
-  ></kendo-grid-column>
+  >
+  </kendo-grid-column>
   <kendo-grid-column
     field="ba"
     title="BA"
-    [editable]="false"
     format="{0:n0}"
+    [editable]="false"
     [class]="'k-text-right'"
     [footerClass]="'k-text-right'"
   >

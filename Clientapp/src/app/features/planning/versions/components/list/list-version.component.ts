@@ -4,7 +4,6 @@ import { PlanningVersion } from '../../models/version.model';
 import { Crud } from 'src/app/shared/classes/crud.class';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { PlanningVersionService } from '../../services/version.service';
-import { versions } from './sampledata';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 
@@ -28,10 +27,18 @@ export class PlanningVersionComponent
   }
 
   ngOnInit() {
-    this.gridData = { data: versions, total: versions.length };
+    this.gridData = { data: [], total: 0 };
+    this.versionService.getVersions().subscribe((versions) => {
+      versions.forEach(
+        (version) => (version.yearDate = new Date(version.yearDate!))
+      );
+      this.gridData = { data: versions, total: versions.length };
+    });
   }
 
   changeStatus({ dataItem }: { dataItem: PlanningVersion }) {
+    this.isMsgDialog = true;
+    this.dialogType = 'danger';
     this.msgDialogService
       .showDialog(
         'Tervverzió',
@@ -41,24 +48,14 @@ export class PlanningVersionComponent
       .result.subscribe((result) => {
         const dialogResult = JSON.parse(JSON.stringify(result));
         if (dialogResult.primary) {
-          // this.versionService.changeStatus(+!dataItem.status).subscribe(() => {
-          //   this.customNotificationService.showNotification(
-          //     'A státusz sikeresen módosításra került',
-          //     3000,
-          //     'success'
-          //   );
-          //   this.loadingOverlayVisible = false;
-          // });
-          setTimeout(() => {
-            this.gridData.data.forEach((item: PlanningVersion) => {
-              if (item.id === dataItem.id) item.status = +!dataItem.status;
-            });
+          dataItem.status = 1;
+          this.versionService.update(dataItem).subscribe(() => {
             this.customNotificationService.showNotification(
               'A státusz sikeresen módosításra került',
               3000,
               'success'
             );
-          }, 1500);
+          });
         }
       });
   }

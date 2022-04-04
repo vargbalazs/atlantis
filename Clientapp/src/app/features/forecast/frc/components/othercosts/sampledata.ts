@@ -10,9 +10,9 @@ export const otherCosts: FrcOtherCost[] = [
       name: 'Indirekt anyagköltség',
     },
     costAccName: 'Indirekt anyagköltség',
-    costCenterId: 1,
+    costCenterId: 3,
     costCenter: {
-      code: '1H3300',
+      code: '1H3310',
       name: 'Szerelde',
     },
     costEffect: 'extra kiadás',
@@ -38,9 +38,9 @@ export const otherCosts: FrcOtherCost[] = [
       name: 'Indirekt anyagköltség',
     },
     costAccName: 'Indirekt anyagköltség',
-    costCenterId: 1,
+    costCenterId: 3,
     costCenter: {
-      code: '1H3300',
+      code: '1H3310',
       name: 'Szerelde',
     },
     costEffect: 'másik extra kiadás',

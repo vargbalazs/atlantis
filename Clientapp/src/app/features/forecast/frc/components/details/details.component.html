@@ -32,12 +32,18 @@
           [plantId]="plantId"
           [companyId]="companyId"
           [year]="year"
+          [costAccounts]="costAccounts"
+          [costCenters]="costCenters"
         ></othercosts>
       </ng-template>
     </kendo-tabstrip-tab>
     <kendo-tabstrip-tab title="Létszám">
       <ng-template kendoTabContent>
-        <hc [frcId]="frcId" [plantId]="plantId"></hc>
+        <hc
+          [frcId]="frcId"
+          [plantId]="plantId"
+          [departments]="departments"
+        ></hc>
       </ng-template>
     </kendo-tabstrip-tab>
   </kendo-tabstrip>

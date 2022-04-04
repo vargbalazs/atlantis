@@ -185,28 +185,21 @@ export class CostAssignComponent {
   }
 
   onSave() {
-    // this.hcPlanningService.saveCostAssigns(this.costAssigns).subscribe(() => {
-    //   console.log('finished');
-    //   this.closeForm();
-    //   this.customNotificationService.showNotification(
-    //     'Az adatok sikeresen mentésre kerültek',
-    //     3000,
-    //     'success'
-    //   );
-    // });
-    setTimeout(() => {
-      console.log('finished');
-      this.closeForm();
-      this.customNotificationService.showNotification(
-        'Az adatok sikeresen mentésre kerültek',
-        3000,
-        'success'
-      );
-      this.save.emit({
-        hcPlanningItemId: this.hcPlanningItem.id!,
-        assigned: this.costAssigns.length > 0,
+    this.hcPlanningService
+      .saveCostAssigns(this.costAssigns, this.hcPlanningItem.id!)
+      .subscribe(() => {
+        console.log('finished');
+        this.closeForm();
+        this.save.emit({
+          hcPlanningItemId: this.hcPlanningItem.id!,
+          assigned: this.costAssigns.length > 0,
+        });
+        this.customNotificationService.showNotification(
+          'Az adatok sikeresen mentésre kerültek',
+          3000,
+          'success'
+        );
       });
-    }, 1500);
     console.log('saving...');
   }
 }

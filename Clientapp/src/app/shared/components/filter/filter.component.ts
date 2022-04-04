@@ -1,16 +1,19 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { companies } from 'src/app/features/masterdata/general/company/components/list/sampledata';
-import { plants } from '../../../features/masterdata/general/plant/components/list/sampledata';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { SubmitFormComponent } from 'src/app/shared/components/submitform/submitform.component';
 import { FilterEntity } from '../../models/filter.model';
 import { CostAccountingType } from 'src/app/features/masterdata/planning/costacctype/models/costacctype.model';
 import { CostCenter } from 'src/app/features/masterdata/planning/costcenter/models/costcenter.model';
-import { costAccTypes } from 'src/app/features/masterdata/planning/costacctype/components/list/sampledata';
-import { costcenters } from 'src/app/features/masterdata/planning/costcenter/components/list/sampledata';
 import { CalendarView } from '@progress/kendo-angular-dateinputs';
+import { MsgDialogService } from '../../services/msgdialog.service';
+import { CompanyService } from 'src/app/features/masterdata/general/company/services/company.service';
+import { PlantService } from 'src/app/features/masterdata/general/plant/services/plant.service';
+import { CostAccountingTypeService } from 'src/app/features/masterdata/planning/costacctype/services/costacctype.service';
+import { CostCenterService } from 'src/app/features/masterdata/planning/costcenter/services/costcenter.service';
+import { forkJoin } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'filter',
@@ -52,18 +55,35 @@ export class FilterComponent
     allCostCenter: new FormControl(this.formData.allCostCenter),
   });
 
+  constructor(
+    private companyService: CompanyService,
+    private plantService: PlantService,
+    private costAccTypeService: CostAccountingTypeService,
+    private costCenterService: CostCenterService,
+    msgDialogService: MsgDialogService
+  ) {
+    super(msgDialogService);
+  }
+
   ngOnInit() {
-    this.companies = companies;
-    this.plants = plants;
+    forkJoin({
+      companies: this.companyService.getCompanies().pipe(first()),
+      plants: this.plantService.getPlants().pipe(first()),
+      costAccTypes: this.costAccTypeService.getCostAccTypes().pipe(first()),
+      costCenters: this.costCenterService.getCostCenters().pipe(first()),
+    }).subscribe(({ companies, plants, costAccTypes, costCenters }) => {
+      this.companies = companies;
+      this.plants = plants;
+      this.costAccTypes = costAccTypes;
+      this.costCenters = costCenters;
+    });
     this.changeControlState(['plant', 'year', 'costCenter'], false);
     if (this.frc || this.planning) {
       this.form.controls.costAccTypeId.setValidators(Validators.required);
       this.form.controls.costAccType.setValidators(Validators.required);
-      this.costAccTypes = costAccTypes;
     }
     if (this.planning) {
       this.costCenterRequired(true);
-      this.costCenters = costcenters;
     }
   }
 

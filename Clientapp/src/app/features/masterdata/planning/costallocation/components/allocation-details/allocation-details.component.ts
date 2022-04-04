@@ -6,8 +6,8 @@ import { CostAllocation } from '../../models/costallocation.model';
 import { CostAllocationDetail } from '../../models/costallocationdetail.model';
 import { MsgDialogService } from '../../../../../../shared/services/msgdialog.service';
 import { CostAllocationService } from '../../services/costallocation.service';
-import { NotificationService } from '@progress/kendo-angular-notification';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
   selector: 'allocation-details',
@@ -46,7 +46,7 @@ export class AllocationDetailsComponent {
     private formBuilder: FormBuilder,
     private msgDialogService: MsgDialogService,
     private costAllocationService: CostAllocationService,
-    private notificationService: NotificationService,
+    private customNotificationService: CustomNotificationService,
     private loaderService: LoaderService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
@@ -58,7 +58,7 @@ export class AllocationDetailsComponent {
     this.formGroup = this.formBuilder.group({
       id: item.id,
       costAllocId: [item.costAllocId, Validators.required],
-      costAlloc: [item.costAlloc, Validators.required],
+      costAllocation: [item.costAllocation, Validators.required],
       baseCostCenterId: [item.baseCostCenterId, Validators.required],
       baseCostCenter: [item.baseCostCenter, Validators.required],
       recCostCenterId: [item.recCostCenterId, Validators.required],
@@ -135,7 +135,7 @@ export class AllocationDetailsComponent {
       ),
     });
     this.formGroup.patchValue({ costAllocId: this.costAllocation.id });
-    this.formGroup.patchValue({ costAlloc: this.costAllocation });
+    this.formGroup.patchValue({ costAllocation: this.costAllocation });
     if (!this.costAllocation.allocCapacity)
       this.formGroup.patchValue({ capacity: 0 });
     if (this.formGroup.valid) {
@@ -264,30 +264,28 @@ export class AllocationDetailsComponent {
           }
         });
     } else {
-      // this.costAllocationService
-      //   .saveAllocationDetails(this.costAllocationDetails)
-      //   .subscribe(() => {
-      //     console.log('finished');
-      //     this.closeForm();
-      //     this.notificationService.show({
-      //       content: 'Az adatok sikeresen mentésre kerültek',
-      //       hideAfter: 3000,
-      //       position: { horizontal: 'center', vertical: 'top' },
-      //       animation: { type: 'fade', duration: 400 },
-      //       type: { style: 'success', icon: true },
-      //     });
-      //   });
-      setTimeout(() => {
-        console.log('finished');
-        this.closeForm();
-        this.notificationService.show({
-          content: 'Az adatok sikeresen mentésre kerültek',
-          hideAfter: 3000,
-          position: { horizontal: 'center', vertical: 'top' },
-          animation: { type: 'fade', duration: 400 },
-          type: { style: 'success', icon: true },
+      this.costAllocationService
+        .saveAllocationDetails(this.costAllocationDetails)
+        .subscribe(() => {
+          console.log('finished');
+          this.closeForm();
+          this.customNotificationService.showNotification(
+            'Az adatok sikeresen mentésre kerültek',
+            3000,
+            'success'
+          );
         });
-      }, 1500);
+      // setTimeout(() => {
+      //   console.log('finished');
+      //   this.closeForm();
+      //   this.notificationService.show({
+      //     content: 'Az adatok sikeresen mentésre kerültek',
+      //     hideAfter: 3000,
+      //     position: { horizontal: 'center', vertical: 'top' },
+      //     animation: { type: 'fade', duration: 400 },
+      //     type: { style: 'success', icon: true },
+      //   });
+      // }, 1500);
       console.log('saving...');
     }
   }

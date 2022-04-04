@@ -60,7 +60,7 @@
         <kendo-label [for]="costGroupName" text="Költségcsoport"></kendo-label>
         <kendo-textbox
           #costGroupName
-          formControlName="costGroupName"
+          formControlName="costGroupNameDisabled"
           class="x-textbox-sm"
         ></kendo-textbox>
       </kendo-formfield>
@@ -154,7 +154,7 @@
     <!-- hidden submit button in order to get work the submit event on enter -->
     <button type="submit" hidden></button>
   </form>
-  <kendo-dialog-actions>
+  <kendo-dialog-actions layout="normal">
     <button
       type="button"
       kendoButton

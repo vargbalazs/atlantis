@@ -38,7 +38,10 @@ export class CreateEditPlanningItemComponent
     costGroupId: new FormControl(this.formData.costGroupId, [
       Validators.required,
     ]),
-    departmentName: new FormControl(
+    departmentName: new FormControl(this.formData.job?.department?.name, [
+      Validators.required,
+    ]),
+    departmentNameDisabled: new FormControl(
       { value: this.formData.job?.department?.name, disabled: true },
       [Validators.required]
     ),
@@ -89,7 +92,16 @@ export class CreateEditPlanningItemComponent
   jobChange(value: Job) {
     if (value) {
       this.form.patchValue({ jobId: value.id });
-      this.form.patchValue({ departmentName: value.department?.name });
+      this.form.patchValue({
+        departmentName: value.department?.name
+          ? value.department.name
+          : this.jobs.find((job) => job.id === value.id)?.department?.name,
+      });
+      this.form.patchValue({
+        departmentNameDisabled: value.department?.name
+          ? value.department.name
+          : this.jobs.find((job) => job.id === value.id)?.department?.name,
+      });
     } else {
       this.form.patchValue({ departmentName: '' });
     }

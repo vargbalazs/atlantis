@@ -8,7 +8,7 @@
   Varázsló indítása
 </button>
 <kendo-dialog
-  [width]="550"
+  [width]="560"
   [height]="470"
   *ngIf="started"
   (close)="closeWizard()"
@@ -29,6 +29,8 @@
       *ngIf="currentStep === 0"
       [entity]="currentGroup"
       [formPassed]="entityFormPassed"
+      [companies]="companies"
+      [plants]="plants"
     >
     </entity>
     <file *ngIf="currentStep === 1" [file]="currentGroup"> </file>

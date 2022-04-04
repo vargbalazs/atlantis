@@ -1,15 +1,17 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { companies } from 'src/app/features/masterdata/general/company/components/list/sampledata';
-import { plants } from '../../../../general/plant/components/list/sampledata';
-import { capTypes } from '../../../captype/components/list/sampledata';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { CapGroup } from '../../models/capgroup.model';
 import { CreateEditComponent } from 'src/app/shared/components/create-edit/createedit.component';
 import { CapType } from '../../../captype/models/captype.model';
 import { CapUnit } from '../../../capunit/models/capunit.model';
-import { capUnits } from '../../../capunit/components/list/sampledata';
+import { CompanyService } from 'src/app/features/masterdata/general/company/services/company.service';
+import { PlantService } from 'src/app/features/masterdata/general/plant/services/plant.service';
+import { CapTypeService } from '../../../captype/services/captype.service';
+import { CapUnitService } from '../../../capunit/services/capunit.service';
+import { forkJoin } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'ce-capgroup',
@@ -47,13 +49,30 @@ export class CreateEditCapGroupComponent
     plantId: new FormControl(this.formData.plantId, [Validators.required]),
     normalCap: new FormControl(this.formData.normalCap, [Validators.required]),
     fixRate: new FormControl(this.formData.fixRate, [Validators.required]),
+    unit: new FormControl(this.formData.unit, [Validators.required]),
   });
 
+  constructor(
+    private companyService: CompanyService,
+    private plantService: PlantService,
+    private capTypeService: CapTypeService,
+    private capUnitService: CapUnitService
+  ) {
+    super();
+  }
+
   ngOnInit() {
-    this.companies = companies;
-    this.plants = plants;
-    this.capTypes = capTypes;
-    this.capUnits = capUnits;
+    forkJoin({
+      companies: this.companyService.getCompanies().pipe(first()),
+      plants: this.plantService.getPlants().pipe(first()),
+      capTypes: this.capTypeService.getCapTypes().pipe(first()),
+      capUnits: this.capUnitService.getCapUnits().pipe(first()),
+    }).subscribe(({ companies, plants, capTypes, capUnits }) => {
+      this.companies = companies;
+      this.plants = plants;
+      this.capTypes = capTypes;
+      this.capUnits = capUnits;
+    });
     this.changeControlState(['plant', 'capType', 'capUnit'], false);
   }
 
@@ -115,7 +134,10 @@ export class CreateEditCapGroupComponent
   }
 
   capUnitChange(capUnit: CapUnit) {
-    if (capUnit) this.form.patchValue({ capUnitId: capUnit.id });
+    if (capUnit) {
+      this.form.patchValue({ capUnitId: capUnit.id });
+      this.form.patchValue({ unit: capUnit.unit });
+    }
   }
 
   yearChange(value: Date) {

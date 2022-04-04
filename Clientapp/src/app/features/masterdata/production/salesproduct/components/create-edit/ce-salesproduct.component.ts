@@ -1,15 +1,17 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { companies } from 'src/app/features/masterdata/general/company/components/list/sampledata';
-import { plants } from '../../../../general/plant/components/list/sampledata';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { SalesProduct } from '../../models/salesproduct.model';
 import { CreateEditComponent } from 'src/app/shared/components/create-edit/createedit.component';
 import { CapUnit } from '../../../capunit/models/capunit.model';
-import { capUnits } from '../../../capunit/components/list/sampledata';
 import { CapGroup } from '../../../capgroup/models/capgroup.model';
-import { capGroups } from '../../../capgroup/components/list/sampledata';
+import { CompanyService } from 'src/app/features/masterdata/general/company/services/company.service';
+import { PlantService } from 'src/app/features/masterdata/general/plant/services/plant.service';
+import { CapGroupService } from '../../../capgroup/services/capgroup.service';
+import { CapUnitService } from '../../../capunit/services/capunit.service';
+import { forkJoin } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'ce-salesproduct',
@@ -45,11 +47,27 @@ export class CreateEditSalesProductComponent
     unitId: new FormControl(this.formData.unitId, [Validators.required]),
   });
 
+  constructor(
+    private companyService: CompanyService,
+    private plantService: PlantService,
+    private capGroupService: CapGroupService,
+    private capUnitService: CapUnitService
+  ) {
+    super();
+  }
+
   ngOnInit() {
-    this.companies = companies;
-    this.plants = plants;
-    this.units = capUnits;
-    this.capGroups = capGroups;
+    forkJoin({
+      companies: this.companyService.getCompanies().pipe(first()),
+      plants: this.plantService.getPlants().pipe(first()),
+      capGroups: this.capGroupService.getCapGroups().pipe(first()),
+      capUnits: this.capUnitService.getCapUnits().pipe(first()),
+    }).subscribe(({ companies, plants, capGroups, capUnits }) => {
+      this.companies = companies;
+      this.plants = plants;
+      this.units = capUnits;
+      this.capGroups = capGroups;
+    });
     this.changeControlState(['plant', 'yearDate', 'capGroup', 'unit'], false);
   }
 

@@ -6,7 +6,6 @@ import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { CopyEntity } from '../../../../../../shared/models/copy.model';
 import { SalesProductService } from '../../services/salesproduct.service';
-import { salesProducts } from './sampledata';
 
 @Component({
   selector: 'production-salesproduct',
@@ -20,7 +19,7 @@ export class SalesProductComponent
   constructor(
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
-    salesProductService: SalesProductService,
+    private salesProductService: SalesProductService,
     loaderService: LoaderService
   ) {
     super(
@@ -32,6 +31,13 @@ export class SalesProductComponent
   }
 
   ngOnInit() {
-    this.gridData = { data: salesProducts, total: salesProducts.length };
+    this.gridData = { data: [], total: 0 };
+    this.salesProductService.getSalesProducts().subscribe((salesProducts) => {
+      salesProducts.forEach(
+        (salesProduct) =>
+          (salesProduct.yearDate = new Date(salesProduct.yearDate!))
+      );
+      this.gridData = { data: salesProducts, total: salesProducts.length };
+    });
   }
 }

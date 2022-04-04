@@ -16,7 +16,7 @@ export class PlantAreaComponent extends Crud<PlantArea> implements OnInit {
   constructor(
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
-    plantAreaService: PlantAreaService,
+    private plantAreaService: PlantAreaService,
     loaderService: LoaderService
   ) {
     super(
@@ -28,6 +28,9 @@ export class PlantAreaComponent extends Crud<PlantArea> implements OnInit {
   }
 
   ngOnInit() {
-    this.gridData = { data: plantareas, total: plantareas.length };
+    this.gridData = { data: [], total: 0 };
+    this.plantAreaService.getPlantAreas().subscribe((plantAreas) => {
+      this.gridData = { data: plantAreas, total: plantAreas.length };
+    });
   }
 }

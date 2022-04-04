@@ -1,11 +1,13 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { companies } from 'src/app/features/masterdata/general/company/components/list/sampledata';
-import { plants } from '../../../plant/components/list/sampledata';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { Department } from '../../models/department.model';
 import { CreateEditComponent } from 'src/app/shared/components/create-edit/createedit.component';
+import { CompanyService } from '../../../company/services/company.service';
+import { PlantService } from '../../../plant/services/plant.service';
+import { forkJoin } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'ce-department',
@@ -28,9 +30,21 @@ export class CreateEditDepartmentComponent
     plantId: new FormControl(this.formData.plantId, [Validators.required]),
   });
 
+  constructor(
+    private companyService: CompanyService,
+    private plantService: PlantService
+  ) {
+    super();
+  }
+
   ngOnInit() {
-    this.companies = companies;
-    this.plants = plants;
+    forkJoin({
+      companies: this.companyService.getCompanies().pipe(first()),
+      plants: this.plantService.getPlants().pipe(first()),
+    }).subscribe(({ companies, plants }) => {
+      this.companies = companies;
+      this.plants = plants;
+    });
     this.changeControlState(['plant'], false);
   }
 

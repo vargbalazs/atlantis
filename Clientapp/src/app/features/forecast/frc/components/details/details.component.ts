@@ -7,6 +7,14 @@ import { FrcCapacity } from '../../models/frc-capacity.model';
 import { SelectEvent } from '@progress/kendo-angular-layout';
 import { FrcSalesProduct } from '../../models/frc-salesproduct.model';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { Department } from 'src/app/features/masterdata/general/department/models/department.model';
+import { DepartmentService } from 'src/app/features/masterdata/general/department/services/department.service';
+import { CostAccountService } from 'src/app/features/masterdata/planning/costaccount/services/costaccount.service';
+import { CostCenterService } from 'src/app/features/masterdata/planning/costcenter/services/costcenter.service';
+import { forkJoin } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { CostCenter } from 'src/app/features/masterdata/planning/costcenter/models/costcenter.model';
+import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
 
 @Component({
   selector: 'frc-details',
@@ -30,6 +38,9 @@ export class FrcDetailsComponent implements OnInit {
   costAccTypeId!: number;
   isMsgDialog = true;
   dialogType = 'danger';
+  costAccounts!: CostAccount[];
+  costCenters!: CostCenter[];
+  departments!: Department[];
 
   frcCapacity!: FrcCapacity[];
   showCapacity = false;
@@ -39,7 +50,10 @@ export class FrcDetailsComponent implements OnInit {
     private router: Router,
     private frcService: FrcService,
     private msgDialogService: MsgDialogService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private departmentService: DepartmentService,
+    private costAccountService: CostAccountService,
+    private costCenterService: CostCenterService
   ) {}
 
   ngOnInit() {
@@ -60,6 +74,22 @@ export class FrcDetailsComponent implements OnInit {
       );
       this.showCapacity = true;
     }, 1500);
+
+    forkJoin({
+      costAccounts: this.costAccountService
+        .getCostAccounts(this.companyId, this.year)
+        .pipe(first()),
+      costCenters: this.costCenterService
+        .getCostCenters(this.plantId, this.year)
+        .pipe(first()),
+      departments: this.departmentService
+        .getDepartments(this.plantId)
+        .pipe(first()),
+    }).subscribe(({ costAccounts, costCenters, departments }) => {
+      this.costAccounts = costAccounts;
+      this.costCenters = costCenters;
+      this.departments = departments;
+    });
   }
 
   goBack() {

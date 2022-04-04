@@ -90,23 +90,7 @@ export class CapTypeGridComponent implements OnInit, OnChanges {
     if (this.detailsForm.invalid) {
       return;
     }
-    // this.provkService.updateProvkDetails(this.provkDetails).subscribe(() => {
-    //   this.closeAllRows();
-    //   this.isInEditMode = false;
-    //   this.switchEditMode.emit({
-    //     editMode: this.isInEditMode,
-    //     selectedCapTypeId: this.selectedCapTypeId,
-    //   });
-    //   this.loadingOverlayVisible = false;
-    //   this.notificationService.showNotification(
-    //     'Az adatok sikeresen mentésre kerültek',
-    //     3000,
-    //     'success'
-    //   );
-    // });
-    setTimeout(() => {
-      // we manipulate this.provkDetails directly, that's why we don't need to get the values from the formArray
-      //this.provkDetails = this.formArray.value;
+    this.provkService.updateProvkDetails(this.provkDetails).subscribe(() => {
       this.closeAllRows();
       this.isInEditMode = false;
       this.switchEditMode.emit({
@@ -118,7 +102,7 @@ export class CapTypeGridComponent implements OnInit, OnChanges {
         3000,
         'success'
       );
-    }, 1500);
+    });
   }
 
   capValueChange(val: string, rowIndex: number) {
@@ -144,8 +128,8 @@ export class CapTypeGridComponent implements OnInit, OnChanges {
       id: [provkDetail.id],
       value: [provkDetail.value, Validators.required],
       ba: [provkDetail.ba],
-      normalCap: [provkDetail.capGroup?.normalCap],
-      fixRate: [provkDetail.capGroup?.fixRate],
+      normalCap: [provkDetail.normalCap],
+      fixRate: [provkDetail.fixRate],
     });
   }
 

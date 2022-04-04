@@ -1,13 +1,13 @@
 <div class="container">
-  <a>
+  <a #langHu (click)="langChange(langHu)" [attr.lang-id]="'hu-HU'">
     <img src="assets/img/hungary.svg" alt="" />
     hu
   </a>
-  <a>
+  <a #langDe (click)="langChange(langDe)" [attr.lang-id]="'de-DE'">
     <img src="assets/img/germany.svg" alt="" />
     de
   </a>
-  <a>
+  <a #langEn (click)="langChange(langEn)" [attr.lang-id]="'en-GB'">
     <img src="assets/img/united.svg" alt="" />
     en
   </a>

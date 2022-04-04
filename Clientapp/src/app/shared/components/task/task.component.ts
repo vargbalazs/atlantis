@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Task } from '../../models/task.model';
 import { CreateEditComponent } from 'src/app/shared/components/create-edit/createedit.component';
+import { TaskStatus } from '../../enums/taskstatus.enum';
 
 @Component({
   selector: 'ce-task',
@@ -24,6 +25,8 @@ export class CreateEditTaskComponent extends CreateEditComponent<Task> {
 
   onTaskDone() {
     this.active = false;
+    this.form.patchValue({ taskStatus: TaskStatus.CLOSED });
+    this.form.patchValue({ taskName: '' });
     this.taskDone.emit(this.form.value);
   }
 }

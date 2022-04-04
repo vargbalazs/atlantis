@@ -5,7 +5,7 @@ export class CostAllocationDetail {
   constructor(
     public id?: number,
     public costAllocId?: number,
-    public costAlloc?: CostAllocation,
+    public costAllocation?: CostAllocation,
     public baseCostCenterId?: number,
     public baseCostCenter?: CostCenter,
     public recCostCenterId?: number,

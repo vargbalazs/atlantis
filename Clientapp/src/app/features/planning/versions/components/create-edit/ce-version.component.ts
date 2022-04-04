@@ -1,13 +1,15 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { companies } from 'src/app/features/masterdata/general/company/components/list/sampledata';
-import { plants } from '../../../../masterdata/general/plant/components/list/sampledata';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { PlanningVersion } from '../../models/version.model';
 import { CreateEditComponent } from 'src/app/shared/components/create-edit/createedit.component';
-import { costAccTypes } from 'src/app/features/masterdata/planning/costacctype/components/list/sampledata';
 import { CostAccountingType } from 'src/app/features/masterdata/planning/costacctype/models/costacctype.model';
+import { CompanyService } from 'src/app/features/masterdata/general/company/services/company.service';
+import { PlantService } from 'src/app/features/masterdata/general/plant/services/plant.service';
+import { CostAccountingTypeService } from 'src/app/features/masterdata/planning/costacctype/services/costacctype.service';
+import { forkJoin } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'ce-version',
@@ -41,10 +43,24 @@ export class CreateEditPlanningVersionComponent
     status: new FormControl(this.formData.status, [Validators.required]),
   });
 
+  constructor(
+    private companyService: CompanyService,
+    private plantService: PlantService,
+    private costAccTypeService: CostAccountingTypeService
+  ) {
+    super();
+  }
+
   ngOnInit() {
-    this.companies = companies;
-    this.plants = plants;
-    this.costAccTypes = costAccTypes;
+    forkJoin({
+      companies: this.companyService.getCompanies().pipe(first()),
+      plants: this.plantService.getPlants().pipe(first()),
+      costAccTypes: this.costAccTypeService.getCostAccTypes().pipe(first()),
+    }).subscribe(({ companies, plants, costAccTypes }) => {
+      this.companies = companies;
+      this.plants = plants;
+      this.costAccTypes = costAccTypes;
+    });
     this.changeControlState(['plant'], false);
   }
 

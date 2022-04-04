@@ -69,7 +69,7 @@
         <kendo-label [for]="departmentName" text="Részleg"></kendo-label>
         <kendo-textbox
           #departmentName
-          formControlName="departmentName"
+          formControlName="departmentNameDisabled"
           class="x-textbox-sm"
         ></kendo-textbox>
       </kendo-formfield>
@@ -99,7 +99,7 @@
     <!-- hidden submit button in order to get work the submit event on enter -->
     <button type="submit" hidden></button>
   </form>
-  <kendo-dialog-actions>
+  <kendo-dialog-actions layout="normal">
     <button
       type="button"
       kendoButton

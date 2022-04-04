@@ -2,13 +2,13 @@ import { PlantPlOverview } from '../../models/plantploverview.model';
 
 export const plantPlOverview: PlantPlOverview[] = [
   {
-    plant: { id: 1, code: '1H0' },
+    plant: { id: 11, code: '1H0' },
     costAccType: { id: 2, name: 'Budget' },
     costGroup: { id: 2, name: 'Anyagköltség', rowIndex: 3 },
     costAccount: {
       id: 1,
-      accountNumber: '60040000',
-      name: 'Indirekt anyagköltség',
+      accountNumber: '68000000',
+      name: 'Irodaszer',
     },
     year: 2021,
     month: 1,
@@ -22,12 +22,12 @@ export const plantPlOverview: PlantPlOverview[] = [
     cumDiff: 2000,
   },
   {
-    plant: { id: 1, code: '1H0' },
+    plant: { id: 11, code: '1H0' },
     costAccType: { id: 2, name: 'Budget' },
-    costGroup: { id: 4, name: 'Indirekt bérköltség', rowIndex: 2 },
+    costGroup: { id: 7, name: 'Indirekt bérköltség', rowIndex: 2 },
     costAccount: {
-      id: 2,
-      accountNumber: '62010000',
+      id: 6,
+      accountNumber: '63000000',
       name: 'Alapbér',
     },
     year: 2021,
@@ -42,11 +42,11 @@ export const plantPlOverview: PlantPlOverview[] = [
     cumDiff: -300,
   },
   {
-    plant: { id: 1, code: '1H0' },
+    plant: { id: 11, code: '1H0' },
     costAccType: { id: 2, name: 'Budget' },
-    costGroup: { id: 1, name: 'Gyári bevétel', rowIndex: 1 },
+    costGroup: { id: 4, name: 'Gyári bevétel', rowIndex: 1 },
     costAccount: {
-      id: 3,
+      id: 5,
       accountNumber: '52010000',
       name: 'Készletváltozás',
     },

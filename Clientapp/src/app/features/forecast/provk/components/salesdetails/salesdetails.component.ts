@@ -88,21 +88,7 @@ export class SalesDetailsComponent implements OnInit, OnChanges {
     if (this.detailsForm.invalid) {
       return;
     }
-    // this.provkService.updateSalesDetails(this.salesDetails).subscribe(() => {
-    //   this.closeAllRows();
-    //   this.isInEditMode = false;
-    //   this.switchEditMode.emit({
-    //     editMode: this.isInEditMode,
-    //     selectedCapTypeId: this.selectedCapTypeId,
-    //   });
-    //   this.loadingOverlayVisible = false;
-    //   this.notificationService.showNotification(
-    //     'Az adatok sikeresen mentésre kerültek',
-    //     3000,
-    //     'success'
-    //   );
-    // });
-    setTimeout(() => {
+    this.provkService.updateSalesDetails(this.salesDetails).subscribe(() => {
       this.closeAllRows();
       this.isInEditMode = false;
       this.switchEditMode.emit({
@@ -114,7 +100,7 @@ export class SalesDetailsComponent implements OnInit, OnChanges {
         3000,
         'success'
       );
-    }, 1500);
+    });
   }
 
   salesValueChange(val: string, rowIndex: number) {

@@ -1,11 +1,13 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { companies } from 'src/app/features/masterdata/general/company/components/list/sampledata';
+import { forkJoin } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
+import { CompanyService } from 'src/app/features/masterdata/general/company/services/company.service';
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
 import { CreateEditComponent } from 'src/app/shared/components/create-edit/createedit.component';
-import { costGroups } from '../../../costgroup/components/list/sampledata';
 import { CostGroup } from '../../../costgroup/models/costgroup.model';
+import { CostGroupService } from '../../../costgroup/services/costgroup.service';
 
 @Component({
   selector: 'ce-costaccount',
@@ -40,9 +42,21 @@ export class CreateEditCostAccountComponent
     ]),
   });
 
+  constructor(
+    private companyService: CompanyService,
+    private costGroupService: CostGroupService
+  ) {
+    super();
+  }
+
   ngOnInit() {
-    this.companies = companies;
-    this.costGroups = costGroups;
+    forkJoin({
+      companies: this.companyService.getCompanies().pipe(first()),
+      costGroups: this.costGroupService.getCostGroups().pipe(first()),
+    }).subscribe(({ companies, costGroups }) => {
+      this.companies = companies;
+      this.costGroups = costGroups;
+    });
     this.changeControlState(['costGroup', 'varRate'], false);
   }
 

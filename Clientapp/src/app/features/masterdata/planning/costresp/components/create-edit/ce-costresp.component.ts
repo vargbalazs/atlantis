@@ -1,11 +1,5 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { companies } from 'src/app/features/masterdata/general/company/components/list/sampledata';
-import { plants } from '../../../../general/plant/components/list/sampledata';
-import { departments } from '../../../../general/department/components/list/sampledata';
-import { jobs } from 'src/app/features/masterdata/general/job/components/list/sampledata';
-import { costcenters } from '../../../costcenter/components/list/sampledata';
-import { languages } from 'src/app/features/masterdata/general/language/components/list/sampledata';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { Department } from 'src/app/features/masterdata/general/department/models/department.model';
@@ -14,6 +8,14 @@ import { CreateEditComponent } from 'src/app/shared/components/create-edit/creat
 import { Job } from 'src/app/features/masterdata/general/job/models/job.model';
 import { CostCenter } from '../../../costcenter/models/costcenter.model';
 import { Language } from 'src/app/features/masterdata/general/language/models/language.model';
+import { CompanyService } from 'src/app/features/masterdata/general/company/services/company.service';
+import { PlantService } from 'src/app/features/masterdata/general/plant/services/plant.service';
+import { DepartmentService } from 'src/app/features/masterdata/general/department/services/department.service';
+import { JobService } from 'src/app/features/masterdata/general/job/services/job.service';
+import { CostCenterService } from '../../../costcenter/services/costcenter.service';
+import { LanguageService } from 'src/app/features/masterdata/general/language/services/language.service';
+import { forkJoin } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'ce-costresp',
@@ -60,13 +62,35 @@ export class CreateEditCostRespComponent
     ]),
   });
 
+  constructor(
+    private companyService: CompanyService,
+    private plantService: PlantService,
+    private departmentService: DepartmentService,
+    private jobService: JobService,
+    private costCenterService: CostCenterService,
+    private langService: LanguageService
+  ) {
+    super();
+  }
+
   ngOnInit() {
-    this.companies = companies;
-    this.plants = plants;
-    this.departments = departments;
-    this.jobs = jobs;
-    this.costCenters = costcenters;
-    this.languages = languages;
+    forkJoin({
+      companies: this.companyService.getCompanies().pipe(first()),
+      plants: this.plantService.getPlants().pipe(first()),
+      departments: this.departmentService.getDepartments().pipe(first()),
+      jobs: this.jobService.getJobs().pipe(first()),
+      costcenters: this.costCenterService.getCostCenters().pipe(first()),
+      languages: this.langService.getLanguages().pipe(first()),
+    }).subscribe(
+      ({ companies, plants, departments, jobs, costcenters, languages }) => {
+        this.companies = companies;
+        this.plants = plants;
+        this.departments = departments;
+        this.jobs = jobs;
+        this.costCenters = costcenters;
+        this.languages = languages;
+      }
+    );
     this.changeControlState(
       ['plant', 'department', 'job', 'costCenter'],
       false

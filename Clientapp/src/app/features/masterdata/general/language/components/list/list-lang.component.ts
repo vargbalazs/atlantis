@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Language } from 'src/app/features/masterdata/general/language/models/language.model';
 import { Crud } from 'src/app/shared/classes/crud.class';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { LanguageService } from '../../services/language.service';
-import { languages } from './sampledata';
 
 @Component({
   selector: 'general-language',
@@ -30,35 +29,38 @@ export class LanguageComponent extends Crud<Language> implements OnInit {
   }
 
   ngOnInit() {
-    this.gridData = { data: languages, total: languages.length };
+    this.gridData = { data: [], total: 0 };
+    this.languageService.getLanguages().subscribe((languages) => {
+      this.gridData = { data: languages, total: languages.length };
+    });
     this.checkFunctionsOnSave.push(this.checkDefaultLang);
-    this.checkFunctionsOnSave.push(this.checkSomeOtherCondition);
     this.checkFunctionsOnDelete.push(this.checkDefaultLang);
-  }
-
-  checkSomeOtherCondition(entity: Language): Observable<boolean> {
-    return of(true);
   }
 
   checkDefaultLang(entity: Language): Observable<boolean> {
     // only one language can be default resp. one language must be default
-    // replace the 'of' with this, when the back end is ready for that
-    // this.languageService.checkDefault(entity)
-
-    // eventually we have to set the loadingOverlay to false
-    const checkResult = of('checkOk').pipe(
+    this.isMsgDialog = true;
+    this.dialogType = 'danger';
+    const checkResult = this.languageService.checkDefault(entity).pipe(
       map((result) => {
-        switch (result) {
+        switch (result.message) {
+          case 'firstLangShouldBeDefault':
+            this.msgDialogService.showDialog(
+              'Atlantis',
+              'Az első nyelvnek alapértelmezettnek kell lennie. Ez később módosítható.',
+              [{ text: 'Ok' }]
+            );
+            return false;
           case 'multipleDefaultLang':
             this.msgDialogService.showDialog(
-              'Nyelvek',
+              'Atlantis',
               'Csak egy alapértelmezett nyelv létezhet',
               [{ text: 'Ok' }]
             );
             return false;
           case 'noDefaultLang':
             this.msgDialogService.showDialog(
-              'Nyelvek',
+              'Atlantis',
               'Egy alapértelmezett nyelvnek lennie kell',
               [{ text: 'Ok' }]
             );

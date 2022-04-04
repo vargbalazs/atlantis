@@ -5,7 +5,6 @@ import { Crud } from 'src/app/shared/classes/crud.class';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { CompanyService } from '../../services/company.service';
-import { companies } from './sampledata';
 
 @Component({
   selector: 'general-company',
@@ -16,13 +15,16 @@ export class CompanyComponent extends Crud<Company> implements OnInit {
   constructor(
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
-    companyService: CompanyService,
+    private companyService: CompanyService,
     loaderService: LoaderService
   ) {
     super(msgDialogService, notificationService, companyService, loaderService);
   }
 
   ngOnInit() {
-    this.gridData = { data: companies, total: companies.length };
+    this.gridData = { data: [], total: 0 };
+    this.companyService.getCompanies().subscribe((companies) => {
+      this.gridData = { data: companies, total: companies.length };
+    });
   }
 }

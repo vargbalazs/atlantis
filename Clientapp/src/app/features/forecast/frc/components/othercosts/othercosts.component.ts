@@ -7,8 +7,6 @@ import { FrcService } from '../../services/frc.service';
 import { otherCosts } from './sampledata';
 import { cloneable } from 'src/app/shared/classes/cloneable.class';
 import { CostCenter } from 'src/app/features/masterdata/planning/costcenter/models/costcenter.model';
-import { costcenters } from 'src/app/features/masterdata/planning/costcenter/components/list/sampledata';
-import { costAccounts } from 'src/app/features/masterdata/planning/costaccount/components/list/sampledata';
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 
@@ -26,13 +24,13 @@ export class OtherCostsComponent implements OnInit {
   loadingOverlayVisible = this.loaderService.isLoading;
   otherCosts: FrcOtherCost[] = [];
   originalOtherCost: FrcOtherCost = new FrcOtherCost();
-  costCenters: CostCenter[] = [];
-  costAccounts: CostAccount[] = [];
 
   @Input() frcId!: number;
   @Input() plantId!: number;
   @Input() companyId!: number;
   @Input() year!: number;
+  @Input() costAccounts!: CostAccount[];
+  @Input() costCenters!: CostCenter[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -54,12 +52,6 @@ export class OtherCostsComponent implements OnInit {
         data: this.otherCosts,
         total: this.otherCosts.length,
       };
-      this.costCenters = costcenters.filter(
-        (item) => item.plantId === this.plantId && item.year === this.year
-      );
-      this.costAccounts = costAccounts.filter(
-        (item) => item.companyId === this.companyId && item.year === this.year
-      );
     }, 1500);
   }
 

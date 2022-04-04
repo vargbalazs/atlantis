@@ -9,7 +9,10 @@ export class CompanyService implements IRepository<Company> {
   constructor(private http: HttpClient) {}
 
   add(company: Company) {
-    return this.http.post<number>('/api/masterdata/general/company', company);
+    return this.http.post<number>(
+      `${environment.apiUrl}/api/masterdata/general/company`,
+      company
+    );
   }
 
   update(company: Company) {
@@ -20,6 +23,14 @@ export class CompanyService implements IRepository<Company> {
   }
 
   delete(id: number) {
-    return this.http.delete<number>(`/api/masterdata/general/company/${id}`);
+    return this.http.delete<number>(
+      `${environment.apiUrl}/api/masterdata/general/company/${id}`
+    );
+  }
+
+  getCompanies() {
+    return this.http.get<Company[]>(
+      `${environment.apiUrl}/api/masterdata/general/company`
+    );
   }
 }

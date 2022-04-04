@@ -1,13 +1,15 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { companies } from 'src/app/features/masterdata/general/company/components/list/sampledata';
-import { plants } from '../../../plant/components/list/sampledata';
-import { departments } from '../../../department/components/list/sampledata';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { Department } from 'src/app/features/masterdata/general/department/models/department.model';
 import { Job } from '../../models/job.model';
 import { CreateEditComponent } from 'src/app/shared/components/create-edit/createedit.component';
+import { CompanyService } from '../../../company/services/company.service';
+import { PlantService } from '../../../plant/services/plant.service';
+import { DepartmentService } from '../../../department/services/department.service';
+import { forkJoin } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'ce-job',
@@ -37,10 +39,24 @@ export class CreateEditJobComponent
   });
 
   ngOnInit() {
-    this.companies = companies;
-    this.plants = plants;
-    this.departments = departments;
+    forkJoin({
+      companies: this.companyService.getCompanies().pipe(first()),
+      plants: this.plantService.getPlants().pipe(first()),
+      departments: this.departmentService.getDepartments().pipe(first()),
+    }).subscribe(({ companies, plants, departments }) => {
+      this.companies = companies;
+      this.plants = plants;
+      this.departments = departments;
+    });
     this.changeControlState(['plant', 'department'], false);
+  }
+
+  constructor(
+    private companyService: CompanyService,
+    private plantService: PlantService,
+    private departmentService: DepartmentService
+  ) {
+    super();
   }
 
   ngOnChanges() {

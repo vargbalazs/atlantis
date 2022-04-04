@@ -6,5 +6,6 @@
 
 .sidebar {
   flex-grow: 1;
-  max-height: 94.6vh;
+  /*max-height: 94.6vh;*/
+  overflow-y: auto;
 }

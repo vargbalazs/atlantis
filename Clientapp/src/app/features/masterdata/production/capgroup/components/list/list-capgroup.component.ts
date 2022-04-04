@@ -6,7 +6,6 @@ import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { CopyEntity } from '../../../../../../shared/models/copy.model';
 import { CopyService } from '../../services/copy.service';
 import { CapGroupService } from '../../services/capgroup.service';
-import { capGroups } from './sampledata';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
@@ -20,7 +19,7 @@ export class CapGroupComponent extends Crud<CapGroup> implements OnInit {
   constructor(
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
-    capGroupService: CapGroupService,
+    private capGroupService: CapGroupService,
     loaderService: LoaderService,
     private copyService: CopyService
   ) {
@@ -33,7 +32,13 @@ export class CapGroupComponent extends Crud<CapGroup> implements OnInit {
   }
 
   ngOnInit() {
-    this.gridData = { data: capGroups, total: capGroups.length };
+    this.gridData = { data: [], total: 0 };
+    this.capGroupService.getCapGroups().subscribe((capGroups) => {
+      capGroups.forEach(
+        (capGroup) => (capGroup.capYearDate = new Date(capGroup.capYearDate!))
+      );
+      this.gridData = { data: capGroups, total: capGroups.length };
+    });
   }
 
   showCopyForm() {

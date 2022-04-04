@@ -2,26 +2,27 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
 import { HcPlanningItem } from '../../models/hcplanningitem.model';
 import { FilterEntity } from 'src/app/shared/models/filter.model';
-import { hcPlanningItems } from './sampledata';
 import { Crud } from 'src/app/shared/classes/crud.class';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { HcPlanningService } from '../../services/hcplanning.service';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { forkJoin, Observable, of } from 'rxjs';
+import { first, map } from 'rxjs/operators';
 import { GroupDescriptor } from '@progress/kendo-data-query';
 import { ContextMenuComponent } from '@progress/kendo-angular-menu';
 import { Task } from '../../../../../shared/models/task.model';
 import { TaskService } from '../../../../../shared/services/task.service';
 import { CostGroup } from 'src/app/features/masterdata/planning/costgroup/models/costgroup.model';
 import { Job } from 'src/app/features/masterdata/general/job/models/job.model';
-import { costGroups } from 'src/app/features/masterdata/planning/costgroup/components/list/sampledata';
-import { jobs } from 'src/app/features/masterdata/general/job/components/list/sampledata';
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
-import { costAccounts } from 'src/app/features/masterdata/planning/costaccount/components/list/sampledata';
 import { CostAssign } from '../../models/costassign.model';
 import { costAssigns } from './costassigns';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { TaskType } from 'src/app/shared/enums/taskType.enum';
+import { CostGroupService } from 'src/app/features/masterdata/planning/costgroup/services/costgroup.service';
+import { JobService } from 'src/app/features/masterdata/general/job/services/job.service';
+import { CostAccountService } from 'src/app/features/masterdata/planning/costaccount/services/costaccount.service';
+import { TaskStatus } from 'src/app/shared/enums/taskstatus.enum';
 
 @Component({
   selector: 'hc-planningitems',
@@ -41,6 +42,7 @@ export class HcPlanningItemsComponent
   gridData!: GridDataResult;
   periods: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   filtered = false;
+  filterFirst = false;
   costGroups!: CostGroup[];
   jobs!: Job[];
   costAccTypeId!: number;
@@ -79,9 +81,12 @@ export class HcPlanningItemsComponent
   constructor(
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
-    hcPlanningService: HcPlanningService,
+    private hcPlanningService: HcPlanningService,
     loaderService: LoaderService,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private costGroupService: CostGroupService,
+    private jobService: JobService,
+    private costAccountService: CostAccountService
   ) {
     super(
       msgDialogService,
@@ -98,42 +103,29 @@ export class HcPlanningItemsComponent
   }
 
   showFilterForm() {
-    this.filterEntity = new FilterEntity();
+    this.filterEntity = this.filterEntityInput
+      ? this.filterEntityInput
+      : new FilterEntity();
+    this.filterFirst = !this.filterEntityInput;
   }
 
   cancelFilterForm() {
     this.filterEntity = undefined!;
+    this.filterFirst = !this.filterEntityInput;
   }
 
   saveFilterForm(filterEntity: FilterEntity) {
     this.filterEntity = undefined!;
     this.filterEntityInput = filterEntity;
-    // this.actProdDataService
-    //   .getActualData(
-    //     filterEntity.companyId!,
-    //     filterEntity.plantId!,
-    //     filterEntity.year?.getFullYear()!
-    //   )
-    //   .subscribe((result) => {
-    //     this.loadingOverlayVisible = false;
-    //     this.gridData = { data: result, total: result.length };
-    //     // filter the accounts
-    //     setTimeout(() => {
-    //       this.grid.autoFitColumns();
-    //     }, 0);
-    //     this.filtered = true;
-    //   });
-
-    setTimeout(() => {
-      const filteredData = hcPlanningItems.filter(
-        (item) =>
-          item.companyId === filterEntity.companyId &&
-          item.plantId === filterEntity.plantId &&
-          item.year === filterEntity.year?.getFullYear() &&
-          item.costAccTypeId === filterEntity.costAccTypeId &&
-          item.costCenterId === filterEntity.costCenterId
-      );
-      this.gridData = { data: filteredData, total: filteredData.length };
+    forkJoin({
+      hcPlanningItems: this.hcPlanningService
+        .getItems(filterEntity.costCenterId!, filterEntity.costAccTypeId!)
+        .pipe(first()),
+      costGroups: this.costGroupService.getCostGroups().pipe(first()),
+      jobs: this.jobService.getJobs().pipe(first()),
+      costAccounts: this.costAccountService.getCostAccounts().pipe(first()),
+    }).subscribe(({ hcPlanningItems, costGroups, jobs, costAccounts }) => {
+      this.gridData = { data: hcPlanningItems, total: hcPlanningItems.length };
       this.costGroups = costGroups.filter(
         (costGroup) =>
           costGroup.companyId === filterEntity.companyId &&
@@ -155,7 +147,7 @@ export class HcPlanningItemsComponent
       }, 0);
       this.filtered = true;
       console.log('finished');
-    }, 1500);
+    });
     console.log('filtering...');
   }
 
@@ -190,18 +182,22 @@ export class HcPlanningItemsComponent
         break;
       }
       case 'costAssign': {
-        // call the service, if the backend is ready
-        setTimeout(() => {
-          this.costAssigns = costAssigns.filter(
-            (costAssign) => costAssign.hcPlanningItemId === this.contextItem.id
-          );
-        }, 1500);
+        this.hcPlanningService
+          .getCostAssigns(this.contextItem.id!)
+          .subscribe((costAssigns) => {
+            this.costAssigns = costAssigns;
+          });
       }
     }
   }
 
   showTaskForm(planningItem: HcPlanningItem, task: Task) {
-    this.task = this.taskService.initTaskForm(planningItem, task, this.isNew);
+    this.task = this.taskService.initTaskForm(
+      planningItem,
+      task,
+      this.isNew,
+      TaskType.HCPLANNING
+    );
   }
 
   cancelTaskForm() {
@@ -210,90 +206,37 @@ export class HcPlanningItemsComponent
 
   saveTaskForm(task: Task) {
     this.task = undefined!;
-    // if (this.isNew) {
-    //   this.taskService.add(task).subscribe((result) => {
-    //     this.loadingOverlayVisible = false;
-    //     this.gridData.data.forEach((item: CostPlanningItem) => {
-    //       if (item.id === task.itemId) {
-    //         item.taskId = result;
-    //         task.id = result;
-    //         item.task = task;
-    //       }
-    //     });
-    //     setTimeout(() => {
-    //       this.grid.autoFitColumns();
-    //     }, 0);
-    //     this.showNotification(
-    //       'Az új feladat sikeresen rögzítve lett',
-    //       3000,
-    //       'success'
-    //     );
-    //   });
-    // } else {
-    //   this.taskService.update(task).subscribe(() => {
-    //     this.loadingOverlayVisible = false;
-    //     this.gridData.data.forEach((item: CostPlanningItem) => {
-    //       if (item.id === task.itemId) item.task = task;
-    //     });
-    //     setTimeout(() => {
-    //       this.grid.autoFitColumns();
-    //     }, 0);
-    //     this.showNotification(
-    //       'A feladat sikeresen módosítva lett',
-    //       3000,
-    //       'success'
-    //     );
-    //   });
-    // }
-    if (this.isNew) {
+    this.taskService.update(task).subscribe(() => {
+      this.gridData.data.forEach((item: HcPlanningItem) => {
+        if (item.id === task.planningItemId) {
+          item.task = task;
+        }
+      });
       setTimeout(() => {
-        this.gridData.data.forEach((item: HcPlanningItem) => {
-          if (item.id === task.planningItemId) {
-            item.task = task;
-          }
-        });
+        this.grid.autoFitColumns();
+      }, 0);
+      if (this.isNew) {
         this.showNotification(
           'Az új feladat sikeresen rögzítve lett',
           3000,
           'success'
         );
-        setTimeout(() => {
-          this.grid.autoFitColumns();
-        }, 0);
-        console.log('task saved');
-      }, 1500);
-    } else {
-      setTimeout(() => {
-        this.gridData.data.forEach((item: HcPlanningItem) => {
-          if (item.id === task.planningItemId) item.task = task;
-        });
+      } else {
         this.showNotification(
           'A feladat sikeresen módosítva lett',
           3000,
           'success'
         );
-        setTimeout(() => {
-          this.grid.autoFitColumns();
-        }, 0);
-        console.log('task saved');
-      }, 1500);
-    }
+      }
+    });
     console.log('task saving...');
   }
 
   taskDone(task: Task) {
-    // this.taskService.done(task.id!).subscribe(() => {
-    //   this.loadingOverlayVisible = false;
-    //   this.showNotification(
-    //     'A feladat sikeresen módosítva lett',
-    //     3000,
-    //     'success'
-    //   );
-    // });
-    setTimeout(() => {
+    this.taskService.update(task).subscribe(() => {
       this.gridData.data.forEach((item: HcPlanningItem) => {
         if (item.id === task.planningItemId) {
-          item.task!.taskStatus = 1;
+          item.task!.taskStatus = TaskStatus.CLOSED;
           item.task!.taskName = '';
         }
       });
@@ -302,7 +245,7 @@ export class HcPlanningItemsComponent
         3000,
         'success'
       );
-    }, 1500);
+    });
   }
 
   generateAggregatesArray(): {}[] {
