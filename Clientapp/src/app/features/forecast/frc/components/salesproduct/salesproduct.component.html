@@ -11,22 +11,22 @@
       [hidden]="true"
     ></kendo-grid-column>
     <kendo-grid-column
-      field="salesProduct.capGroup.capType.capType"
+      field="capType"
       title="Kap. típ."
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
-      field="salesProduct.capGroup.capGroup"
+      field="capGroup"
       title="Kap. csop."
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
-      field="salesProduct.name"
+      field="salesProduct"
       title="Név"
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
-      field="salesProduct.unit.unit"
+      field="unit"
       title="Egys."
       [editable]="false"
     ></kendo-grid-column>
@@ -182,8 +182,4 @@
       Nincs megjelenítendő adat
     </ng-template>
   </kendo-grid>
-  <loading-overlay
-    [visible]="loadingOverlayVisible | async"
-    loadingText=""
-  ></loading-overlay>
 </div>

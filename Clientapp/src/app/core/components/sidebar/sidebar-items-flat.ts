@@ -198,12 +198,6 @@ export const drawerItemsFlattened: drawerItem[] = [
     routePath: 'forecast/frc',
   },
   {
-    text: 'Kimutatások',
-    level: 1,
-    id: '2.3',
-    parentId: '2',
-  },
-  {
     text: 'Gyári eredmény',
     icon: 'currency',
     expanded: false,
@@ -293,17 +287,5 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '4.4',
     parentId: '4',
     routePath: 'planning/capplanning',
-  },
-  {
-    text: 'Bérköltség feltöltése',
-    level: 1,
-    id: '4.5',
-    parentId: '4',
-  },
-  {
-    text: 'Kimutatások',
-    level: 1,
-    id: '4.6',
-    parentId: '4',
   },
 ];

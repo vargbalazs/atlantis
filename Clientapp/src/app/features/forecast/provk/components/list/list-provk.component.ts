@@ -4,8 +4,6 @@ import { Provk } from '../../models/provk.model';
 import { ProvkVersion } from '../../models/provkversion.model';
 import { ProvkService } from '../../services/provk.service';
 import { MsgDialogService } from '../../../../../shared/services/msgdialog.service';
-import { provkVersions } from '../version-selector/sampledata';
-import { provks } from './sampledata';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Crud } from 'src/app/shared/classes/crud.class';
 import { NotificationService } from '@progress/kendo-angular-notification';

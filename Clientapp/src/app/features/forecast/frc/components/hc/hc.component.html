@@ -28,25 +28,29 @@
       [hidden]="true"
     ></kendo-grid-column>
     <kendo-grid-column
-      field="hcPlanningItem.job.department.name"
+      field="department"
       title="Részleg"
       [width]="130"
+      [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
-      field="hcPlanningItem.costGroup.name"
+      field="costGroup"
       title="Költségcsoport"
       [width]="150"
+      [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
-      field="hcPlanningItem.job.name"
+      field="job"
       title="Munkakör"
       [width]="130"
+      [editable]="false"
     >
     </kendo-grid-column>
     <kendo-grid-column
-      field="hcPlanningItem.costCenter.code"
+      field="costCenter"
       title="Költséghely"
       [width]="100"
+      [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
       *ngFor="let period of periods; index as i"
@@ -62,12 +66,14 @@
         let-formGroup="formGroup"
         let-rowIndex="rowIndex"
       >
-        <kendo-textbox
+        <kendo-numerictextbox
+          [spinners]="false"
           #p="popupAnchor"
+          format="n0"
           popupAnchor
           [formControl]="formGroup.get(column.field)"
         >
-        </kendo-textbox>
+        </kendo-numerictextbox>
         <kendo-popup
           [anchor]="$any(p.element)"
           *ngIf="
@@ -130,8 +136,4 @@
       Nincs megjelenítendő adat
     </ng-template>
   </kendo-grid>
-  <loading-overlay
-    [visible]="loadingOverlayVisible | async"
-    loadingText=""
-  ></loading-overlay>
 </div>

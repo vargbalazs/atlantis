@@ -22,7 +22,10 @@
     </kendo-tabstrip-tab>
     <kendo-tabstrip-tab title="Értékesített termékek">
       <ng-template kendoTabContent>
-        <salesproduct [frcId]="frcId"></salesproduct>
+        <salesproduct
+          [loadedSalesProduct]="frcSalesProduct"
+          [frcId]="frcId"
+        ></salesproduct>
       </ng-template>
     </kendo-tabstrip-tab>
     <kendo-tabstrip-tab title="Egyéb bevételek/kiadások">
@@ -34,6 +37,7 @@
           [year]="year"
           [costAccounts]="costAccounts"
           [costCenters]="costCenters"
+          [otherCosts]="otherCosts"
         ></othercosts>
       </ng-template>
     </kendo-tabstrip-tab>
@@ -42,17 +46,13 @@
         <hc
           [frcId]="frcId"
           [plantId]="plantId"
+          [costAccTypeId]="costAccTypeId"
+          [year]="year"
           [departments]="departments"
         ></hc>
       </ng-template>
     </kendo-tabstrip-tab>
   </kendo-tabstrip>
-  <div class="grid-container">
-    <loading-overlay
-      [visible]="loadingOverlayVisibleGrid"
-      loadingText=""
-    ></loading-overlay>
-  </div>
 </div>
 <div
   class="x-dialog-container"

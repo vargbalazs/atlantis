@@ -1,0 +1,11 @@
+:host::ng-deep .k-upload .k-upload-button {
+  display: none;
+}
+
+:host::ng-deep .k-upload .k-dropzone .k-dropzone-hint {
+  display: none;
+}
+
+.file-list {
+  margin-top: 1rem;
+}

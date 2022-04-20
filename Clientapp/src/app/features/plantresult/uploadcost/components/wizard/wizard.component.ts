@@ -7,7 +7,9 @@ import { Company } from 'src/app/features/masterdata/general/company/models/comp
 import { CompanyService } from 'src/app/features/masterdata/general/company/services/company.service';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { PlantService } from 'src/app/features/masterdata/general/plant/services/plant.service';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { uploadCost } from '../../models/uploadcost.model';
+import { UploadFileComponent } from '../upload-file/upload-file.component';
 
 @Component({
   selector: 'wizard',
@@ -23,8 +25,10 @@ export class WizardComponent {
   started = false;
   companies!: Company[];
   plants!: Plant[];
+  loadingOverlayVisible = this.loaderService.isLoading;
 
   @ViewChild('stepper') stepper!: StepperComponent;
+  @ViewChild('uploadFileComponent') uploadFileComp!: UploadFileComponent;
 
   isStepValid = (index: number): boolean => {
     return this.getGroupAt(index).valid || this.currentGroup.untouched;
@@ -66,9 +70,7 @@ export class WizardComponent {
       month: new FormControl(this.uploadCost.month, [Validators.required]),
     }),
     file: new FormGroup({
-      fileName: new FormControl(this.uploadCost.fileName, [
-        Validators.required,
-      ]),
+      fileName: new FormControl(this.uploadCost.files, [Validators.required]),
     }),
   });
 
@@ -78,7 +80,8 @@ export class WizardComponent {
 
   constructor(
     private companyService: CompanyService,
-    private plantService: PlantService
+    private plantService: PlantService,
+    private loaderService: LoaderService
   ) {}
 
   start() {
@@ -119,7 +122,7 @@ export class WizardComponent {
 
   submit() {
     if (this.form.valid) {
-      console.log(this.form.value);
+      this.uploadFileComp.uploadFile();
     }
   }
 
@@ -129,5 +132,9 @@ export class WizardComponent {
     ) as FormGroup[];
 
     return groups[index];
+  }
+
+  uploadFinished() {
+    this.closeWizard();
   }
 }

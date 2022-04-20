@@ -12,6 +12,7 @@ import { CondFormatModule } from 'src/app/shared/components/cond-format/cond-for
 import { NavigationModule } from '@progress/kendo-angular-navigation';
 import { RouterModule } from '@angular/router';
 import { ReportService } from 'src/app/shared/services/report.service';
+import { CostCenterReportService } from '../../services/costcenter-report.service';
 
 @NgModule({
   declarations: [CostCenterOverviewComponent],
@@ -29,7 +30,7 @@ import { ReportService } from 'src/app/shared/services/report.service';
     NavigationModule,
     RouterModule,
   ],
-  providers: [ReportService],
+  providers: [],
   exports: [CostCenterOverviewComponent],
 })
 export class CostCenterOverviewModule {}

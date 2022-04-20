@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     if (this.authService.isUserLoggedIn()) {
       this.router.navigate(['/home'], { skipLocationChange: true });
+      this.initLoginForm();
     } else {
       this.initLoginForm();
     }

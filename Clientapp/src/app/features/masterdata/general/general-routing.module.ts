@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { StartLayoutComponent } from 'src/app/core/components/start-layout/start-layout.component';
+import { AuthGuard } from 'src/app/core/guards/auth.guard';
 import { CompanyComponent } from 'src/app/features/masterdata/general/company/components/list/list-company.component';
 import { DepartmentComponent } from './department/components/list/list-department.component';
 import { JobComponent } from './job/components/list/list-job.component';
@@ -12,6 +13,7 @@ const routes: Routes = [
   {
     path: '',
     component: StartLayoutComponent,
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'masterdata/general/company',

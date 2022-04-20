@@ -28,9 +28,17 @@ export class CostGroupService implements IRepository<CostGroup> {
     );
   }
 
-  getCostGroups() {
-    return this.http.get<CostGroup[]>(
-      `${environment.apiUrl}/api/masterdata/planning/costgroup`
-    );
+  getCostGroups(companyId?: number) {
+    if (companyId) {
+      let filterCrit = { companyId: companyId };
+      return this.http.get<CostGroup[]>(
+        `${environment.apiUrl}/api/masterdata/planning/costgroup/filter`,
+        { params: filterCrit }
+      );
+    } else {
+      return this.http.get<CostGroup[]>(
+        `${environment.apiUrl}/api/masterdata/planning/costgroup`
+      );
+    }
   }
 }

@@ -1,6 +1,11 @@
 <div class="component-header">Gyári eredménykimutatás</div>
 <div class="grid">
-  <kendo-grid [kendoGridBinding]="gridData.data" [group]="groups" #grid>
+  <kendo-grid
+    [kendoGridBinding]="gridData.data"
+    [group]="groups"
+    [style.maxHeight.%]="100"
+    #grid
+  >
     <ng-template kendoGridToolbarTemplate>
       <button
         kendoButton

@@ -18,6 +18,11 @@
 
 .grid {
   margin: 1rem 1rem;
+  height: calc(100% - 82px);
+}
+
+.grid-with-breadcrumb {
+  height: calc(100% - 121px);
 }
 
 .command-icon {

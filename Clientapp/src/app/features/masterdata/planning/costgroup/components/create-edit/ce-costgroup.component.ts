@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { companies } from 'src/app/features/masterdata/general/company/components/list/sampledata';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { CompanyService } from 'src/app/features/masterdata/general/company/services/company.service';
 import { CostGroup } from 'src/app/features/masterdata/planning/costgroup/models/costgroup.model';

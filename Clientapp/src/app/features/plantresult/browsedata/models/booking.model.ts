@@ -23,6 +23,6 @@ export class Booking {
     public bookingDate?: Date,
     public docDate?: Date,
     public postingDate?: Date,
-    public user?: string
+    public userName?: string
   ) {}
 }

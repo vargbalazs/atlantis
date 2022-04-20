@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { StartLayoutComponent } from 'src/app/core/components/start-layout/start-layout.component';
+import { AuthGuard } from 'src/app/core/guards/auth.guard';
 import { CostAccountComponent } from './costaccount/components/list/list-costaccount.component';
 import { CostAccountingTypeComponent } from './costacctype/components/list/list-costacctype.component';
 import { CostAllocationComponent } from './costallocation/components/list/list-costallocation.component';
@@ -12,6 +13,7 @@ const routes: Routes = [
   {
     path: '',
     component: StartLayoutComponent,
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'masterdata/planning/costacctype',

@@ -8,6 +8,7 @@
     (add)="addHandler()"
     [group]="groups"
     (cellClick)="onCellClick($event)"
+    [style.maxHeight.%]="100"
     #grid
   >
     <ng-template kendoGridToolbarTemplate>

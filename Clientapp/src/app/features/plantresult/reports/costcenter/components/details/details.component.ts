@@ -8,8 +8,7 @@ import { IReportSum } from 'src/app/shared/interfaces/reportsum.interface';
 import { FilterEntity } from 'src/app/shared/models/filter.model';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { ReportService } from 'src/app/shared/services/report.service';
-import { CostCenterView } from '../../models/costcenterview.model';
-import { costCenterView } from './sampledata';
+import { CostCenterReportService } from '../../services/costcenter-report.service';
 
 @Component({
   selector: 'cc-details',
@@ -47,7 +46,8 @@ export class CostCenterDetailsComponent implements OnInit {
   constructor(
     private router: Router,
     private reportService: ReportService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private costCenterReportService: CostCenterReportService
   ) {
     this.state = this.router.getCurrentNavigation()?.extras.state;
     this.costCenter = <CostCenter>this.state.costCenter;
@@ -58,11 +58,19 @@ export class CostCenterDetailsComponent implements OnInit {
   ngOnInit() {
     this.gridData = { data: [], total: 0 };
     this.reportMonths = this.reportService.setMonthHeader(this.filterEntity);
-    setTimeout(() => {
-      const filteredData = this.loadCostCenterDetails(this.costCenter.id!);
-      this.gridData = { data: filteredData, total: filteredData.length };
-      this.sums = this.reportService.calculateSums(filteredData);
-    }, 1500);
+    this.costCenterReportService
+      .getCostCenterDetails(
+        this.filterEntity.year?.getFullYear()!,
+        this.filterEntity.year?.getMonth()! + 1,
+        this.costCenter.id!,
+        this.filterEntity.costAccTypeId!,
+        this.filterEntity.plantId!,
+        this.filterEntity.companyId!
+      )
+      .subscribe((details) => {
+        this.gridData = { data: details, total: details.length };
+        this.sums = this.reportService.calculateSums(details);
+      });
   }
 
   onNavItemClick(item: BreadCrumbItem): void {
@@ -70,12 +78,5 @@ export class CostCenterDetailsComponent implements OnInit {
       skipLocationChange: true,
       state: this.state,
     });
-  }
-
-  loadCostCenterDetails(costCenterId: number): CostCenterView[] {
-    const filteredData = costCenterView.filter(
-      (item) => item.costCenter?.id === costCenterId
-    );
-    return filteredData;
   }
 }

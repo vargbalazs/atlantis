@@ -1,12 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { FrcService } from '../../services/frc.service';
-import { frcSalesProductItems } from './sampledata';
 import { FrcSalesProduct } from '../../models/frc-salesproduct.model';
 import { cloneable } from 'src/app/shared/classes/cloneable.class';
-import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'salesproduct',
@@ -24,17 +22,16 @@ export class SalesProductComponent implements OnInit {
   editing = false;
   editedRowIndex!: number;
   formGroup!: FormGroup;
-  loadingOverlayVisible = this.loaderService.isLoading;
   frcSalesProduct: FrcSalesProduct[] = [];
   originalFrcSalesProduct: FrcSalesProduct = new FrcSalesProduct();
 
   @Input() frcId!: number;
+  @Input() loadedSalesProduct: FrcSalesProduct[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private frcService: FrcService,
-    private notificationService: CustomNotificationService,
-    private loaderService: LoaderService
+    private notificationService: CustomNotificationService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -47,24 +44,24 @@ export class SalesProductComponent implements OnInit {
       data: [],
       total: 0,
     };
-    setTimeout(() => {
-      this.frcSalesProduct = frcSalesProductItems.filter(
-        (item) => item.frcId === this.frcId
-      );
-      this.gridData = {
-        data: this.frcSalesProduct,
-        total: this.frcSalesProduct.length,
-      };
-    }, 1500);
+    this.frcSalesProduct = this.loadedSalesProduct;
+    this.gridData = {
+      data: this.frcSalesProduct,
+      total: this.frcSalesProduct.length,
+    };
   }
 
   public createFormGroup(args: any): FormGroup {
     const item = <FrcSalesProduct>args.dataItem;
 
     this.formGroup = this.formBuilder.group({
-      id: [item.id, Validators.required],
+      id: [item.id],
       salesProduct: [item.salesProduct, Validators.required],
-      salesProductId: [item.salesProductid, Validators.required],
+      salesProductId: [item.salesProductId, Validators.required],
+      capGroup: [item.capGroup, Validators.required],
+      capName: [item.capName, Validators.required],
+      capType: [item.capType, Validators.required],
+      unit: [item.unit, Validators.required],
       frcId: [item.frcId, Validators.required],
       p1: [item.p1, Validators.required],
       p2: [item.p2, Validators.required],
@@ -91,23 +88,28 @@ export class SalesProductComponent implements OnInit {
     sender: GridComponent;
     rowIndex: number;
   }) {
+    this.formGroup.patchValue({ frcId: this.frcId });
     if (this.formGroup.valid) {
-      setTimeout(() => {
-        this.gridData.data = (<FrcSalesProduct[]>this.gridData.data).map(
-          (item) =>
-            item.id === this.formGroup.get('id')?.value
-              ? this.formGroup.value
-              : item
-        );
-        this.editing = false;
-        sender.closeRow(rowIndex);
-        console.log('finished');
-        this.notificationService.showNotification(
-          'Adatok sikeresen mentve',
-          3000,
-          'success'
-        );
-      }, 1500);
+      this.frcService
+        .saveSalesProduct(this.formGroup.value)
+        .subscribe((res) => {
+          this.formGroup.patchValue({ id: res });
+          this.gridData.data = (<FrcSalesProduct[]>this.gridData.data).map(
+            (item) =>
+              item.salesProductId ===
+              this.formGroup.get('salesProductId')?.value
+                ? this.formGroup.value
+                : item
+          );
+          this.editing = false;
+          sender.closeRow(rowIndex);
+          console.log('finished');
+          this.notificationService.showNotification(
+            'Adatok sikeresen mentve',
+            3000,
+            'success'
+          );
+        });
       console.log('saving...');
     }
   }

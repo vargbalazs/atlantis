@@ -4,8 +4,12 @@ export class FrcSalesProduct {
   constructor(
     public id?: number,
     public frcId?: number,
-    public salesProductid?: number,
+    public salesProductId?: number,
     public salesProduct?: SalesProduct,
+    public capGroup?: string,
+    public capType?: string,
+    public capName?: string,
+    public unit?: string,
     public p1?: number,
     public p2?: number,
     public p3?: number,

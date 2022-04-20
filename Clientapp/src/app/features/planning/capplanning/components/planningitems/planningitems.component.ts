@@ -5,7 +5,6 @@ import { CapPlanningItem } from '../../models/capplanningitem.model';
 import { FilterEntity } from 'src/app/shared/models/filter.model';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { CapPlanningService } from '../../services/capplanning.service';
-import { capPlanningItems } from './sampledata';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({

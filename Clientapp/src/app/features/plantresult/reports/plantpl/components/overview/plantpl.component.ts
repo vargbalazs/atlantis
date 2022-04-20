@@ -6,11 +6,9 @@ import { IReportMonth } from 'src/app/shared/interfaces/reportmonth.interface';
 import { IReportSum } from 'src/app/shared/interfaces/reportsum.interface';
 import { FilterEntity } from 'src/app/shared/models/filter.model';
 import { ReportService } from 'src/app/shared/services/report.service';
-import { PlantPlOverview } from '../../models/plantploverview.model';
-import { plantPlOverview } from './sampledata';
-import { costGroups } from 'src/app/features/masterdata/planning/costgroup/components/list/sampledata';
 import { CostGroup } from 'src/app/features/masterdata/planning/costgroup/models/costgroup.model';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { PlantPlReportService } from '../../services/plantpl-report.service';
 import { CostGroupService } from 'src/app/features/masterdata/planning/costgroup/services/costgroup.service';
 
 @Component({
@@ -52,25 +50,14 @@ export class PlantPlOverviewComponent implements OnInit {
     private router: Router,
     private reportService: ReportService,
     private loaderService: LoaderService,
+    private plantPlService: PlantPlReportService,
     private costGroupService: CostGroupService
   ) {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state) {
       const filterEntity = <FilterEntity>state.filterEntity;
       this.filterEntityInput = filterEntity;
-      setTimeout(() => {
-        this.filterCostGroups(filterEntity);
-        const filteredData = this.loadPlantPlOverview(
-          filterEntity.plantId!,
-          filterEntity.costAccTypeId!,
-          filterEntity.year!.getFullYear(),
-          filterEntity.year!.getMonth() + 1
-        );
-        this.gridData = { data: filteredData, total: filteredData.length };
-        this.filtered = true;
-        this.reportMonths = this.reportService.setMonthHeader(filterEntity);
-        this.sums = this.reportService.calculateSums(filteredData);
-      }, 1500);
+      this.loadData(filterEntity);
     }
   }
 
@@ -106,37 +93,26 @@ export class PlantPlOverviewComponent implements OnInit {
   saveFilterForm(filterEntity: FilterEntity) {
     this.filterEntity = undefined!;
     this.filterEntityInput = filterEntity;
-    setTimeout(() => {
-      this.filterCostGroups(filterEntity);
-      const filteredData = this.loadPlantPlOverview(
-        filterEntity.plantId!,
-        filterEntity.costAccTypeId!,
-        filterEntity.year?.getFullYear()!,
-        filterEntity.year?.getMonth()! + 1
-      );
-      this.gridData = { data: filteredData, total: filteredData.length };
-      this.filtered = true;
-      this.reportMonths = this.reportService.setMonthHeader(filterEntity);
-      this.sums = this.reportService.calculateSums(filteredData);
-      console.log('finished');
-    }, 1500);
-    console.log('filtering...');
+    this.loadData(filterEntity);
   }
 
   loadPlantPlOverview(
     plantId: number,
+    companyId: number,
     costAccTypeId: number,
     year: number,
-    month: number
-  ): PlantPlOverview[] {
-    const filteredData = plantPlOverview.filter(
-      (item) =>
-        item.plant?.id === plantId &&
-        item.costAccType?.id === costAccTypeId &&
-        item.year === year &&
-        item.month === month
-    );
-    return filteredData;
+    month: number,
+    filterEntity: FilterEntity
+  ) {
+    this.plantPlService
+      .getPlantPl(year, month, costAccTypeId, plantId, companyId)
+      .subscribe((plantPl) => {
+        this.gridData = { data: plantPl, total: plantPl.length };
+        this.filtered = true;
+        this.reportMonths = this.reportService.setMonthHeader(filterEntity);
+        this.sums = this.reportService.calculateSums(plantPl);
+        console.log('finished');
+      });
   }
 
   toggleGroupState() {
@@ -152,9 +128,19 @@ export class PlantPlOverviewComponent implements OnInit {
       ?.name!;
   }
 
-  filterCostGroups(filterEntity: FilterEntity) {
-    this.costGroups = costGroups.filter(
-      (costGroup) => costGroup.companyId === filterEntity.companyId
-    );
+  loadData(filterEntity: FilterEntity) {
+    this.costGroupService
+      .getCostGroups(filterEntity.companyId)
+      .subscribe((costGroups) => {
+        this.costGroups = costGroups;
+        this.loadPlantPlOverview(
+          filterEntity.plantId!,
+          filterEntity.companyId!,
+          filterEntity.costAccTypeId!,
+          filterEntity.year?.getFullYear()!,
+          filterEntity.year?.getMonth()! + 1,
+          filterEntity
+        );
+      });
   }
 }

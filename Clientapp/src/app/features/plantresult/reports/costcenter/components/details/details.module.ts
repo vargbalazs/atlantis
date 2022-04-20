@@ -23,7 +23,7 @@ import { RouterModule } from '@angular/router';
     NavigationModule,
     RouterModule,
   ],
-  providers: [ReportService],
+  providers: [],
   exports: [CostCenterDetailsComponent],
 })
 export class CostCenterDetailsModule {}

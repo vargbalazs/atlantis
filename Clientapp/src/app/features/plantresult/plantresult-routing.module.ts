@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { StartLayoutComponent } from 'src/app/core/components/start-layout/start-layout.component';
+import { AuthGuard } from 'src/app/core/guards/auth.guard';
 import { BrowseDataComponent } from './browsedata/components/list/list.component';
 import { CostCenterDetailsComponent } from './reports/costcenter/components/details/details.component';
 import { CostCenterOverviewComponent } from './reports/costcenter/components/overview/overview.component';
@@ -11,6 +12,7 @@ const routes: Routes = [
   {
     path: '',
     component: StartLayoutComponent,
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'plantresult/uploadcost',

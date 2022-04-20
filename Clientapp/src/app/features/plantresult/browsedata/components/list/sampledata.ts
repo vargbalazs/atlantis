@@ -25,6 +25,6 @@ export const bookings: Booking[] = [
     bookingDate: new Date(2021, 0, 1),
     docDate: new Date(2021, 0, 1),
     postingDate: new Date(2021, 0, 1),
-    user: 'VARGBAL',
+    userName: 'VARGBAL',
   },
 ];

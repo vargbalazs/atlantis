@@ -6,7 +6,6 @@ import { FilterEntity } from 'src/app/shared/models/filter.model';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { ActProdDataService } from '../../services/act-prod-data.service';
-import { actualProdData } from './sampledata';
 
 @Component({
   selector: 'actual-prod-data',
@@ -35,8 +34,6 @@ export class ActProdDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    // on init no data load, because we will filter the data
-    //this.gridData = { data: actualProdData, total: actualProdData.length };
     this.gridData = { data: [], total: 0 };
   }
 
@@ -44,7 +41,7 @@ export class ActProdDataComponent implements OnInit {
     const item = <ActProdData>args.dataItem;
 
     this.formGroup = this.formBuilder.group({
-      id: [item.id, Validators.required],
+      id: [item.id],
       capGroup: [item.capGroup, Validators.required],
       capGroupId: [item.capGroupId, Validators.required],
       companyId: [item.companyId, Validators.required],
@@ -77,27 +74,14 @@ export class ActProdDataComponent implements OnInit {
 
   saveFilterForm(filterEntity: FilterEntity) {
     this.filterEntity = undefined!;
-    // this.actProdDataService
-    //   .getActualData(
-    //     filterEntity.companyId!,
-    //     filterEntity.plantId!,
-    //     filterEntity.year?.getFullYear()!
-    //   )
-    //   .subscribe((result) => {
-    //     this.loadingOverlayVisible = false;
-    //     this.gridData = { data: result, total: result.length };
-    //   });
-
-    setTimeout(() => {
-      const filteredData = actualProdData.filter(
-        (item) =>
-          item.companyId === filterEntity.companyId &&
-          item.plantId === filterEntity.plantId &&
-          item.year === filterEntity.year?.getFullYear()
-      );
-      this.gridData = { data: filteredData, total: filteredData.length };
+    this.loadData(
+      filterEntity.companyId!,
+      filterEntity.plantId!,
+      filterEntity.year?.getFullYear()!
+    ).subscribe((actProdData) => {
+      this.gridData = { data: actProdData, total: actProdData.length };
       console.log('finished');
-    }, 1500);
+    });
     console.log('filtering...');
   }
 
@@ -109,31 +93,26 @@ export class ActProdDataComponent implements OnInit {
     rowIndex: number;
   }) {
     if (this.formGroup.valid) {
-      // this.actProdDataService.update(this.formGroup.value).subscribe(() => {
-      //   this.editing = false;
-      //   sender.closeRow(rowIndex);
-      //   console.log('finished');
-      //   this.notificationService.showNotification(
-      //     'Adatok sikeresen mentve',
-      //     3000,
-      //     'success'
-      //   );
-      // });
-      setTimeout(() => {
-        this.gridData.data = (<ActProdData[]>this.gridData.data).map((item) =>
-          item.id === this.formGroup.get('id')?.value
-            ? this.formGroup.value
-            : item
-        );
+      this.actProdDataService.update(this.formGroup.value).subscribe(() => {
         this.editing = false;
         sender.closeRow(rowIndex);
-        console.log('finished');
-        this.notificationService.showNotification(
-          'Adatok sikeresen mentve',
-          3000,
-          'success'
-        );
-      }, 1500);
+        this.loadData(
+          this.formGroup.get('companyId')!.value,
+          this.formGroup.get('plantId')!.value,
+          this.formGroup.get('year')!.value
+        ).subscribe((actualProdData) => {
+          this.gridData = {
+            data: actualProdData,
+            total: actualProdData.length,
+          };
+          console.log('finished');
+          this.notificationService.showNotification(
+            'Adatok sikeresen mentve',
+            3000,
+            'success'
+          );
+        });
+      });
       console.log('saving...');
     }
   }
@@ -169,5 +148,9 @@ export class ActProdDataComponent implements OnInit {
     grid.closeRow(rowIndex);
     this.editedRowIndex = undefined!;
     this.formGroup = undefined!;
+  }
+
+  private loadData(companyId: number, plantId: number, year: number) {
+    return this.actProdDataService.getActualData(companyId, plantId, year);
   }
 }

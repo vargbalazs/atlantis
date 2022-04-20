@@ -8,6 +8,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
 import { FilterModule } from 'src/app/shared/components/filter/filter.module';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { NavigationModule } from '@progress/kendo-angular-navigation';
+import { BrowseDataService } from '../../services/browsedata.service';
 
 @NgModule({
   declarations: [BrowseDataComponent],
@@ -22,7 +23,7 @@ import { NavigationModule } from '@progress/kendo-angular-navigation';
     ExcelModule,
     NavigationModule,
   ],
-  providers: [],
+  providers: [BrowseDataService],
   exports: [BrowseDataComponent],
 })
 export class BrowseDataModule {}

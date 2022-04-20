@@ -5,7 +5,6 @@ import { Crud } from 'src/app/shared/classes/crud.class';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { PlantAreaService } from '../../services/plantarea.service';
-import { plantareas } from './sampledata';
 
 @Component({
   selector: 'general-plantarea',

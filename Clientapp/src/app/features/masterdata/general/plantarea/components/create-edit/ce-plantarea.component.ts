@@ -1,7 +1,5 @@
-import { AfterViewInit, Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { companies } from 'src/app/features/masterdata/general/company/components/list/sampledata';
-import { plants } from '../../../plant/components/list/sampledata';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { PlantArea } from '../../models/plantarea.model';

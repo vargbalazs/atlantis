@@ -1,11 +1,14 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { companies } from 'src/app/features/masterdata/general/company/components/list/sampledata';
-import { plants } from '../../../features/masterdata/general/plant/components/list/sampledata';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { CopyEntity } from '../../models/copy.model';
 import { SubmitFormComponent } from 'src/app/shared/components/submitform/submitform.component';
+import { CompanyService } from 'src/app/features/masterdata/general/company/services/company.service';
+import { PlantService } from 'src/app/features/masterdata/general/plant/services/plant.service';
+import { MsgDialogService } from '../../services/msgdialog.service';
+import { forkJoin } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'copy-entity',
@@ -37,9 +40,22 @@ export class CopyComponent
     plantId: new FormControl(this.formData.plantId, [Validators.required]),
   });
 
+  constructor(
+    private companyService: CompanyService,
+    private plantService: PlantService,
+    protected msgDialogService: MsgDialogService
+  ) {
+    super(msgDialogService);
+  }
+
   ngOnInit() {
-    this.companies = companies;
-    this.plants = plants;
+    forkJoin({
+      companies: this.companyService.getCompanies().pipe(first()),
+      plants: this.plantService.getPlants().pipe(first()),
+    }).subscribe(({ companies, plants }) => {
+      this.companies = companies;
+      this.plants = plants;
+    });
     this.changeControlState(['plant'], false);
     this.checkFunctionsOnSaveClient.push(this.yearsAreNotTheSame);
   }

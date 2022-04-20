@@ -207,14 +207,18 @@
           name="cancel"
           (click)="cancelHandler({ sender: grid, rowIndex: rowIndex })"
         ></kendo-icon>
+        <kendo-icon
+          *ngIf="!isNew && !editing"
+          style="color: crimson !important"
+          class="command-icon"
+          themeColor="secondary"
+          name="delete"
+          (click)="removeHandler({ dataItem: dataItem })"
+        ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
     <ng-template kendoGridNoRecordsTemplate>
       Nincs megjelenítendő adat
     </ng-template>
   </kendo-grid>
-  <loading-overlay
-    [visible]="loadingOverlayVisible | async"
-    loadingText=""
-  ></loading-overlay>
 </div>

@@ -6,8 +6,7 @@ import { IReportSum } from 'src/app/shared/interfaces/reportsum.interface';
 import { FilterEntity } from 'src/app/shared/models/filter.model';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { ReportService } from 'src/app/shared/services/report.service';
-import { CostOverview } from '../../models/costoverview.model';
-import { costOverview } from './sampledata';
+import { CostCenterReportService } from '../../services/costcenter-report.service';
 
 @Component({
   selector: 'overview',
@@ -38,25 +37,21 @@ export class CostCenterOverviewComponent implements OnInit {
   constructor(
     private router: Router,
     private reportService: ReportService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private costCenterReportService: CostCenterReportService
   ) {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state) {
       const filterEntity = <FilterEntity>state.filterEntity;
       this.filterEntityInput = filterEntity;
-      setTimeout(() => {
-        const filteredData = this.loadCostCenterOverview(
-          filterEntity.plantId!,
-          filterEntity.costAccTypeId!,
-          filterEntity.year!.getFullYear(),
-          filterEntity.year!.getMonth() + 1,
-          filterEntity.costCenterId
-        );
-        this.gridData = { data: filteredData, total: filteredData.length };
-        this.filtered = true;
-        this.reportMonths = this.reportService.setMonthHeader(filterEntity);
-        this.sums = this.reportService.calculateSums(filteredData);
-      }, 1500);
+      this.loadCostCenterOverview(
+        filterEntity.plantId!,
+        filterEntity.costAccTypeId!,
+        filterEntity.year?.getFullYear()!,
+        filterEntity.year?.getMonth()! + 1,
+        filterEntity.costCenterId,
+        filterEntity
+      );
     }
   }
 
@@ -79,20 +74,14 @@ export class CostCenterOverviewComponent implements OnInit {
   saveFilterForm(filterEntity: FilterEntity) {
     this.filterEntity = undefined!;
     this.filterEntityInput = filterEntity;
-    setTimeout(() => {
-      const filteredData = this.loadCostCenterOverview(
-        filterEntity.plantId!,
-        filterEntity.costAccTypeId!,
-        filterEntity.year?.getFullYear()!,
-        filterEntity.year?.getMonth()! + 1,
-        filterEntity.costCenterId
-      );
-      this.gridData = { data: filteredData, total: filteredData.length };
-      this.filtered = true;
-      this.reportMonths = this.reportService.setMonthHeader(filterEntity);
-      this.sums = this.reportService.calculateSums(filteredData);
-      console.log('finished');
-    }, 1500);
+    this.loadCostCenterOverview(
+      filterEntity.plantId!,
+      filterEntity.costAccTypeId!,
+      filterEntity.year?.getFullYear()!,
+      filterEntity.year?.getMonth()! + 1,
+      filterEntity.costCenterId,
+      filterEntity
+    );
     console.log('filtering...');
   }
 
@@ -101,26 +90,21 @@ export class CostCenterOverviewComponent implements OnInit {
     costAccTypeId: number,
     year: number,
     month: number,
-    costCenterId: number | undefined
-  ): CostOverview[] {
-    const filteredData = costOverview.filter((item) => {
-      if (!costCenterId) {
-        return (
-          item.plant?.id === plantId &&
-          item.costAccType?.id === costAccTypeId &&
-          item.year === year &&
-          item.month === month
-        );
-      } else {
-        return (
-          item.plant?.id === plantId &&
-          item.costAccType?.id === costAccTypeId &&
-          item.year === year &&
-          item.month === month &&
-          item.costCenter?.id === costCenterId
-        );
-      }
-    });
-    return filteredData;
+    costCenterId: number | undefined,
+    filterEntity: FilterEntity
+  ) {
+    this.costCenterReportService
+      .getCostCenterOverview(year, month, costAccTypeId, plantId)
+      .subscribe((overview) => {
+        if (costCenterId)
+          overview = overview.filter(
+            (row) => row.costCenter!.id === costCenterId
+          );
+        this.gridData = { data: overview, total: overview.length };
+        this.filtered = true;
+        this.reportMonths = this.reportService.setMonthHeader(filterEntity);
+        this.sums = this.reportService.calculateSums(overview);
+        console.log('finished');
+      });
   }
 }

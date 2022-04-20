@@ -4,11 +4,10 @@ import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
 import { FrcOtherCost } from '../../models/frc-othercost.model';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { FrcService } from '../../services/frc.service';
-import { otherCosts } from './sampledata';
 import { cloneable } from 'src/app/shared/classes/cloneable.class';
 import { CostCenter } from 'src/app/features/masterdata/planning/costcenter/models/costcenter.model';
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
-import { LoaderService } from 'src/app/shared/services/loader.service';
+import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 
 @Component({
   selector: 'othercosts',
@@ -21,8 +20,6 @@ export class OtherCostsComponent implements OnInit {
   editing = false;
   editedRowIndex!: number;
   formGroup!: FormGroup;
-  loadingOverlayVisible = this.loaderService.isLoading;
-  otherCosts: FrcOtherCost[] = [];
   originalOtherCost: FrcOtherCost = new FrcOtherCost();
 
   @Input() frcId!: number;
@@ -31,28 +28,22 @@ export class OtherCostsComponent implements OnInit {
   @Input() year!: number;
   @Input() costAccounts!: CostAccount[];
   @Input() costCenters!: CostCenter[];
+  @Input() otherCosts!: FrcOtherCost[];
 
   constructor(
     private formBuilder: FormBuilder,
     private frcService: FrcService,
     private notificationService: CustomNotificationService,
-    private loaderService: LoaderService
+    private msgDialogService: MsgDialogService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
 
   ngOnInit() {
     this.gridData = {
-      data: [],
-      total: 0,
+      data: this.otherCosts,
+      total: this.otherCosts.length,
     };
-    setTimeout(() => {
-      this.otherCosts = otherCosts.filter((item) => item.frcId === this.frcId);
-      this.gridData = {
-        data: this.otherCosts,
-        total: this.otherCosts.length,
-      };
-    }, 1500);
   }
 
   public createFormGroup(args: any): FormGroup {
@@ -114,10 +105,14 @@ export class OtherCostsComponent implements OnInit {
   }) {
     this.formGroup.patchValue({ frcId: this.frcId });
     if (this.formGroup.valid) {
-      setTimeout(() => {
-        if (isNew) {
+      if (isNew) {
+        this.frcService.addOtherCost(this.formGroup.value).subscribe((res) => {
+          this.formGroup.patchValue({ id: res });
           this.gridData.data.push(this.formGroup.value);
-        } else {
+          this.costSaved(sender, rowIndex);
+        });
+      } else {
+        this.frcService.updateOtherCost(this.formGroup.value).subscribe(() => {
           this.gridData.data = (<FrcOtherCost[]>this.gridData.data).map(
             (item) =>
               item.id === this.formGroup.get('id')?.value
@@ -125,17 +120,21 @@ export class OtherCostsComponent implements OnInit {
                 : item
           );
           this.editing = false;
-        }
-        sender.closeRow(rowIndex);
-        console.log('finished');
-        this.notificationService.showNotification(
-          'Adatok sikeresen mentve',
-          3000,
-          'success'
-        );
-      }, 1500);
+          this.costSaved(sender, rowIndex);
+        });
+      }
       console.log('saving...');
     }
+  }
+
+  costSaved(sender: GridComponent, rowIndex: number) {
+    console.log('finished');
+    sender.closeRow(rowIndex);
+    this.notificationService.showNotification(
+      'Adatok sikeresen mentve',
+      3000,
+      'success'
+    );
   }
 
   editHandler({
@@ -165,6 +164,29 @@ export class OtherCostsComponent implements OnInit {
     this.closeEditor(sender, rowIndex);
     this.otherCosts[rowIndex] = this.originalOtherCost;
     this.editing = false;
+  }
+
+  removeHandler({ dataItem }: { dataItem: FrcOtherCost }) {
+    this.msgDialogService
+      .showDialog('FRC', 'Valóban törölni szeretnéd a kiválasztott elemet?', [
+        { text: 'Nem' },
+        { text: 'Igen', primary: true },
+      ])
+      .result.subscribe((result) => {
+        const dialogResult = JSON.parse(JSON.stringify(result));
+        if (dialogResult.primary) {
+          this.frcService.deleteOtherCost(dataItem.id!).subscribe((res) => {
+            this.gridData.data = this.gridData.data.filter(
+              (item) => item.id !== dataItem.id
+            );
+            this.notificationService.showNotification(
+              'A kiválasztott elem sikeresen törölve lett',
+              3000,
+              'success'
+            );
+          });
+        }
+      });
   }
 
   private closeEditor(grid: GridComponent, rowIndex = this.editedRowIndex) {

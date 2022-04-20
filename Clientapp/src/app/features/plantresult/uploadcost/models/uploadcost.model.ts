@@ -1,3 +1,4 @@
+import { FileInfo } from '@progress/kendo-angular-upload';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 
 export class uploadCost {
@@ -7,6 +8,6 @@ export class uploadCost {
     public plantId?: number,
     public plant?: number,
     public month?: Date,
-    public fileName?: []
+    public files?: []
   ) {}
 }

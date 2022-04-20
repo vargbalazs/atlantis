@@ -2,10 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FrcService } from '../../services/frc.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
-import { frcCapacityItems } from '../capacity/sampledata';
 import { FrcCapacity } from '../../models/frc-capacity.model';
 import { SelectEvent } from '@progress/kendo-angular-layout';
-import { FrcSalesProduct } from '../../models/frc-salesproduct.model';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { Department } from 'src/app/features/masterdata/general/department/models/department.model';
 import { DepartmentService } from 'src/app/features/masterdata/general/department/services/department.service';
@@ -15,6 +13,8 @@ import { forkJoin } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { CostCenter } from 'src/app/features/masterdata/planning/costcenter/models/costcenter.model';
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
+import { FrcOtherCost } from '../../models/frc-othercost.model';
+import { FrcSalesProduct } from '../../models/frc-salesproduct.model';
 
 @Component({
   selector: 'frc-details',
@@ -26,7 +26,6 @@ import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/mo
 })
 export class FrcDetailsComponent implements OnInit {
   loadingOverlayVisible = this.loaderService.isLoading;
-  loadingOverlayVisibleGrid = false;
   isInEditMode = false;
   company!: string;
   companyId!: number;
@@ -41,8 +40,9 @@ export class FrcDetailsComponent implements OnInit {
   costAccounts!: CostAccount[];
   costCenters!: CostCenter[];
   departments!: Department[];
-
+  otherCosts!: FrcOtherCost[];
   frcCapacity!: FrcCapacity[];
+  frcSalesProduct!: FrcSalesProduct[];
   showCapacity = false;
 
   constructor(
@@ -67,14 +67,6 @@ export class FrcDetailsComponent implements OnInit {
     this.costAccTypeId =
       +this.route.snapshot.queryParamMap.get('costAccTypeId')!;
 
-    // load the first tab (capacity)
-    setTimeout(() => {
-      this.frcCapacity = frcCapacityItems.filter(
-        (item) => item.frcId === this.frcId
-      );
-      this.showCapacity = true;
-    }, 1500);
-
     forkJoin({
       costAccounts: this.costAccountService
         .getCostAccounts(this.companyId, this.year)
@@ -85,11 +77,33 @@ export class FrcDetailsComponent implements OnInit {
       departments: this.departmentService
         .getDepartments(this.plantId)
         .pipe(first()),
-    }).subscribe(({ costAccounts, costCenters, departments }) => {
-      this.costAccounts = costAccounts;
-      this.costCenters = costCenters;
-      this.departments = departments;
-    });
+      otherCosts: this.frcService.getOtherCosts(this.frcId).pipe(first()),
+      capacities: this.frcService
+        .getCapacities(this.frcId, this.year, this.plantId)
+        .pipe(first()),
+      salesProducts: this.frcService
+        .getSalesProducts(this.frcId, this.year, this.plantId)
+        .pipe(first()),
+    }).subscribe(
+      ({
+        costAccounts,
+        costCenters,
+        departments,
+        otherCosts,
+        capacities,
+        salesProducts,
+      }) => {
+        this.costAccounts = costAccounts;
+        this.costCenters = costCenters;
+        this.departments = departments;
+        this.otherCosts = otherCosts;
+        this.frcCapacity = capacities;
+        this.frcSalesProduct = salesProducts;
+        this.calculateTotal(this.frcCapacity);
+        this.calculateTotal(this.frcSalesProduct);
+        this.showCapacity = true;
+      }
+    );
   }
 
   goBack() {
@@ -113,13 +127,21 @@ export class FrcDetailsComponent implements OnInit {
 
   showEditModeDialog() {
     this.msgDialogService.showDialog(
-      'PROVK',
+      'Atlantis',
       'Mentetlen változások vannak. Először mentsd őket.',
       [{ text: 'Ok', primary: true }]
     );
   }
 
-  public onSelect(e: SelectEvent) {
-    this.frcCapacity = [];
+  public onSelect(e: SelectEvent) {}
+
+  calculateTotal(capacities: FrcCapacity[] | FrcSalesProduct[]) {
+    for (let i = 0; i <= capacities.length - 1; i++) {
+      let total = 0;
+      for (let [key, value] of Object.entries(capacities[i])) {
+        if (key.startsWith('p')) total += value;
+      }
+      capacities[i].total = total;
+    }
   }
 }

@@ -35,7 +35,12 @@
     </entity>
     <file *ngIf="currentStep === 1" [file]="currentGroup"> </file>
     <overview *ngIf="currentStep === 2" [form]="form"></overview>
-    <upload-file *ngIf="currentStep === 3" [form]="form"></upload-file>
+    <upload-file
+      #uploadFileComponent
+      *ngIf="currentStep === 3"
+      [form]="form"
+      (uploadFinished)="uploadFinished()"
+    ></upload-file>
   </form>
   <kendo-dialog-actions layout="normal">
     <button
@@ -64,6 +69,10 @@
     >
       Feltöltés
     </button>
+    <loading-overlay
+      [visible]="loadingOverlayVisible | async"
+      loadingText=""
+    ></loading-overlay>
   </kendo-dialog-actions>
 </kendo-dialog>
 <div kendoDialogContainer></div>

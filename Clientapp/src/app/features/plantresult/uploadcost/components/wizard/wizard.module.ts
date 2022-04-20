@@ -10,6 +10,7 @@ import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { FileModule } from '../file/file.module';
 import { OverviewModule } from '../overview/overview.module';
 import { UploadFileModule } from '../upload-file/upload-file.module';
+import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/loading-overlay.module';
 
 @NgModule({
   declarations: [WizardComponent],
@@ -25,6 +26,7 @@ import { UploadFileModule } from '../upload-file/upload-file.module';
     FileModule,
     OverviewModule,
     UploadFileModule,
+    LoadingOverlayModule,
   ],
   providers: [],
   exports: [WizardComponent],

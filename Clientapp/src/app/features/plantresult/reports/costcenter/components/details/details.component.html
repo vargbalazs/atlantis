@@ -3,8 +3,12 @@
   [items]="navItems"
   (itemClick)="onNavItemClick($event)"
 ></kendo-breadcrumb>
-<div class="grid">
-  <kendo-grid [kendoGridBinding]="gridData.data" #grid>
+<div class="grid grid-with-breadcrumb">
+  <kendo-grid
+    [kendoGridBinding]="gridData.data"
+    [style.maxHeight.%]="100"
+    #grid
+  >
     <ng-template kendoGridToolbarTemplate>
       <button
         kendoGridExcelCommand

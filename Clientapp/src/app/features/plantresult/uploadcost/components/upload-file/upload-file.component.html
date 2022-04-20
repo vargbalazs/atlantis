@@ -3,4 +3,13 @@
   kattints a
   <span class="k-label" style="display: inline">'Feltöltés'</span> gombra.</span
 >
-<kendo-upload [ngModel]="fileArray"> </kendo-upload>
+<kendo-upload
+  #upload
+  [ngModel]="fileArray"
+  class="file-list"
+  [autoUpload]="false"
+  [saveUrl]="uploadUrl"
+  (upload)="uploadEventHandler($event)"
+  (error)="errorEventHandler($event)"
+  (success)="success($event)"
+></kendo-upload>

@@ -1,6 +1,10 @@
 <div class="component-header">Költséghelyi áttekintő</div>
 <div class="grid">
-  <kendo-grid [kendoGridBinding]="gridData.data" #grid>
+  <kendo-grid
+    [kendoGridBinding]="gridData.data"
+    [style.maxHeight.%]="100"
+    #grid
+  >
     <ng-template kendoGridToolbarTemplate>
       <button
         kendoButton

@@ -7,7 +7,7 @@ import { CostCenter } from 'src/app/features/masterdata/planning/costcenter/mode
 import { FilterEntity } from 'src/app/shared/models/filter.model';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { Booking } from '../../models/booking.model';
-import { bookings } from './sampledata';
+import { BrowseDataService } from '../../services/browsedata.service';
 
 @Component({
   selector: 'browsedata',
@@ -37,7 +37,11 @@ export class BrowseDataComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private loaderService: LoaderService) {
+  constructor(
+    private router: Router,
+    private loaderService: LoaderService,
+    private browseDataService: BrowseDataService
+  ) {
     this.state = this.router.getCurrentNavigation()?.extras.state;
     if (this.state) {
       this.routedFilterEntity = <FilterEntity>this.state.filterEntity;
@@ -61,27 +65,33 @@ export class BrowseDataComponent implements OnInit {
   ngOnInit() {
     this.gridData = { data: [], total: 0 };
     if (this.state) {
-      setTimeout(() => {
-        let filteredData: Booking[] = [];
-        if (this.state.origin === 'costcenter') {
-          filteredData = bookings.filter(
-            (item) =>
-              item.costCenter === this.costCenter.code &&
-              item.year === this.routedFilterEntity.year?.getFullYear() &&
-              item.month === this.routedFilterEntity.year?.getMonth()! + 1 &&
-              item.accountNumber === this.costAccount.accountNumber
-          );
-        }
-        if (this.state.origin === 'plantpl') {
-          filteredData = bookings.filter(
-            (item) =>
-              item.year === this.routedFilterEntity.year?.getFullYear() &&
-              item.month === this.routedFilterEntity.year?.getMonth()! + 1 &&
-              item.accountNumber === this.costAccount.accountNumber
-          );
-        }
-        this.gridData = { data: filteredData, total: filteredData.length };
-      }, 1500);
+      if (this.state.origin === 'costcenter') {
+        this.browseDataService
+          .getBookingsForCostCenter(
+            this.costCenter.code!,
+            this.routedFilterEntity.plantId!,
+            this.routedFilterEntity.year?.getFullYear()!,
+            this.routedFilterEntity.year?.getMonth()! + 1,
+            this.costAccount.accountNumber!
+          )
+          .subscribe((bookings) => {
+            this.convertBookingsDate(bookings);
+            this.gridData = { data: bookings, total: bookings.length };
+          });
+      }
+      if (this.state.origin === 'plantpl') {
+        this.browseDataService
+          .getBookingsForAccountNumber(
+            this.costAccount.accountNumber!,
+            this.routedFilterEntity.plantId!,
+            this.routedFilterEntity.year?.getFullYear()!,
+            this.routedFilterEntity.year?.getMonth()! + 1
+          )
+          .subscribe((bookings) => {
+            this.convertBookingsDate(bookings);
+            this.gridData = { data: bookings, total: bookings.length };
+          });
+      }
     }
   }
 
@@ -100,17 +110,18 @@ export class BrowseDataComponent implements OnInit {
   saveFilterForm(filterEntity: FilterEntity) {
     this.filterEntity = undefined!;
     this.filterEntityInput = filterEntity;
-    setTimeout(() => {
-      const filteredData = bookings.filter(
-        (booking) =>
-          booking.plantId === filterEntity.plantId &&
-          booking.year === filterEntity.year?.getFullYear() &&
-          booking.month === filterEntity.year!.getMonth() + 1
-      );
-      this.gridData = { data: filteredData, total: filteredData.length };
-      this.filtered = true;
-      console.log('finished');
-    }, 1500);
+    this.browseDataService
+      .getBookings(
+        filterEntity.plantId!,
+        filterEntity.year?.getFullYear()!,
+        filterEntity.year?.getMonth()! + 1
+      )
+      .subscribe((bookings) => {
+        this.convertBookingsDate(bookings);
+        this.gridData = { data: bookings, total: bookings.length };
+        this.filtered = true;
+        console.log('finished');
+      });
     console.log('filtering...');
   }
 
@@ -150,5 +161,21 @@ export class BrowseDataComponent implements OnInit {
         });
         break;
     }
+  }
+
+  converToDate(date: string): Date {
+    return new Date(
+      +date.toString().substring(0, 4),
+      +date.toString().substring(5, 7) - 1,
+      +date.toString().substring(8, 10)
+    );
+  }
+
+  convertBookingsDate(bookings: Booking[]) {
+    bookings.forEach((booking) => {
+      booking.docDate = this.converToDate(booking.docDate!.toString());
+      booking.bookingDate = this.converToDate(booking.bookingDate!.toString());
+      booking.postingDate = this.converToDate(booking.postingDate!.toString());
+    });
   }
 }

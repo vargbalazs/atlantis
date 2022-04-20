@@ -1,19 +1,27 @@
 <ng-container [formGroup]="file">
   <kendo-formfield>
     <kendo-label [for]="fileName" text="Fájl tallózása"></kendo-label>
-    <kendo-fileselect
+    <kendo-upload
       #fileName
-      formControlName="fileName"
+      [autoUpload]="false"
       [multiple]="false"
       [restrictions]="fileRestrictions"
+      (select)="select($event)"
+      (remove)="remove($event)"
+      formControlName="fileName"
     >
-      <kendo-fileselect-messages
+      <kendo-upload-messages
         select="Tallózás..."
         dropFilesHere="Húzz ide egy fájlt"
         invalidFileExtension="A fájl kiterjesztése nem megfelelő"
       >
-      </kendo-fileselect-messages>
-    </kendo-fileselect>
-    <kendo-formerror>Kötelező mező</kendo-formerror>
+      </kendo-upload-messages>
+    </kendo-upload>
+    <kendo-formerror *ngIf="file.controls.fileName.errors?.required"
+      >Kötelező mező</kendo-formerror
+    >
+    <kendo-formerror *ngIf="file.controls.fileName.errors?.invalidExtension"
+      >Hibás fájlformátum</kendo-formerror
+    >
   </kendo-formfield>
 </ng-container>

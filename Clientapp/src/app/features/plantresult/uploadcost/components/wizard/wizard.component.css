@@ -4,3 +4,7 @@
 .start-wizard {
   margin: 1rem;
 }
+
+:host::ng-deep .k-upload .k-actions {
+  display: none;
+}

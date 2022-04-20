@@ -1,12 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
 import { FrcCapacity } from '../../models/frc-capacity.model';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { FrcService } from '../../services/frc.service';
-import { frcCapacityItems } from './sampledata';
 import { cloneable } from 'src/app/shared/classes/cloneable.class';
-import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'capacity',
@@ -24,7 +22,6 @@ export class CapacityComponent implements OnInit {
   editing = false;
   editedRowIndex!: number;
   formGroup!: FormGroup;
-  loadingOverlayVisible = this.loaderService.isLoading;
   frcCapacity: FrcCapacity[] = [];
   originalFrcCapacity: FrcCapacity = new FrcCapacity();
 
@@ -34,8 +31,7 @@ export class CapacityComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private frcService: FrcService,
-    private notificationService: CustomNotificationService,
-    private loaderService: LoaderService
+    private notificationService: CustomNotificationService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -50,20 +46,6 @@ export class CapacityComponent implements OnInit {
         total: this.loadedCapacity.length,
       };
       this.frcCapacity = this.loadedCapacity;
-    } else {
-      this.gridData = {
-        data: [],
-        total: 0,
-      };
-      setTimeout(() => {
-        this.frcCapacity = frcCapacityItems.filter(
-          (item) => item.frcId === this.frcId
-        );
-        this.gridData = {
-          data: this.frcCapacity,
-          total: this.frcCapacity.length,
-        };
-      }, 1500);
     }
   }
 
@@ -71,9 +53,12 @@ export class CapacityComponent implements OnInit {
     const item = <FrcCapacity>args.dataItem;
 
     this.formGroup = this.formBuilder.group({
-      id: [item.id, Validators.required],
+      id: [item.id],
       capGroup: [item.capGroup, Validators.required],
       capGroupId: [item.capGroupId, Validators.required],
+      capName: [item.capName, Validators.required],
+      capType: [item.capType, Validators.required],
+      unit: [item.unit, Validators.required],
       frcId: [item.frcId, Validators.required],
       p1: [item.p1, Validators.required],
       p2: [item.p2, Validators.required],
@@ -100,10 +85,12 @@ export class CapacityComponent implements OnInit {
     sender: GridComponent;
     rowIndex: number;
   }) {
+    this.formGroup.patchValue({ frcId: this.frcId });
     if (this.formGroup.valid) {
-      setTimeout(() => {
+      this.frcService.saveCapacity(this.formGroup.value).subscribe((res) => {
+        this.formGroup.patchValue({ id: res });
         this.gridData.data = (<FrcCapacity[]>this.gridData.data).map((item) =>
-          item.id === this.formGroup.get('id')?.value
+          item.capGroupId === this.formGroup.get('capGroupId')?.value
             ? this.formGroup.value
             : item
         );
@@ -115,7 +102,7 @@ export class CapacityComponent implements OnInit {
           3000,
           'success'
         );
-      }, 1500);
+      });
       console.log('saving...');
     }
   }

@@ -4,6 +4,7 @@
     [kendoGridReactiveEditing]="createFormGroup"
     [kendoGridBinding]="gridData.data"
     [sortable]="true"
+    [style.maxHeight.%]="100"
     #grid
   >
     <ng-template kendoGridToolbarTemplate>
@@ -22,22 +23,22 @@
       [hidden]="true"
     ></kendo-grid-column>
     <kendo-grid-column
-      field="capGroup.capType.capType"
+      field="capType"
       title="Kap. típ."
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
-      field="capGroup.capGroup"
+      field="capGroup"
       title="Kap. csop."
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
-      field="capGroup.capName"
+      field="capName"
       title="Kap. név"
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
-      field="capGroup.capUnit.unit"
+      field="unit"
       title="Kap. egys."
       [editable]="false"
     ></kendo-grid-column>
