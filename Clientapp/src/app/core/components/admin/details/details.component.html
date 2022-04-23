@@ -12,13 +12,13 @@
           <div>{{ user.userName }}</div>
           <div class="date">
             Regisztrált:
-            {{ user.joinDate | date: "yyyy.MM.dd HH:mm:ss" }}
+            {{ user.joinDate | date: "medium" }}
           </div>
           <div class="date">
             Utoljára bejelentkezett:
             {{
               lastLoginDateDisplay
-                ? (lastLoginDateDisplay | date: "yyyy.MM.dd HH:mm:ss")
+                ? (lastLoginDateDisplay | date: "medium")
                 : ""
             }}
           </div>

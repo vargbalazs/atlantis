@@ -45,6 +45,11 @@ export class UserMenuComponent extends Crud<User> implements OnInit {
         break;
       // settings
       case '1':
+        this.msgDialogService.showDialog(
+          'Atlantis',
+          'Ez a funkció jelenleg nem elérhető.',
+          [{ text: 'OK', primary: true }]
+        );
         break;
       // logout
       case '2':

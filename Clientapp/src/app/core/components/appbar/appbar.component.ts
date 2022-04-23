@@ -23,6 +23,7 @@ import { UserService } from '../../services/user.service';
 export class AppBarComponent implements OnInit, OnDestroy {
   showPopup = false;
   adminUser = false;
+  showAbout = false;
   user!: User;
 
   animateSettings: any = {
@@ -38,6 +39,7 @@ export class AppBarComponent implements OnInit, OnDestroy {
   @ViewChild('popupAnchor') popupAnchor!: ElementRef;
   @ViewChild('popup', { read: ElementRef }) popup!: ElementRef;
   @ViewChild('searchBox') searchBox!: TextBoxComponent;
+  @ViewChild('appBarBtn') appBarBtn!: ElementRef;
 
   private searchBoxSub!: Subscription;
   private profileUpdatedSub!: Subscription;
@@ -93,10 +95,22 @@ export class AppBarComponent implements OnInit, OnDestroy {
 
   goToHome() {
     this.router.navigate(['/home'], { skipLocationChange: true });
-    //this.LayoutService.drawerToggleBtnClicked.next();
   }
 
   showAdminArea() {
     this.router.navigate(['/admin/userlist'], { skipLocationChange: true });
+  }
+
+  showAboutDialog() {
+    this.showAbout = true;
+  }
+
+  closeAboutDialog() {
+    this.showAbout = false;
+  }
+
+  appBarClicked(event: any) {
+    if (!this.appBarBtn.nativeElement.contains(event.target))
+      this.layoutService.drawerToggleBtnClicked.next('hide');
   }
 }

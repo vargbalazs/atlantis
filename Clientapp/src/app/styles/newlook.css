@@ -764,6 +764,10 @@ body {
   box-shadow: 0 0 0 0 rgb(82 88 93 / 50%);
 }
 
+.x-text-base {
+  color: #3e5569;
+}
+
 .x-text-primary {
   color: #3699ff;
 }

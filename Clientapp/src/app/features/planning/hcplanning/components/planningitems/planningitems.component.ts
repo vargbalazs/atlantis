@@ -18,7 +18,7 @@ import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/mo
 import { CostAssign } from '../../models/costassign.model';
 import { costAssigns } from './costassigns';
 import { LoaderService } from 'src/app/shared/services/loader.service';
-import { TaskType } from 'src/app/shared/enums/taskType.enum';
+import { TaskType } from 'src/app/shared/enums/tasktype.enum';
 import { CostGroupService } from 'src/app/features/masterdata/planning/costgroup/services/costgroup.service';
 import { JobService } from 'src/app/features/masterdata/general/job/services/job.service';
 import { CostAccountService } from 'src/app/features/masterdata/planning/costaccount/services/costaccount.service';

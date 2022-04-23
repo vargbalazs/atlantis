@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  margin: 1rem 1rem;
+  height: calc(100% - 82px);
+}
+
+.quick-access-container {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+}
+
+.header {
+  font-weight: bold;
+  padding: 1rem 1rem 1rem;
+  color: #3e5569;
+  font-family: "Nunito Sans", sans-serif;
+  margin-bottom: 1rem;
+}
+
+.header-line {
+  border-bottom: 1px solid #00000014;
+  padding-top: 0.5rem;
+}
+
+.task-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tasks {
+  margin-left: 1rem;
+  overflow-y: overlay;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}

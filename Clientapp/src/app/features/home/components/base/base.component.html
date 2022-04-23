@@ -1,0 +1,26 @@
+<div class="component-header">Home</div>
+<div class="container">
+  <div class="quick-access-container">
+    <div class="header">
+      Gyors elérés
+      <div class="header-line"></div>
+    </div>
+    <quick-access class="flex-row"></quick-access>
+    <div class="header">
+      Utoljára felkeresett
+      <div class="header-line"></div>
+    </div>
+    <recently-visited class="flex-row"></recently-visited>
+  </div>
+  <div class="task-container">
+    <div class="header">
+      Feladatok
+      <div class="header-line"></div>
+    </div>
+    <tasks class="tasks"></tasks>
+  </div>
+</div>
+<loading-overlay
+  [visible]="loadingOverlayVisible | async"
+  loadingText=""
+></loading-overlay>

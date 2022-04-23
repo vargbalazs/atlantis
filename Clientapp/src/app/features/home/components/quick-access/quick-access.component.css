@@ -2,26 +2,12 @@
   justify-content: space-between;
 }
 
-.td-data {
-  font-weight: bold;
-  text-align: right;
-}
-
 .top-bar {
   height: 5px;
 }
 
 .hovered {
   background-color: #00b0ff;
-}
-
-.actions-visible {
-  visibility: visible;
-  background-color: rgba(128, 128, 128, 0.3);
-}
-
-.actions-hidden {
-  visibility: hidden;
 }
 
 .k-card {
@@ -33,7 +19,14 @@
   cursor: pointer;
 }
 
-.year-month {
+.k-card-body {
+  text-align: center;
+}
+
+.icon-color {
+  color: rgba(62, 85, 105, 0.8);
+}
+
+.icon-color-hovered {
   color: #00b0ff;
-  font-weight: 700;
 }

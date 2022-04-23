@@ -22,6 +22,7 @@ import { DialogModule } from '@progress/kendo-angular-dialog';
 import { IntlModule } from '@progress/kendo-angular-intl';
 import { LocaleProvider } from './core/providers/locale.provider';
 import { TranslateModule } from '@ngx-translate/core';
+import { HomeModule } from './features/home/home.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +35,7 @@ import { TranslateModule } from '@ngx-translate/core';
     AuthModule,
     AdminModule,
     StartLayoutModule,
+    HomeModule,
     MasterDataModule,
     ProductionDataModule,
     ForecastModule,

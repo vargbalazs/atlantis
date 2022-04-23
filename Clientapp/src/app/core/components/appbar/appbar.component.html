@@ -1,10 +1,15 @@
-<kendo-appbar position="top" positionsMode="sticky">
+<kendo-appbar
+  position="top"
+  positionsMode="sticky"
+  (click)="appBarClicked($event)"
+>
   <kendo-appbar-section>
     <button
       kendoButton
       icon="menu"
       (click)="onDrawerToggleBtnClick()"
       class="appbar-btn"
+      #appBarBtn
     ></button>
     <kendo-appbar-spacer width="1rem"></kendo-appbar-spacer>
     <span class="app-title">Atlantis</span>
@@ -71,7 +76,9 @@
         icon="info"
         class="appbar-btn"
         title="Névjegy"
+        (click)="showAboutDialog()"
       ></button>
     </div>
   </kendo-appbar-section>
 </kendo-appbar>
+<about *ngIf="showAbout" (closeAbout)="closeAboutDialog()"></about>

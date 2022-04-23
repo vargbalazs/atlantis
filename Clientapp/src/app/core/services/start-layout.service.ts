@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 @Injectable()
 export class LayoutService {
   // subject for the toggle btn
-  drawerToggleBtnClicked = new Subject();
+  drawerToggleBtnClicked = new Subject<string>();
 
   // subject for the searchbox value changing
   searchBoxValueChanged = new Subject<string>();

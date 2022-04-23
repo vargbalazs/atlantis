@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorPageComponent } from './core/components/errorpage/errorpage.component';
 import { StartLayoutComponent } from './core/components/start-layout/start-layout.component';
-import { HomeComponent } from './features/home/components/home.component';
+import { HomeComponent } from './features/home/components/base/base.component';
 
 const routes: Routes = [
   // {

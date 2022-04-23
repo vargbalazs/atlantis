@@ -215,12 +215,6 @@ export const drawerItemsFlattened: drawerItem[] = [
     routePath: 'plantresult/uploadcost',
   },
   {
-    text: 'Havi eredmény rögzítése',
-    level: 1,
-    id: '3.2',
-    parentId: '3',
-  },
-  {
     text: 'Könyvelési adatok tallózása',
     level: 1,
     id: '3.3',

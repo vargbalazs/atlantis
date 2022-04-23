@@ -1,5 +1,5 @@
 import { TaskStatus } from '../enums/taskstatus.enum';
-import { TaskType } from '../enums/taskType.enum';
+import { TaskType } from '../enums/tasktype.enum';
 
 export class Task {
   constructor(

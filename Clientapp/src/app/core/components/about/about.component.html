@@ -1,0 +1,21 @@
+<kendo-dialog [width]="370" [height]="410" (close)="closeForm()">
+  <kendo-dialog-titlebar class="x-bg-primary x-font">
+    About
+  </kendo-dialog-titlebar>
+  <h2 class="x-font x-text-base section">Atlantis</h2>
+  <div class="x-text section">
+    Controlling szoftver tervezéshez, előrejelzéshez, terv-tény elemzéshez
+  </div>
+  <div class="x-text section">Készítette: Varga Balázs</div>
+  <div class="x-text section">Minden jog fenntartva</div>
+  <kendo-dialog-actions layout="normal">
+    <button
+      type="button"
+      kendoButton
+      (click)="closeForm()"
+      class="x-btn-primary click-primary"
+    >
+      Bezár
+    </button>
+  </kendo-dialog-actions>
+</kendo-dialog>

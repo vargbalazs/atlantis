@@ -15,7 +15,7 @@ import { Task } from '../../../../../shared/models/task.model';
 import { TaskService } from '../../../../../shared/services/task.service';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { CostAccountService } from 'src/app/features/masterdata/planning/costaccount/services/costaccount.service';
-import { TaskType } from 'src/app/shared/enums/taskType.enum';
+import { TaskType } from 'src/app/shared/enums/tasktype.enum';
 import { TaskStatus } from 'src/app/shared/enums/taskstatus.enum';
 
 @Component({

@@ -1,0 +1,51 @@
+.side-bar {
+  width: 5px;
+}
+
+.hovered {
+  background-color: #00b0ff;
+}
+
+.k-card {
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+}
+
+.k-card:hover {
+  cursor: pointer;
+}
+
+.k-card-header {
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.k-card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.text {
+  margin-left: 0.5rem;
+  color: #00b0ff;
+}
+
+.badge {
+  margin-top: 0.5rem;
+  height: 1rem;
+  width: fit-content;
+  border-radius: 10%;
+  color: white;
+  display: flex;
+  align-self: flex-end;
+  align-items: center;
+  padding: 0.1rem 0.5rem;
+}
+
+.cost-planning {
+  background-color: #3699ff;
+}
+
+.hc-planning {
+  background-color: #6c757d;
+}

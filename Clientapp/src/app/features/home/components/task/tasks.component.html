@@ -1,0 +1,33 @@
+<kendo-card
+  width="300px"
+  *ngFor="let task of tasks"
+  (mouseover)="cardOverOut(task)"
+  (mouseout)="cardOverOut(task)"
+  (click)="cardClick(task)"
+>
+  <div class="k-hstack">
+    <div class="side-bar" [ngClass]="{ hovered: task.hovered }"></div>
+    <kendo-card-header class="k-hstack">
+      <div class="k-hstack">
+        Gyár: {{ task.plantLocation }}
+        <div class="text x-font-medium">{{ task.plantCode }}</div>
+      </div>
+      <div class="k-hstack">
+        Költséghely:
+        <div class="text x-font-medium">{{ task.costCenter }}</div>
+      </div>
+    </kendo-card-header>
+  </div>
+  <div class="k-hstack">
+    <div class="side-bar" [ngClass]="{ hovered: task.hovered }"></div>
+    <kendo-card-body>
+      <div>{{ task.taskName }}</div>
+      <div
+        class="badge"
+        [ngClass]="task.taskType === 0 ? 'cost-planning' : 'hc-planning'"
+      >
+        {{ task.taskType === 0 ? "Költség" : "Létszám" }}
+      </div>
+    </kendo-card-body>
+  </div>
+</kendo-card>

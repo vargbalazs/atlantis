@@ -10,6 +10,8 @@ import { UserMenuModule } from '../usermenu/usermenu.module';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { TooltipModule } from '@progress/kendo-angular-tooltip';
 import { UserProfileModule } from '../userprofile/userprofile.module';
+import { AboutModule } from '../about/about.module';
+import { SideBarService } from '../../services/sidebar.service';
 
 @NgModule({
   declarations: [AppBarComponent],
@@ -24,6 +26,7 @@ import { UserProfileModule } from '../userprofile/userprofile.module';
     InputsModule,
     TooltipModule,
     UserProfileModule,
+    AboutModule,
   ],
   providers: [],
   exports: [AppBarComponent],

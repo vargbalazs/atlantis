@@ -5,7 +5,7 @@ import { IRepository } from 'src/app/shared/interfaces/repository.interface';
 import { CostPlanningItem } from 'src/app/features/planning/costplanning/models/costplanningitem.model';
 import { HcPlanningItem } from 'src/app/features/planning/hcplanning/models/hcplanningitem.model';
 import { environment } from 'src/environments/environment';
-import { TaskType } from '../enums/taskType.enum';
+import { TaskType } from '../enums/tasktype.enum';
 import { TaskStatus } from '../enums/taskstatus.enum';
 
 @Injectable()

@@ -13,13 +13,11 @@
           <div>{{ form.controls.userName.value }}</div>
           <div class="date">
             Regisztrált:
-            {{ form.controls.joinDate.value | date: "yyyy.MM.dd HH:mm:ss" }}
+            {{ form.controls.joinDate.value | date: "medium" }}
           </div>
           <div class="date">
             Utoljára bejelentkezett:
-            {{
-              lastLoginDate ? (lastLoginDate | date: "yyyy.MM.dd HH:mm:ss") : ""
-            }}
+            {{ lastLoginDate ? (lastLoginDate | date: "medium") : "" }}
           </div>
         </div>
         <div

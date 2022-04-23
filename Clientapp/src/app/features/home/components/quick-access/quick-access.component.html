@@ -1,0 +1,18 @@
+<kendo-card
+  width="230px"
+  *ngFor="let module of modules"
+  (mouseover)="cardOverOut(module)"
+  (mouseout)="cardOverOut(module)"
+  (click)="cardClick(module)"
+>
+  <div class="top-bar" [ngClass]="{ hovered: module.hovered }"></div>
+  <kendo-card-header class="k-hstack space-between">
+    <h1 kendoCardTitle>{{ module.name }}</h1>
+  </kendo-card-header>
+  <kendo-card-body>
+    <span
+      class="k-icon k-i-{{ module.icon }} k-icon-lg icon-color"
+      [ngClass]="{ 'icon-color-hovered': module.hovered }"
+    ></span>
+  </kendo-card-body>
+</kendo-card>
