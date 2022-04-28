@@ -11,7 +11,7 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
 import { TooltipModule } from '@progress/kendo-angular-tooltip';
 import { UserProfileModule } from '../userprofile/userprofile.module';
 import { AboutModule } from '../about/about.module';
-import { SideBarService } from '../../services/sidebar.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [AppBarComponent],
@@ -27,6 +27,7 @@ import { SideBarService } from '../../services/sidebar.service';
     TooltipModule,
     UserProfileModule,
     AboutModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [AppBarComponent],

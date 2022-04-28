@@ -1,8 +1,14 @@
 <div class="user-header x-font">{{ userName }}</div>
 <kendo-menu [vertical]="true" (select)="onSelectItem($event)">
   <kendo-menu-item text="Profil" icon="user"></kendo-menu-item>
-  <kendo-menu-item text="Beállítások" icon="gear"></kendo-menu-item>
-  <kendo-menu-item text="Kijelentkezés" icon="logout"></kendo-menu-item>
+  <kendo-menu-item
+    [text]="'user.settings' | translate"
+    icon="gear"
+  ></kendo-menu-item>
+  <kendo-menu-item
+    [text]="'user.logout' | translate"
+    icon="logout"
+  ></kendo-menu-item>
 </kendo-menu>
 <userprofile
   [model]="loggedInUser"

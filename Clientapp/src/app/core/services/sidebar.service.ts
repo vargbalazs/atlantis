@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { drawerItem } from '../components/sidebar/sidebar-item.type';
 import { drawerItemsFlattened } from '../components/sidebar/sidebar-items-flat';
 
 @Injectable()
 export class SideBarService {
+  constructor(private translateService: TranslateService) {}
+
   /**
    * adds children from the given index to the drawerItems array
    *
@@ -88,6 +90,9 @@ export class SideBarService {
     drawerItemsFlattened.forEach((item) => {
       clonedItems.push(Object.assign({}, item));
     });
+    clonedItems.forEach(
+      (item) => (item.text = this.translateService.instant(item.text))
+    );
     return clonedItems;
   }
 
@@ -165,9 +170,11 @@ export class SideBarService {
     const parents = drawerItemsFlattened.filter(
       (item) =>
         item.parent &&
-        newItems.some((resultItem) => resultItem.id.startsWith(`${item.id}.`))
+        newItems.some((resultItem) => resultItem.id.startsWith(`${item.id}`)) // `${item.id}.`
+      // without the dot, if the search term is only present in the parent, we get the parent too (f. e. the topmost parent)
+      // originally, it was with the dot
     );
-    const mergedItems: drawerItem[] = [];
+    let mergedItems: drawerItem[] = [];
     // insert the parents and the hitlist elements into the new 'mergedItems' array according to their id's
     // let index = 1;
     for (let i = 0; i <= parents.length - 1; i++) {
@@ -180,6 +187,22 @@ export class SideBarService {
         mergedItems.push(Object.assign({}, children[j]));
       }
     }
+    // remove duplicate parents, because without the dot id search, we can get the parent twice:
+    // first: the parent itself, second: as the parent of the found child
+    mergedItems = mergedItems.filter(
+      (val, ind, arr) => arr.findIndex((item) => item.id === val.id) === ind
+    );
+    mergedItems.forEach(
+      (item) => (item.text = this.translateService.instant(item.text))
+    );
     return mergedItems;
+  }
+
+  // translate the hierarchycal data
+  translateItemsRecursively(items: drawerItem[]) {
+    items.forEach((item) => {
+      item.text = this.translateService.instant(item.text);
+      if (item.children) this.translateItemsRecursively(item.children);
+    });
   }
 }

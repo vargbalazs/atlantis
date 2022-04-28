@@ -5,6 +5,7 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { ChangePwdModule } from 'src/app/shared/components/changepwd/changepwd.module';
 import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/loading-overlay.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [PwdComponent],
@@ -14,6 +15,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
     ButtonsModule,
     ChangePwdModule,
     LoadingOverlayModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [PwdComponent],

@@ -1,4 +1,4 @@
-<div class="component-header">Regisztrált felhasználók</div>
+<div class="component-header" translate>headers.registeredUsers</div>
 <div class="grid">
   <kendo-grid
     [kendoGridBinding]="gridData.data"
@@ -7,30 +7,49 @@
   >
     <kendo-grid-column
       field="userId"
-      title="Felhasználó ID"
+      [title]="'columns.userId' | translate"
     ></kendo-grid-column>
-    <kendo-grid-column field="firstName" title="Keresztnév"></kendo-grid-column>
-    <kendo-grid-column field="lastName" title="Vezetéknév"></kendo-grid-column>
+    <kendo-grid-column
+      field="firstName"
+      [title]="'user.signupForm.firstName' | translate"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="lastName"
+      [title]="'user.signupForm.lastName' | translate"
+    ></kendo-grid-column>
     <kendo-grid-column
       field="userName"
-      title="Felhasználónév"
+      [title]="'user.userName' | translate"
     ></kendo-grid-column>
-    <kendo-grid-column field="email" title="E-mail"></kendo-grid-column>
-    <kendo-grid-column field="role" title="Jogosultság"></kendo-grid-column>
-    <kendo-grid-column field="isActive" title="Státusz">
+    <kendo-grid-column
+      field="email"
+      [title]="'columns.email' | translate"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="role"
+      [title]="'columns.userRole' | translate"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="isActive"
+      [title]="'columns.userStatus' | translate"
+    >
       <ng-template kendoGridCellTemplate let-dataItem>
         <div class="badge-container">
           <div
             [ngClass]="dataItem.isActive ? 'active' : 'inactive'"
             class="badge"
           >
-            {{ dataItem.isActive ? "Aktív" : "Inaktív" }}
+            {{
+              dataItem.isActive
+                ? ("user.active" | translate)
+                : ("user.inactive" | translate)
+            }}
           </div>
           <div
             [ngClass]="!dataItem.isNotLocked ? 'inactive' : 'hidden'"
             class="badge"
           >
-            {{ !dataItem.isNotLocked ? "Zárolt" : "" }}
+            {{ !dataItem.isNotLocked ? ("user.lockedShort" | translate) : "" }}
           </div>
         </div>
       </ng-template>
@@ -63,9 +82,9 @@
         ></kendo-svg-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
+    <!-- <ng-template kendoGridNoRecordsTemplate>
       Nincs megjelenítendő adat
-    </ng-template>
+    </ng-template> -->
   </kendo-grid>
 </div>
 <userdetails

@@ -23,6 +23,9 @@ import { IntlModule } from '@progress/kendo-angular-intl';
 import { LocaleProvider } from './core/providers/locale.provider';
 import { TranslateModule } from '@ngx-translate/core';
 import { HomeModule } from './features/home/home.module';
+import { MessageService } from '@progress/kendo-angular-l10n';
+import { ComponentMessagesService } from './core/services/comp-messages.service';
+import { NgxTranslateModule } from './core/i18n/translate.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,12 +47,14 @@ import { HomeModule } from './features/home/home.module';
     ConfirmDialogStyleModule,
     DialogModule,
     IntlModule,
-    TranslateModule.forRoot(),
+    // TranslateModule.forRoot(),
+    NgxTranslateModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    { provide: MessageService, useClass: ComponentMessagesService },
     LocaleProvider,
   ],
   bootstrap: [AppComponent],

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { MenuEvent } from '@progress/kendo-angular-menu';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { Crud } from 'src/app/shared/classes/crud.class';
@@ -27,6 +28,7 @@ export class UserMenuComponent extends Crud<User> implements OnInit {
     loaderService: LoaderService,
     private authService: AuthService,
     private customNotificationService: CustomNotificationService,
+    private translateService: TranslateService,
     private router: Router
   ) {
     super(msgDialogService, notificationService, userService, loaderService);
@@ -47,7 +49,7 @@ export class UserMenuComponent extends Crud<User> implements OnInit {
       case '1':
         this.msgDialogService.showDialog(
           'Atlantis',
-          'Ez a funkció jelenleg nem elérhető.',
+          this.translateService.instant('dialog.notAccessible'),
           [{ text: 'OK', primary: true }]
         );
         break;
@@ -56,7 +58,7 @@ export class UserMenuComponent extends Crud<User> implements OnInit {
         this.authService.logout();
         this.router.navigate(['/auth/login'], { skipLocationChange: true });
         this.customNotificationService.showNotification(
-          'A kijelentkezés sikeres',
+          this.translateService.instant('notifications.logoutSuccess'),
           3000,
           'success'
         );
@@ -70,7 +72,7 @@ export class UserMenuComponent extends Crud<User> implements OnInit {
       .subscribe((resp) => {
         this.authService.addUserToLocalCache(<User>resp);
         this.showNotification(
-          'A módosítás sikeresen megtörtént',
+          this.translateService.instant('notifications.editSuccess'),
           3000,
           'success'
         );

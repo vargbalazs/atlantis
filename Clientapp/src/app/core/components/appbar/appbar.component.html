@@ -17,7 +17,7 @@
   <kendo-appbar-spacer width="2rem"></kendo-appbar-spacer>
   <kendo-appbar-section>
     <kendo-textbox
-      placeholder="Keresés..."
+      [placeholder]="'appbar.search' | translate"
       (valueChange)="onSearchBoxValueChange($event)"
       #searchBox
     >
@@ -36,7 +36,7 @@
         icon="tell-a-friend"
         (click)="showAdminArea()"
         class="appbar-btn"
-        title="Admin felület"
+        [title]="'appbar.adminArea' | translate"
       ></button>
     </div>
     <div kendoTooltip>
@@ -45,7 +45,7 @@
         icon="home"
         (click)="goToHome()"
         class="appbar-btn"
-        title="Kezdőlap"
+        [title]="'appbar.home' | translate"
       ></button>
     </div>
     <div kendoTooltip>
@@ -55,7 +55,7 @@
         #popupAnchor
         (click)="togglePopup()"
         class="appbar-btn"
-        title="Felhasználó"
+        [title]="'appbar.user' | translate"
       ></button>
     </div>
     <kendo-popup
@@ -75,7 +75,7 @@
         kendoButton
         icon="info"
         class="appbar-btn"
-        title="Névjegy"
+        [title]="'appbar.about' | translate"
         (click)="showAboutDialog()"
       ></button>
     </div>

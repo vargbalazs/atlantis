@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TooltipModule } from '@progress/kendo-angular-tooltip';
 import { IndicatorsModule } from '@progress/kendo-angular-indicators';
 import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/loading-overlay.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [SignUpComponent],
@@ -27,6 +28,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
     TooltipModule,
     IndicatorsModule,
     LoadingOverlayModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [SignUpComponent],

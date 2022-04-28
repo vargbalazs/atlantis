@@ -96,6 +96,11 @@ a {
   margin-left: 2rem;
 }
 
+.pwd-match-error-userprofile {
+  align-self: flex-start;
+  margin-left: 0.5rem;
+}
+
 .info-icon {
   margin-right: 0.25rem;
 }

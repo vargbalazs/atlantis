@@ -11,7 +11,7 @@ import { CustomNotificationService } from 'src/app/shared/services/notification.
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
-import { ProvkService } from 'src/app/features/forecast/provk/services/provk.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -20,7 +20,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     private loaderService: LoaderService,
     private userService: UserService,
     private authService: AuthService,
-    private provkService: ProvkService
+    private translateService: TranslateService
   ) {}
 
   intercept(
@@ -54,7 +54,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             );
           } else {
             this.customNotificationService.showNotification(
-              'Ismeretlen eredetű hiba. Lépj kapcsolatba a rendszer üzemeltetőjével.',
+              this.translateService.instant('notifications.unknownError'),
               3000,
               'error'
             );

@@ -1,0 +1,41 @@
+import { TranslatedLang } from '../interfaces/translated-lang.interface';
+
+export const kendoHuMessages: TranslatedLang = {
+  lang: {
+    locale: 'hu',
+    rtl: false,
+    messages: new Map<string, string>([
+      ['kendo.grid.filterEqOperator', 'egyenlő'],
+      ['kendo.grid.filterNotEqOperator', 'nem egyenlő'],
+      ['kendo.grid.filterIsNullOperator', 'nulla'],
+      ['kendo.grid.filterIsNotNullOperator', 'nem nulla'],
+      ['kendo.grid.filterIsEmptyOperator', 'üres'],
+      ['kendo.grid.filterIsNotEmptyOperator', 'nem üres'],
+      ['kendo.grid.filterStartsWithOperator', 'kezdete'],
+      ['kendo.grid.filterContainsOperator', 'tartalmaz'],
+      ['kendo.grid.filterNotContainsOperator', 'nem tartalmaz'],
+      ['kendo.grid.filterEndsWithOperator', 'vége'],
+      ['kendo.grid.filterGteOperator', 'nagyobb vagy egyenlő'],
+      ['kendo.grid.filterGtOperator', 'nagyobb mint'],
+      ['kendo.grid.filterLteOperator', 'kisebb vagy egyenlő'],
+      ['kendo.grid.filterLtOperator', 'kisebb mint'],
+      ['kendo.grid.filterIsTrue', 'igaz'],
+      ['kendo.grid.filterIsFalse', 'hamis'],
+      ['kendo.grid.filterBooleanAll', 'mind'],
+      ['kendo.grid.filterAfterOrEqualOperator', 'később vagy egyenlő'],
+      ['kendo.grid.filterAfterOperator', 'később mint'],
+      ['kendo.grid.filterBeforeOperator', 'korábban'],
+      ['kendo.grid.filterBeforeOrEqualOperator', 'korábban vagy egyenlő'],
+      ['kendo.grid.filterDateToday', 'Ma'],
+      ['kendo.grid.noRecords', 'Nincs megjelenítendő adat'],
+      ['kendo.datepicker.today', 'Ma'],
+      ['kendo.upload.dropFilesHere', 'Húzz ide egy fájl'],
+      [
+        'kendo.upload.invalidFileExtension',
+        'A fájl kiterjesztése nem megfelelő',
+      ],
+      ['kendo.upload.select', 'Tallózás...'],
+      ['kendo.dialog.closeTitle', 'Bezár'],
+    ]),
+  },
+};

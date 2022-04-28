@@ -10,12 +10,12 @@
             {{ user.firstName }} {{ user.lastName }}
           </div>
           <div>{{ user.userName }}</div>
-          <div class="date">
-            Regisztrált:
+          <div class="date" translate>
+            {{ "user.registered" | translate }}
             {{ user.joinDate | date: "medium" }}
           </div>
           <div class="date">
-            Utoljára bejelentkezett:
+            {{ "user.lastLoggedIn" | translate }}
             {{
               lastLoginDateDisplay
                 ? (lastLoginDateDisplay | date: "medium")
@@ -27,7 +27,11 @@
           [ngClass]="user.isActive ? 'active' : 'inactive'"
           class="badge status"
         >
-          {{ user.isActive ? "Aktív" : "Inaktív" }}
+          {{
+            user.isActive
+              ? ("user.active" | translate)
+              : ("user.inactive" | translate)
+          }}
         </div>
       </div>
     </ng-template>
@@ -46,8 +50,9 @@
       kendoButton
       class="x-btn-light-secondary click-secondary"
       (click)="showAccessRightsForm()"
+      translate
     >
-      Jogosultságok
+      user.rights
     </button>
   </div>
   <kendo-dialog-actions layout="normal">
@@ -56,8 +61,9 @@
       kendoButton
       (click)="onCancel()"
       class="x-btn-primary click-primary"
+      translate
     >
-      Bezár
+      form.close
     </button>
     <loading-overlay
       [visible]="loadingOverlayVisible | async"

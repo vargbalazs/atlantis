@@ -1,42 +1,54 @@
 <kendo-dialog *ngIf="active" [width]="300" [height]="450" (close)="closeForm()">
-  <kendo-dialog-titlebar class="x-bg-primary x-font">
-    {{ "Szerkesztés" }}
+  <kendo-dialog-titlebar class="x-bg-primary x-font" translate>
+    {{ "form.edit" | translate }}
   </kendo-dialog-titlebar>
   <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
     <kendo-formfield>
       <kendo-textbox hidden formControlName="id"></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="firstName" text="Keresztnév"></kendo-label>
+      <kendo-label
+        [for]="firstName"
+        [text]="'user.signupForm.firstName' | translate"
+      ></kendo-label>
       <kendo-textbox
         #firstName
         formControlName="firstName"
         class="x-textbox-sm"
       >
       </kendo-textbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="lastName" text="Vezetéknév"></kendo-label>
+      <kendo-label
+        [for]="lastName"
+        [text]="'user.signupForm.lastName' | translate"
+      ></kendo-label>
       <kendo-textbox #lastName formControlName="lastName" class="x-textbox-sm">
       </kendo-textbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="userName" text="Felhasználónév"></kendo-label>
+      <kendo-label
+        [for]="userName"
+        [text]="'user.userName' | translate"
+      ></kendo-label>
       <kendo-textbox #userName formControlName="userName" class="x-textbox-sm">
       </kendo-textbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="email" text="E-mail cím"></kendo-label>
+      <kendo-label
+        [for]="email"
+        [text]="'user.signupForm.email' | translate"
+      ></kendo-label>
       <kendo-textbox #email formControlName="email" class="x-textbox-sm">
       </kendo-textbox>
-      <kendo-formerror *ngIf="form.controls.email.errors?.required"
-        >Kötelező mező</kendo-formerror
+      <kendo-formerror *ngIf="form.controls.email.errors?.required" translate
+        >form.required</kendo-formerror
       >
-      <kendo-formerror *ngIf="form.controls.email.errors?.email"
-        >Hibás e-mail formátum</kendo-formerror
+      <kendo-formerror *ngIf="form.controls.email.errors?.email" translate
+        >form.wrongEmailFormat</kendo-formerror
       >
     </kendo-formfield>
     <kendo-formfield>
@@ -50,7 +62,7 @@
         <kendo-label
           class="k-checkbox-label"
           [for]="active"
-          text="Aktív"
+          [text]="'user.active' | translate"
         ></kendo-label>
       </div>
     </kendo-formfield>
@@ -65,7 +77,7 @@
         <kendo-label
           class="k-checkbox-label"
           [for]="notLocked"
-          text="Nem zárolt"
+          [text]="'user.notLocked' | translate"
         ></kendo-label>
       </div>
     </kendo-formfield>
@@ -79,8 +91,9 @@
       icon="cancel"
       (click)="onCancel()"
       class="x-btn-light click-light"
+      translate
     >
-      Mégsem
+      form.cancel
     </button>
     <button
       type="submit"
@@ -89,8 +102,9 @@
       [primary]="true"
       (click)="onSave()"
       class="x-btn-primary click-primary"
+      translate
     >
-      Mentés
+      form.save
     </button>
   </kendo-dialog-actions>
 </kendo-dialog>

@@ -1,0 +1,141 @@
+{
+  "user": {
+    "loginForm": {
+      "login": "Bejelentkezés",
+      "rememberMe": "Jegyezd meg",
+      "doLogin": "Bejelentkezés",
+      "forgotPwd": "Elfelejtettem a jelszót",
+      "register": "Regisztráció"
+    },
+    "signupForm": {
+      "firstName": "Keresztnév",
+      "lastName": "Vezetéknév",
+      "email": "E-mail cím",
+      "createNewAccount": "Új fiók létrehozása",
+      "doYouHaveAnAccount": "Már van fiókod? ",
+      "login": "Jelentkezz be"
+    },
+    "forgotPwdForm": {
+      "resetPwd": "Jelszó visszaállítása",
+      "descr": "Add meg az e-mail címedet, amivel regisztráltál, és küldjük az új jelszót",
+      "backTo": "Vissza a ",
+      "login": "bejelentkezéshez"
+    },
+    "changePwdForm": {
+      "changePwd": "Jelszó módosítása",
+      "actualPwd": "Aktuális jelszó",
+      "pwdInfo": "Min. 6 karakter, min. 1 szám, min. 1 kis- és nagybetű",
+      "pwdStrength": "A jelszó erőssége nem megfelelő",
+      "repeatPwd": "Jelszó még egyszer",
+      "pwdNotMatching": "A két jelszó nem egyezik"
+    },
+    "userName": "Felhasználónév",
+    "password": "Jelszó",
+    "registered": "Regisztrált:",
+    "lastLoggedIn": "Utoljára bejelentkezett:",
+    "active": "Aktív",
+    "inactive": "Inaktív",
+    "rights": "Jogosultságok",
+    "notLocked": "Fiók nem zárolt",
+    "locked": "Fiók zárolt",
+    "lockedShort": "Zárolt",
+    "settings": "Beállítások",
+    "logout": "Kijelentkezés",
+    "userProfile": "Felhasználói profil"
+  },
+  "form": {
+    "required": "Kötelező mező",
+    "userNameAlreadyExists": "Ez a felhasználónév nem elérhető",
+    "wrongEmailFormat": "Hibás e-mail formátum",
+    "emailAlreadyExists": "Ez az e-mail cím nem elérhető",
+    "close": "Bezár",
+    "edit": "Szerkesztés",
+    "cancel": "Mégsem",
+    "save": "Mentés",
+    "change": "Módosítás"
+  },
+  "notifications": {
+    "forgotPwdEmailSent": "Az új jelszót kiküldtük a megadott e-mail címre.",
+    "registerSuccess": "Az új fiók sikeresen létre lett hozva. A bejelentkezési jelszót elküldtük email-ben.",
+    "logoutSuccess": "A kijelentkezés sikeres",
+    "editSuccess": "A módosítás sikeresen megtörtént",
+    "accessDenied": "Hozzáférés megtagadva. Jelentkezz be, hogy hozzáférj a kívánt tartalomhoz.",
+    "unknownError": "Ismeretlen eredetű hiba. Lépj kapcsolatba a rendszer üzemeltetőjével."
+  },
+  "about": {
+    "descr": "Controlling szoftver tervezéshez, előrejelzéshez, terv-tény elemzéshez",
+    "created": "Készítette: Varga Balázs",
+    "allRightReserved": "Minden jog fenntartva"
+  },
+  "dialog": {
+    "notAccessible": "Ez a funkció jelenleg nem elérhető",
+    "generateNewPassword": "Új jelszó generálás",
+    "confirmGenerateNewPassword": "Valóban új jelszavat szeretnél generálni a kiválasztott felhasználónak?",
+    "generateNewPasswordSuccess": "Az új jelszó ki lett küldve a beállított e-mail címre",
+    "no": "Nem",
+    "yes": "Igen"
+  },
+  "headers": {
+    "registeredUsers": "Regisztrált felhasználók",
+    "error": "Hiba történt!"
+  },
+  "columns": {
+    "userId": "Felhasználó ID",
+    "email": "E-mail",
+    "userRole": "Jogosultság",
+    "userStatus": "Státusz"
+  },
+  "appbar": {
+    "search": "Keresés...",
+    "adminArea": "Admin felület",
+    "home": "Kezdőlap",
+    "user": "Felhasználó",
+    "about": "Névjegy"
+  },
+  "components": {
+    "error": {
+      "errorMessage": "Hibaüzenet:",
+      "statusCode": "Státuszkód:",
+      "statusText": "Státusz:"
+    }
+  },
+  "sidebar": {
+    "masterData": "Törzsadatok",
+    "general": "Általános",
+    "companies": "Gazdasági egységek",
+    "plants": "Gyárak",
+    "plantAreas": "Gyáregységek",
+    "departments": "Részlegek",
+    "jobs": "Munkakörök",
+    "languages": "Nyelvek",
+    "dictionary": "Szótár",
+    "planningAndSettlement": "Tervezés és elszámolás",
+    "costAccTypes": "Költségszámítási típusok",
+    "costGroups": "Költségcsoportok",
+    "costCenters": "Költséghelyek",
+    "costResponsibles": "Költségfelelősök",
+    "costAccounts": "Költségnemek",
+    "costAllocations": "Költségátterhelések",
+    "production": "Termelés",
+    "capGroups": "Kapacitáscsoportok",
+    "salesProducts": "Értékesített termékek",
+    "capTypes": "Kapacitástípusok",
+    "capUnits": "Kapacitásegységek",
+    "prodData": "Termelési adatok",
+    "saveActualData": "Tény adatok rögzítése",
+    "forecasting": "Előrejelzés",
+    "provk": "PROVK",
+    "forecast": "Forecast",
+    "plantResult": "Gyári eredmény",
+    "uploadPlantCosts": "Gyári költségek feltöltése",
+    "browseBookings": "Könyvelési adatok tallózása",
+    "reports": "Kimutatások",
+    "costOverview": "Költséghelyi áttekintő",
+    "plantPl": "Gyári eredménykimutatás",
+    "planning": "Tervezés",
+    "planningVersions": "Tervverziók",
+    "costPlanning": "Költségtervezés",
+    "hcPlanning": "Létszámtervezés",
+    "capPlanning": "Kapacitástervezés"
+  }
+}

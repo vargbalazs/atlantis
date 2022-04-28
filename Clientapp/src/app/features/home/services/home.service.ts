@@ -16,6 +16,7 @@ export class HomeService {
     if (visitedItems.some((item) => item.routePath === module.routePath)) {
       visitedItems.find((item) => item.routePath === module.routePath)!.date =
         module.date;
+      this.saveVisitedItemsToLocalStorage(visitedItems);
       return;
     }
     if (visitedItems.length === 5) visitedItems.pop();

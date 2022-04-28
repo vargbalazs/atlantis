@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { User } from 'src/app/core/models/user.model';
 import { CreateEditComponent } from 'src/app/shared/components/create-edit/createedit.component';
 import { LoaderService } from 'src/app/shared/services/loader.service';
@@ -23,7 +24,8 @@ export class UserDetailsComponent
 
   constructor(
     private loaderService: LoaderService,
-    private msgDialogService: MsgDialogService
+    private msgDialogService: MsgDialogService,
+    private translateService: TranslateService
   ) {
     super();
   }
@@ -36,7 +38,9 @@ export class UserDetailsComponent
         { item: this.user.email!, icon: 'email' },
         { item: this.user.role!, icon: 'accessibility' },
         {
-          item: this.user.isNotLocked ? 'Fiók nem zárolt' : 'Fiók zárolt',
+          item: this.user.isNotLocked
+            ? this.translateService.instant('user.notLocked')
+            : this.translateService.instant('user.locked'),
           icon: this.user.isNotLocked ? 'unlock' : 'lock',
         }
       );
@@ -50,7 +54,7 @@ export class UserDetailsComponent
   showAccessRightsForm() {
     this.msgDialogService.showDialog(
       'Atlantis',
-      'Ez a funkció jelenleg nem elérhető',
+      this.translateService.instant('dialog.notAccessible'),
       [{ text: 'OK', primary: true }]
     );
   }

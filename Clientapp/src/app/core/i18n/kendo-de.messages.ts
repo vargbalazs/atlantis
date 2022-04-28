@@ -1,0 +1,38 @@
+import { TranslatedLang } from '../interfaces/translated-lang.interface';
+
+export const kendoDeMessages: TranslatedLang = {
+  lang: {
+    locale: 'de',
+    rtl: false,
+    messages: new Map<string, string>([
+      ['kendo.grid.filterEqOperator', 'ist gleich'],
+      ['kendo.grid.filterNotEqOperator', 'ist nicht gleich'],
+      ['kendo.grid.filterIsNullOperator', 'ist Null'],
+      ['kendo.grid.filterIsNotNullOperator', 'ist nicht Null'],
+      ['kendo.grid.filterIsEmptyOperator', 'ist leer'],
+      ['kendo.grid.filterIsNotEmptyOperator', 'ist nicht leer'],
+      ['kendo.grid.filterStartsWithOperator', 'beginnt mit'],
+      ['kendo.grid.filterContainsOperator', 'beinhaltet'],
+      ['kendo.grid.filterNotContainsOperator', 'beinhaltet nicht'],
+      ['kendo.grid.filterEndsWithOperator', 'endet mit'],
+      ['kendo.grid.filterGteOperator', 'ist größer als oder gleich'],
+      ['kendo.grid.filterGtOperator', 'ist größer als'],
+      ['kendo.grid.filterLteOperator', 'ist kleiner oder gleich als'],
+      ['kendo.grid.filterLtOperator', 'ist kleiner als'],
+      ['kendo.grid.filterIsTrue', 'ist richtig'],
+      ['kendo.grid.filterIsFalse', 'ist falsch'],
+      ['kendo.grid.filterBooleanAll', 'Alle'],
+      ['kendo.grid.filterAfterOrEqualOperator', 'ist gleich oder später als'],
+      ['kendo.grid.filterAfterOperator', 'ist später als'],
+      ['kendo.grid.filterBeforeOperator', 'ist früher als'],
+      ['kendo.grid.filterBeforeOrEqualOperator', 'ist gleich oder früher als'],
+      ['kendo.grid.filterDateToday', 'Heute'],
+      ['kendo.grid.noRecords', 'Keine Datensätze verfügbar'],
+      ['kendo.datepicker.today', 'Heute'],
+      ['kendo.upload.dropFilesHere', 'Datei zum Hochladen hierhin ziehen'],
+      ['kendo.upload.invalidFileExtension', 'Dateityp nicht erlaubt'],
+      ['kendo.upload.select', 'Datei auswählen...'],
+      ['kendo.dialog.closeTitle', 'Schließen'],
+    ]),
+  },
+};

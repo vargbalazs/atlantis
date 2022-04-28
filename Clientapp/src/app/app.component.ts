@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MsgDialogService } from './shared/services/msgdialog.service';
 import { LocaleService } from './core/services/locale.service';
+import { AuthService } from './core/services/auth.service';
+import { MessageService } from '@progress/kendo-angular-l10n';
+import { ComponentMessagesService } from './core/services/comp-messages.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +19,9 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private msgDialogService: MsgDialogService,
-    private localeService: LocaleService
+    private localeService: LocaleService,
+    private authService: AuthService,
+    private componentMessages: MessageService
   ) {}
 
   ngOnInit() {
@@ -32,6 +37,7 @@ export class AppComponent implements OnInit {
       return;
     }
 
+    // check locale and set it appr.
     if (
       !this.localeService.supportedLocales.some(
         (locale) => locale.language === this.localeService.browserLocale
@@ -43,8 +49,18 @@ export class AppComponent implements OnInit {
         [{ text: 'OK', primary: true }]
       );
       this.localeService.setLocale('en-GB');
+      // no need to change the language for the translated kendo component messages,
+      // because if there is no language found, the default messages will be applied (en)
     } else {
       this.localeService.setLocale(this.localeService.browserLocale);
+      (<ComponentMessagesService>this.componentMessages).language =
+        this.localeService.browserLocale.substring(0, 2);
     }
+  }
+
+  // remember me function
+  @HostListener('window:beforeunload', ['$event'])
+  handleBeforeUnload(event: any) {
+    if (!this.authService.isRememberMeActive()) this.authService.logout();
   }
 }

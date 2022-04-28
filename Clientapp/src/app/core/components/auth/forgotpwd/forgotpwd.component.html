@@ -4,25 +4,29 @@
       [visible]="loadingOverlayVisible | async"
       loadingText=""
     ></loading-overlay>
-    <h2>Jelszó visszaállítása</h2>
-    <span class="forgotpwd-descr"
-      >Add meg az e-mail címedet, amivel regisztráltál, és küldeni fogunk egy
-      linket, amivel új jelszót tudsz beállítani.
-    </span>
+    <h2 translate>user.forgotPwdForm.resetPwd</h2>
+    <span class="forgotpwd-descr" translate>user.forgotPwdForm.descr</span>
     <form [formGroup]="forgotPwdForm" (ngSubmit)="submitForm()">
       <kendo-formfield>
-        <kendo-textbox placeholder="E-mail cím" formControlName="email">
+        <kendo-textbox
+          [placeholder]="'user.signupForm.email' | translate"
+          formControlName="email"
+        >
           <ng-template kendoTextBoxPrefixTemplate>
             <div class="x-input-prefix">
               <kendo-icon name="user"></kendo-icon>
             </div>
           </ng-template>
         </kendo-textbox>
-        <kendo-formerror *ngIf="forgotPwdForm.controls.email.errors?.required"
-          >Kötelező mező</kendo-formerror
+        <kendo-formerror
+          *ngIf="forgotPwdForm.controls.email.errors?.required"
+          translate
+          >form.required</kendo-formerror
         >
-        <kendo-formerror *ngIf="forgotPwdForm.controls.email.errors?.email"
-          >Hibás e-mail formátum</kendo-formerror
+        <kendo-formerror
+          *ngIf="forgotPwdForm.controls.email.errors?.email"
+          translate
+          >form.wrongEmailFormat</kendo-formerror
         >
       </kendo-formfield>
       <button
@@ -31,11 +35,13 @@
         kendoButton
         class="btn x-btn-primary click-primary"
       >
-        JELSZÓ VISSZAÁLLÍTÁSA
+        {{ "user.forgotPwdForm.resetPwd" | translate | uppercase }}
       </button>
       <div class="link">
-        <span>Vissza a </span>
-        <a href="#" (click)="backToLogin()">bejelentkezéshez</a>
+        <span translate>user.forgotPwdForm.backTo</span>
+        <a href="#" (click)="backToLogin()" translate
+          >user.forgotPwdForm.login</a
+        >
       </div>
     </form>
   </kendo-card>

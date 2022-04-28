@@ -4,21 +4,24 @@
       [visible]="loadingOverlayVisible | async"
       loadingText=""
     ></loading-overlay>
-    <h2>Bejelentkezés</h2>
+    <h2 translate>user.loginForm.login</h2>
     <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
       <kendo-formfield>
-        <kendo-textbox placeholder="Felhasználónév" formControlName="userName">
+        <kendo-textbox
+          [placeholder]="'user.userName' | translate"
+          formControlName="userName"
+        >
           <ng-template kendoTextBoxPrefixTemplate>
             <div class="x-input-prefix">
               <kendo-icon name="user"></kendo-icon>
             </div>
           </ng-template>
         </kendo-textbox>
-        <kendo-formerror>Kötelező mező</kendo-formerror>
+        <kendo-formerror translate>form.required</kendo-formerror>
       </kendo-formfield>
       <kendo-formfield>
         <kendo-textbox
-          placeholder="Jelszó"
+          [placeholder]="'user.password' | translate"
           #tbxPassword
           formControlName="password"
         >
@@ -31,21 +34,26 @@
             <span class="k-icon k-i-eye eye-icon" (click)="togglePass()"></span>
           </ng-template>
         </kendo-textbox>
-        <kendo-formerror>Kötelező mező</kendo-formerror>
+        <kendo-formerror translate>form.required</kendo-formerror>
       </kendo-formfield>
       <div class="remember-me">
-        <input type="checkbox" #rememberMe kendoCheckBox />
+        <input
+          type="checkbox"
+          #rememberMe
+          formControlName="rememberMe"
+          kendoCheckBox
+        />
         <kendo-label
           class="k-checkbox-label"
           [for]="rememberMe"
-          text="Jegyezd meg"
+          [text]="'user.loginForm.rememberMe' | translate"
         ></kendo-label>
       </div>
       <button type="submit" kendoButton class="btn x-btn-primary click-primary">
-        BEJELENTKEZÉS
+        {{ "user.loginForm.doLogin" | translate | uppercase }}
       </button>
-      <a class="link" href="#" (click)="showForgotPwdForm()"
-        >Elfelejtettem a jelszót</a
+      <a class="link" href="#" (click)="showForgotPwdForm()" translate
+        >user.loginForm.forgotPwd</a
       >
       <button
         type="button"
@@ -54,7 +62,7 @@
         click-primary
         (click)="showCreateAccountForm()"
       >
-        REGISZTRÁCIÓ
+        {{ "user.loginForm.register" | translate | uppercase }}
       </button>
     </form>
   </kendo-card>

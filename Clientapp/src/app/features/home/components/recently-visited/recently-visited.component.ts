@@ -34,7 +34,8 @@ export class RecentlyVisitedComponent implements OnInit, OnDestroy {
 
   cardClick(module: ModuleInterface) {
     this.router.navigate([module.routePath], { skipLocationChange: true });
-    this.modules.find((item) => item.routePath === module.routePath)!.date =
-      new Date();
+    module.hovered = false;
+    module.date = new Date();
+    this.homeService.registerRecentlyVisitedModule(this.modules, module);
   }
 }

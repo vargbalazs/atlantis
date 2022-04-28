@@ -145,7 +145,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
       else {
         this.sideBarService.addChildrenOnId(
           this.newItems,
-          drawerItemsFlattened,
+          this.drawerItemsFlat, // drawerItemsFlattened
           this.item.id,
           index
         );
@@ -172,6 +172,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
     drawerItemsHierarchy.forEach((item) => {
       clonedItems.push(Object.assign({}, item));
     });
+    this.sideBarService.translateItemsRecursively(clonedItems);
     return clonedItems;
   }
 
@@ -179,6 +180,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
     // it is needed to clear the state on 'newItems', because in the 'resetItems' function we only do a simple cloning on the top level
     // and so if we modify any child, it's get modified in the 'items' array too
     this.clear();
+    // if we click outside the drawer (state isn't null), then hide it
     if (!state) {
       this.drawer.toggle();
     } else {

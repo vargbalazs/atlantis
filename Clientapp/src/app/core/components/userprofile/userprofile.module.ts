@@ -9,6 +9,7 @@ import { LabelModule } from '@progress/kendo-angular-label';
 import { ListViewModule } from '@progress/kendo-angular-listview';
 import { PwdModule } from './pwd/pwd.module';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [UserProfileComponent],
@@ -22,6 +23,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     ListViewModule,
     PwdModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [UserProfileComponent],

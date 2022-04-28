@@ -2,7 +2,7 @@
 
 .component-header {
   font-weight: bold;
-  padding: 1rem 1rem 1rem;
+  padding: 1rem;
   background-color: #f8f9fa;
   color: #3e5569;
   font-family: "Nunito Sans", sans-serif;
@@ -17,12 +17,12 @@
 }
 
 .grid {
-  margin: 1rem 1rem;
-  height: calc(100% - 82px);
+  padding: 1rem;
+  height: calc(100% - 51px);
 }
 
 .grid-with-breadcrumb {
-  height: calc(100% - 121px);
+  height: calc(100% - 99px);
 }
 
 .command-icon {

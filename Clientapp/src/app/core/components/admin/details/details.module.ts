@@ -6,6 +6,7 @@ import { DialogModule } from '@progress/kendo-angular-dialog';
 import { ListViewModule } from '@progress/kendo-angular-listview';
 import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/loading-overlay.module';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [UserDetailsComponent],
@@ -16,6 +17,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     ListViewModule,
     LoadingOverlayModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [UserDetailsComponent],

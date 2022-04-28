@@ -5,7 +5,7 @@
   (close)="closeForm()"
 >
   <kendo-dialog-titlebar class="x-bg-primary x-font">
-    {{ "Jelszó módosítása" }}
+    {{ "user.changePwdForm.changePwd" | translate }}
   </kendo-dialog-titlebar>
   <changepwd [fromProfile]="fromProfile"></changepwd>
   <kendo-dialog-actions layout="stretched">
@@ -15,8 +15,9 @@
       icon="cancel"
       (click)="closeForm()"
       class="x-btn-light click-light"
+      translate
     >
-      Mégsem
+      form.cancel
     </button>
     <button
       type="submit"
@@ -25,8 +26,9 @@
       [primary]="true"
       (click)="onSave()"
       class="x-btn-primary click-primary"
+      translate
     >
-      Módosítás
+      form.change
     </button>
     <loading-overlay
       [ngStyle]="{

@@ -11,6 +11,7 @@ import { LangSelectorModule } from '../langselector/langselector.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/loading-overlay.module';
 import { NotificationModule } from '@progress/kendo-angular-notification';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [ForgotPwdComponent],
@@ -25,6 +26,7 @@ import { NotificationModule } from '@progress/kendo-angular-notification';
     ReactiveFormsModule,
     LoadingOverlayModule,
     NotificationModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [ForgotPwdComponent],

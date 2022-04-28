@@ -4,7 +4,7 @@
       [visible]="loadingOverlayVisible | async"
       loadingText=""
     ></loading-overlay>
-    <h2>Jelszó megváltoztatása</h2>
+    <h2 translate>user.changePwdForm.changePwd</h2>
     <changepwd></changepwd>
     <button
       class="btn"
@@ -12,7 +12,7 @@
       class="btn x-btn-primary click-primary"
       (click)="changePwd()"
     >
-      JELSZÓ MEGVÁLTOZTATÁSA
+      {{ "user.changePwdForm.changePwd" | translate | uppercase }}
     </button>
   </kendo-card>
 </div>

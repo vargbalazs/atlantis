@@ -1,0 +1,141 @@
+{
+  "user": {
+    "loginForm": {
+      "login": "Login",
+      "rememberMe": "Anmeldedaten merken",
+      "doLogin": "Anmelden",
+      "forgotPwd": "Ich habe das Passwort vergessen",
+      "register": "Registrieren"
+    },
+    "signupForm": {
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "email": "E-mail Adresse",
+      "createNewAccount": "Neues Account anlegen",
+      "doYouHaveAnAccount": "Hast du bereits eines? ",
+      "login": "Melde dich an"
+    },
+    "forgotPwdForm": {
+      "resetPwd": "Passwort zurücksetzen",
+      "descr": "Gib die E-mailadresse an, mit der du registriert hast, und wir werden das neue Passwort auf diese versenden.",
+      "backTo": "Zurück zum ",
+      "login": "Anmelden"
+    },
+    "changePwdForm": {
+      "changePwd": "Passwort ändern",
+      "actualPwd": "Aktuelles Passwort",
+      "pwdInfo": "Min. Länge 6, mind. 1 Nummer, mind. 1 Klein- und Großbuchstabe",
+      "pwdStrength": "Passwordstärke ist nicht ausreicheind",
+      "repeatPwd": "Passwort wiederholen",
+      "pwdNotMatching": "Die Passwörter stimmen sich nicht überein"
+    },
+    "userName": "Benutzername",
+    "password": "Passwort",
+    "registered": "Registriert:",
+    "lastLoggedIn": "Zuletzt angemeldet:",
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "rights": "Berechtigungen",
+    "notLocked": "Nicht gesperrt",
+    "locked": "Gesperrt",
+    "lockedShort": "Gesperrt",
+    "settings": "Einstellungen",
+    "logout": "Abmelden",
+    "userProfile": "Benutzerprofile"
+  },
+  "form": {
+    "required": "Pflichtfeld",
+    "userNameAlreadyExists": "Dieser Benutzername existiert bereits",
+    "wrongEmailFormat": "Falsches E-mailformat",
+    "emailAlreadyExists": "Diese Emailadresse existiert bereits",
+    "close": "Schliessen",
+    "edit": "Ändern",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "change": "Ändern"
+  },
+  "notifications": {
+    "forgotPwdEmailSent": "Das neue Passwort wurde an die angegebene E-mail Adresse gesendet",
+    "registerSuccess": "Das neue Benutzerkonto wurde angelegt und das Passwort an die angegebene E-mail Adresse gesendet.",
+    "logoutSuccess": "Du wurdest erfolgreich abgemeldet",
+    "editSuccess": "Die Änderungen wurden erfolgreich gespeichert",
+    "accessDenied": "Zugriff verweigert. Melde dich an, um die gewünschte Seite anzuzeigen.",
+    "unknownError": "Es ist ein unbekannter Fehler aufgetreten. Wende dich an den Systemadministrator."
+  },
+  "about": {
+    "descr": "Controlling Software für Planung, Forecasting und Plan-Ist Analysen",
+    "created": "Erstellt von: Balázs Varga",
+    "allRightReserved": "Alle Rechte vorbehalten"
+  },
+  "dialog": {
+    "notAccessible": "Diese Funktion ist aktuell nicht erreichbar",
+    "generateNewPassword": "Neues Passwort generieren",
+    "confirmGenerateNewPassword": "Möchtest du wirklich ein neues Passwort für den ausgewählten Benutzer generieren?",
+    "generateNewPasswordSuccess": "Das neue Passwort wurde an die eingestellte E-mail Adresse gesendet",
+    "no": "Nein",
+    "yes": "Ja"
+  },
+  "headers": {
+    "registeredUsers": "Registrierte Benutzer",
+    "error": "Es ist ein Fehler aufgetreten!"
+  },
+  "columns": {
+    "userId": "Benutzer ID",
+    "email": "E-mail",
+    "userRole": "Rolle",
+    "userStatus": "Status"
+  },
+  "appbar": {
+    "search": "Suchen...",
+    "adminArea": "Admin Bereich",
+    "home": "Home",
+    "user": "Benutzer",
+    "about": "About"
+  },
+  "components": {
+    "error": {
+      "errorMessage": "Fehler:",
+      "statusCode": "Statuscode:",
+      "statusText": "Status:"
+    }
+  },
+  "sidebar": {
+    "masterData": "Stammdaten",
+    "general": "Allgemein",
+    "companies": "Gesellschaften",
+    "plants": "Werke",
+    "plantAreas": "Werkbereiche",
+    "departments": "Abteilungen",
+    "jobs": "Planstellen",
+    "languages": "Sprachen",
+    "dictionary": "Wörterbuch",
+    "planningAndSettlement": "Planung und Verrechnung",
+    "costAccTypes": "Kostenverrechnungen",
+    "costGroups": "Kostengruppen",
+    "costCenters": "Kostenstellen",
+    "costResponsibles": "Kostenverantwortliche",
+    "costAccounts": "Kostenarten",
+    "costAllocations": "Umlagen",
+    "production": "Produktion",
+    "capGroups": "Kapazitätsgruppen",
+    "salesProducts": "Verkaufte Produkte",
+    "capTypes": "Kapazitätstypen",
+    "capUnits": "Kapazitätseinheiten",
+    "prodData": "Produktionsdaten",
+    "saveActualData": "Erfassung Ist-Daten",
+    "forecasting": "Forecasting",
+    "provk": "PROVK",
+    "forecast": "Forecast",
+    "plantResult": "Werksergebnis",
+    "uploadPlantCosts": "Werkskosten hochladen",
+    "browseBookings": "Buchungsdaten einsehen",
+    "reports": "Auswertungen",
+    "costOverview": "Kostenstellenübersicht",
+    "plantPl": "GuV Werk",
+    "planning": "Planung",
+    "planningVersions": "Planversionen",
+    "costPlanning": "Kostenstellenplanung",
+    "hcPlanning": "Personalplanung",
+    "capPlanning": "Kapazitätsplanung"
+  }
+}

@@ -32,6 +32,6 @@ export class LocaleService {
       (locale) => locale.language === language
     );
     registerLocaleData(locale?.localeImport);
-    this.translateService.use(language);
+    this.translateService.use(language.substring(0, 2));
   }
 }

@@ -13,6 +13,7 @@ import { ForecastRoutingModule } from 'src/app/features/forecast/forecast-routin
 import { PlanningRoutingModule } from 'src/app/features/planning/planning-routing.module';
 import { PlantResultRoutingModule } from 'src/app/features/plantresult/plantresult-routing.module';
 import { AdminRoutingModule } from '../admin/admin-routing.module';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [SideBarComponent, HighlightSearch],
@@ -29,8 +30,9 @@ import { AdminRoutingModule } from '../admin/admin-routing.module';
     PlanningRoutingModule,
     PlantResultRoutingModule,
     AdminRoutingModule,
+    TranslateModule,
   ],
-  providers: [],
+  providers: [TranslateService],
   exports: [SideBarComponent],
 })
 export class SideBarModule {}

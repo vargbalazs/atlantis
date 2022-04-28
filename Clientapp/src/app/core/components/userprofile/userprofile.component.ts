@@ -1,5 +1,6 @@
 import { Component, OnChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { User } from 'src/app/core/models/user.model';
 import { CreateEditComponent } from 'src/app/shared/components/create-edit/createedit.component';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
@@ -49,7 +50,8 @@ export class UserProfileComponent
 
   constructor(
     private authService: AuthService,
-    private msgDialogService: MsgDialogService
+    private msgDialogService: MsgDialogService,
+    private translateService: TranslateService
   ) {
     super();
   }
@@ -78,7 +80,7 @@ export class UserProfileComponent
   showAccessRightsForm() {
     this.msgDialogService.showDialog(
       'Atlantis',
-      'Ez a funkció jelenleg nem elérhető',
+      this.translateService.instant('dialog.notAccessible'),
       [{ text: 'OK', primary: true }]
     );
   }

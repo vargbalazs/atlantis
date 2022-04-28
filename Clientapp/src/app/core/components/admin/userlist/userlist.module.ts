@@ -8,6 +8,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
 import { UserDetailsModule } from '../details/details.module';
 import { UserEditModule } from '../edit/edit.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [UserListComponent],
@@ -20,6 +21,7 @@ import { UserEditModule } from '../edit/edit.module';
     ConfirmDialogStyleModule,
     UserDetailsModule,
     UserEditModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [UserListComponent],

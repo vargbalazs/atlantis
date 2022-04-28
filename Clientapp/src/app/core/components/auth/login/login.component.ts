@@ -73,6 +73,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loginForm = new FormGroup({
       userName: new FormControl(this.formData.userName, [Validators.required]),
       password: new FormControl(this.formData.password, [Validators.required]),
+      rememberMe: new FormControl(),
     });
   }
 
@@ -93,6 +94,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
           this.router.navigate(['/home'], { skipLocationChange: true });
         }
+        if (this.loginForm.get('rememberMe')!.value)
+          this.authService.rememberMe();
       });
     }
   }

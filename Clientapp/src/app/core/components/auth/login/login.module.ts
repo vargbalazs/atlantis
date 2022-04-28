@@ -9,6 +9,7 @@ import { LabelModule } from '@progress/kendo-angular-label';
 import { IconsModule } from '@progress/kendo-angular-icons';
 import { LangSelectorModule } from '../langselector/langselector.module';
 import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/loading-overlay.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -22,6 +23,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
     LangSelectorModule,
     ReactiveFormsModule,
     LoadingOverlayModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [LoginComponent],

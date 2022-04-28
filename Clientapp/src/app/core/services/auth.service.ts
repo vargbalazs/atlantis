@@ -51,6 +51,7 @@ export class AuthService {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('users');
+    localStorage.removeItem('rememberMe');
   }
 
   saveToken(token: string) {
@@ -88,6 +89,14 @@ export class AuthService {
       return false;
     }
     return false;
+  }
+
+  rememberMe() {
+    localStorage.setItem('rememberMe', 'true');
+  }
+
+  isRememberMeActive(): boolean {
+    return localStorage.getItem('rememberMe') ? true : false;
   }
 
   forgotPassword(email: string) {

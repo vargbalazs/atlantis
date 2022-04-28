@@ -2,7 +2,7 @@ import { drawerItem } from './sidebar-item.type';
 
 export const drawerItemsHierarchy: drawerItem[] = [
   {
-    text: 'Törzsadatok',
+    text: 'sidebar.masterData',
     icon: 'file-data',
     selected: false,
     expanded: false,
@@ -12,7 +12,7 @@ export const drawerItemsHierarchy: drawerItem[] = [
     parentId: '',
     children: [
       {
-        text: 'Általános',
+        text: 'sidebar.general',
         selected: false,
         expanded: false,
         parent: true,
@@ -21,49 +21,49 @@ export const drawerItemsHierarchy: drawerItem[] = [
         parentId: '0',
         children: [
           {
-            text: 'Gazdasági egységek',
+            text: 'sidebar.companies',
             level: 2,
             id: '0.1.1',
             parentId: '0.1',
             routePath: 'masterdata/general/company',
           },
           {
-            text: 'Gyárak',
+            text: 'sidebar.plants',
             level: 2,
             id: '0.1.2',
             parentId: '0.1',
             routePath: 'masterdata/general/plant',
           },
           {
-            text: 'Gyáregységek',
+            text: 'sidebar.plantAreas',
             level: 2,
             id: '0.1.3',
             parentId: '0.1',
             routePath: 'masterdata/general/plantarea',
           },
           {
-            text: 'Részlegek',
+            text: 'sidebar.departments',
             level: 2,
             id: '0.1.4',
             parentId: '0.1',
             routePath: 'masterdata/general/department',
           },
           {
-            text: 'Munkakörök',
+            text: 'sidebar.jobs',
             level: 2,
             id: '0.1.5',
             parentId: '0.1',
             routePath: 'masterdata/general/job',
           },
           {
-            text: 'Nyelvek',
+            text: 'sidebar.languages',
             level: 2,
             id: '0.1.6',
             parentId: '0.1',
             routePath: 'masterdata/general/language',
           },
           {
-            text: 'Szótár',
+            text: 'sidebar.dictionary',
             level: 2,
             id: '0.1.7',
             parentId: '0.1',
@@ -71,7 +71,7 @@ export const drawerItemsHierarchy: drawerItem[] = [
         ],
       },
       {
-        text: 'Tervezés és elszámolás',
+        text: 'sidebar.planningAndSettlement',
         selected: false,
         expanded: false,
         parent: true,
@@ -80,42 +80,42 @@ export const drawerItemsHierarchy: drawerItem[] = [
         parentId: '0',
         children: [
           {
-            text: 'Költségszámítási típusok',
+            text: 'sidebar.costAccTypes',
             level: 2,
             id: '0.2.1',
             parentId: '0.2',
             routePath: 'masterdata/planning/costacctype',
           },
           {
-            text: 'Költségcsoportok',
+            text: 'sidebar.costGroups',
             level: 2,
             id: '0.2.2',
             parentId: '0.2',
             routePath: 'masterdata/planning/costgroup',
           },
           {
-            text: 'Költséghelyek',
+            text: 'sidebar.costCenters',
             level: 2,
             id: '0.2.3',
             parentId: '0.2',
             routePath: 'masterdata/planning/costcenter',
           },
           {
-            text: 'Költségfelelősök',
+            text: 'sidebar.costResponsibles',
             level: 2,
             id: '0.2.4',
             parentId: '0.2',
             routePath: 'masterdata/planning/costresp',
           },
           {
-            text: 'Költségnemek',
+            text: 'sidebar.costAccounts',
             level: 2,
             id: '0.2.5',
             parentId: '0.2',
             routePath: 'masterdata/planning/costaccount',
           },
           {
-            text: 'Költségátterhelések',
+            text: 'sidebar.costAllocations',
             level: 2,
             id: '0.2.6',
             parentId: '0.2',
@@ -124,7 +124,7 @@ export const drawerItemsHierarchy: drawerItem[] = [
         ],
       },
       {
-        text: 'Termelés',
+        text: 'sidebar.production',
         selected: false,
         expanded: false,
         parent: true,
@@ -133,28 +133,28 @@ export const drawerItemsHierarchy: drawerItem[] = [
         parentId: '0',
         children: [
           {
-            text: 'Kapacitáscsoportok',
+            text: 'sidebar.capGroups',
             level: 2,
             id: '0.3.1',
             parentId: '0.3',
             routePath: 'masterdata/production/capgroup',
           },
           {
-            text: 'Értékesített termékek',
+            text: 'sidebar.salesProducts',
             level: 2,
             id: '0.3.2',
             parentId: '0.3',
             routePath: 'masterdata/production/salesproduct',
           },
           {
-            text: 'Kapacitástípusok',
+            text: 'sidebar.capTypes',
             level: 2,
             id: '0.3.3',
             parentId: '0.3',
             routePath: 'masterdata/production/captype',
           },
           {
-            text: 'Kapacitásegységek',
+            text: 'sidebar.capUnits',
             level: 2,
             id: '0.3.4',
             parentId: '0.3',
@@ -165,7 +165,7 @@ export const drawerItemsHierarchy: drawerItem[] = [
     ],
   },
   {
-    text: 'Termelési adatok',
+    text: 'sidebar.prodData',
     icon: 'wrench',
     expanded: false,
     selected: false,
@@ -175,7 +175,7 @@ export const drawerItemsHierarchy: drawerItem[] = [
     parentId: '',
     children: [
       {
-        text: 'Tény adatok rögzítése',
+        text: 'sidebar.saveActualData',
         level: 1,
         id: '1.1',
         parentId: '1',
@@ -184,7 +184,7 @@ export const drawerItemsHierarchy: drawerItem[] = [
     ],
   },
   {
-    text: 'Előrejelzés',
+    text: 'sidebar.forecasting',
     icon: 'graph',
     selected: false,
     expanded: false,
@@ -194,14 +194,14 @@ export const drawerItemsHierarchy: drawerItem[] = [
     parentId: '',
     children: [
       {
-        text: 'PROVK',
+        text: 'sidebar.provk',
         level: 1,
         id: '2.1',
         parentId: '2',
         routePath: 'forecast/provk',
       },
       {
-        text: 'Forecast',
+        text: 'sidebar.forecast',
         level: 1,
         id: '2.2',
         parentId: '2',
@@ -210,7 +210,7 @@ export const drawerItemsHierarchy: drawerItem[] = [
     ],
   },
   {
-    text: 'Gyári eredmény',
+    text: 'sidebar.plantResult',
     icon: 'currency',
     selected: false,
     expanded: false,
@@ -220,21 +220,21 @@ export const drawerItemsHierarchy: drawerItem[] = [
     parentId: '',
     children: [
       {
-        text: 'Gyári költségek feltöltése',
+        text: 'sidebar.uploadPlantCosts',
         level: 1,
         id: '3.1',
         parentId: '3',
         routePath: 'plantresult/uploadcost',
       },
       {
-        text: 'Könyvelési adatok tallózása',
+        text: 'sidebar.browseBookings',
         level: 1,
         id: '3.3',
         parentId: '3',
         routePath: 'plantresult/browsedata',
       },
       {
-        text: 'Kimutatások',
+        text: 'sidebar.reports',
         level: 1,
         selected: false,
         expanded: false,
@@ -243,14 +243,14 @@ export const drawerItemsHierarchy: drawerItem[] = [
         parentId: '3',
         children: [
           {
-            text: 'Költséghelyi áttekintő',
+            text: 'sidebar.costOverview',
             level: 2,
             id: '3.4.1',
             parentId: '3.4',
             routePath: 'plantresult/costcenter',
           },
           {
-            text: 'Gyári eredménykimutatás',
+            text: 'sidebar.plantPl',
             level: 2,
             id: '3.4.2',
             parentId: '3.4',
@@ -261,7 +261,7 @@ export const drawerItemsHierarchy: drawerItem[] = [
     ],
   },
   {
-    text: 'Tervezés',
+    text: 'sidebar.planning',
     icon: 'calendar',
     selected: false,
     expanded: false,
@@ -271,28 +271,28 @@ export const drawerItemsHierarchy: drawerItem[] = [
     parentId: '',
     children: [
       {
-        text: 'Tervverziók',
+        text: 'sidebar.planningVersions',
         level: 1,
         id: '4.1',
         parentId: '4',
         routePath: 'planning/version',
       },
       {
-        text: 'Költségtervezés',
+        text: 'sidebar.costPlanning',
         level: 1,
         id: '4.2',
         parentId: '4',
         routePath: 'planning/costplanning',
       },
       {
-        text: 'Létszámtervezés',
+        text: 'sidebar.hcPlanning',
         level: 1,
         id: '4.3',
         parentId: '4',
         routePath: 'planning/hcplanning',
       },
       {
-        text: 'Kapacitástervezés',
+        text: 'sidebar.capPlanning',
         level: 1,
         id: '4.4',
         parentId: '4',

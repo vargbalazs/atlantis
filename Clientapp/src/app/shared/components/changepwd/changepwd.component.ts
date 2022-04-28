@@ -69,7 +69,7 @@ export class ChangePwdComponent implements OnInit, AfterViewInit, OnDestroy {
           Validators.required,
         ]),
       },
-      { validators: [this.match('password', 'passwordConfirm')] }
+      { validators: [this.match('newPassword', 'confirmPassword')] }
     );
   }
 

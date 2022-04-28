@@ -9,6 +9,7 @@ import { IconsModule } from '@progress/kendo-angular-icons';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TooltipModule } from '@progress/kendo-angular-tooltip';
 import { IndicatorsModule } from '@progress/kendo-angular-indicators';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [ChangePwdComponent],
@@ -21,6 +22,7 @@ import { IndicatorsModule } from '@progress/kendo-angular-indicators';
     ReactiveFormsModule,
     TooltipModule,
     IndicatorsModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [ChangePwdComponent],

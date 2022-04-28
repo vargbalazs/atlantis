@@ -1,7 +1,7 @@
 <form [formGroup]="changePwdForm" (ngSubmit)="submitForm()">
   <kendo-formfield>
     <kendo-textbox
-      placeholder="Aktuális jelszó"
+      [placeholder]="'user.changePwdForm.actualPwd' | translate"
       #tbxActualPassword
       formControlName="oldPassword"
     >
@@ -14,13 +14,15 @@
         <span class="k-icon k-i-eye eye-icon" (click)="togglePassAct()"></span>
       </ng-template>
     </kendo-textbox>
-    <kendo-formerror *ngIf="changePwdForm.controls.oldPassword.errors?.required"
-      >Kötelező mező</kendo-formerror
+    <kendo-formerror
+      *ngIf="changePwdForm.controls.oldPassword.errors?.required"
+      translate
+      >form.required</kendo-formerror
     >
   </kendo-formfield>
   <kendo-formfield>
     <kendo-textbox
-      placeholder="Jelszó"
+      [placeholder]="'user.password' | translate"
       #tbxPassword
       formControlName="newPassword"
     >
@@ -39,21 +41,25 @@
           <kendo-icon
             class="info-icon"
             name="info"
-            title="Min. 6 karakter, min. 1 szám, min. 1 kis- és nagybetű"
+            [title]="'user.changePwdForm.pwdInfo' | translate"
           ></kendo-icon>
         </div>
       </ng-template>
     </kendo-textbox>
-    <kendo-formerror *ngIf="changePwdForm.controls.newPassword.errors?.required"
-      >Kötelező mező</kendo-formerror
+    <kendo-formerror
+      *ngIf="changePwdForm.controls.newPassword.errors?.required"
+      translate
+      >form.required</kendo-formerror
     >
-    <kendo-formerror *ngIf="changePwdForm.controls.newPassword.errors?.pattern"
-      >A jelszó erőssége nem megfelelő</kendo-formerror
+    <kendo-formerror
+      *ngIf="changePwdForm.controls.newPassword.errors?.pattern"
+      translate
+      >user.changePwdForm.pwdStrength</kendo-formerror
     >
   </kendo-formfield>
   <kendo-formfield>
     <kendo-textbox
-      placeholder="Jelszó még egyszer"
+      [placeholder]="'user.changePwdForm.repeatPwd' | translate"
       #tbxRepeatPassword
       formControlName="confirmPassword"
     >
@@ -68,13 +74,15 @@
     </kendo-textbox>
     <kendo-formerror
       *ngIf="changePwdForm.controls.confirmPassword.errors?.required"
-      >Kötelező mező</kendo-formerror
+      translate
+      >form.required</kendo-formerror
     >
   </kendo-formfield>
   <kendo-formerror
-    class="pwd-match-error"
+    [ngClass]="fromProfile ? 'pwd-match-error-userprofile' : 'pwd-match-error'"
     *ngIf="changePwdForm.errors?.notMatching"
-    >A két jelszó nem egyezik</kendo-formerror
+    translate
+    >user.changePwdForm.pwdNotMatching</kendo-formerror
   >
   <button type="submit" hidden (click)="hiddenSubmit()"></button>
 </form>

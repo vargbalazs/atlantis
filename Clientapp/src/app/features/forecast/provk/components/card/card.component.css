@@ -29,10 +29,6 @@
   margin-bottom: 1rem;
 }
 
-.k-card:hover {
-  cursor: pointer;
-}
-
 .year-month {
   color: #00b0ff;
   font-weight: 700;

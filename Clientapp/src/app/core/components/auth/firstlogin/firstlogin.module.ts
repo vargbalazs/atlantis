@@ -6,6 +6,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
 import { ChangePwdModule } from 'src/app/shared/components/changepwd/changepwd.module';
 import { LayoutModule } from '@progress/kendo-angular-layout';
 import { ButtonModule } from '@progress/kendo-angular-buttons';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [FirstLoginComponent],
@@ -15,6 +16,7 @@ import { ButtonModule } from '@progress/kendo-angular-buttons';
     LayoutModule,
     LoadingOverlayModule,
     ChangePwdModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [FirstLoginComponent],

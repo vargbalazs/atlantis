@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 import { userIcon } from '@progress/kendo-svg-icons';
 import { Observable } from 'rxjs';
@@ -33,7 +34,8 @@ export class SignUpComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private customNotificationService: CustomNotificationService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
@@ -75,7 +77,7 @@ export class SignUpComponent implements OnInit {
       const user = <User>this.signupForm.value;
       this.authService.register(user).subscribe((resp: User) => {
         this.customNotificationService.showNotification(
-          `Az új fiók sikeresen létre lett hozva. A bejelentkezési jelszót elküldtük email-ben.`,
+          this.translateService.instant('notifications.registerSuccess'),
           5000,
           'success'
         );

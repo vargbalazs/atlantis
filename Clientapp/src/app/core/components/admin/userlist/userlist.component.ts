@@ -7,6 +7,7 @@ import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { passwordIcon } from '@progress/kendo-svg-icons';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'userlist',
@@ -25,7 +26,8 @@ export class UserListComponent extends Crud<User> {
     notificationService: NotificationService,
     protected userService: UserService,
     loaderService: LoaderService,
-    private customNotificationService: CustomNotificationService
+    private customNotificationService: CustomNotificationService,
+    private translateService: TranslateService
   ) {
     super(msgDialogService, notificationService, userService, loaderService);
   }
@@ -54,16 +56,21 @@ export class UserListComponent extends Crud<User> {
     this.dialogType = 'danger';
     this.msgDialogService
       .showDialog(
-        'Új jelszó generálás',
-        'Valóban új jelszavat szeretnél generálni a kiválasztott felhasználónak?',
-        [{ text: 'Nem' }, { text: 'Igen', primary: true }]
+        this.translateService.instant('dialog.generateNewPassword'),
+        this.translateService.instant('dialog.confirmGenerateNewPassword'),
+        [
+          { text: this.translateService.instant('dialog.no') },
+          { text: this.translateService.instant('dialog.yes'), primary: true },
+        ]
       )
       .result.subscribe((result) => {
         const dialogResult = JSON.parse(JSON.stringify(result));
         if (dialogResult.primary) {
           this.userService.resetPassword(dataItem.email!).subscribe((resp) => {
             this.customNotificationService.showNotification(
-              'Az új jelszó ki lett küldve a beállított e-mail címre',
+              this.translateService.instant(
+                'dialog.generateNewPasswordSuccess'
+              ),
               3000,
               'success'
             );

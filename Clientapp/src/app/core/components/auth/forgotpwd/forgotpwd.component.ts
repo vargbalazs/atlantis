@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 import { userIcon } from '@progress/kendo-svg-icons';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -28,7 +29,8 @@ export class ForgotPwdComponent implements OnInit {
     private router: Router,
     private customNotificationService: CustomNotificationService,
     private loaderService: LoaderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
@@ -55,7 +57,7 @@ export class ForgotPwdComponent implements OnInit {
       const email = <string>this.forgotPwdForm.get('email')?.value;
       this.authService.forgotPassword(email).subscribe(() => {
         this.customNotificationService.showNotification(
-          'Lépj be az email fiókodba és kövesd az elküldött levélben szereplő utasításokat',
+          this.translateService.instant('notifications.forgotPwdEmailSent'),
           3000,
           'success'
         );

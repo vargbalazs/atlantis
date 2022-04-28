@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { LabelModule } from '@progress/kendo-angular-label';
 import { ListViewModule } from '@progress/kendo-angular-listview';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [UserEditComponent],
@@ -18,6 +19,7 @@ import { ListViewModule } from '@progress/kendo-angular-listview';
     InputsModule,
     LabelModule,
     ListViewModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [UserEditComponent],

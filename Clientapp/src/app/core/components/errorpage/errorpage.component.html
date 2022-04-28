@@ -1,15 +1,15 @@
-<div class="component-header error">Hiba történt!</div>
+<div class="component-header error" translate>headers.error</div>
 <table *ngIf="isHttpError">
   <tr>
-    <td>Hibaüzenet:</td>
+    <td translate>components.error.errorMessage</td>
     <td>{{ error.message }}</td>
   </tr>
   <tr>
-    <td>Státuszkód:</td>
+    <td translate>components.error.statusCode</td>
     <td>{{ error.status }}</td>
   </tr>
   <tr>
-    <td>Státusz:</td>
+    <td translate>components.error.statusText</td>
     <td>{{ error.statusText }}</td>
   </tr>
   <tr>
@@ -19,7 +19,7 @@
 </table>
 <table *ngIf="!isHttpError">
   <tr>
-    <td>Hibaüzenet:</td>
+    <td translate>components.error.errorMessage</td>
     <td>{{ error.message }}</td>
   </tr>
   <tr>
