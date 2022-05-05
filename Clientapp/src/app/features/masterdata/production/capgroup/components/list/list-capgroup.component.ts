@@ -7,6 +7,7 @@ import { CopyEntity } from '../../../../../../shared/models/copy.model';
 import { CopyService } from '../../services/copy.service';
 import { CapGroupService } from '../../services/capgroup.service';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'production-capgroup',
@@ -21,7 +22,8 @@ export class CapGroupComponent extends Crud<CapGroup> implements OnInit {
     notificationService: NotificationService,
     private capGroupService: CapGroupService,
     loaderService: LoaderService,
-    private copyService: CopyService
+    private copyService: CopyService,
+    private translateService: TranslateService
   ) {
     super(
       msgDialogService,
@@ -76,7 +78,11 @@ export class CapGroupComponent extends Crud<CapGroup> implements OnInit {
     //   });
     setTimeout(() => {
       console.log('finished');
-      this.showNotification('A másolás sikeresen megtörtént', 3000, 'success');
+      this.showNotification(
+        this.translateService.instant('notifications.copySuccess'),
+        3000,
+        'success'
+      );
     }, 1500);
     console.log('copying...');
   }

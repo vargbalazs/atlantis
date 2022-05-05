@@ -6,8 +6,8 @@
     #grid
   >
     <ng-template kendoGridToolbarTemplate>
-      <button kendoGridAddCommand class="x-btn-primary click-primary">
-        Új tétel
+      <button kendoGridAddCommand class="x-btn-primary click-primary" translate>
+        form.newPosition
       </button>
     </ng-template>
     <kendo-grid-column
@@ -17,7 +17,7 @@
     ></kendo-grid-column>
     <kendo-grid-column
       field="costAccId"
-      title="Főkönyvi szám"
+      [title]="'columns.accountNumber' | translate"
       [editable]="true"
       [autoSize]="true"
     >
@@ -46,11 +46,15 @@
         >
           <kendo-combobox-column
             field="accountNumber"
-            title="Főkönyvi szám"
+            [title]="'columns.accountNumber' | translate"
             [width]="100"
           >
           </kendo-combobox-column>
-          <kendo-combobox-column field="name" title="Megnevezés" [width]="200">
+          <kendo-combobox-column
+            field="name"
+            [title]="'columns.name' | translate"
+            [width]="200"
+          >
           </kendo-combobox-column>
         </kendo-multicolumncombobox>
         <kendo-popup
@@ -61,16 +65,20 @@
           "
           popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
         >
-          Kötelező mező
+          {{ "form.required" | translate }}
         </kendo-popup>
       </ng-template>
     </kendo-grid-column>
     <kendo-grid-column
       field="costAccName"
-      title="Megnevezés"
+      [title]="'columns.name' | translate"
       [editable]="false"
     ></kendo-grid-column>
-    <kendo-grid-column field="costEffect" title="Tétel" [editable]="true">
+    <kendo-grid-column
+      field="costEffect"
+      [title]="'columns.position' | translate"
+      [editable]="true"
+    >
       <ng-template
         kendoGridEditTemplate
         let-column="column"
@@ -90,13 +98,13 @@
           "
           popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
         >
-          Kötelező mező
+          {{ "form.required" | translate }}
         </kendo-popup>
       </ng-template>
     </kendo-grid-column>
     <kendo-grid-column
       field="costCenterId"
-      title="Költséghely"
+      [title]="'columns.costCenter' | translate"
       [editable]="true"
       [autoSize]="true"
     >
@@ -119,9 +127,17 @@
           [formControl]="formGroup.get('costCenterId')"
           (valueChange)="costCenterChange($event)"
         >
-          <kendo-combobox-column field="code" title="Költséghely" [width]="100">
+          <kendo-combobox-column
+            field="code"
+            [title]="'columns.costCenter' | translate"
+            [width]="100"
+          >
           </kendo-combobox-column>
-          <kendo-combobox-column field="name" title="Megnevezés" [width]="200">
+          <kendo-combobox-column
+            field="name"
+            [title]="'columns.name'"
+            [width]="200"
+          >
           </kendo-combobox-column>
         </kendo-multicolumncombobox>
         <kendo-popup
@@ -132,7 +148,7 @@
           "
           popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
         >
-          Kötelező mező
+          {{ "form.required" | translate }}
         </kendo-popup>
       </ng-template>
     </kendo-grid-column>
@@ -167,7 +183,7 @@
           "
           popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
         >
-          Kötelező mező
+          {{ "form.required" | translate }}
         </kendo-popup>
       </ng-template>
     </kendo-grid-column>
@@ -217,8 +233,5 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
   </kendo-grid>
 </div>

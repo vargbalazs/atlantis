@@ -15,7 +15,7 @@
   <kendo-card-body>
     <table>
       <tr>
-        <td style="padding-right: 8.8rem">Gyár</td>
+        <td style="padding-right: 8.8rem" translate>columns.plant</td>
         <td class="td-data">{{ frc.plant?.code }}</td>
       </tr>
       <tr>
@@ -32,7 +32,7 @@
       </tr>
       <tr>
         <td>EBIT</td>
-        <td class="td-data">{{ frc.va! + frc.ba! }}</td>
+        <td class="td-data">{{ frc.va ? frc.va! + frc.ba! : 0 }}</td>
       </tr>
     </table>
   </kendo-card-body>
@@ -62,9 +62,10 @@
       kendoButton
       class="x-btn-light-primary x-text-primary click-primary x-flat"
       (click)="onShowFrcClick(frc)"
+      translate
     >
       <span class="k-icon k-i-more-vertical"></span>
-      Részletek
+      form.details
     </button>
   </kendo-card-actions>
 </kendo-card>

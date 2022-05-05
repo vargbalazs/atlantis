@@ -1,6 +1,10 @@
 <kendo-dialog *ngIf="active" [width]="300" [height]="400" (close)="closeForm()">
   <kendo-dialog-titlebar class="x-bg-primary x-font">
-    {{ isNew ? "Új kapacitástípus" : "Szerkesztés" }}
+    {{
+      isNew
+        ? ("form.newM" | translate) + " " + ("form.capType" | translate)
+        : ("form.edit" | translate)
+    }}
   </kendo-dialog-titlebar>
   <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
     <kendo-formfield>
@@ -14,7 +18,10 @@
       ></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="company" text="Gazdasági egység"></kendo-label>
+      <kendo-label
+        [for]="company"
+        [text]="'columns.company' | translate"
+      ></kendo-label>
       <kendo-combobox
         #company
         formControlName="company"
@@ -25,11 +32,8 @@
         (valueChange)="companyChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
       <kendo-textbox
@@ -39,7 +43,10 @@
       ></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="plant" text="Gyár"></kendo-label>
+      <kendo-label
+        [for]="plant"
+        [text]="'columns.plant' | translate"
+      ></kendo-label>
       <kendo-combobox
         #plant
         formControlName="plant"
@@ -50,20 +57,20 @@
         (valueChange)="plantChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="capType" text="Kapacitástípus"></kendo-label>
+      <kendo-label
+        [for]="capType"
+        [text]="'form.capType' | translate"
+      ></kendo-label>
       <kendo-textbox
         #capType
         formControlName="capType"
         class="x-textbox-sm"
       ></kendo-textbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <!-- hidden submit button in order to get work the submit event on enter -->
     <button type="submit" hidden></button>
@@ -75,8 +82,9 @@
       icon="cancel"
       (click)="onCancel()"
       class="x-btn-light click-light"
+      translate
     >
-      Mégsem
+      form.cancel
     </button>
     <button
       type="submit"
@@ -84,8 +92,9 @@
       icon="save"
       class="x-btn-primary click-primary"
       (click)="onSave()"
+      translate
     >
-      Mentés
+      form.save
     </button>
   </kendo-dialog-actions>
 </kendo-dialog>

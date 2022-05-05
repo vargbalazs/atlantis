@@ -8,6 +8,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
 import { CreateEditCostGroupModule } from 'src/app/features/masterdata/planning/costgroup/components/create-edit/ce-costgroup.module';
 import { CostGroupService } from '../../services/costgroup.service';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [CostGroupComponent],
@@ -19,6 +20,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     CreateEditCostGroupModule,
     LoadingOverlayModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [CostGroupService],
   exports: [CostGroupComponent],

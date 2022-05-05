@@ -12,6 +12,7 @@ import { PopupModule } from '@progress/kendo-angular-popup';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { PopupAnchorModule } from 'src/app/shared/directives/popup.anchor-target.module';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [OtherCostsComponent],
@@ -27,6 +28,7 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
     InputsModule,
     PopupAnchorModule,
     DropDownsModule,
+    TranslateModule,
   ],
   providers: [FrcService],
   exports: [OtherCostsComponent],

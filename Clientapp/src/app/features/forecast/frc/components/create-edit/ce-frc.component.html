@@ -1,6 +1,6 @@
 <kendo-dialog *ngIf="active" [width]="300" [height]="350" (close)="closeForm()">
   <kendo-dialog-titlebar class="x-bg-primary x-font">
-    {{ isNew ? "Új FRC" : "Szerkesztés" }}
+    {{ isNew ? ("form.newFrc" | translate) : ("form.edit" | translate) }}
   </kendo-dialog-titlebar>
   <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
     <kendo-formfield>
@@ -19,13 +19,19 @@
       <kendo-textbox hidden formControlName="year"></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="version" text="Verzió"></kendo-label>
+      <kendo-label
+        [for]="version"
+        [text]="'form.version' | translate"
+      ></kendo-label>
       <kendo-textbox #version formControlName="version" class="x-textbox-sm">
       </kendo-textbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="comment" text="Egyéb megjegyzés"></kendo-label>
+      <kendo-label
+        [for]="comment"
+        [text]="'form.comment' | translate"
+      ></kendo-label>
       <kendo-textarea #comment formControlName="comment" class="x-textarea-sm">
       </kendo-textarea>
     </kendo-formfield>
@@ -39,8 +45,9 @@
       icon="cancel"
       (click)="onCancel()"
       class="x-btn-light click-light"
+      translate
     >
-      Mégsem
+      form.cancel
     </button>
     <button
       type="submit"
@@ -48,8 +55,9 @@
       icon="save"
       class="x-btn-primary click-primary"
       (click)="onSave()"
+      translate
     >
-      Mentés
+      form.save
     </button>
   </kendo-dialog-actions>
 </kendo-dialog>

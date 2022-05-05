@@ -8,6 +8,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
 import { CreateEditPlantAreaModule } from 'src/app/features/masterdata/general/plantarea/components/create-edit/ce-plantarea.module';
 import { PlantAreaService } from '../../services/plantarea.service';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [PlantAreaComponent],
@@ -19,6 +20,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     CreateEditPlantAreaModule,
     LoadingOverlayModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [PlantAreaService],
   exports: [PlantAreaComponent],

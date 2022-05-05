@@ -7,6 +7,7 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
 import { LabelModule } from '@progress/kendo-angular-label';
 import { ButtonModule } from '@progress/kendo-angular-buttons';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [CreateEditDepartmentComponent],
@@ -18,6 +19,7 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
     LabelModule,
     ButtonModule,
     DropDownsModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [CreateEditDepartmentComponent],

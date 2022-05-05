@@ -15,15 +15,15 @@
   <kendo-card-body>
     <table>
       <tr>
-        <td style="padding-right: 8.8rem">Gyár</td>
+        <td style="padding-right: 8.8rem" translate>columns.plant</td>
         <td class="td-data">{{ provk.plant?.code }}</td>
       </tr>
       <tr>
-        <td>Verziók</td>
+        <td translate>form.versions</td>
         <td class="td-data">{{ provk.versions }}</td>
       </tr>
       <tr>
-        <td>Mentett verziók</td>
+        <td translate>columns.savedVersions</td>
         <td class="td-data">1</td>
       </tr>
     </table>
@@ -65,9 +65,10 @@
       kendoButton
       class="x-btn-light-primary x-text-primary click-primary x-flat"
       (click)="onShowVersionsClick(provk)"
+      translate
     >
       <span class="k-icon k-i-more-vertical"></span>
-      Verziók
+      form.versions
     </button>
   </kendo-card-actions>
 </kendo-card>

@@ -5,6 +5,7 @@ import { FrcCapacity } from '../../models/frc-capacity.model';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { FrcService } from '../../services/frc.service';
 import { cloneable } from 'src/app/shared/classes/cloneable.class';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'capacity',
@@ -31,7 +32,8 @@ export class CapacityComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private frcService: FrcService,
-    private notificationService: CustomNotificationService
+    private notificationService: CustomNotificationService,
+    private translateService: TranslateService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -98,7 +100,7 @@ export class CapacityComponent implements OnInit {
         sender.closeRow(rowIndex);
         console.log('finished');
         this.notificationService.showNotification(
-          'Adatok sikeresen mentve',
+          this.translateService.instant('notifications.saveSuccess'),
           3000,
           'success'
         );

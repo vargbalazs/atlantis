@@ -12,6 +12,7 @@ import { VersionSelectorModule } from '../version-selector/ver-sel.module';
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { CreateEditProvkModule } from '../create-edit/ce-provk.module';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [ProvkComponent],
@@ -27,6 +28,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     VersionSelectorModule,
     CreateEditProvkModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [ProvkService],
   exports: [ProvkComponent],

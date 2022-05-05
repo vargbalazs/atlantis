@@ -12,6 +12,7 @@ import { AllocationDetailsModule } from '../allocation-details/allocation-detail
 import { CopyModule } from 'src/app/shared/components/copy-entity/copy.module';
 import { CopyService } from '../../services/copy.service';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [CostAllocationComponent],
@@ -26,6 +27,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     AllocationDetailsModule,
     CopyModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [CostAllocationService, CopyService],
   exports: [CostAllocationComponent],

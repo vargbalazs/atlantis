@@ -10,6 +10,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0',
     parentId: '',
     children: [],
+    translateId: 'sidebar.masterData',
   },
   {
     text: 'sidebar.general',
@@ -19,6 +20,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.1',
     parentId: '0',
     children: [],
+    translateId: 'sidebar.general',
   },
   {
     text: 'sidebar.companies',
@@ -26,6 +28,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.1.1',
     parentId: '0.1',
     routePath: 'masterdata/general/company',
+    translateId: 'sidebar.companies',
   },
   {
     text: 'sidebar.plants',
@@ -33,6 +36,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.1.2',
     parentId: '0.1',
     routePath: 'masterdata/general/plant',
+    translateId: 'sidebar.plants',
   },
   {
     text: 'sidebar.plantAreas',
@@ -40,6 +44,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.1.3',
     parentId: '0.1',
     routePath: 'masterdata/general/plantarea',
+    translateId: 'sidebar.plantAreas',
   },
   {
     text: 'sidebar.departments',
@@ -47,6 +52,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.1.4',
     parentId: '0.1',
     routePath: 'masterdata/general/department',
+    translateId: 'sidebar.departments',
   },
   {
     text: 'sidebar.jobs',
@@ -54,6 +60,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.1.5',
     parentId: '0.1',
     routePath: 'masterdata/general/job',
+    translateId: 'sidebar.jobs',
   },
   {
     text: 'sidebar.languages',
@@ -61,12 +68,14 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.1.6',
     parentId: '0.1',
     routePath: 'masterdata/general/language',
+    translateId: 'sidebar.languages',
   },
   {
     text: 'sidebar.dictionary',
     level: 2,
     id: '0.1.7',
     parentId: '0.1',
+    translateId: 'sidebar.dictionary',
   },
   {
     text: 'sidebar.planningAndSettlement',
@@ -76,6 +85,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.2',
     parentId: '0',
     children: [],
+    translateId: 'sidebar.planningAndSettlement',
   },
   {
     text: 'sidebar.costAccTypes',
@@ -83,6 +93,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.2.1',
     parentId: '0.2',
     routePath: 'masterdata/planning/costacctype',
+    translateId: 'sidebar.costAccTypes',
   },
   {
     text: 'sidebar.costGroups',
@@ -90,6 +101,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.2.2',
     parentId: '0.2',
     routePath: 'masterdata/planning/costgroup',
+    translateId: 'sidebar.costGroups',
   },
   {
     text: 'sidebar.costCenters',
@@ -97,6 +109,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.2.3',
     parentId: '0.2',
     routePath: 'masterdata/planning/costcenter',
+    translateId: 'sidebar.costCenters',
   },
   {
     text: 'sidebar.costResponsibles',
@@ -104,6 +117,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.2.4',
     parentId: '0.2',
     routePath: 'masterdata/planning/costresp',
+    translateId: 'sidebar.costResponsibles',
   },
   {
     text: 'sidebar.costAccounts',
@@ -111,6 +125,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.2.5',
     parentId: '0.2',
     routePath: 'masterdata/planning/costaccount',
+    translateId: 'sidebar.costAccounts',
   },
   {
     text: 'sidebar.costAllocations',
@@ -118,6 +133,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.2.6',
     parentId: '0.2',
     routePath: 'masterdata/planning/costallocation',
+    translateId: 'sidebar.costAllocations',
   },
   {
     text: 'sidebar.production',
@@ -127,6 +143,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.3',
     parentId: '0',
     children: [],
+    translateId: 'sidebar.production',
   },
   {
     text: 'sidebar.capGroups',
@@ -134,6 +151,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.3.1',
     parentId: '0.3',
     routePath: 'masterdata/production/capgroup',
+    translateId: 'sidebar.capGroups',
   },
   {
     text: 'sidebar.salesProducts',
@@ -141,6 +159,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.3.2',
     parentId: '0.3',
     routePath: 'masterdata/production/salesproduct',
+    translateId: 'sidebar.salesProducts',
   },
   {
     text: 'sidebar.capTypes',
@@ -148,6 +167,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.3.3',
     parentId: '0.3',
     routePath: 'masterdata/production/captype',
+    translateId: 'sidebar.capTypes',
   },
   {
     text: 'sidebar.capUnits',
@@ -155,6 +175,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '0.3.4',
     parentId: '0.3',
     routePath: 'masterdata/production/capunit',
+    translateId: 'sidebar.capUnits',
   },
   {
     text: 'sidebar.prodData',
@@ -165,6 +186,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '1',
     parentId: '',
     children: [],
+    translateId: 'sidebar.prodData',
   },
   {
     text: 'sidebar.saveActualData',
@@ -172,6 +194,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '1.1',
     parentId: '1',
     routePath: 'productiondata/actual',
+    translateId: 'sidebar.saveActualData',
   },
   {
     text: 'sidebar.forecasting',
@@ -182,6 +205,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '2',
     parentId: '',
     children: [],
+    translateId: 'sidebar.forecasting',
   },
   {
     text: 'sidebar.provk',
@@ -189,6 +213,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '2.1',
     parentId: '2',
     routePath: 'forecast/provk',
+    translateId: 'sidebar.provk',
   },
   {
     text: 'sidebar.forecast',
@@ -196,6 +221,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '2.2',
     parentId: '2',
     routePath: 'forecast/frc',
+    translateId: 'sidebar.forecast',
   },
   {
     text: 'sidebar.plantResult',
@@ -206,6 +232,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '3',
     parentId: '',
     children: [],
+    translateId: 'sidebar.plantResult',
   },
   {
     text: 'sidebar.uploadPlantCosts',
@@ -213,6 +240,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '3.1',
     parentId: '3',
     routePath: 'plantresult/uploadcost',
+    translateId: 'sidebar.uploadPlantCosts',
   },
   {
     text: 'sidebar.browseBookings',
@@ -220,6 +248,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '3.3',
     parentId: '3',
     routePath: 'plantresult/browsedata',
+    translateId: 'sidebar.browseBookings',
   },
   {
     text: 'sidebar.reports',
@@ -229,6 +258,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '3.4',
     parentId: '3',
     children: [],
+    translateId: 'sidebar.reports',
   },
   {
     text: 'sidebar.costOverview',
@@ -236,6 +266,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '3.4.1',
     parentId: '3.4',
     routePath: 'plantresult/costcenter',
+    translateId: 'sidebar.costOverview',
   },
   {
     text: 'sidebar.plantPl',
@@ -243,6 +274,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '3.4.2',
     parentId: '3.4',
     routePath: 'plantresult/plantpl',
+    translateId: 'sidebar.plantPl',
   },
   {
     text: 'sidebar.planning',
@@ -253,6 +285,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '4',
     parentId: '',
     children: [],
+    translateId: 'sidebar.planning',
   },
   {
     text: 'sidebar.planningVersions',
@@ -260,6 +293,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '4.1',
     parentId: '4',
     routePath: 'planning/version',
+    translateId: 'sidebar.planningVersions',
   },
   {
     text: 'sidebar.costPlanning',
@@ -267,6 +301,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '4.2',
     parentId: '4',
     routePath: 'planning/costplanning',
+    translateId: 'sidebar.costPlanning',
   },
   {
     text: 'sidebar.hcPlanning',
@@ -274,6 +309,7 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '4.3',
     parentId: '4',
     routePath: 'planning/hcplanning',
+    translateId: 'sidebar.hcPlanning',
   },
   {
     text: 'sidebar.capPlanning',
@@ -281,5 +317,6 @@ export const drawerItemsFlattened: drawerItem[] = [
     id: '4.4',
     parentId: '4',
     routePath: 'planning/capplanning',
+    translateId: 'sidebar.capPlanning',
   },
 ];

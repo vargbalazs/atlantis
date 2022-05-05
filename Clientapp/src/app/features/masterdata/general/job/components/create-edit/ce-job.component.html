@@ -1,13 +1,20 @@
 <kendo-dialog *ngIf="active" [width]="300" [height]="490" (close)="closeForm()">
   <kendo-dialog-titlebar class="x-bg-primary x-font">
-    {{ isNew ? "Új munkakör" : "Szerkesztés" }}
+    {{
+      isNew
+        ? ("form.newF" | translate) + " " + ("columns.job" | translate)
+        : ("form.edit" | translate)
+    }}
   </kendo-dialog-titlebar>
   <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
     <kendo-formfield>
       <kendo-textbox hidden formControlName="id"></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="company" text="Gazdasági egység"></kendo-label>
+      <kendo-label
+        [for]="company"
+        [text]="'columns.company' | translate"
+      ></kendo-label>
       <kendo-combobox
         #company
         formControlName="company"
@@ -18,14 +25,14 @@
         (valueChange)="companyChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="plant" text="Gyár"></kendo-label>
+      <kendo-label
+        [for]="plant"
+        [text]="'columns.plant' | translate"
+      ></kendo-label>
       <kendo-combobox
         #plant
         formControlName="plant"
@@ -36,11 +43,8 @@
         (valueChange)="plantChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
       <kendo-textbox
@@ -50,7 +54,10 @@
       ></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="department" text="Részleg"></kendo-label>
+      <kendo-label
+        [for]="department"
+        [text]="'columns.department' | translate"
+      ></kendo-label>
       <kendo-combobox
         #department
         formControlName="department"
@@ -61,20 +68,23 @@
         (valueChange)="departmentChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="name" text="Munkakör"></kendo-label>
+      <kendo-label
+        [for]="name"
+        [text]="'columns.job' | translate"
+      ></kendo-label>
       <kendo-textbox #name formControlName="name" class="x-textbox-sm">
       </kendo-textbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="descr" text="Leírás"></kendo-label>
+      <kendo-label
+        [for]="descr"
+        [text]="'form.descr' | translate"
+      ></kendo-label>
       <kendo-textbox #descr formControlName="descr" class="x-textbox-sm">
       </kendo-textbox>
     </kendo-formfield>
@@ -88,8 +98,9 @@
       icon="cancel"
       (click)="onCancel()"
       class="x-btn-light click-light"
+      translate
     >
-      Mégsem
+      form.cancel
     </button>
     <button
       type="submit"
@@ -98,8 +109,9 @@
       [primary]="true"
       (click)="onSave()"
       class="x-btn-primary click-primary"
+      translate
     >
-      Mentés
+      form.save
     </button>
   </kendo-dialog-actions>
 </kendo-dialog>

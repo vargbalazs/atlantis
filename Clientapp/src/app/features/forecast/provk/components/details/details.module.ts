@@ -14,6 +14,7 @@ import { SalesDetailsModule } from '../salesdetails/salesdetails.module';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
 import { ToolbarTextModule } from 'src/app/shared/components/toolbartext/toolbartext.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [ProvkDetailsComponent],
@@ -30,6 +31,7 @@ import { ToolbarTextModule } from 'src/app/shared/components/toolbartext/toolbar
     ButtonsModule,
     ConfirmDialogStyleModule,
     ToolbarTextModule,
+    TranslateModule,
   ],
   providers: [CapTypeService, ProvkService],
   exports: [ProvkDetailsComponent],

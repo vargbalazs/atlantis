@@ -8,6 +8,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
 import { CreateEditJobModule } from 'src/app/features/masterdata/general/job/components/create-edit/ce-job.module';
 import { JobService } from '../../services/job.service';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [JobComponent],
@@ -19,6 +20,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     CreateEditJobModule,
     LoadingOverlayModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [JobService],
   exports: [JobComponent],

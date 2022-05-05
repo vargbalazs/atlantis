@@ -4,17 +4,17 @@
   [height]="600"
   (close)="closeForm()"
 >
-  <kendo-dialog-titlebar class="x-bg-primary x-font"
-    >Terhelendő költséghelyek</kendo-dialog-titlebar
-  >
+  <kendo-dialog-titlebar class="x-bg-primary x-font">{{
+    "form.recCostCenters" | translate
+  }}</kendo-dialog-titlebar>
   <kendo-grid
     [kendoGridReactiveEditing]="createFormGroup"
     [kendoGridBinding]="costAllocationDetails"
     #grid
   >
     <ng-template kendoGridToolbarTemplate>
-      <button kendoGridAddCommand class="x-btn-primary click-primary">
-        Új tétel
+      <button kendoGridAddCommand class="x-btn-primary click-primary" translate>
+        form.newPosition
       </button>
     </ng-template>
     <kendo-grid-column
@@ -27,7 +27,10 @@
       title="index"
       [hidden]="true"
     ></kendo-grid-column>
-    <kendo-grid-column field="recCostCenterId" title="Költséghely">
+    <kendo-grid-column
+      field="recCostCenterId"
+      [title]="'columns.costCenter' | translate"
+    >
       <ng-template kendoGridCellTemplate let-dataItem>
         {{ getCostCenter(dataItem.recCostCenterId)?.code }}
       </ng-template>
@@ -47,9 +50,17 @@
           [formControl]="formGroup.get('recCostCenterId')"
           (valueChange)="recCostCenterChange($event)"
         >
-          <kendo-combobox-column field="code" title="Költséghely" [width]="100">
+          <kendo-combobox-column
+            field="code"
+            [title]="'columns.costCenter' | translate"
+            [width]="100"
+          >
           </kendo-combobox-column>
-          <kendo-combobox-column field="name" title="Megnevezés" [width]="200">
+          <kendo-combobox-column
+            field="name"
+            [title]="'columns.name' | translate"
+            [width]="200"
+          >
           </kendo-combobox-column>
         </kendo-multicolumncombobox>
         <kendo-popup
@@ -60,18 +71,18 @@
           "
           popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
         >
-          Kötelező mező
+          {{ "form.required" | translate }}
         </kendo-popup>
       </ng-template>
     </kendo-grid-column>
     <kendo-grid-column
       field="recCostCenterName"
-      title="Megnevezés"
+      [title]="'columns.name' | translate"
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
       field="capacity"
-      title="Teljesítmény"
+      [title]="'form.allocCapacity' | translate"
       editor="numeric"
       [editable]="costAllocation.allocCapacity!"
       [style]="{ 'text-align': 'right' }"
@@ -99,20 +110,21 @@
           "
           popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
         >
-          Kötelező mező
+          {{ "form.required" | translate }}
         </kendo-popup>
       </ng-template>
       <ng-template
         kendoGridFooterTemplate
         *ngIf="costAllocation.allocCapacity!"
       >
-        Összesen: {{ sumCapacity | number: "1.2-2" }} Felosztandó:
+        {{ "columns.total" | translate }}: {{ sumCapacity | number: "1.2-2" }}
+        {{ "form.toBeAllocated" | translate }}:
         {{ costAllocation.totalCapacity | number: "1.2-2" }}
       </ng-template>
     </kendo-grid-column>
     <kendo-grid-column
       field="percent"
-      title="Százalék"
+      [title]="'form.percent' | translate"
       [editable]="!costAllocation.allocCapacity!"
       [style]="{ 'text-align': 'right' }"
       [footerStyle]="{ 'text-align': 'right' }"
@@ -138,11 +150,11 @@
           "
           popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
         >
-          Kötelező mező
+          {{ "form.required" | translate }}
         </kendo-popup>
       </ng-template>
       <ng-template kendoGridFooterTemplate>
-        Összesen: {{ sumPercent | number: "1.2-2" }}
+        {{ "columns.total" | translate }}: {{ sumPercent | number: "1.2-2" }}
       </ng-template>
     </kendo-grid-column>
     <kendo-grid-command-column [width]="90">
@@ -190,9 +202,6 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
   </kendo-grid>
   <kendo-dialog-actions layout="normal">
     <button
@@ -201,8 +210,9 @@
       icon="cancel"
       (click)="closeForm()"
       class="x-btn-light click-light"
+      translate
     >
-      Mégsem
+      form.cancel
     </button>
     <button
       type="submit"
@@ -210,8 +220,9 @@
       icon="save"
       class="x-btn-primary click-primary"
       (click)="onSave()"
+      translate
     >
-      Mentés
+      form.save
     </button>
     <loading-overlay
       [visible]="loadingOverlayVisible | async"

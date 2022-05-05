@@ -4,9 +4,9 @@
   [height]="480"
   (close)="closeForm()"
 >
-  <kendo-dialog-titlebar class="x-bg-primary x-font"
-    >Verziók</kendo-dialog-titlebar
-  >
+  <kendo-dialog-titlebar class="x-bg-primary x-font">{{
+    "form.versions" | translate
+  }}</kendo-dialog-titlebar>
   <kendo-card
     *ngFor="let version of provkVersions; index as i"
     class="card"
@@ -18,8 +18,8 @@
     <div class="k-hstack">
       <div class="side-bar" [ngClass]="{ hovered: version.hovered }"></div>
       <kendo-card-header class="k-hstack">
-        <h1 kendoCardTitle class="k-hstack">
-          Verzió
+        <h1 kendoCardTitle class="k-hstack" translate>
+          form.version
           <div class="spacer"></div>
           <h1 kendoCardTitle class="bold">{{ version.version }}</h1>
         </h1>

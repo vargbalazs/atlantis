@@ -11,6 +11,7 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { CopyModule } from '../../../../../../shared/components/copy-entity/copy.module';
 import { CopyService } from '../../services/copy.service';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [CapGroupComponent],
@@ -24,6 +25,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     CopyModule,
     LoadingOverlayModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [CapGroupService, CopyService],
   exports: [CapGroupComponent],

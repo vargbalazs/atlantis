@@ -11,6 +11,7 @@ import { FrcCardModule } from '../card/card.module';
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { CreateEditFrcModule } from '../create-edit/ce-frc.module';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [FrcComponent],
@@ -25,6 +26,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     FrcCardModule,
     CreateEditFrcModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [FrcService],
   exports: [FrcComponent],

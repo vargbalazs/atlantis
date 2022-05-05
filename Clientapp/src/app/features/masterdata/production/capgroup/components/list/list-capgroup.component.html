@@ -1,4 +1,4 @@
-<div class="component-header">Kapacitáscsoportok</div>
+<div class="component-header" translate>sidebar.capGroups</div>
 <div class="grid">
   <kendo-grid
     [kendoGridBinding]="gridData.data"
@@ -12,8 +12,9 @@
         kendoGridAddCommand
         class="x-btn-primary click-primary"
         icon="file"
+        translate
       >
-        Új
+        form.new
       </button>
       <kendo-grid-spacer width="1px"></kendo-grid-spacer>
       <button
@@ -21,8 +22,9 @@
         class="x-btn-light-primary x-text-primary click-primary"
         icon="copy"
         (click)="showCopyForm()"
+        translate
       >
-        Másolás
+        form.copy
       </button>
     </ng-template>
     <kendo-grid-column
@@ -32,31 +34,48 @@
     ></kendo-grid-column>
     <kendo-grid-column
       field="capGroup"
-      title="Kapacitáscsoport"
+      [title]="'form.capGroup' | translate"
     ></kendo-grid-column>
     <kendo-grid-column
       field="capType.capType"
-      title="Kapacitástípus"
+      [title]="'form.capType' | translate"
     ></kendo-grid-column>
-    <kendo-grid-column field="capName" title="Kapacitásnév"></kendo-grid-column>
-    <kendo-grid-column field="capUnit.unit" title="Egység"></kendo-grid-column>
-    <kendo-grid-column field="capYear" title="Év" format="d" filter="numeric">
+    <kendo-grid-column
+      field="capName"
+      [title]="'form.capName' | translate"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="capUnit.unit"
+      [title]="'columns.unit' | translate"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="capYear"
+      [title]="'columns.year' | translate"
+      format="d"
+      filter="numeric"
+    >
     </kendo-grid-column>
-    <kendo-grid-column field="invNr" title="Leltári szám"></kendo-grid-column>
+    <kendo-grid-column
+      field="invNr"
+      [title]="'columns.invNr' | translate"
+    ></kendo-grid-column>
     <kendo-grid-column
       field="normalCap"
-      title="Normál éves kapacitás"
+      [title]="'columns.normalCap' | translate"
       filter="numeric"
     ></kendo-grid-column>
     <kendo-grid-column
       field="fixRate"
-      title="Fix egységdíj"
+      [title]="'columns.fixRate' | translate"
       filter="numeric"
     ></kendo-grid-column>
-    <kendo-grid-column field="plant.code" title="Gyár"></kendo-grid-column>
+    <kendo-grid-column
+      field="plant.code"
+      [title]="'columns.plant' | translate"
+    ></kendo-grid-column>
     <kendo-grid-column
       field="company.name"
-      title="Gazdasági egység"
+      [title]="'columns.company' | translate"
     ></kendo-grid-column>
     <kendo-grid-command-column [width]="70">
       <ng-template kendoGridCellTemplate let-dataItem>
@@ -74,9 +93,6 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
   </kendo-grid>
 </div>
 <ce-capgroup

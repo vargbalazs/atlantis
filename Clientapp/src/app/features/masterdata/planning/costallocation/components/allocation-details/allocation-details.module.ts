@@ -12,6 +12,7 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
 import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/loading-overlay.module';
 import { PopupAnchorModule } from 'src/app/shared/directives/popup.anchor-target.module';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [AllocationDetailsComponent],
@@ -28,6 +29,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     LoadingOverlayModule,
     PopupAnchorModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [AllocationDetailsComponent],

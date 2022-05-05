@@ -1,18 +1,36 @@
-<div class="component-header">PROVK verzió</div>
+<div class="component-header" translate>
+  PROVK {{ "form.version" | translate }}
+</div>
 <div class="x-toolbar">
   <button
     kendoButton
     icon="arrow-60-left"
     class="x-btn-primary click-primary"
     (click)="goBack()"
+    translate
   >
-    Vissza
+    form.back
   </button>
-  <toolbar-text [caption]="'Gazdasági egység'" [value]="company"></toolbar-text>
-  <toolbar-text [caption]="'Gyár'" [value]="plant"></toolbar-text>
-  <toolbar-text [caption]="'Év'" [value]="year"></toolbar-text>
-  <toolbar-text [caption]="'Hónap'" [value]="month"></toolbar-text>
-  <toolbar-text [caption]="'Verzió'" [value]="version"></toolbar-text>
+  <toolbar-text
+    [caption]="'columns.company' | translate"
+    [value]="company"
+  ></toolbar-text>
+  <toolbar-text
+    [caption]="'columns.plant' | translate"
+    [value]="plant"
+  ></toolbar-text>
+  <toolbar-text
+    [caption]="'columns.year' | translate"
+    [value]="year"
+  ></toolbar-text>
+  <toolbar-text
+    [caption]="'columns.month' | translate"
+    [value]="month"
+  ></toolbar-text>
+  <toolbar-text
+    [caption]="'form.version' | translate"
+    [value]="version"
+  ></toolbar-text>
 </div>
 <div class="container">
   <kendo-panelbar

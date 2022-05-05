@@ -13,6 +13,7 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
 import { PopupAnchorModule } from 'src/app/shared/directives/popup.anchor-target.module';
 import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/loading-overlay.module';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [HcComponent],
@@ -29,6 +30,7 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
     DropDownsModule,
     PopupAnchorModule,
     LoadingOverlayModule,
+    TranslateModule,
   ],
   providers: [FrcService],
   exports: [HcComponent],

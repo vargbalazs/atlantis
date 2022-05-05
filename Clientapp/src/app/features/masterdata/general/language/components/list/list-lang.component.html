@@ -1,4 +1,4 @@
-<div class="component-header">Nyelvek</div>
+<div class="component-header" translate>sidebar.languages</div>
 <div class="grid">
   <kendo-grid
     [kendoGridBinding]="gridData.data"
@@ -13,8 +13,9 @@
         [primary]="true"
         icon="file"
         class="x-btn-primary click-primary"
+        translate
       >
-        Új
+        form.new
       </button>
     </ng-template>
     <kendo-grid-column
@@ -22,11 +23,17 @@
       field="id"
       title="ID"
     ></kendo-grid-column>
-    <kendo-grid-column field="isoCode" title="ISO kód"></kendo-grid-column>
-    <kendo-grid-column field="name" title="Nyelv"></kendo-grid-column>
+    <kendo-grid-column
+      field="isoCode"
+      [title]="'form.isoCode' | translate"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="name"
+      [title]="'columns.lang' | translate"
+    ></kendo-grid-column>
     <kendo-grid-column
       field="defaultLang"
-      title="Alapértelmezett"
+      [title]="'form.default' | translate"
       filter="boolean"
     >
       <ng-template kendoGridCellTemplate let-dataItem>
@@ -51,9 +58,6 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
   </kendo-grid>
 </div>
 <ce-language

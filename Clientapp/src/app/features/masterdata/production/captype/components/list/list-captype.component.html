@@ -1,4 +1,4 @@
-<div class="component-header">Kapacitástípusok</div>
+<div class="component-header" translate>sidebar.capTypes</div>
 <div class="grid">
   <kendo-grid
     [kendoGridBinding]="gridData.data"
@@ -12,8 +12,9 @@
         kendoGridAddCommand
         class="x-btn-primary click-primary"
         icon="file"
+        translate
       >
-        Új
+        form.new
       </button>
     </ng-template>
     <kendo-grid-column
@@ -23,12 +24,15 @@
     ></kendo-grid-column>
     <kendo-grid-column
       field="capType"
-      title="Kapacitástípus"
+      [title]="'form.capType' | translate"
     ></kendo-grid-column>
-    <kendo-grid-column field="plant.code" title="Gyár"></kendo-grid-column>
+    <kendo-grid-column
+      field="plant.code"
+      [title]="'columns.plant' | translate"
+    ></kendo-grid-column>
     <kendo-grid-column
       field="company.name"
-      title="Gazdasági egység"
+      [title]="'columns.company' | translate"
     ></kendo-grid-column>
     <kendo-grid-command-column [width]="70">
       <ng-template kendoGridCellTemplate let-dataItem>
@@ -46,9 +50,6 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
   </kendo-grid>
 </div>
 <ce-captype

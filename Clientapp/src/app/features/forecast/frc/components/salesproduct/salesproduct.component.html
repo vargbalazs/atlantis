@@ -12,25 +12,25 @@
     ></kendo-grid-column>
     <kendo-grid-column
       field="capType"
-      title="Kap. típ."
+      [title]="'columns.capType' | translate"
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
       field="capGroup"
-      title="Kap. csop."
+      [title]="'columns.capGroup' | translate"
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
       field="salesProduct"
-      title="Név"
+      [title]="'columns.name' | translate"
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
       field="unit"
-      title="Egys."
+      [title]="'columns.capUnit' | translate"
       [editable]="false"
     ></kendo-grid-column>
-    <kendo-grid-column-group title="Tény">
+    <kendo-grid-column-group [title]="'columns.actual' | translate">
       <kendo-grid-column
         *ngFor="let actPeriod of actPeriods; index as i"
         field="p{{ i + 1 }}"
@@ -62,7 +62,7 @@
             "
             popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
           >
-            Kötelező mező
+            {{ "form.required" | translate }}
           </kendo-popup>
         </ng-template>
       </kendo-grid-column>
@@ -97,7 +97,7 @@
             "
             popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
           >
-            Kötelező mező
+            {{ "form.required" | translate }}
           </kendo-popup>
         </ng-template>
       </kendo-grid-column>
@@ -132,14 +132,14 @@
             "
             popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
           >
-            Kötelező mező
+            {{ "form.required" | translate }}
           </kendo-popup>
         </ng-template>
       </kendo-grid-column>
     </kendo-grid-column-group>
     <kendo-grid-column
       field="total"
-      title="Összesen"
+      [title]="'columns.total' | translate"
       [editable]="false"
       [style]="{ 'text-align': 'right', 'font-weight': '700' }"
     ></kendo-grid-column>
@@ -178,8 +178,5 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
   </kendo-grid>
 </div>

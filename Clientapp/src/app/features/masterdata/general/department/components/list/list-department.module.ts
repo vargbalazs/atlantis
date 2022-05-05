@@ -8,6 +8,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
 import { CreateEditDepartmentModule } from 'src/app/features/masterdata/general/department/components/create-edit/ce-department.module';
 import { DepartmentService } from '../../services/department.service';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [DepartmentComponent],
@@ -19,6 +20,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     CreateEditDepartmentModule,
     LoadingOverlayModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [DepartmentService],
   exports: [DepartmentComponent],

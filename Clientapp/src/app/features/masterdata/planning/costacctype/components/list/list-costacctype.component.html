@@ -1,4 +1,4 @@
-<div class="component-header">Költségszámítási típusok</div>
+<div class="component-header" translate>sidebar.costAccTypes</div>
 <div class="grid">
   <kendo-grid
     [kendoGridBinding]="gridData.data"
@@ -12,8 +12,9 @@
         kendoGridAddCommand
         class="x-btn-primary click-primary"
         icon="file"
+        translate
       >
-        Új
+        form.new
       </button>
     </ng-template>
     <kendo-grid-column
@@ -21,8 +22,14 @@
       field="id"
       title="ID"
     ></kendo-grid-column>
-    <kendo-grid-column field="name" title="Név"></kendo-grid-column>
-    <kendo-grid-column field="descr" title="Leírás"></kendo-grid-column>
+    <kendo-grid-column
+      field="name"
+      [title]="'form.name' | translate"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="descr"
+      [title]="'form.descr' | translate"
+    ></kendo-grid-column>
     <kendo-grid-command-column [width]="70">
       <ng-template kendoGridCellTemplate let-dataItem>
         <kendo-icon
@@ -39,9 +46,6 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
   </kendo-grid>
 </div>
 <ce-costacctype

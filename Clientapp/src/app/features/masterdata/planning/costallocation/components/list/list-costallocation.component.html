@@ -1,4 +1,4 @@
-<div class="component-header">Költségátterhelések</div>
+<div class="component-header" translate>sidebar.costAllocations</div>
 <div class="grid">
   <kendo-grid
     [kendoGridBinding]="gridData.data"
@@ -12,8 +12,9 @@
         kendoGridAddCommand
         class="x-btn-primary click-primary"
         icon="file"
+        translate
       >
-        Új
+        form.new
       </button>
       <kendo-grid-spacer width="1px"></kendo-grid-spacer>
       <button
@@ -21,8 +22,9 @@
         icon="copy"
         (click)="showCopyForm()"
         class="x-btn-light-primary x-text-primary click-primary"
+        translate
       >
-        Másolás
+        form.copy
       </button>
     </ng-template>
     <kendo-grid-column
@@ -30,49 +32,44 @@
       field="id"
       title="ID"
     ></kendo-grid-column>
-    <kendo-grid-column field="level" title="Szint"></kendo-grid-column>
-    <kendo-grid-column field="name" title="Megnevezés"></kendo-grid-column>
+    <kendo-grid-column
+      field="level"
+      [title]="'form.level' | translate"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="name"
+      [title]="'columns.name' | translate"
+    ></kendo-grid-column>
     <kendo-grid-column
       field="allocCostCenter.code"
-      title="Felosztandó költséghely"
+      [title]="'form.baseCostCenter' | translate"
     ></kendo-grid-column>
     <kendo-grid-column
       field="allocCostCenter.name"
-      title="Megnevezés"
+      [title]="'columns.name' | translate"
     ></kendo-grid-column>
     <kendo-grid-column
       field="costAccount.accountNumber"
-      title="Főkönyvi szám"
+      [title]="'columns.accountNumber' | translate"
     ></kendo-grid-column>
     <kendo-grid-column
       field="costAccount.name"
-      title="Költségnem"
+      [title]="'form.costAccount' | translate"
     ></kendo-grid-column>
-    <kendo-grid-column field="year" title="Év" filter="numeric" format="d">
-      <!-- <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
-        <kendo-grid-date-filter-cell
-          [showOperators]="false"
-          [column]="column"
-          [filter]="filter"
-          activeView="decade"
-          bottomView="decade"
-          format="yyyy"
-          [formatPlaceholder]="{
-            year: ' ',
-            month: '',
-            day: '',
-            hour: '',
-            minute: '',
-            second: ''
-          }"
-        >
-        </kendo-grid-date-filter-cell> </ng-template -->
-      ></kendo-grid-column
+    <kendo-grid-column
+      field="year"
+      [title]="'columns.year' | translate"
+      filter="numeric"
+      format="d"
     >
-    <kendo-grid-column field="plant.code" title="Gyár"></kendo-grid-column>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="plant.code"
+      [title]="'columns.plant' | translate"
+    ></kendo-grid-column>
     <kendo-grid-column
       field="company.name"
-      title="Gazdasági egység"
+      [title]="'columns.company' | translate"
     ></kendo-grid-column>
     <kendo-grid-command-column [width]="90">
       <ng-template kendoGridCellTemplate let-dataItem>
@@ -96,9 +93,6 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
   </kendo-grid>
 </div>
 <ce-costallocation

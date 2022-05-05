@@ -8,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { GridComponent } from '@progress/kendo-angular-grid';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
@@ -44,7 +45,8 @@ export class SalesDetailsComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder,
     private notificationService: CustomNotificationService,
     private provkService: ProvkService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
@@ -96,7 +98,7 @@ export class SalesDetailsComponent implements OnInit, OnChanges {
         selectedCapTypeId: this.selectedCapTypeId,
       });
       this.notificationService.showNotification(
-        'Az adatok sikeresen mentésre kerültek',
+        this.translateService.instant('notifications.saveSuccess'),
         3000,
         'success'
       );

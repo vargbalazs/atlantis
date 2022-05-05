@@ -15,6 +15,7 @@ import { CapacityModule } from '../capacity/capacity.module';
 import { SalesProductModule } from '../salesproduct/salesproduct.module';
 import { OtherCostsModule } from '../othercosts/othercosts.module';
 import { HcModule } from '../hc/hc.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [FrcDetailsComponent],
@@ -33,6 +34,7 @@ import { HcModule } from '../hc/hc.module';
     SalesProductModule,
     OtherCostsModule,
     HcModule,
+    TranslateModule,
   ],
   providers: [FrcService],
   exports: [FrcDetailsComponent],

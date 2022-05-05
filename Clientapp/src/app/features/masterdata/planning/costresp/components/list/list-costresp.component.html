@@ -1,4 +1,4 @@
-<div class="component-header">Költséghelyi felelősök</div>
+<div class="component-header" translate>sidebar.costResponsibles</div>
 <div class="grid">
   <kendo-grid
     [kendoGridBinding]="gridData.data"
@@ -12,8 +12,9 @@
         kendoGridAddCommand
         class="x-btn-primary click-primary"
         icon="file"
+        translate
       >
-        Új
+        form.new
       </button>
     </ng-template>
     <kendo-grid-column
@@ -23,24 +24,39 @@
     ></kendo-grid-column>
     <kendo-grid-column
       field="costCenter.code"
-      title="Költséghely"
+      [title]="'columns.costCenter' | translate"
     ></kendo-grid-column>
     <kendo-grid-column
       field="costCenter.name"
-      title="Megnevezés"
+      [title]="'columns.name' | translate"
     ></kendo-grid-column>
-    <kendo-grid-column field="name" title="Felelős"></kendo-grid-column>
-    <kendo-grid-column field="email" title="E-mail"></kendo-grid-column>
-    <kendo-grid-column field="lang.isoCode" title="Nyelv"></kendo-grid-column>
-    <kendo-grid-column field="job.name" title="Munkakör"></kendo-grid-column>
+    <kendo-grid-column
+      field="name"
+      [title]="'form.responsible' | translate"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="email"
+      [title]="'columns.email' | translate"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="lang.isoCode"
+      [title]="'columns.lang' | translate"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="job.name"
+      [title]="'columns.job' | translate"
+    ></kendo-grid-column>
     <kendo-grid-column
       field="department.name"
-      title="Részleg"
+      [title]="'columns.department' | translate"
     ></kendo-grid-column>
-    <kendo-grid-column field="plant.code" title="Gyár"></kendo-grid-column>
+    <kendo-grid-column
+      field="plant.code"
+      [title]="'columns.plant' | translate"
+    ></kendo-grid-column>
     <kendo-grid-column
       field="company.name"
-      title="Gazdasági egység"
+      [title]="'columns.company' | translate"
     ></kendo-grid-column>
     <kendo-grid-command-column [width]="70">
       <ng-template kendoGridCellTemplate let-dataItem>
@@ -58,9 +74,6 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
   </kendo-grid>
 </div>
 <ce-costresp

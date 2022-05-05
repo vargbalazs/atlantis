@@ -9,6 +9,7 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PopupAnchorModule } from 'src/app/shared/directives/popup.anchor-target.module';
 import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/loading-overlay.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [SalesDetailsComponent],
@@ -21,6 +22,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
     ReactiveFormsModule,
     PopupAnchorModule,
     LoadingOverlayModule,
+    TranslateModule,
   ],
   providers: [ProvkService],
   exports: [SalesDetailsComponent],

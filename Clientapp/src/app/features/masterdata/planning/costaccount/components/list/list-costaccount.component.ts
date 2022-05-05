@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
 import { Crud } from 'src/app/shared/classes/crud.class';
@@ -21,7 +22,8 @@ export class CostAccountComponent extends Crud<CostAccount> implements OnInit {
     notificationService: NotificationService,
     private costaccountService: CostAccountService,
     private copyService: CopyService,
-    loaderService: LoaderService
+    loaderService: LoaderService,
+    private translateService: TranslateService
   ) {
     super(
       msgDialogService,
@@ -77,7 +79,11 @@ export class CostAccountComponent extends Crud<CostAccount> implements OnInit {
     //   });
     setTimeout(() => {
       console.log('finished');
-      this.showNotification('A másolás sikeresen megtörtént', 3000, 'success');
+      this.showNotification(
+        this.translateService.instant('notifications.copySuccess'),
+        3000,
+        'success'
+      );
     }, 1500);
     console.log('copying...');
   }

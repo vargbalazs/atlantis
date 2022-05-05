@@ -9,6 +9,7 @@ import { PopupAnchorModule } from 'src/app/shared/directives/popup.anchor-target
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/loading-overlay.module';
 import { ProvkService } from '../../services/provk.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [CapTypeGridComponent],
@@ -21,6 +22,7 @@ import { ProvkService } from '../../services/provk.service';
     PopupAnchorModule,
     InputsModule,
     LoadingOverlayModule,
+    TranslateModule,
   ],
   providers: [ProvkService],
   exports: [CapTypeGridComponent],

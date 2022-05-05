@@ -5,8 +5,9 @@
     icon="filter"
     class="x-btn-primary click-primary"
     (click)="showFilterForm()"
+    translate
   >
-    Szűrés
+    form.filter
   </button>
   <button
     kendoButton
@@ -14,8 +15,9 @@
     *ngIf="listWasFiltered"
     class="x-btn-primary click-primary"
     (click)="addHandler()"
+    translate
   >
-    Új FRC
+    form.newFrc
   </button>
 </div>
 <frc-card

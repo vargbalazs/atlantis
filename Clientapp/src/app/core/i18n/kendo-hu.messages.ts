@@ -36,6 +36,10 @@ export const kendoHuMessages: TranslatedLang = {
       ],
       ['kendo.upload.select', 'Tallózás...'],
       ['kendo.dialog.closeTitle', 'Bezár'],
+      ['kendo.combobox.noDataText', 'Nincs megjelenítendő adat'],
+      ['kendo.combobox.clearTitle', 'Törlés'],
+      ['kendo.multicolumncombobox.noDataText', 'Nincs megjelenítendő adat'],
+      ['kendo.multicolumncombobox.clearTitle', 'Törlés'],
     ]),
   },
 };

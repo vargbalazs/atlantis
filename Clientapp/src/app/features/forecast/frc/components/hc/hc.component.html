@@ -1,6 +1,6 @@
 <div style="position: relative">
   <div class="x-toolbar" style="margin-bottom: 1rem">
-    <span class="k-label">Részleg</span>
+    <span class="k-label" translate>columns.department</span>
     <kendo-combobox
       #department
       [data]="departments"
@@ -10,9 +10,6 @@
       (valueChange)="departmentChange($event)"
       class="x-combobox-sm"
     >
-      <ng-template kendoComboBoxNoDataTemplate>
-        Nincs megjelenítendő adat
-      </ng-template>
     </kendo-combobox>
   </div>
   <kendo-grid
@@ -29,26 +26,26 @@
     ></kendo-grid-column>
     <kendo-grid-column
       field="department"
-      title="Részleg"
+      [title]="'columns.department' | translate"
       [width]="130"
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
       field="costGroup"
-      title="Költségcsoport"
+      [title]="'columns.costGroup' | translate"
       [width]="150"
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
       field="job"
-      title="Munkakör"
+      [title]="'columns.job' | translate"
       [width]="130"
       [editable]="false"
     >
     </kendo-grid-column>
     <kendo-grid-column
       field="costCenter"
-      title="Költséghely"
+      [title]="'columns.costCenter' | translate"
       [width]="100"
       [editable]="false"
     ></kendo-grid-column>
@@ -82,7 +79,7 @@
           "
           popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
         >
-          Kötelező mező
+          {{ "form.required" | translate }}
         </kendo-popup>
       </ng-template>
       <ng-template
@@ -132,8 +129,5 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
   </kendo-grid>
 </div>

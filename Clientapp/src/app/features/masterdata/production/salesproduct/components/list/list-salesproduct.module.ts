@@ -10,6 +10,7 @@ import { SalesProductService } from '../../services/salesproduct.service';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { CopyModule } from '../../../../../../shared/components/copy-entity/copy.module';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [SalesProductComponent],
@@ -22,6 +23,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     CreateEditSalesProductModule,
     LoadingOverlayModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [SalesProductService],
   exports: [SalesProductComponent],

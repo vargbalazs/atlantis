@@ -1,4 +1,4 @@
-<div class="component-header">Költségcsoportok</div>
+<div class="component-header" translate>sidebar.costGroups</div>
 <div class="grid">
   <kendo-grid
     [kendoGridBinding]="gridData.data"
@@ -12,8 +12,9 @@
         kendoGridAddCommand
         class="x-btn-primary click-primary"
         icon="file"
+        translate
       >
-        Új
+        form.new
       </button>
     </ng-template>
     <kendo-grid-column
@@ -21,11 +22,17 @@
       field="id"
       title="ID"
     ></kendo-grid-column>
-    <kendo-grid-column field="name" title="Költségcsoport"></kendo-grid-column>
-    <kendo-grid-column field="rowIndex" title="Pozíció"></kendo-grid-column>
+    <kendo-grid-column
+      field="name"
+      [title]="'form.costGroup' | translate"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="rowIndex"
+      [title]="'form.position' | translate"
+    ></kendo-grid-column>
     <kendo-grid-column
       field="usedForPersPlanning"
-      title="Létszámterv. haszn."
+      [title]="'columns.usedForPersPlanningShort' | translate"
       filter="boolean"
     >
       <ng-template kendoGridCellTemplate let-dataItem>
@@ -40,7 +47,7 @@
     </kendo-grid-column>
     <kendo-grid-column
       field="ohterPlantCost"
-      title="Egyéb gyári költség"
+      [title]="'form.otherPlantCost' | translate"
       filter="boolean"
     >
       <ng-template kendoGridCellTemplate let-dataItem>
@@ -51,7 +58,7 @@
     </kendo-grid-column>
     <kendo-grid-column
       field="directWagesCost"
-      title="Operátori bérköltség"
+      [title]="'form.directWagesCost' | translate"
       filter="boolean"
     >
       <ng-template kendoGridCellTemplate let-dataItem>
@@ -66,7 +73,7 @@
     </kendo-grid-column>
     <kendo-grid-column
       field="company.name"
-      title="Gazdasági egység"
+      [title]="'columns.company' | translate"
     ></kendo-grid-column>
     <kendo-grid-command-column [width]="70">
       <ng-template kendoGridCellTemplate let-dataItem>
@@ -84,9 +91,6 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
   </kendo-grid>
 </div>
 <ce-costgroup

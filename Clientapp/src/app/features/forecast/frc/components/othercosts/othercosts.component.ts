@@ -8,6 +8,7 @@ import { cloneable } from 'src/app/shared/classes/cloneable.class';
 import { CostCenter } from 'src/app/features/masterdata/planning/costcenter/models/costcenter.model';
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'othercosts',
@@ -34,7 +35,8 @@ export class OtherCostsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private frcService: FrcService,
     private notificationService: CustomNotificationService,
-    private msgDialogService: MsgDialogService
+    private msgDialogService: MsgDialogService,
+    private translateService: TranslateService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -131,7 +133,7 @@ export class OtherCostsComponent implements OnInit {
     console.log('finished');
     sender.closeRow(rowIndex);
     this.notificationService.showNotification(
-      'Adatok sikeresen mentve',
+      this.translateService.instant('notifications.saveSuccess'),
       3000,
       'success'
     );
@@ -168,10 +170,14 @@ export class OtherCostsComponent implements OnInit {
 
   removeHandler({ dataItem }: { dataItem: FrcOtherCost }) {
     this.msgDialogService
-      .showDialog('FRC', 'Valóban törölni szeretnéd a kiválasztott elemet?', [
-        { text: 'Nem' },
-        { text: 'Igen', primary: true },
-      ])
+      .showDialog(
+        'FRC',
+        this.translateService.instant('dialog.confirmDelete'),
+        [
+          { text: this.translateService.instant('dialog.no') },
+          { text: this.translateService.instant('dialog.yes'), primary: true },
+        ]
+      )
       .result.subscribe((result) => {
         const dialogResult = JSON.parse(JSON.stringify(result));
         if (dialogResult.primary) {
@@ -180,7 +186,7 @@ export class OtherCostsComponent implements OnInit {
               (item) => item.id !== dataItem.id
             );
             this.notificationService.showNotification(
-              'A kiválasztott elem sikeresen törölve lett',
+              this.translateService.instant('notifications.deleteSuccess'),
               3000,
               'success'
             );

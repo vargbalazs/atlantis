@@ -7,6 +7,7 @@ import { SalesDetail } from '../../models/salesdetail.model';
 import { ProvkService } from '../../services/provk.service';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'provk-details',
@@ -43,7 +44,8 @@ export class ProvkDetailsComponent implements OnInit {
     private capTypeService: CapTypeService,
     private provkService: ProvkService,
     private msgDialogService: MsgDialogService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
@@ -69,7 +71,7 @@ export class ProvkDetailsComponent implements OnInit {
         this.loadingOverlayVisible = false;
         // add the item for sales products
         this.items.push(<PanelBarItemModel>{
-          title: 'Értékesített termékek',
+          title: this.translateService.instant('sidebar.salesProducts'),
           id: 'sales',
         });
         // get the details for the first capType and select it
@@ -170,7 +172,7 @@ export class ProvkDetailsComponent implements OnInit {
   showEditModeDialog() {
     this.msgDialogService.showDialog(
       'PROVK',
-      'Mentetlen változások vannak. Először mentsd őket.',
+      this.translateService.instant('dialog.unsavedChanges'),
       [{ text: 'Ok', primary: true }]
     );
   }

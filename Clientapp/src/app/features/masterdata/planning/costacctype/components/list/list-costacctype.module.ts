@@ -8,6 +8,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
 import { CreateEditCostAccountingTypeModule } from 'src/app/features/masterdata/planning/costacctype/components/create-edit/ce-costacctype.module';
 import { CostAccountingTypeService } from '../../services/costacctype.service';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [CostAccountingTypeComponent],
@@ -19,6 +20,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     CreateEditCostAccountingTypeModule,
     LoadingOverlayModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [CostAccountingTypeService],
   exports: [CostAccountingTypeComponent],

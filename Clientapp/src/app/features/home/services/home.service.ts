@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ModuleInterface } from '../interfaces/module.interface';
@@ -7,7 +8,10 @@ import { TaskInterface } from '../interfaces/task.interface';
 
 @Injectable()
 export class HomeService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private translateService: TranslateService,
+    private http: HttpClient
+  ) {}
 
   registerRecentlyVisitedModule(
     visitedItems: ModuleInterface[],
@@ -16,6 +20,8 @@ export class HomeService {
     if (visitedItems.some((item) => item.routePath === module.routePath)) {
       visitedItems.find((item) => item.routePath === module.routePath)!.date =
         module.date;
+      visitedItems.find((item) => item.routePath === module.routePath)!.name =
+        this.translateService.instant(module.translateId!);
       this.saveVisitedItemsToLocalStorage(visitedItems);
       return;
     }
@@ -33,6 +39,9 @@ export class HomeService {
   getVisitedItemsFromLocalStorage(): ModuleInterface[] {
     const visitedItems = <ModuleInterface[]>(
       JSON.parse(localStorage.getItem('visitedItems')!)
+    );
+    visitedItems.forEach(
+      (item) => (item.name = this.translateService.instant(item.translateId!))
     );
     return visitedItems ? visitedItems : [];
   }

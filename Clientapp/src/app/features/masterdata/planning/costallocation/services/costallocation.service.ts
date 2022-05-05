@@ -29,11 +29,18 @@ export class CostAllocationService implements IRepository<CostAllocation> {
     );
   }
 
-  saveAllocationDetails(details: CostAllocationDetail[]) {
-    return this.http.post(
-      `${environment.apiUrl}/api/masterdata/planning/costallocationdetails`,
-      details
-    );
+  saveAllocationDetails(details: CostAllocationDetail[], costAllocId: number) {
+    if (details.length === 0) {
+      return this.http.post(
+        `${environment.apiUrl}/api/masterdata/planning/costallocationdetails/${costAllocId}`,
+        null
+      );
+    } else {
+      return this.http.post(
+        `${environment.apiUrl}/api/masterdata/planning/costallocationdetails`,
+        details
+      );
+    }
   }
 
   getCostAllocations() {

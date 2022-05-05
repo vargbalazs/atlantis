@@ -33,6 +33,10 @@ export const kendoDeMessages: TranslatedLang = {
       ['kendo.upload.invalidFileExtension', 'Dateityp nicht erlaubt'],
       ['kendo.upload.select', 'Datei auswählen...'],
       ['kendo.dialog.closeTitle', 'Schließen'],
+      ['kendo.combobox.noDataText', 'Keine Daten gefunden'],
+      ['kendo.combobox.clearTitle', 'Leeren'],
+      ['kendo.multicolumncombobox.noDataText', 'Keine Daten gefunden'],
+      ['kendo.multicolumncombobox.clearTitle', 'Leeren'],
     ]),
   },
 };

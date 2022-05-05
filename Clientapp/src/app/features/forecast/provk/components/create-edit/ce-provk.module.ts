@@ -7,6 +7,7 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
 import { LabelModule } from '@progress/kendo-angular-label';
 import { ButtonModule } from '@progress/kendo-angular-buttons';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [CreateEditProvkComponent],
@@ -18,6 +19,7 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
     LabelModule,
     ButtonModule,
     DateInputsModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [CreateEditProvkComponent],

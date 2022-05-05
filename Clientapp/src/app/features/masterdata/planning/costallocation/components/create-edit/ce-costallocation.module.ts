@@ -8,6 +8,7 @@ import { LabelModule } from '@progress/kendo-angular-label';
 import { ButtonModule } from '@progress/kendo-angular-buttons';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { DatePickerModule } from '@progress/kendo-angular-dateinputs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [CreateEditCostAllocationComponent],
@@ -20,6 +21,7 @@ import { DatePickerModule } from '@progress/kendo-angular-dateinputs';
     ButtonModule,
     DropDownsModule,
     DatePickerModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [CreateEditCostAllocationComponent],

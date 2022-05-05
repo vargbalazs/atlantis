@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { forkJoin } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -33,7 +34,8 @@ export class CostAllocationComponent
     private costAllocationService: CostAllocationService,
     loaderService: LoaderService,
     private copyService: CopyService,
-    private costCenterService: CostCenterService
+    private costCenterService: CostCenterService,
+    private translateService: TranslateService
   ) {
     super(
       msgDialogService,
@@ -116,7 +118,11 @@ export class CostAllocationComponent
     //   });
     setTimeout(() => {
       console.log('finished');
-      this.showNotification('A másolás sikeresen megtörtént', 3000, 'success');
+      this.showNotification(
+        this.translateService.instant('notifications.copySuccess'),
+        3000,
+        'success'
+      );
     }, 1500);
     console.log('copying...');
   }

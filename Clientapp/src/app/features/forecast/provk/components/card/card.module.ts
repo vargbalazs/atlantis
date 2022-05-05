@@ -4,10 +4,17 @@ import { ProvkCardComponent } from './card.component';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { IconsModule } from '@progress/kendo-angular-icons';
 import { LayoutModule } from '@progress/kendo-angular-layout';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [ProvkCardComponent],
-  imports: [CommonModule, LayoutModule, ButtonsModule, IconsModule],
+  imports: [
+    CommonModule,
+    LayoutModule,
+    ButtonsModule,
+    IconsModule,
+    TranslateModule,
+  ],
   providers: [],
   exports: [ProvkCardComponent],
 })

@@ -1,6 +1,10 @@
 <kendo-dialog *ngIf="active" [width]="300" [height]="450" (close)="closeForm()">
   <kendo-dialog-titlebar class="x-bg-primary x-font">
-    {{ isNew ? "Új gyár" : "Szerkesztés" }}
+    {{
+      isNew
+        ? ("form.newM" | translate) + " " + ("columns.plant" | translate)
+        : ("form.edit" | translate)
+    }}
   </kendo-dialog-titlebar>
   <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
     <kendo-formfield>
@@ -14,7 +18,10 @@
       ></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="company" text="Gazdasági egység"></kendo-label>
+      <kendo-label
+        [for]="company"
+        [text]="'columns.company' | translate"
+      ></kendo-label>
       <kendo-combobox
         #company
         formControlName="company"
@@ -25,23 +32,26 @@
         (valueChange)="companyChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="code" text="Gyárkód"></kendo-label>
+      <kendo-label
+        [for]="code"
+        [text]="'form.plantCode' | translate"
+      ></kendo-label>
       <kendo-textbox #code formControlName="code" class="x-textbox-sm">
       </kendo-textbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="location" text="Székhely"></kendo-label>
+      <kendo-label
+        [for]="location"
+        [text]="'form.location' | translate"
+      ></kendo-label>
       <kendo-textbox #location formControlName="location" class="x-textbox-sm">
       </kendo-textbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <!-- hidden submit button in order to get work the submit event on enter -->
     <button type="submit" hidden></button>
@@ -53,8 +63,9 @@
       icon="cancel"
       (click)="onCancel()"
       class="x-btn-light click-light"
+      translate
     >
-      Mégsem
+      form.cancel
     </button>
     <button
       type="submit"
@@ -62,8 +73,9 @@
       icon="save"
       (click)="onSave()"
       class="x-btn-primary click-primary"
+      translate
     >
-      Mentés
+      form.save
     </button>
   </kendo-dialog-actions>
 </kendo-dialog>

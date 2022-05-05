@@ -9,6 +9,7 @@ import { CreateEditCapTypeModule } from 'src/app/features/masterdata/production/
 import { CapTypeService } from '../../services/captype.service';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [CapTypeComponent],
@@ -21,6 +22,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     CreateEditCapTypeModule,
     LoadingOverlayModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [CapTypeService],
   exports: [CapTypeComponent],

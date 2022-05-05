@@ -8,6 +8,7 @@ import { FrcHc } from '../../models/frc-hc.model';
 import { cloneable } from 'src/app/shared/classes/cloneable.class';
 import { GroupDescriptor } from '@progress/kendo-data-query';
 import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'hc',
@@ -36,7 +37,8 @@ export class HcComponent implements OnInit {
     private formBuilder: FormBuilder,
     private frcService: FrcService,
     private notificationService: CustomNotificationService,
-    private msgDialogService: MsgDialogService
+    private msgDialogService: MsgDialogService,
+    private translateService: TranslateService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -99,7 +101,7 @@ export class HcComponent implements OnInit {
       sender.closeRow(rowIndex);
       console.log('finished');
       this.notificationService.showNotification(
-        'Adatok sikeresen mentve',
+        this.translateService.instant('notifications.saveSuccess'),
         3000,
         'success'
       );
@@ -157,7 +159,7 @@ export class HcComponent implements OnInit {
           if (hc.length === 0) {
             this.msgDialogService.showDialog(
               'Atlantis',
-              'A kiválasztott részleghez még nincsenek tervszámok (pl. budget), így az előrejelzés sem lehetséges.',
+              this.translateService.instant('dialog.noHcBudget'),
               [{ text: 'OK', primary: true }]
             );
           }

@@ -6,8 +6,9 @@
       icon="edit"
       (click)="editAllRows()"
       *ngIf="!isInEditMode"
+      translate
     >
-      Szerkesztés
+      form.edit
     </button>
     <button
       kendoButton
@@ -15,26 +16,28 @@
       icon="save"
       (click)="saveChanges()"
       *ngIf="isInEditMode"
+      translate
     >
-      Mentés
+      form.save
     </button>
   </ng-template>
   <kendo-grid-column field="id" title="ID" [hidden]="true"></kendo-grid-column>
   <kendo-grid-column
     field="capGroup"
-    title="Kap. csop."
+    [title]="'columns.capGroup' | translate"
     [editable]="false"
   ></kendo-grid-column>
   <kendo-grid-column
     field="name"
-    title="Termék"
+    [title]="'columns.product' | translate"
     [editable]="false"
   ></kendo-grid-column>
   <kendo-grid-column
     field="value"
-    title="Előrejelzés"
+    [title]="'columns.forecast' | translate"
     [editable]="true"
     [class]="'k-text-right'"
+    format="{0:n0}"
   >
     <ng-template
       kendoGridEditTemplate
@@ -61,18 +64,15 @@
         "
         popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
       >
-        Kötelező mező
+        {{ "form.required" | translate }}
       </kendo-popup>
     </ng-template>
   </kendo-grid-column>
   <kendo-grid-column
     field="unit"
-    title="Egység"
+    [title]="'columns.unit' | translate"
     [editable]="false"
   ></kendo-grid-column>
-  <ng-template kendoGridNoRecordsTemplate>
-    Nincs megjelenítendő adat
-  </ng-template>
 </kendo-grid>
 <loading-overlay
   [visible]="loadingOverlayVisible | async"

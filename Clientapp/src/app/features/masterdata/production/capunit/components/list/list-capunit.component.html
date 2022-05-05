@@ -1,4 +1,4 @@
-<div class="component-header">Kapacitásegységek</div>
+<div class="component-header" translate>sidebar.capUnits</div>
 <div class="grid">
   <kendo-grid
     [kendoGridBinding]="gridData.data"
@@ -12,8 +12,9 @@
         kendoGridAddCommand
         class="x-btn-primary click-primary"
         icon="file"
+        translate
       >
-        Új
+        form.new
       </button>
     </ng-template>
     <kendo-grid-column
@@ -21,15 +22,21 @@
       field="id"
       title="ID"
     ></kendo-grid-column>
-    <kendo-grid-column field="unit" title="Kapacitásegység"></kendo-grid-column>
+    <kendo-grid-column
+      field="unit"
+      [title]="'form.capUnit' | translate"
+    ></kendo-grid-column>
     <kendo-grid-column
       field="name"
-      title="Egység megnevezés"
+      [title]="'form.capUnitName' | translate"
     ></kendo-grid-column>
-    <kendo-grid-column field="plant.code" title="Gyár"></kendo-grid-column>
+    <kendo-grid-column
+      field="plant.code"
+      [title]="'columns.plant' | translate"
+    ></kendo-grid-column>
     <kendo-grid-column
       field="company.name"
-      title="Gazdasági egység"
+      [title]="'columns.company' | translate"
     ></kendo-grid-column>
     <kendo-grid-command-column [width]="70">
       <ng-template kendoGridCellTemplate let-dataItem>
@@ -47,9 +54,6 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
   </kendo-grid>
 </div>
 <ce-capunit

@@ -1,6 +1,10 @@
 <kendo-dialog *ngIf="active" [width]="300" [height]="600" (close)="closeForm()">
   <kendo-dialog-titlebar class="x-bg-primary x-font">
-    {{ isNew ? "Új kapacitáscsoport" : "Szerkesztés" }}
+    {{
+      isNew
+        ? ("form.newF" | translate) + " " + ("form.capGroup" | translate)
+        : ("form.edit" | translate)
+    }}
   </kendo-dialog-titlebar>
   <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
     <kendo-formfield>
@@ -14,7 +18,10 @@
       ></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="company" text="Gazdasági egység"></kendo-label>
+      <kendo-label
+        [for]="company"
+        [text]="'columns.company' | translate"
+      ></kendo-label>
       <kendo-combobox
         #company
         formControlName="company"
@@ -25,11 +32,8 @@
         (valueChange)="companyChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
       <kendo-textbox
@@ -39,7 +43,10 @@
       ></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="plant" text="Gyár"></kendo-label>
+      <kendo-label
+        [for]="plant"
+        [text]="'columns.plant' | translate"
+      ></kendo-label>
       <kendo-combobox
         #plant
         formControlName="plant"
@@ -50,11 +57,8 @@
         (valueChange)="plantChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
       <kendo-textbox
@@ -64,7 +68,10 @@
       ></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="capYearDate" text="Év"></kendo-label>
+      <kendo-label
+        [for]="capYearDate"
+        [text]="'columns.year' | translate"
+      ></kendo-label>
       <kendo-datepicker
         #capYearDate
         formControlName="capYearDate"
@@ -72,7 +79,7 @@
         bottomView="decade"
         format="yyyy"
         [formatPlaceholder]="{
-          year: 'Év',
+          year: 'columns.year' | translate,
           month: '',
           day: '',
           hour: '',
@@ -83,16 +90,19 @@
         class="x-datepicker-sm"
       >
       </kendo-datepicker>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="capGroup" text="Kapacitáscsoport"></kendo-label>
+      <kendo-label
+        [for]="capGroup"
+        [text]="'form.capGroup' | translate"
+      ></kendo-label>
       <kendo-textbox
         #capGroup
         formControlName="capGroup"
         class="x-textbox-sm"
       ></kendo-textbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
       <kendo-textbox
@@ -102,7 +112,10 @@
       ></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="capType" text="Kapacitástípus"></kendo-label>
+      <kendo-label
+        [for]="capType"
+        [text]="'form.capType' | translate"
+      ></kendo-label>
       <kendo-combobox
         #capType
         formControlName="capType"
@@ -113,20 +126,20 @@
         (valueChange)="capTypeChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="capName" text="Kapacitásnév"></kendo-label>
+      <kendo-label
+        [for]="capName"
+        [text]="'form.capName' | translate"
+      ></kendo-label>
       <kendo-textbox
         #capName
         formControlName="capName"
         class="x-textbox-sm"
       ></kendo-textbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
       <kendo-textbox
@@ -136,7 +149,10 @@
       ></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="capUnit" text="Kapacitásegység"></kendo-label>
+      <kendo-label
+        [for]="capUnit"
+        [text]="'form.capUnit' | translate"
+      ></kendo-label>
       <kendo-combobox
         #capUnit
         formControlName="capUnit"
@@ -147,23 +163,26 @@
         (valueChange)="capUnitChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="invNr" text="Leltári szám"></kendo-label>
+      <kendo-label
+        [for]="invNr"
+        [text]="'columns.invNr' | translate"
+      ></kendo-label>
       <kendo-textbox
         #invNr
         formControlName="invNr"
         class="x-textbox-sm"
       ></kendo-textbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="normalCap" text="Normál éves kapacitás"></kendo-label>
+      <kendo-label
+        [for]="normalCap"
+        [text]="'columns.normalCap' | translate"
+      ></kendo-label>
       <kendo-numerictextbox
         #normalCap
         formControlName="normalCap"
@@ -171,10 +190,13 @@
         class="x-numerictextbox-sm"
       >
       </kendo-numerictextbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="fixRate" text="Fix egységdíj"></kendo-label>
+      <kendo-label
+        [for]="fixRate"
+        [text]="'columns.fixRate' | translate"
+      ></kendo-label>
       <kendo-numerictextbox
         #fixRate
         formControlName="fixRate"
@@ -182,7 +204,7 @@
         class="x-numerictextbox-sm"
       >
       </kendo-numerictextbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <!-- hidden submit button in order to get work the submit event on enter -->
     <button type="submit" hidden></button>
@@ -194,8 +216,9 @@
       icon="cancel"
       (click)="onCancel()"
       class="x-btn-light click-light"
+      translate
     >
-      Mégsem
+      form.cancel
     </button>
     <button
       type="submit"
@@ -203,8 +226,9 @@
       icon="save"
       class="x-btn-primary click-primary"
       (click)="onSave()"
+      translate
     >
-      Mentés
+      form.save
     </button>
   </kendo-dialog-actions>
 </kendo-dialog>

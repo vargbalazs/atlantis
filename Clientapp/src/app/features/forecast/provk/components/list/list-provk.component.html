@@ -5,8 +5,9 @@
     icon="filter"
     class="x-btn-primary click-primary"
     (click)="showFilterForm()"
+    translate
   >
-    Szűrés
+    form.filter
   </button>
   <button
     kendoButton
@@ -15,7 +16,7 @@
     class="x-btn-primary click-primary"
     (click)="addHandler()"
   >
-    Új PROVK
+    {{ "form.newN" | translate }} PROVK
   </button>
 </div>
 <provk-card

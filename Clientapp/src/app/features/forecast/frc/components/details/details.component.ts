@@ -15,6 +15,7 @@ import { CostCenter } from 'src/app/features/masterdata/planning/costcenter/mode
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
 import { FrcOtherCost } from '../../models/frc-othercost.model';
 import { FrcSalesProduct } from '../../models/frc-salesproduct.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'frc-details',
@@ -53,7 +54,8 @@ export class FrcDetailsComponent implements OnInit {
     private loaderService: LoaderService,
     private departmentService: DepartmentService,
     private costAccountService: CostAccountService,
-    private costCenterService: CostCenterService
+    private costCenterService: CostCenterService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
@@ -128,7 +130,7 @@ export class FrcDetailsComponent implements OnInit {
   showEditModeDialog() {
     this.msgDialogService.showDialog(
       'Atlantis',
-      'Mentetlen változások vannak. Először mentsd őket.',
+      this.translateService.instant('dialog.unsavedChanges'),
       [{ text: 'Ok', primary: true }]
     );
   }

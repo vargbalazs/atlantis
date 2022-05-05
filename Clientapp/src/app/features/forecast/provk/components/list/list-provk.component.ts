@@ -12,6 +12,7 @@ import { map } from 'rxjs/operators';
 import { Company } from 'src/app/features/masterdata/general/company/models/company.model';
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'list-provk',
@@ -38,6 +39,7 @@ export class ProvkComponent extends Crud<Provk> implements OnInit {
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     loaderService: LoaderService,
+    private translateService: TranslateService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -85,7 +87,7 @@ export class ProvkComponent extends Crud<Provk> implements OnInit {
           this.dialogType = 'info';
           this.msgDialogService.showDialog(
             'PROVK',
-            'A kiválasztott PROVK-hoz nem tartozik egy verzió sem',
+            this.translateService.instant('dialog.noProvkVersion'),
             [{ text: 'Ok', primary: true }]
           );
           return;
@@ -109,7 +111,7 @@ export class ProvkComponent extends Crud<Provk> implements OnInit {
           this.dialogType = 'info';
           this.msgDialogService.showDialog(
             'PROVK',
-            'Adott hónapra adott évben már létre lett hozva PROVK',
+            this.translateService.instant('dialog.provkAlreadyExists'),
             [{ text: 'Ok', primary: true }]
           );
           return false;
@@ -129,7 +131,7 @@ export class ProvkComponent extends Crud<Provk> implements OnInit {
           this.dialogType = 'info';
           this.msgDialogService.showDialog(
             'PROVK',
-            'A törölni kívánt PROVK már tartalmaz legalább egy verziót, ezért a törlés nem lehetséges',
+            this.translateService.instant('dialog.provkNoDelete'),
             [{ text: 'Ok', primary: true }]
           );
           return false;
@@ -167,7 +169,7 @@ export class ProvkComponent extends Crud<Provk> implements OnInit {
         this.dialogType = 'info';
         this.msgDialogService.showDialog(
           'PROVK',
-          'Nem hozható létre több verzió, mert a verziók száma meghaladná a maximálisan létrehozható verziók számát',
+          this.translateService.instant('dialog.noMoreProvkVersion'),
           [{ text: 'Ok', primary: true }]
         );
         return;

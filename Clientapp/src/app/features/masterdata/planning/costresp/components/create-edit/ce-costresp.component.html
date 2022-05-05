@@ -1,15 +1,22 @@
 <kendo-dialog *ngIf="active" [width]="400" [height]="490" (close)="closeForm()">
   <kendo-dialog-titlebar class="x-bg-primary x-font">
-    {{ isNew ? "Új költséghelyfelelős" : "Szerkesztés" }}
+    {{
+      isNew
+        ? ("form.newM" | translate) + " " + ("form.costCenterResp" | translate)
+        : ("form.edit" | translate)
+    }}
   </kendo-dialog-titlebar>
   <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
     <fieldset class="k-form-fieldset">
-      <legend class="k-form-legend">Szervezet</legend>
+      <legend class="k-form-legend" translate>form.organisation</legend>
       <kendo-formfield>
         <kendo-textbox hidden formControlName="id"></kendo-textbox>
       </kendo-formfield>
       <kendo-formfield>
-        <kendo-label [for]="company" text="Gazdasági egység"></kendo-label>
+        <kendo-label
+          [for]="company"
+          [text]="'columns.company' | translate"
+        ></kendo-label>
         <kendo-combobox
           #company
           formControlName="company"
@@ -20,14 +27,14 @@
           (valueChange)="companyChange($event)"
           class="x-combobox-sm"
         >
-          <ng-template kendoComboBoxNoDataTemplate>
-            Nincs megjelenítendő adat
-          </ng-template>
         </kendo-combobox>
-        <kendo-formerror>Kötelező mező</kendo-formerror>
+        <kendo-formerror translate>form.required</kendo-formerror>
       </kendo-formfield>
       <kendo-formfield>
-        <kendo-label [for]="plant" text="Gyár"></kendo-label>
+        <kendo-label
+          [for]="plant"
+          [text]="'columns.plant' | translate"
+        ></kendo-label>
         <kendo-combobox
           #plant
           formControlName="plant"
@@ -38,11 +45,8 @@
           (valueChange)="plantChange($event)"
           class="x-combobox-sm"
         >
-          <ng-template kendoComboBoxNoDataTemplate>
-            Nincs megjelenítendő adat
-          </ng-template>
         </kendo-combobox>
-        <kendo-formerror>Kötelező mező</kendo-formerror>
+        <kendo-formerror translate>form.required</kendo-formerror>
       </kendo-formfield>
       <kendo-textbox
         hidden
@@ -50,7 +54,10 @@
         value="form.controls.department.value?.id"
       ></kendo-textbox>
       <kendo-formfield>
-        <kendo-label [for]="department" text="Részleg"></kendo-label>
+        <kendo-label
+          [for]="department"
+          [text]="'columns.department' | translate"
+        ></kendo-label>
         <kendo-combobox
           #department
           formControlName="department"
@@ -61,11 +68,8 @@
           (valueChange)="departmentChange($event)"
           class="x-combobox-sm"
         >
-          <ng-template kendoComboBoxNoDataTemplate>
-            Nincs megjelenítendő adat
-          </ng-template>
         </kendo-combobox>
-        <kendo-formerror>Kötelező mező</kendo-formerror>
+        <kendo-formerror translate>form.required</kendo-formerror>
       </kendo-formfield>
       <kendo-textbox
         hidden
@@ -73,7 +77,10 @@
         value="form.controls.job.value?.id"
       ></kendo-textbox>
       <kendo-formfield>
-        <kendo-label [for]="job" text="Munkakör"></kendo-label>
+        <kendo-label
+          [for]="job"
+          [text]="'columns.job' | translate"
+        ></kendo-label>
         <kendo-combobox
           #job
           formControlName="job"
@@ -84,22 +91,22 @@
           (valueChange)="jobChange($event)"
           class="x-combobox-sm"
         >
-          <ng-template kendoComboBoxNoDataTemplate>
-            Nincs megjelenítendő adat
-          </ng-template>
         </kendo-combobox>
-        <kendo-formerror>Kötelező mező</kendo-formerror>
+        <kendo-formerror translate>form.required</kendo-formerror>
       </kendo-formfield>
     </fieldset>
     <fieldset class="k-form-fieldset">
-      <legend class="k-form-legend">Felelős</legend>
+      <legend class="k-form-legend" translate>form.responsible</legend>
       <kendo-textbox
         hidden
         formControlName="costCenterId"
         value="form.controls.costCenter.value?.id"
       ></kendo-textbox>
       <kendo-formfield>
-        <kendo-label [for]="costCenter" text="Költséghely"></kendo-label>
+        <kendo-label
+          [for]="costCenter"
+          [text]="'columns.costCenter' | translate"
+        ></kendo-label>
         <kendo-multicolumncombobox
           #costCenter
           formControlName="costCenter"
@@ -110,37 +117,48 @@
           (valueChange)="costCenterChange($event)"
           class="x-combobox-sm"
         >
-          <kendo-combobox-column field="code" title="Költséghely" [width]="100">
+          <kendo-combobox-column
+            field="code"
+            [title]="'columns.costCenter' | translate"
+            [width]="100"
+          >
           </kendo-combobox-column>
-          <kendo-combobox-column field="name" title="Megnevezés" [width]="200">
+          <kendo-combobox-column
+            field="name"
+            [title]="'columns.name' | translate"
+            [width]="200"
+          >
           </kendo-combobox-column>
-          <ng-template kendoMultiColumnComboBoxNoDataTemplate>
-            Nincs megjelenítendő adat
-          </ng-template>
         </kendo-multicolumncombobox>
-        <kendo-formerror>Kötelező mező</kendo-formerror>
+        <kendo-formerror translate>form.required</kendo-formerror>
       </kendo-formfield>
       <kendo-formfield>
-        <kendo-label [for]="name" text="Felelős"></kendo-label>
+        <kendo-label
+          [for]="name"
+          [text]="'form.responsible' | translate"
+        ></kendo-label>
         <kendo-textbox
           #name
           formControlName="name"
           class="x-textbox-sm"
         ></kendo-textbox>
-        <kendo-formerror>Kötelező mező</kendo-formerror>
+        <kendo-formerror translate>form.required</kendo-formerror>
       </kendo-formfield>
       <kendo-formfield>
-        <kendo-label [for]="email" text="E-mail"></kendo-label>
+        <kendo-label
+          [for]="email"
+          [text]="'columns.email' | translate"
+        ></kendo-label>
         <kendo-textbox
           #email
           formControlName="email"
           class="x-textbox-sm"
         ></kendo-textbox>
-        <kendo-formerror *ngIf="form.controls.email.errors?.required"
-          >Kötelező mező</kendo-formerror
+        <kendo-formerror *ngIf="form.controls.email.errors?.required" translate
+          >form.required</kendo-formerror
         >
-        <kendo-formerror *ngIf="form.controls.email.errors?.email"
-          >Hibás e-mail formátum</kendo-formerror
+        <kendo-formerror *ngIf="form.controls.email.errors?.email" translate
+          >form.wrongEmailFormat</kendo-formerror
         >
       </kendo-formfield>
       <kendo-formfield>
@@ -151,7 +169,10 @@
         ></kendo-textbox>
       </kendo-formfield>
       <kendo-formfield>
-        <kendo-label [for]="lang" text="Nyelv"></kendo-label>
+        <kendo-label
+          [for]="lang"
+          [text]="'columns.lang' | translate"
+        ></kendo-label>
         <kendo-multicolumncombobox
           #lang
           formControlName="lang"
@@ -162,15 +183,20 @@
           (valueChange)="langChange($event)"
           class="x-combobox-sm"
         >
-          <kendo-combobox-column field="isoCode" title="ISO kód" [width]="100">
+          <kendo-combobox-column
+            field="isoCode"
+            [title]="'form.isoCode' | translate"
+            [width]="100"
+          >
           </kendo-combobox-column>
-          <kendo-combobox-column field="name" title="Nyelv" [width]="200">
+          <kendo-combobox-column
+            field="name"
+            [title]="'columns.lang' | translate"
+            [width]="200"
+          >
           </kendo-combobox-column>
-          <ng-template kendoMultiColumnComboBoxNoDataTemplate>
-            Nincs megjelenítendő adat
-          </ng-template>
         </kendo-multicolumncombobox>
-        <kendo-formerror>Kötelező mező</kendo-formerror>
+        <kendo-formerror translate>form.required</kendo-formerror>
       </kendo-formfield>
     </fieldset>
     <!-- hidden submit button in order to get work the submit event on enter -->
@@ -183,8 +209,9 @@
       icon="cancel"
       (click)="onCancel()"
       class="x-btn-light click-light"
+      translate
     >
-      Mégsem
+      form.cancel
     </button>
     <button
       type="submit"
@@ -192,8 +219,9 @@
       icon="save"
       class="x-btn-primary click-primary"
       (click)="onSave()"
+      translate
     >
-      Mentés
+      form.save
     </button>
   </kendo-dialog-actions>
 </kendo-dialog>

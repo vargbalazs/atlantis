@@ -1,6 +1,8 @@
 <kendo-dialog *ngIf="active" [width]="300" [height]="350" (close)="closeForm()">
   <kendo-dialog-titlebar class="x-bg-primary x-font">
-    {{ isNew ? "Új PROVK" : "Szerkesztés" }}
+    {{
+      isNew ? ("form.newN" | translate) + " PROVK" : ("form.edit" | translate)
+    }}
   </kendo-dialog-titlebar>
   <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
     <kendo-formfield>
@@ -19,18 +21,21 @@
       <kendo-textbox hidden formControlName="month"></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="period" text="Periódus"></kendo-label>
+      <kendo-label
+        [for]="period"
+        [text]="'form.period' | translate"
+      ></kendo-label>
       <kendo-datepicker
         #period
         formControlName="period"
         activeView="year"
         bottomView="year"
-        format="yyyy.MM"
+        format="y"
         [min]="minDate"
         [max]="maxDate"
         [formatPlaceholder]="{
-          year: 'Év',
-          month: 'Hónap',
+          year: 'columns.year' | translate,
+          month: 'columns.month' | translate,
           day: '',
           hour: '',
           minute: '',
@@ -40,10 +45,13 @@
         class="x-datepicker-sm"
       >
       </kendo-datepicker>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="versions" text="Verziók száma"></kendo-label>
+      <kendo-label
+        [for]="versions"
+        [text]="'form.versionNumber' | translate"
+      ></kendo-label>
       <kendo-numerictextbox
         #versions
         formControlName="versions"
@@ -52,7 +60,7 @@
         class="x-numerictextbox-sm"
       >
       </kendo-numerictextbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <!-- hidden submit button in order to get work the submit event on enter -->
     <button type="submit" hidden></button>
@@ -64,8 +72,9 @@
       icon="cancel"
       (click)="onCancel()"
       class="x-btn-light click-light"
+      translate
     >
-      Mégsem
+      form.cancel
     </button>
     <button
       type="submit"
@@ -73,8 +82,9 @@
       icon="save"
       class="x-btn-primary click-primary"
       (click)="onSave()"
+      translate
     >
-      Mentés
+      form.save
     </button>
   </kendo-dialog-actions>
 </kendo-dialog>

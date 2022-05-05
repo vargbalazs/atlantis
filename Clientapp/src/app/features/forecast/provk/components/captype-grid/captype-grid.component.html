@@ -6,8 +6,9 @@
       icon="edit"
       (click)="editAllRows()"
       *ngIf="!isInEditMode"
+      translate
     >
-      Szerkesztés
+      form.edit
     </button>
     <button
       kendoButton
@@ -15,34 +16,35 @@
       icon="save"
       (click)="saveChanges()"
       *ngIf="isInEditMode"
+      translate
     >
-      Mentés
+      form.save
     </button>
   </ng-template>
   <kendo-grid-column field="id" title="ID" [hidden]="true"></kendo-grid-column>
   <kendo-grid-column
     field="capGroup"
-    title="Kap. csop."
+    [title]="'columns.capGroup' | translate"
     [editable]="false"
   ></kendo-grid-column>
   <kendo-grid-column
     field="capName"
-    title="Kap. név"
+    [title]="'columns.capName' | translate"
     [editable]="false"
   ></kendo-grid-column>
   <kendo-grid-column
     field="invNr"
-    title="Leltári szám"
+    [title]="'columns.invNr' | translate"
     [editable]="false"
   ></kendo-grid-column>
   <kendo-grid-column
     field="unit"
-    title="Kap. egys."
+    [title]="'columns.capUnit' | translate"
     [editable]="false"
   ></kendo-grid-column>
   <kendo-grid-column
     field="value"
-    title="Előrejelzés"
+    [title]="'columns.forecast' | translate"
     format="{0:n0}"
     [editable]="true"
     [class]="'k-text-right'"
@@ -72,13 +74,13 @@
         "
         popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
       >
-        Kötelező mező
+        {{ "form.required" | translate }}
       </kendo-popup>
     </ng-template>
   </kendo-grid-column>
   <kendo-grid-column
     field="normalCap"
-    title="Normál éves kapacitás"
+    [title]="'columns.normalCap' | translate"
     filter="numeric"
     format="{0:n0}"
     [editable]="false"
@@ -87,7 +89,7 @@
   </kendo-grid-column>
   <kendo-grid-column
     field="fixRate"
-    title="Fix egységdíj"
+    [title]="'columns.fixRate' | translate"
     filter="numeric"
     format="{0:n2}"
     [editable]="false"
@@ -103,12 +105,9 @@
     [footerClass]="'k-text-right'"
   >
     <ng-template kendoGridFooterTemplate>
-      Összesen: {{ sumBa | number: "1.0-0" }}
+      {{ "columns.total" | translate }}: {{ sumBa | number: "1.0-0" }}
     </ng-template>
   </kendo-grid-column>
-  <ng-template kendoGridNoRecordsTemplate>
-    Nincs megjelenítendő adat
-  </ng-template>
 </kendo-grid>
 <loading-overlay
   [visible]="loadingOverlayVisible | async"

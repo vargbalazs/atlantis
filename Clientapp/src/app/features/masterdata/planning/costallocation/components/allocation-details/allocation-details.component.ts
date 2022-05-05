@@ -8,6 +8,7 @@ import { MsgDialogService } from '../../../../../../shared/services/msgdialog.se
 import { CostAllocationService } from '../../services/costallocation.service';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'allocation-details',
@@ -47,7 +48,8 @@ export class AllocationDetailsComponent {
     private msgDialogService: MsgDialogService,
     private costAllocationService: CostAllocationService,
     private customNotificationService: CustomNotificationService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private translateService: TranslateService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -111,8 +113,8 @@ export class AllocationDetailsComponent {
     ) {
       this.msgDialogService
         .showDialog(
-          'Átterhelés',
-          'A kiválasztott költséghely már használatban van',
+          this.translateService.instant('sidebar.costAllocations'),
+          this.translateService.instant('dialog.costCenterAlreadyInUse'),
           [{ text: 'OK', primary: true }]
         )
         .result.subscribe((result) => {
@@ -188,8 +190,8 @@ export class AllocationDetailsComponent {
   removeHandler({ dataItem }: { dataItem: CostAllocationDetail }) {
     this.msgDialogService
       .showDialog(
-        'Átterhelés',
-        'Valóban törölni szeretnéd a kiválasztott elemet?',
+        this.translateService.instant('sidebar.costAllocations'),
+        this.translateService.instant('dialog.confirmDelete'),
         [{ text: 'Nem' }, { text: 'Igen', primary: true }]
       )
       .result.subscribe((result) => {
@@ -250,11 +252,14 @@ export class AllocationDetailsComponent {
 
   onSave() {
     // save only if the sum percent = 100
-    if (this.calculateSumPercent() !== 100) {
+    if (
+      this.calculateSumPercent() !== 100 &&
+      this.costAllocationDetails.length > 0
+    ) {
       this.msgDialogService
         .showDialog(
-          'Átterhelés',
-          'A felosztandó költséghelyeknek 100%-ot kell kiadniuk',
+          this.translateService.instant('sidebar.costAllocations'),
+          this.translateService.instant('dialog.costCentersNot100'),
           [{ text: 'OK', primary: true }]
         )
         .result.subscribe((result) => {
@@ -265,27 +270,19 @@ export class AllocationDetailsComponent {
         });
     } else {
       this.costAllocationService
-        .saveAllocationDetails(this.costAllocationDetails)
+        .saveAllocationDetails(
+          this.costAllocationDetails,
+          this.costAllocation.id!
+        )
         .subscribe(() => {
           console.log('finished');
           this.closeForm();
           this.customNotificationService.showNotification(
-            'Az adatok sikeresen mentésre kerültek',
+            this.translateService.instant('notifications.saveSuccess'),
             3000,
             'success'
           );
         });
-      // setTimeout(() => {
-      //   console.log('finished');
-      //   this.closeForm();
-      //   this.notificationService.show({
-      //     content: 'Az adatok sikeresen mentésre kerültek',
-      //     hideAfter: 3000,
-      //     position: { horizontal: 'center', vertical: 'top' },
-      //     animation: { type: 'fade', duration: 400 },
-      //     type: { style: 'success', icon: true },
-      //   });
-      // }, 1500);
       console.log('saving...');
     }
   }

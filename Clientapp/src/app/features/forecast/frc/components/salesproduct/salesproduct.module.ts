@@ -12,6 +12,7 @@ import { PopupModule } from '@progress/kendo-angular-popup';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { PopupAnchorModule } from 'src/app/shared/directives/popup.anchor-target.module';
 import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/loading-overlay.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [SalesProductComponent],
@@ -27,6 +28,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
     InputsModule,
     PopupAnchorModule,
     LoadingOverlayModule,
+    TranslateModule,
   ],
   providers: [FrcService],
   exports: [SalesProductComponent],

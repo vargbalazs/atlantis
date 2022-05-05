@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import {
   HttpErrorResponse,
   HttpEvent,
@@ -20,7 +20,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     private loaderService: LoaderService,
     private userService: UserService,
     private authService: AuthService,
-    private translateService: TranslateService
+    private readonly injector: Injector
   ) {}
 
   intercept(
@@ -53,8 +53,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               'error'
             );
           } else {
+            const translateService = this.injector.get(TranslateService);
             this.customNotificationService.showNotification(
-              this.translateService.instant('notifications.unknownError'),
+              translateService.instant('notifications.unknownError'),
               3000,
               'error'
             );

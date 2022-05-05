@@ -9,4 +9,5 @@ export type drawerItem = {
   parentId: string;
   children?: drawerItem[];
   routePath?: string;
+  translateId?: string;
 };

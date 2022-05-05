@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -18,7 +19,8 @@ export class LanguageComponent extends Crud<Language> implements OnInit {
     protected msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     protected languageService: LanguageService,
-    loaderService: LoaderService
+    loaderService: LoaderService,
+    private translateService: TranslateService
   ) {
     super(
       msgDialogService,
@@ -47,22 +49,22 @@ export class LanguageComponent extends Crud<Language> implements OnInit {
           case 'firstLangShouldBeDefault':
             this.msgDialogService.showDialog(
               'Atlantis',
-              'Az első nyelvnek alapértelmezettnek kell lennie. Ez később módosítható.',
-              [{ text: 'Ok' }]
+              this.translateService.instant('dialog.firstLangIsDefault'),
+              [{ text: 'Ok', primary: true }]
             );
             return false;
           case 'multipleDefaultLang':
             this.msgDialogService.showDialog(
               'Atlantis',
-              'Csak egy alapértelmezett nyelv létezhet',
-              [{ text: 'Ok' }]
+              this.translateService.instant('dialog.onlyOneDefaultLang'),
+              [{ text: 'Ok', primary: true }]
             );
             return false;
           case 'noDefaultLang':
             this.msgDialogService.showDialog(
               'Atlantis',
-              'Egy alapértelmezett nyelvnek lennie kell',
-              [{ text: 'Ok' }]
+              this.translateService.instant('dialog.oneDefaultLang'),
+              [{ text: 'Ok', primary: true }]
             );
             return false;
           case 'checkOk':

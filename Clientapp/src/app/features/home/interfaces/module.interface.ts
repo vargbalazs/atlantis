@@ -4,4 +4,5 @@ export interface ModuleInterface {
   hovered?: boolean;
   icon?: string;
   date?: Date;
+  translateId?: string;
 }

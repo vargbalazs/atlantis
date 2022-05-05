@@ -1,22 +1,32 @@
 <kendo-dialog *ngIf="active" [width]="300" [height]="450" (close)="closeForm()">
   <kendo-dialog-titlebar class="x-bg-primary x-font">
-    {{ isNew ? "Új nyelv" : "Szerkesztés" }}
+    {{
+      isNew
+        ? ("form.newF" | translate) + " " + ("columns.lang" | translate)
+        : ("form.edit" | translate)
+    }}
   </kendo-dialog-titlebar>
   <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
     <kendo-formfield>
       <kendo-textbox hidden formControlName="id"></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="isoCode" text="ISO kód"></kendo-label>
+      <kendo-label
+        [for]="isoCode"
+        [text]="'form.isoCode' | translate"
+      ></kendo-label>
       <kendo-textbox #isoCode formControlName="isoCode" class="x-textbox-sm">
       </kendo-textbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="name" text="Nyelv"></kendo-label>
+      <kendo-label
+        [for]="name"
+        [text]="'columns.lang' | translate"
+      ></kendo-label>
       <kendo-textbox #name formControlName="name" class="x-textbox-sm">
       </kendo-textbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
       <div class="k-checkbox-wrap">
@@ -29,7 +39,7 @@
         <kendo-label
           class="k-checkbox-label"
           [for]="defaultLang"
-          text="Alapértelmezett"
+          [text]="'form.default' | translate"
         ></kendo-label>
       </div>
     </kendo-formfield>
@@ -43,8 +53,9 @@
       icon="cancel"
       (click)="onCancel()"
       class="x-btn-light click-light"
+      translate
     >
-      Mégsem
+      form.cancel
     </button>
     <button
       type="submit"
@@ -52,8 +63,9 @@
       icon="save"
       class="x-btn-primary click-primary"
       (click)="onSave()"
+      translate
     >
-      Mentés
+      form.save
     </button>
   </kendo-dialog-actions>
 </kendo-dialog>

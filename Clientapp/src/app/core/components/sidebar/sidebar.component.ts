@@ -28,6 +28,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
   private newItems: drawerItem[] = [];
   private toggleSub!: Subscription;
   private searchBoxSub!: Subscription;
+  private registerModuleSub!: Subscription;
   searching = false;
   searchTerm: string = '';
 
@@ -75,11 +76,19 @@ export class SideBarComponent implements OnInit, OnDestroy {
         }
       }
     );
+    // sub for registering the recently visited items
+    this.registerModuleSub = this.homeService.registerModule.subscribe(
+      (module) => {
+        const modules = this.homeService.getVisitedItemsFromLocalStorage();
+        this.homeService.registerRecentlyVisitedModule(modules, module);
+      }
+    );
   }
 
   ngOnDestroy() {
     this.toggleSub.unsubscribe();
     this.searchBoxSub.unsubscribe();
+    this.registerModuleSub.unsubscribe();
   }
 
   onSelect(e: DrawerSelectEvent): void {
@@ -103,6 +112,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
           routePath: this.item.routePath,
           icon: 'calendar-date',
           date: new Date(),
+          translateId: this.item.translateId,
         };
         this.homeService.registerModule.next(module);
       }

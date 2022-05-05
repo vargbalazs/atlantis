@@ -6,6 +6,7 @@ import { TasksModule } from '../task/tasks.module';
 import { RecentlyVisitedModule } from '../recently-visited/recently-visited.module';
 import { HomeService } from '../../services/home.service';
 import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/loading-overlay.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -15,6 +16,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
     TasksModule,
     RecentlyVisitedModule,
     LoadingOverlayModule,
+    TranslateModule,
   ],
   providers: [HomeService],
   exports: [HomeComponent],

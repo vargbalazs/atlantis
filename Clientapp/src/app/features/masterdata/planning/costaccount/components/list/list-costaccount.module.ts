@@ -11,6 +11,7 @@ import { CopyModule } from 'src/app/shared/components/copy-entity/copy.module';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { CopyService } from '../../services/copy.service';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [CostAccountComponent],
@@ -24,6 +25,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     LoadingOverlayModule,
     CopyModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [CostAccountService, CopyService],
   exports: [CostAccountComponent],
