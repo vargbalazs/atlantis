@@ -29,7 +29,7 @@ export const kendoHuMessages: TranslatedLang = {
       ['kendo.grid.filterDateToday', 'Ma'],
       ['kendo.grid.noRecords', 'Nincs megjelenítendő adat'],
       ['kendo.datepicker.today', 'Ma'],
-      ['kendo.upload.dropFilesHere', 'Húzz ide egy fájl'],
+      ['kendo.upload.dropFilesHere', 'Húzz ide egy fájlt'],
       [
         'kendo.upload.invalidFileExtension',
         'A fájl kiterjesztése nem megfelelő',

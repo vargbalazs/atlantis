@@ -174,7 +174,7 @@
     "onlyOneDefaultLang": "Csak egy alapértelmezett nyelv létezhet",
     "oneDefaultLang": "Egy alapértelmezett nyelvnek lennie kell",
     "costCenterAlreadyInUse": "A kiválasztott költséghely már használatban van",
-    "costCentersNot100": "A felosztandó költséghelyeknek 100%-ot kell kiadniuk",
+    "costCentersNot100": "A terhelendő költséghelyeknek 100%-ot kell kiadniuk",
     "sumDoesntMatch": "A havi összegek összesenje nem egyezik a megadott éves összeggel",
     "planVersion": "Tervverzió",
     "verStatusChange": "Valóban meg szeretnéd változtatni a tervverzió státuszát?",

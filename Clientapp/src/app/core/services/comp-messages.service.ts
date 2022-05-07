@@ -1,11 +1,13 @@
 import { MessageService } from '@progress/kendo-angular-l10n';
 import { kendoDeMessages } from '../i18n/kendo-de.messages';
 import { kendoHuMessages } from '../i18n/kendo-hu.messages';
+import { kendoEnMessages } from '../i18n/kendo-en.messages';
 import { TranslatedLang } from '../interfaces/translated-lang.interface';
 
 const translatedLanguages: TranslatedLang[] = [
   kendoHuMessages,
   kendoDeMessages,
+  kendoEnMessages,
 ];
 
 export class ComponentMessagesService extends MessageService {
