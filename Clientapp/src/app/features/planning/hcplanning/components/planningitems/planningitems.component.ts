@@ -95,13 +95,14 @@ export class HcPlanningItemsComponent
     private jobService: JobService,
     private costAccountService: CostAccountService,
     private differs: IterableDiffers,
-    private translateService: TranslateService
+    protected translateService: TranslateService
   ) {
     super(
       msgDialogService,
       notificationService,
       hcPlanningService,
-      loaderService
+      loaderService,
+      translateService
     );
     this.differ = differs.find([]).create(null!);
   }

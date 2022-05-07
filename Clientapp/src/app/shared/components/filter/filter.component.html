@@ -4,9 +4,9 @@
   [height]="!planning ? 400 : 530"
   (close)="closeForm()"
 >
-  <kendo-dialog-titlebar class="x-bg-primary x-font"
-    >Szűrés</kendo-dialog-titlebar
-  >
+  <kendo-dialog-titlebar class="x-bg-primary x-font">{{
+    "form.filter" | translate
+  }}</kendo-dialog-titlebar>
   <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
     <kendo-formfield>
       <kendo-textbox
@@ -16,7 +16,10 @@
       ></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="company" text="Gazdasági egység"></kendo-label>
+      <kendo-label
+        [for]="company"
+        [text]="'columns.company' | translate"
+      ></kendo-label>
       <kendo-combobox
         #company
         formControlName="company"
@@ -27,11 +30,8 @@
         (valueChange)="companyChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
       <kendo-textbox
@@ -41,7 +41,10 @@
       ></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="plant" text="Gyár"></kendo-label>
+      <kendo-label
+        [for]="plant"
+        [text]="'columns.plant' | translate"
+      ></kendo-label>
       <kendo-combobox
         #plant
         formControlName="plant"
@@ -52,26 +55,27 @@
         (valueChange)="plantChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
       <kendo-label
         [for]="year"
-        text="{{ monthOverview ? 'Év/hónap' : 'Év' }}"
+        text="{{
+          monthOverview
+            ? ('columns.year' | translate) + '/' + ('columns.month' | translate)
+            : ('columns.year' | translate)
+        }}"
       ></kendo-label>
       <kendo-datepicker
         #year
         formControlName="year"
         [activeView]="monthOverview ? yearView : decadeView"
         [bottomView]="monthOverview ? yearView : decadeView"
-        format="{{ monthOverview ? 'yyyy.MM' : 'yyyy' }}"
+        format="{{ monthOverview ? 'y' : 'yyyy' }}"
         [formatPlaceholder]="{
-          year: 'Év',
-          month: monthOverview ? 'Hónap' : '',
+          year: 'columns.year' | translate,
+          month: monthOverview ? ('columns.month' | translate) : '',
           day: '',
           hour: '',
           minute: '',
@@ -81,7 +85,7 @@
         class="x-datepicker-sm"
       >
       </kendo-datepicker>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield *ngIf="planning || frc">
       <kendo-textbox
@@ -93,7 +97,7 @@
     <kendo-formfield *ngIf="planning || frc">
       <kendo-label
         [for]="costAccType"
-        text="Költségszámítási típus"
+        [text]="'form.costAccType' | translate"
       ></kendo-label>
       <kendo-combobox
         #costAccType
@@ -105,11 +109,8 @@
         (valueChange)="costAccTypeChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield *ngIf="showAllCostCenter">
       <div class="k-checkbox-wrap">
@@ -123,7 +124,7 @@
         <kendo-label
           class="k-checkbox-label"
           [for]="all"
-          text="Összes költséghely"
+          [text]="'form.allCostCenters' | translate"
         ></kendo-label>
       </div>
     </kendo-formfield>
@@ -135,7 +136,10 @@
       ></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield *ngIf="planning">
-      <kendo-label [for]="costCenter" text="Költséghely"></kendo-label>
+      <kendo-label
+        [for]="costCenter"
+        [text]="'columns.costCenter' | translate"
+      ></kendo-label>
       <kendo-multicolumncombobox
         #costCenter
         formControlName="costCenter"
@@ -149,15 +153,20 @@
         (valueChange)="costCenterChange($event)"
         class="x-combobox-sm"
       >
-        <kendo-combobox-column field="code" title="Költséghely" [width]="100">
+        <kendo-combobox-column
+          field="code"
+          [title]="'columns.costCenter' | translate"
+          [width]="100"
+        >
         </kendo-combobox-column>
-        <kendo-combobox-column field="name" title="Megnevezés" [width]="200">
+        <kendo-combobox-column
+          field="name"
+          [title]="'columns.name' | translate"
+          [width]="200"
+        >
         </kendo-combobox-column>
-        <ng-template kendoMultiColumnComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-multicolumncombobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <!-- hidden submit button in order to get work the submit event on enter -->
     <button type="submit" hidden></button>
@@ -169,8 +178,9 @@
       icon="cancel"
       (click)="onCancel()"
       class="x-btn-light click-light"
+      translate
     >
-      Mégsem
+      form.cancel
     </button>
     <button
       type="submit"
@@ -178,8 +188,9 @@
       icon="filter"
       class="x-btn-primary click-primary"
       (click)="onSave()"
+      translate
     >
-      Szűrés
+      form.filter
     </button>
   </kendo-dialog-actions>
 </kendo-dialog>

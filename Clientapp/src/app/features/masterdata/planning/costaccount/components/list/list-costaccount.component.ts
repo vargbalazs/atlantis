@@ -23,13 +23,14 @@ export class CostAccountComponent extends Crud<CostAccount> implements OnInit {
     private costaccountService: CostAccountService,
     private copyService: CopyService,
     loaderService: LoaderService,
-    private translateService: TranslateService
+    protected translateService: TranslateService
   ) {
     super(
       msgDialogService,
       notificationService,
       costaccountService,
-      loaderService
+      loaderService,
+      translateService
     );
   }
 

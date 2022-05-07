@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { CapUnit } from 'src/app/features/masterdata/production/capunit/models/capunit.model';
 import { Crud } from 'src/app/shared/classes/crud.class';
@@ -16,13 +17,15 @@ export class CapUnitComponent extends Crud<CapUnit> implements OnInit {
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     private capGroupService: CapUnitService,
-    loaderService: LoaderService
+    loaderService: LoaderService,
+    translateService: TranslateService
   ) {
     super(
       msgDialogService,
       notificationService,
       capGroupService,
-      loaderService
+      loaderService,
+      translateService
     );
   }
 

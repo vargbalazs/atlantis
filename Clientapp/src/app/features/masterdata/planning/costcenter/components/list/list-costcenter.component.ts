@@ -23,13 +23,14 @@ export class CostCenterComponent extends Crud<CostCenter> implements OnInit {
     private costcenterService: CostCenterService,
     loaderService: LoaderService,
     private copyService: CopyService,
-    private translateService: TranslateService
+    protected translateService: TranslateService
   ) {
     super(
       msgDialogService,
       notificationService,
       costcenterService,
-      loaderService
+      loaderService,
+      translateService
     );
   }
 

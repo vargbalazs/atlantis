@@ -77,13 +77,14 @@ export class CostPlanningItemsComponent
     private taskService: TaskService,
     private costAccountService: CostAccountService,
     private differs: IterableDiffers,
-    private translateService: TranslateService
+    protected translateService: TranslateService
   ) {
     super(
       msgDialogService,
       notificationService,
       costPlanningService,
-      loaderService
+      loaderService,
+      translateService
     );
     this.differ = differs.find([]).create(null!);
   }

@@ -1,6 +1,10 @@
 <kendo-dialog *ngIf="active" [width]="400" [height]="250" (close)="closeForm()">
   <kendo-dialog-titlebar class="x-bg-primary x-font">
-    {{ isNew ? "Új feladat" : "Szerkesztés" }}
+    {{
+      isNew
+        ? ("form.newF" | translate) + " " + ("form.task" | translate)
+        : ("form.edit" | translate)
+    }}
   </kendo-dialog-titlebar>
   <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
     <kendo-formfield>
@@ -13,13 +17,13 @@
       <kendo-textbox hidden formControlName="taskStatus"></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="task" text="Feladat"></kendo-label>
+      <kendo-label [for]="task" [text]="'form.task' | translate"></kendo-label>
       <kendo-textbox
         #task
         formControlName="taskName"
         class="x-textbox-sm"
       ></kendo-textbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <!-- hidden submit button in order to get work the submit event on enter -->
     <button type="submit" hidden></button>
@@ -31,8 +35,9 @@
       icon="cancel"
       (click)="onCancel()"
       class="x-btn-light click-light"
+      translate
     >
-      Mégsem
+      form.cancel
     </button>
     <button
       type="submit"
@@ -40,8 +45,9 @@
       icon="save"
       class="x-btn-primary click-primary"
       (click)="onSave()"
+      translate
     >
-      Mentés
+      form.save
     </button>
     <button
       type="submit"
@@ -50,8 +56,9 @@
       *ngIf="!isNew"
       (click)="onTaskDone()"
       class="x-btn-outline-primary click-primary"
+      translate
     >
-      Elintézve
+      form.done
     </button>
   </kendo-dialog-actions>
 </kendo-dialog>

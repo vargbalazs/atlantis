@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { CostGroup } from 'src/app/features/masterdata/planning/costgroup/models/costgroup.model';
 import { Crud } from 'src/app/shared/classes/crud.class';
@@ -16,13 +17,15 @@ export class CostGroupComponent extends Crud<CostGroup> implements OnInit {
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     private costgroupService: CostGroupService,
-    loaderService: LoaderService
+    loaderService: LoaderService,
+    translateService: TranslateService
   ) {
     super(
       msgDialogService,
       notificationService,
       costgroupService,
-      loaderService
+      loaderService,
+      translateService
     );
   }
 

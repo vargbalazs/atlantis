@@ -10,6 +10,7 @@ import { Company } from 'src/app/features/masterdata/general/company/models/comp
 import { Plant } from 'src/app/features/masterdata/general/plant/models/plant.model';
 import { CostAccountingType } from 'src/app/features/masterdata/planning/costacctype/models/costacctype.model';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'list-frc',
@@ -34,10 +35,17 @@ export class FrcComponent extends Crud<Frc> implements OnInit {
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     loaderService: LoaderService,
+    translateService: TranslateService,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    super(msgDialogService, notificationService, frcService, loaderService);
+    super(
+      msgDialogService,
+      notificationService,
+      frcService,
+      loaderService,
+      translateService
+    );
   }
 
   ngOnInit() {

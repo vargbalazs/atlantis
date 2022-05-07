@@ -35,13 +35,14 @@ export class CostAllocationComponent
     loaderService: LoaderService,
     private copyService: CopyService,
     private costCenterService: CostCenterService,
-    private translateService: TranslateService
+    protected translateService: TranslateService
   ) {
     super(
       msgDialogService,
       notificationService,
       costAllocationService,
-      loaderService
+      loaderService,
+      translateService
     );
   }
 

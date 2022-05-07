@@ -56,6 +56,7 @@
     "save": "Speichern",
     "change": "Ändern",
     "copy": "Kopieren",
+    "done": "Erledigt",
     "details": "Details",
     "newFrc": "Neues FRC",
     "version": "Version",
@@ -124,7 +125,14 @@
     "upload": "Hochladen",
     "uploadButtonSuffix": "",
     "startWizard": "Wizard starten",
-    "dataFile": "Datei"
+    "dataFile": "Datei",
+    "copyFromYear": "Kopieren aus diesem Jahr",
+    "sourceYear": "Quelljahr",
+    "copyToYear": "Kopieren in dieses Jahr",
+    "targetYear": "Zieljahr",
+    "copyInfo": "Kopieren ist nur dann möglich, wenn im Zieljahr unter dem ausgewählten Werk es kein einziges zu kopierendes Objekt existiert.",
+    "allCostCenters": "Alle Kostenstellen",
+    "task": "Aufgabe"
   },
   "notifications": {
     "forgotPwdEmailSent": "Das neue Passwort wurde an die angegebene E-mail Adresse gesendet",
@@ -138,7 +146,9 @@
     "copySuccess": "Die Daten wurden erfolgreich kopiert",
     "taskAddedSuccess": "Die Aufgabe wurde erfolgreich hinzugefügt",
     "taskEditedSuccess": "Die Aufgabe wurde erfolgreich geändert",
-    "statusChangedSuccess": "Der Status wurde erfolgreich geändert"
+    "statusChangedSuccess": "Der Status wurde erfolgreich geändert",
+    "addedSuccess": "Das neue Element wurde erfolgreich hinzugefügt",
+    "editedSuccess": "Die Änderungen wurden erfolgreich gespeichert"
   },
   "about": {
     "descr": "Controlling Software für Planung, Forecasting und Plan-Ist Analysen",
@@ -152,6 +162,7 @@
     "generateNewPasswordSuccess": "Das neue Passwort wurde an die eingestellte E-mail Adresse gesendet",
     "no": "Nein",
     "yes": "Ja",
+    "delete": "Löschen",
     "unsavedChanges": "Es gibt nicht gespeicherte Änderungen. Sie müssen zuerst gespeichert werden.",
     "noHcBudget": "Für die ausgewählte Abteilung gibt es noch keine Planzahlen (z. B. Budget), so ist das Forecasting nicht möglich.",
     "confirmDelete": "Möchtest du das ausgewählte Element wirklich löschen?",
@@ -166,7 +177,8 @@
     "costCentersNot100": "Die Kostenstellen müssen 100% ergeben",
     "sumDoesntMatch": "Die Summe der Monatsbeträge stimmt mit dem angegebenen Jahresbetrag nicht überein",
     "planVersion": "Planversion",
-    "verStatusChange": "Möchtest du den Status der Planversion wirklich ändern?"
+    "verStatusChange": "Möchtest du den Status der Planversion wirklich ändern?",
+    "sourceAndTargetAreTheSame": "Quell- und Zieljahr dürfen nicht das gleiche sein"
   },
   "headers": {
     "registeredUsers": "Registrierte Benutzer",

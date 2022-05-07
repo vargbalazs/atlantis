@@ -56,6 +56,7 @@
     "save": "Mentés",
     "change": "Módosítás",
     "copy": "Másolás",
+    "done": "Elintézve",
     "details": "Részletek",
     "newFrc": "Új FRC",
     "version": "Verzió",
@@ -124,7 +125,14 @@
     "upload": "Feltöltés",
     "uploadButtonSuffix": "gombra.",
     "startWizard": "Varázsló indítása",
-    "dataFile": "Adatállomány"
+    "dataFile": "Adatállomány",
+    "copyFromYear": "Másolás ebből az évből",
+    "sourceYear": "Forrásév",
+    "copyToYear": "Másolás ebbe az évbe",
+    "targetYear": "Célév",
+    "copyInfo": "Másolás csak akkor lehetséges, ha a cél évben az adott gyár alatt még egy másolandó objektum sem lett létrehozva",
+    "allCostCenters": "Összes költséghely",
+    "task": "Feladat"
   },
   "notifications": {
     "forgotPwdEmailSent": "Az új jelszót kiküldtük a megadott e-mail címre.",
@@ -138,7 +146,9 @@
     "copySuccess": "A másolás sikeresen megtörtént",
     "taskAddedSuccess": "Az új feladat sikeresen rögzítve lett",
     "taskEditedSuccess": "A feladat sikeresen módosítva lett",
-    "statusChangedSuccess": "A státusz sikeresen módosításra került"
+    "statusChangedSuccess": "A státusz sikeresen módosításra került",
+    "addedSuccess": "Az új elem sikeresen rögzítve lett",
+    "editedSuccess": "A módosítások sikeresen mentésre kerültek"
   },
   "about": {
     "descr": "Controlling szoftver tervezéshez, előrejelzéshez, terv-tény elemzéshez",
@@ -152,6 +162,7 @@
     "generateNewPasswordSuccess": "Az új jelszó ki lett küldve a beállított e-mail címre",
     "no": "Nem",
     "yes": "Igen",
+    "delete": "Törlés",
     "unsavedChanges": "Mentetlen változások vannak. Először mentsd őket.",
     "noHcBudget": "A kiválasztott részleghez még nincsenek tervszámok (pl. budget), így az előrejelzés sem lehetséges.",
     "confirmDelete": "Valóban törölni szeretnéd a kiválasztott elemet?",
@@ -166,7 +177,8 @@
     "costCentersNot100": "A felosztandó költséghelyeknek 100%-ot kell kiadniuk",
     "sumDoesntMatch": "A havi összegek összesenje nem egyezik a megadott éves összeggel",
     "planVersion": "Tervverzió",
-    "verStatusChange": "Valóban meg szeretnéd változtatni a tervverzió státuszát?"
+    "verStatusChange": "Valóban meg szeretnéd változtatni a tervverzió státuszát?",
+    "sourceAndTargetAreTheSame": "A forrásév és a célév nem lehet ugyanaz"
   },
   "headers": {
     "registeredUsers": "Regisztrált felhasználók",

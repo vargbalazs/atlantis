@@ -9,6 +9,7 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { IconsModule } from '@progress/kendo-angular-icons';
 import { FilterComponent } from './filter.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [FilterComponent],
@@ -22,6 +23,7 @@ import { FilterComponent } from './filter.component';
     DropDownsModule,
     DateInputsModule,
     IconsModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [FilterComponent],

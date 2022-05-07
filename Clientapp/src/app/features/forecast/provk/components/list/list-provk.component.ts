@@ -39,11 +39,17 @@ export class ProvkComponent extends Crud<Provk> implements OnInit {
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     loaderService: LoaderService,
-    private translateService: TranslateService,
+    protected translateService: TranslateService,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    super(msgDialogService, notificationService, provkService, loaderService);
+    super(
+      msgDialogService,
+      notificationService,
+      provkService,
+      loaderService,
+      translateService
+    );
   }
 
   ngOnInit() {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { CostResp } from 'src/app/features/masterdata/planning/costresp/models/costresp.model';
 import { Crud } from 'src/app/shared/classes/crud.class';
@@ -16,13 +17,15 @@ export class CostRespComponent extends Crud<CostResp> implements OnInit {
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     private costrespService: CostRespService,
-    loaderService: LoaderService
+    loaderService: LoaderService,
+    translateService: TranslateService
   ) {
     super(
       msgDialogService,
       notificationService,
       costrespService,
-      loaderService
+      loaderService,
+      translateService
     );
   }
 

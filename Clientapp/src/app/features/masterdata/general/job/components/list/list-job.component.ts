@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { Job } from 'src/app/features/masterdata/general/job/models/job.model';
 import { Crud } from 'src/app/shared/classes/crud.class';
@@ -16,9 +17,10 @@ export class JobComponent extends Crud<Job> implements OnInit {
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     private jobService: JobService,
-    loaderService: LoaderService
+    loaderService: LoaderService,
+    translateService: TranslateService
   ) {
-    super(msgDialogService, notificationService, jobService, loaderService);
+    super(msgDialogService, notificationService, jobService, loaderService, translateService);
   }
 
   ngOnInit() {

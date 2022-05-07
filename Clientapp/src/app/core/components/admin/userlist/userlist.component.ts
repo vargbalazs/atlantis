@@ -27,9 +27,15 @@ export class UserListComponent extends Crud<User> {
     protected userService: UserService,
     loaderService: LoaderService,
     private customNotificationService: CustomNotificationService,
-    private translateService: TranslateService
+    protected translateService: TranslateService
   ) {
-    super(msgDialogService, notificationService, userService, loaderService);
+    super(
+      msgDialogService,
+      notificationService,
+      userService,
+      loaderService,
+      translateService
+    );
   }
 
   ngOnInit() {

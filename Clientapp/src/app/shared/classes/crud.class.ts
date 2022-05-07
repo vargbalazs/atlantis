@@ -7,6 +7,7 @@ import { IRepository } from '../interfaces/repository.interface';
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { LoaderService } from '../services/loader.service';
 import { first } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 export abstract class Crud<T extends { id?: number }> {
   gridData!: GridDataResult;
@@ -23,7 +24,8 @@ export abstract class Crud<T extends { id?: number }> {
     protected msgDialogService: MsgDialogService,
     protected notificationService: NotificationService,
     protected repositoryService: IRepository<T>,
-    protected loaderService: LoaderService
+    protected loaderService: LoaderService,
+    protected translateService: TranslateService
   ) {
     this.isNew = false;
     this.loadingOverlayVisible = this.loaderService.isLoading;
@@ -59,7 +61,7 @@ export abstract class Crud<T extends { id?: number }> {
         entity.id = id;
         this.gridData.data = [...this.gridData.data, entity];
         this.showNotification(
-          'Az új elem sikeresen rögzítve lett',
+          this.translateService.instant('notifications.addedSuccess'),
           3000,
           'success'
         );
@@ -72,7 +74,7 @@ export abstract class Crud<T extends { id?: number }> {
           item.id === entity.id ? entity : item
         );
         this.showNotification(
-          'A módosítások sikeresen mentésre kerültek',
+          this.translateService.instant('notifications.editedSuccess'),
           3000,
           'success'
         );
@@ -91,9 +93,12 @@ export abstract class Crud<T extends { id?: number }> {
     this.dialogType = 'danger';
     this.msgDialogService
       .showDialog(
-        'Törlés',
-        'Valóban törölni szeretnéd a kiválasztott elemet?',
-        [{ text: 'Nem' }, { text: 'Igen', primary: true }]
+        this.translateService.instant('dialog.delete'),
+        this.translateService.instant('dialog.confirmDelete'),
+        [
+          { text: this.translateService.instant('dialog.no') },
+          { text: this.translateService.instant('dialog.yes'), primary: true },
+        ]
       )
       .result.subscribe((result) => {
         // the properties on the result are not direct accessible, that's why this hack
@@ -126,7 +131,7 @@ export abstract class Crud<T extends { id?: number }> {
         (item) => item.id !== entity.id
       );
       this.showNotification(
-        'A kiválasztott elem sikeresen törölve lett',
+        this.translateService.instant('notifications.deleteSuccess'),
         3000,
         'success'
       );

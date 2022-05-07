@@ -23,13 +23,14 @@ export class CapGroupComponent extends Crud<CapGroup> implements OnInit {
     private capGroupService: CapGroupService,
     loaderService: LoaderService,
     private copyService: CopyService,
-    private translateService: TranslateService
+    protected translateService: TranslateService
   ) {
     super(
       msgDialogService,
       notificationService,
       capGroupService,
-      loaderService
+      loaderService,
+      translateService
     );
   }
 

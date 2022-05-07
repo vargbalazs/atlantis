@@ -10,6 +10,7 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { IconsModule } from '@progress/kendo-angular-icons';
 import { ConfirmDialogStyleModule } from '../../directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [CopyComponent],
@@ -24,6 +25,7 @@ import { ConfirmDialogStyleModule } from '../../directives/confirmdialog/confirm
     DateInputsModule,
     IconsModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [CopyComponent],

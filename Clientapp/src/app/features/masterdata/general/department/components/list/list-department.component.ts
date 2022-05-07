@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { Department } from 'src/app/features/masterdata/general/department/models/department.model';
 import { Crud } from 'src/app/shared/classes/crud.class';
@@ -16,13 +17,15 @@ export class DepartmentComponent extends Crud<Department> implements OnInit {
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     private departmentService: DepartmentService,
-    loaderService: LoaderService
+    loaderService: LoaderService,
+    translateService: TranslateService
   ) {
     super(
       msgDialogService,
       notificationService,
       departmentService,
-      loaderService
+      loaderService,
+      translateService
     );
   }
 

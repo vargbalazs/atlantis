@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { CostAccountingType } from 'src/app/features/masterdata/planning/costacctype/models/costacctype.model';
 import { Crud } from 'src/app/shared/classes/crud.class';
@@ -19,13 +20,15 @@ export class CostAccountingTypeComponent
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     private costacctypeService: CostAccountingTypeService,
-    loaderService: LoaderService
+    loaderService: LoaderService,
+    translateService: TranslateService
   ) {
     super(
       msgDialogService,
       notificationService,
       costacctypeService,
-      loaderService
+      loaderService,
+      translateService
     );
   }
 

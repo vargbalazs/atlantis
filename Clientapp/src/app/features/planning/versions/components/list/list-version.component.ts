@@ -23,9 +23,15 @@ export class PlanningVersionComponent
     protected versionService: PlanningVersionService,
     loaderService: LoaderService,
     private customNotificationService: CustomNotificationService,
-    private translateService: TranslateService
+    protected translateService: TranslateService
   ) {
-    super(msgDialogService, notificationService, versionService, loaderService);
+    super(
+      msgDialogService,
+      notificationService,
+      versionService,
+      loaderService,
+      translateService
+    );
   }
 
   ngOnInit() {

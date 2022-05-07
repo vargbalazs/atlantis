@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { SalesProduct } from 'src/app/features/masterdata/production/salesproduct/models/salesproduct.model';
 import { Crud } from 'src/app/shared/classes/crud.class';
@@ -20,13 +21,15 @@ export class SalesProductComponent
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     private salesProductService: SalesProductService,
-    loaderService: LoaderService
+    loaderService: LoaderService,
+    translateService: TranslateService
   ) {
     super(
       msgDialogService,
       notificationService,
       salesProductService,
-      loaderService
+      loaderService,
+      translateService
     );
   }
 

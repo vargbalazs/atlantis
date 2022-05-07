@@ -20,13 +20,14 @@ export class LanguageComponent extends Crud<Language> implements OnInit {
     notificationService: NotificationService,
     protected languageService: LanguageService,
     loaderService: LoaderService,
-    private translateService: TranslateService
+    protected translateService: TranslateService
   ) {
     super(
       msgDialogService,
       notificationService,
       languageService,
-      loaderService
+      loaderService,
+      translateService
     );
   }
 

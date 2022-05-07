@@ -28,10 +28,16 @@ export class UserMenuComponent extends Crud<User> implements OnInit {
     loaderService: LoaderService,
     private authService: AuthService,
     private customNotificationService: CustomNotificationService,
-    private translateService: TranslateService,
+    protected translateService: TranslateService,
     private router: Router
   ) {
-    super(msgDialogService, notificationService, userService, loaderService);
+    super(
+      msgDialogService,
+      notificationService,
+      userService,
+      loaderService,
+      translateService
+    );
   }
 
   ngOnInit() {

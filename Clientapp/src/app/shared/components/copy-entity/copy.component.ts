@@ -9,6 +9,7 @@ import { PlantService } from 'src/app/features/masterdata/general/plant/services
 import { MsgDialogService } from '../../services/msgdialog.service';
 import { forkJoin } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'copy-entity',
@@ -43,7 +44,8 @@ export class CopyComponent
   constructor(
     private companyService: CompanyService,
     private plantService: PlantService,
-    protected msgDialogService: MsgDialogService
+    protected msgDialogService: MsgDialogService,
+    private translateService: TranslateService
   ) {
     super(msgDialogService);
   }
@@ -92,9 +94,9 @@ export class CopyComponent
       copyCostCenter.targetYear?.getFullYear()
     ) {
       this.msgDialogService.showDialog(
-        'Másolás',
-        'A forrásév és a célév nem lehet ugyanaz',
-        [{ text: 'Ok' }]
+        this.translateService.instant('form.copy'),
+        this.translateService.instant('dialog.sourceAndTargetAreTheSame'),
+        [{ text: 'Ok', primary: true }]
       );
       return false;
     } else {

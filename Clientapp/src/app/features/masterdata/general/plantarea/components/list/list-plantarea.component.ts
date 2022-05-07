@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { NotificationService } from '@progress/kendo-angular-notification';
 import { PlantArea } from 'src/app/features/masterdata/general/plantarea/models/plantarea.model';
 import { Crud } from 'src/app/shared/classes/crud.class';
@@ -16,13 +17,15 @@ export class PlantAreaComponent extends Crud<PlantArea> implements OnInit {
     msgDialogService: MsgDialogService,
     notificationService: NotificationService,
     private plantAreaService: PlantAreaService,
-    loaderService: LoaderService
+    loaderService: LoaderService,
+    translateService: TranslateService
   ) {
     super(
       msgDialogService,
       notificationService,
       plantAreaService,
-      loaderService
+      loaderService,
+      translateService
     );
   }
 
