@@ -1,4 +1,4 @@
-<div class="component-header">Kapacitástervezés</div>
+<div class="component-header" translate>sidebar.capPlanning</div>
 <div class="grid">
   <kendo-grid
     [kendoGridReactiveEditing]="createFormGroup"
@@ -13,8 +13,9 @@
         class="x-btn-primary click-primary"
         icon="filter"
         (click)="showFilterForm()"
+        translate
       >
-        Szűrés
+        form.filter
       </button>
     </ng-template>
     <kendo-grid-column
@@ -24,22 +25,22 @@
     ></kendo-grid-column>
     <kendo-grid-column
       field="capType"
-      title="Kap. típ."
+      [title]="'columns.capType' | translate"
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
       field="capGroup"
-      title="Kap. csop."
+      [title]="'columns.capGroup' | translate"
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
       field="capName"
-      title="Kap. név"
+      [title]="'columns.capName' | translate"
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
       field="unit"
-      title="Kap. egys."
+      [title]="'columns.capUnit' | translate"
       [editable]="false"
     ></kendo-grid-column>
     <kendo-grid-column
@@ -71,7 +72,7 @@
           "
           popupClass="k-widget k-tooltip k-tooltip-error k-validator-tooltip"
         >
-          Kötelező mező
+          {{ "form.required" | translate }}
         </kendo-popup>
       </ng-template>
     </kendo-grid-column>
@@ -110,9 +111,6 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
   </kendo-grid>
 </div>
 <filter

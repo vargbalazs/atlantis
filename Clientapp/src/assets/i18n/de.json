@@ -49,6 +49,7 @@
     "userNameAlreadyExists": "Dieser Benutzername existiert bereits",
     "wrongEmailFormat": "Falsches E-mailformat",
     "emailAlreadyExists": "Diese Emailadresse existiert bereits",
+    "wrongFileFormat": "Dateityp nicht erlaubt",
     "close": "Schliessen",
     "edit": "Ändern",
     "cancel": "Abbrechen",
@@ -60,6 +61,7 @@
     "version": "Version",
     "comment": "Sonst. Bemerkungen",
     "back": "Zurück",
+    "next": "Weiter",
     "filter": "Filtern",
     "newPosition": "Neue Zeile",
     "versions": "Versionen",
@@ -103,7 +105,26 @@
     "capName": "Kapazitätsname",
     "capUnit": "Kapazitätseinheit",
     "capUnitName": "Einheitsbezeichnung",
-    "salesProduct": "Produkt"
+    "salesProduct": "Produkt",
+    "planningPosition": "Planungsposition",
+    "currency": "Währung",
+    "amount": "Betrag in Hauswährung",
+    "distribution": "Aufteilung",
+    "individualDistr": "Indiv.",
+    "equalDistr": "Gleich",
+    "selectCostCenter": "Kostenstelle selektieren",
+    "amountInCurrency": "Betrag in Fremdwährung",
+    "costAssign": "Kosten zuordnen",
+    "amountZero": "Betrag",
+    "closed": "Abgeschlossen",
+    "expandCollapse": "Ausklappen / Einklappen",
+    "browseFile": "Datei auswählen",
+    "file": "Datei",
+    "allRequiredDataCollected": "Das Wizard hat alle notwendigen Daten gesammelt. Um die Datei hochzuladen, klicke auf",
+    "upload": "Hochladen",
+    "uploadButtonSuffix": "",
+    "startWizard": "Wizard starten",
+    "dataFile": "Datei"
   },
   "notifications": {
     "forgotPwdEmailSent": "Das neue Passwort wurde an die angegebene E-mail Adresse gesendet",
@@ -114,7 +135,10 @@
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten. Wende dich an den Systemadministrator.",
     "saveSuccess": "Die Daten wurden erfolgreich gespeichert",
     "deleteSuccess": "Das ausgewählte Element wurde erfolgreich gelöscht",
-    "copySuccess": "Die Daten wurden erfolgreich kopiert"
+    "copySuccess": "Die Daten wurden erfolgreich kopiert",
+    "taskAddedSuccess": "Die Aufgabe wurde erfolgreich hinzugefügt",
+    "taskEditedSuccess": "Die Aufgabe wurde erfolgreich geändert",
+    "statusChangedSuccess": "Der Status wurde erfolgreich geändert"
   },
   "about": {
     "descr": "Controlling Software für Planung, Forecasting und Plan-Ist Analysen",
@@ -139,7 +163,10 @@
     "onlyOneDefaultLang": "Es darf nur eine voreingestellte Sprache existieren",
     "oneDefaultLang": "Es muss eine voreingestellte Sprache vorhanden sein",
     "costCenterAlreadyInUse": "Auf die ausgewählte Kostenstelle wird bereits umgelegt",
-    "costCentersNot100": "Die Kostenstellen müssen 100% ergeben"
+    "costCentersNot100": "Die Kostenstellen müssen 100% ergeben",
+    "sumDoesntMatch": "Die Summe der Monatsbeträge stimmt mit dem angegebenen Jahresbetrag nicht überein",
+    "planVersion": "Planversion",
+    "verStatusChange": "Möchtest du den Status der Planversion wirklich ändern?"
   },
   "headers": {
     "registeredUsers": "Registrierte Benutzer",
@@ -175,11 +202,26 @@
     "fixRate": "Fixsatz",
     "savedVersions": "Gespeicherte Versionen",
     "month": "Monat",
+    "day": "Tag",
     "product": "Produkt",
     "unit": "Einheit",
     "lang": "Sprache",
     "plantArea": "Werksbereich",
-    "usedForPersPlanningShort": "Für Pers.Planung"
+    "usedForPersPlanningShort": "Für Pers.Planung",
+    "invoiceAmount": "Wert in BW",
+    "transAmount": "Wert in TW",
+    "transCurr": "TW",
+    "bookingNr": "Buchungsnummer",
+    "refNr": "Referenznummer",
+    "partnerObj": "Partnerobjekt",
+    "partnerObjName": "Bezeichnung Partnerobj.",
+    "contAccNumb": "Konto Gegenbuchung",
+    "contAccName": "Bezeichnung Konto Gegenbuchung",
+    "bookingDate": "Buchungsdatum",
+    "docDate": "Belegdatum",
+    "postingDate": "Erfassungsdatum",
+    "variance": "Abweichung",
+    "cumulative": "Kumuliert"
   },
   "appbar": {
     "search": "Suchen...",
@@ -239,5 +281,12 @@
     "costPlanning": "Kostenstellenplanung",
     "hcPlanning": "Personalplanung",
     "capPlanning": "Kapazitätsplanung"
+  },
+  "contextMenu": {
+    "addTask": "Aufgabe hinzufügen",
+    "editTask": "Aufgabe ändern"
+  },
+  "breadCrumb": {
+    "overview": "Übersicht"
   }
 }

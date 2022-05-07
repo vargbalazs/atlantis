@@ -442,6 +442,10 @@ body {
   line-height: 1;
 }
 
+.k-dropdowngrid-popup {
+  overflow-y: scroll;
+}
+
 .k-numerictextbox .k-numeric-wrap {
   display: flex;
   width: 100%;

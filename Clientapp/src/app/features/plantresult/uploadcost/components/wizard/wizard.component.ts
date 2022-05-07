@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { StepperComponent } from '@progress/kendo-angular-layout';
 import { forkJoin } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -40,20 +41,28 @@ export class WizardComponent {
 
   steps = [
     {
-      label: 'Gazdasági egység',
+      label: this.translateService.instant('columns.company'),
       icon: 'globe-outline',
       isValid: this.isStepValid,
       validate: this.shouldValidate,
     },
     {
-      label: 'Adatállomány',
+      label: this.translateService.instant('form.dataFile'),
       icon: 'file-excel',
       isValid: this.isStepValid,
       validate: this.shouldValidate,
       disabled: true,
     },
-    { label: 'Áttekintő', icon: 'preview', disabled: true },
-    { label: 'Feltöltés', icon: 'upload', disabled: true },
+    {
+      label: this.translateService.instant('breadCrumb.overview'),
+      icon: 'preview',
+      disabled: true,
+    },
+    {
+      label: this.translateService.instant('form.upload'),
+      icon: 'upload',
+      disabled: true,
+    },
   ];
 
   uploadCost = new uploadCost();
@@ -81,7 +90,8 @@ export class WizardComponent {
   constructor(
     private companyService: CompanyService,
     private plantService: PlantService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private translateService: TranslateService
   ) {}
 
   start() {

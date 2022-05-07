@@ -15,6 +15,7 @@ import { CreateEditTaskModule } from '../../../../../shared/components/task/task
 import { TaskService } from '../../../../../shared/services/task.service';
 import { CostAssignModule } from '../costassign/costassign.module';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [HcPlanningItemsComponent],
@@ -33,6 +34,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     ExcelModule,
     CostAssignModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [HcPlanningService, TaskService],
   exports: [HcPlanningItemsComponent],

@@ -1,4 +1,7 @@
-<kendo-label [for]="company" text="Gazdasági egység"></kendo-label>
+<kendo-label
+  [for]="company"
+  [text]="'columns.company' | translate"
+></kendo-label>
 <kendo-textbox
   #company
   class="x-textbox-sm x-readonly"
@@ -6,7 +9,7 @@
   [value]="form.get('entity.company')?.value.name"
 >
 </kendo-textbox>
-<kendo-label [for]="plant" text="Gyár"></kendo-label>
+<kendo-label [for]="plant" [text]="'columns.plant' | translate"></kendo-label>
 <kendo-textbox
   #plant
   class="x-textbox-sm x-readonly"
@@ -14,7 +17,10 @@
   [value]="form.get('entity.plant')?.value.code"
 >
 </kendo-textbox>
-<kendo-label [for]="month" text="Év/hónap"></kendo-label>
+<kendo-label
+  [for]="month"
+  [text]="('columns.year' | translate) + '/' + ('columns.month' | translate)"
+></kendo-label>
 <kendo-textbox
   #month
   class="x-textbox-sm x-readonly"
@@ -22,7 +28,7 @@
   [value]="monthValue"
 >
 </kendo-textbox>
-<kendo-label [for]="fileName" text="Fájl"></kendo-label>
+<kendo-label [for]="fileName" [text]="'form.file' | translate"></kendo-label>
 <kendo-textbox
   #fileName
   class="x-textbox-sm x-readonly"

@@ -7,7 +7,10 @@
     ></kendo-textbox>
   </kendo-formfield>
   <kendo-formfield>
-    <kendo-label [for]="company" text="Gazdasági egység"></kendo-label>
+    <kendo-label
+      [for]="company"
+      [text]="'columns.company' | translate"
+    ></kendo-label>
     <kendo-combobox
       #company
       formControlName="company"
@@ -18,11 +21,8 @@
       (valueChange)="companyChange($event)"
       class="x-combobox-sm"
     >
-      <ng-template kendoComboBoxNoDataTemplate>
-        Nincs megjelenítendő adat
-      </ng-template>
     </kendo-combobox>
-    <kendo-formerror>Kötelező mező</kendo-formerror>
+    <kendo-formerror translate>form.required</kendo-formerror>
   </kendo-formfield>
   <kendo-formfield>
     <kendo-textbox
@@ -32,7 +32,10 @@
     ></kendo-textbox>
   </kendo-formfield>
   <kendo-formfield>
-    <kendo-label [for]="plant" text="Gyár"></kendo-label>
+    <kendo-label
+      [for]="plant"
+      [text]="'columns.plant' | translate"
+    ></kendo-label>
     <kendo-combobox
       #plant
       formControlName="plant"
@@ -43,23 +46,25 @@
       (valueChange)="plantChange($event)"
       class="x-combobox-sm"
     >
-      <ng-template kendoComboBoxNoDataTemplate>
-        Nincs megjelenítendő adat
-      </ng-template>
     </kendo-combobox>
-    <kendo-formerror>Kötelező mező</kendo-formerror>
+    <kendo-formerror translate>form.required</kendo-formerror>
   </kendo-formfield>
   <kendo-formfield>
-    <kendo-label [for]="month" text="Év/hónap"></kendo-label>
+    <kendo-label
+      [for]="month"
+      [text]="
+        ('columns.year' | translate) + '/' + ('columns.month' | translate)
+      "
+    ></kendo-label>
     <kendo-datepicker
       #month
       formControlName="month"
       activeView="year"
       bottomView="year"
-      format="yyyy.MM"
+      format="y"
       [formatPlaceholder]="{
-        year: 'Év',
-        month: 'Hónap',
+        year: 'columns.year' | translate,
+        month: 'columns.month' | translate,
         day: '',
         hour: '',
         minute: '',
@@ -68,6 +73,6 @@
       class="x-datepicker-sm"
     >
     </kendo-datepicker>
-    <kendo-formerror>Kötelező mező</kendo-formerror>
+    <kendo-formerror translate>form.required</kendo-formerror>
   </kendo-formfield>
 </ng-container>

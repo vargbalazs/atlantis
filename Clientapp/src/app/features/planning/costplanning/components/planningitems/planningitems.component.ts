@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  DoCheck,
+  IterableDiffers,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
 import { CostPlanningItem } from '../../models/costplanningitem.model';
 import { FilterEntity } from 'src/app/shared/models/filter.model';
@@ -17,6 +23,7 @@ import { LoaderService } from 'src/app/shared/services/loader.service';
 import { CostAccountService } from 'src/app/features/masterdata/planning/costaccount/services/costaccount.service';
 import { TaskType } from 'src/app/shared/enums/tasktype.enum';
 import { TaskStatus } from 'src/app/shared/enums/taskstatus.enum';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'cost-planningitems',
@@ -28,7 +35,7 @@ import { TaskStatus } from 'src/app/shared/enums/taskstatus.enum';
 })
 export class CostPlanningItemsComponent
   extends Crud<CostPlanningItem>
-  implements OnInit
+  implements OnInit, DoCheck
 {
   filterEntity!: FilterEntity;
   filterEntityInput!: FilterEntity;
@@ -44,19 +51,20 @@ export class CostPlanningItemsComponent
   ];
   contextMenuItems: any[] = [
     {
-      text: 'Feladat hozzáadása',
+      text: this.translateService.instant('contextMenu.addTask'),
       icon: 'file',
       tag: 'newTask',
       disabled: false,
     },
     {
-      text: 'Feladat szerkesztése',
+      text: this.translateService.instant('contextMenu.editTask'),
       icon: 'edit',
       tag: 'editTask',
       disabled: false,
     },
   ];
   contextItem!: CostPlanningItem;
+  differ: any;
 
   @ViewChild('grid') grid!: GridComponent;
   @ViewChild('gridmenu') gridContextMenu!: ContextMenuComponent;
@@ -67,7 +75,9 @@ export class CostPlanningItemsComponent
     private costPlanningService: CostPlanningService,
     loaderService: LoaderService,
     private taskService: TaskService,
-    private costAccountService: CostAccountService
+    private costAccountService: CostAccountService,
+    private differs: IterableDiffers,
+    private translateService: TranslateService
   ) {
     super(
       msgDialogService,
@@ -75,11 +85,21 @@ export class CostPlanningItemsComponent
       costPlanningService,
       loaderService
     );
+    this.differ = differs.find([]).create(null!);
   }
 
   ngOnInit() {
     this.gridData = { data: [], total: 0 };
     this.checkFunctionsOnSave.push(this.checkSum);
+  }
+
+  ngDoCheck() {
+    const change = this.differ.diff(this.gridData.data);
+    if (change) {
+      setTimeout(() => {
+        this.grid.autoFitColumns();
+      }, 0);
+    }
   }
 
   showFilterForm() {
@@ -136,8 +156,8 @@ export class CostPlanningItemsComponent
             this.isMsgDialog = true;
             this.dialogType = 'danger';
             this.msgDialogService.showDialog(
-              'Költségtervezés',
-              'A havi összegek összesenje nem egyezik a megadott éves összeggel',
+              this.translateService.instant('sidebar.costPlanning'),
+              this.translateService.instant('dialog.sumDoesntMatch'),
               [{ text: 'Ok', primary: true }]
             );
             return false;
@@ -210,13 +230,13 @@ export class CostPlanningItemsComponent
       }, 0);
       if (this.isNew) {
         this.showNotification(
-          'Az új feladat sikeresen rögzítve lett',
+          this.translateService.instant('notifications.taskAddedSuccess'),
           3000,
           'success'
         );
       } else {
         this.showNotification(
-          'A feladat sikeresen módosítva lett',
+          this.translateService.instant('notifications.taskEditedSuccess'),
           3000,
           'success'
         );
@@ -234,7 +254,7 @@ export class CostPlanningItemsComponent
         }
       });
       this.showNotification(
-        'A feladat sikeresen módosítva lett',
+        this.translateService.instant('notifications.taskEditedSuccess'),
         3000,
         'success'
       );

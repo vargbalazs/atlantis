@@ -1,4 +1,4 @@
-<div class="component-header">Létszámtervezés</div>
+<div class="component-header" translate>sidebar.hcPlanning</div>
 <div class="grid">
   <kendo-grid
     [kendoGridBinding]="gridData.data"
@@ -16,16 +16,18 @@
         class="x-btn-primary click-primary"
         icon="filter"
         (click)="showFilterForm()"
+        translate
       >
-        Költséghely választás
+        form.selectCostCenter
       </button>
       <button
         kendoGridAddCommand
         class="x-btn-primary click-primary"
         icon="file"
         *ngIf="filtered"
+        translate
       >
-        Új
+        form.new
       </button>
       <button
         kendoGridExcelCommand
@@ -42,10 +44,14 @@
     ></kendo-grid-column>
     <kendo-grid-column
       field="costGroup.name"
-      title="Költségcsoport"
+      [title]="'columns.costGroup' | translate"
       [width]="150"
     ></kendo-grid-column>
-    <kendo-grid-column field="job.name" title="Munkakör" [width]="150">
+    <kendo-grid-column
+      field="job.name"
+      [title]="'columns.job' | translate"
+      [width]="150"
+    >
       <ng-template kendoGridCellTemplate let-dataItem>
         <div class="item-name-container">
           <span>{{ dataItem.job.name }}</span>
@@ -63,7 +69,7 @@
     </kendo-grid-column>
     <kendo-grid-column
       field="departmentName"
-      title="Részleg"
+      [title]="'columns.department' | translate"
       [width]="150"
     ></kendo-grid-column>
     <kendo-grid-column
@@ -102,9 +108,6 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
     <kendo-grid-excel
       fileName="Items.xlsx"
       [collapsible]="true"

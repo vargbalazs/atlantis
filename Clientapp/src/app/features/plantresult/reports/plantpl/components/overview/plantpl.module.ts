@@ -11,6 +11,7 @@ import { CondFormatModule } from 'src/app/shared/components/cond-format/cond-for
 import { RouterModule } from '@angular/router';
 import { ReportService } from 'src/app/shared/services/report.service';
 import { TooltipModule } from '@progress/kendo-angular-tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [PlantPlOverviewComponent],
@@ -26,6 +27,7 @@ import { TooltipModule } from '@progress/kendo-angular-tooltip';
     CondFormatModule,
     RouterModule,
     TooltipModule,
+    TranslateModule,
   ],
   providers: [ReportService],
   exports: [PlantPlOverviewComponent],

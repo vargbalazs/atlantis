@@ -1,7 +1,9 @@
 <kendo-dialog *ngIf="active" [width]="300" [height]="530" (close)="closeForm()">
-  <kendo-dialog-titlebar class="x-bg-primary x-font"
-    >Új verzió</kendo-dialog-titlebar
-  >
+  <kendo-dialog-titlebar class="x-bg-primary x-font">{{
+    isNew
+      ? ("form.newF" | translate) + " " + ("form.version" | translate)
+      : ("form.edit" | translate)
+  }}</kendo-dialog-titlebar>
   <form class="k-form" [formGroup]="form" (ngSubmit)="onSave()">
     <kendo-formfield>
       <kendo-textbox hidden formControlName="id"></kendo-textbox>
@@ -17,7 +19,10 @@
       ></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="company" text="Gazdasági egység"></kendo-label>
+      <kendo-label
+        [for]="company"
+        [text]="'columns.company' | translate"
+      ></kendo-label>
       <kendo-combobox
         #company
         formControlName="company"
@@ -28,11 +33,8 @@
         (valueChange)="companyChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
       <kendo-textbox
@@ -42,7 +44,10 @@
       ></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="plant" text="Gyár"></kendo-label>
+      <kendo-label
+        [for]="plant"
+        [text]="'columns.plant' | translate"
+      ></kendo-label>
       <kendo-combobox
         #plant
         formControlName="plant"
@@ -53,11 +58,8 @@
         (valueChange)="plantChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
       <kendo-textbox
@@ -67,7 +69,10 @@
       ></kendo-textbox>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="yearDate" text="Év"></kendo-label>
+      <kendo-label
+        [for]="yearDate"
+        [text]="'columns.year' | translate"
+      ></kendo-label>
       <kendo-datepicker
         #yearDate
         formControlName="yearDate"
@@ -75,7 +80,7 @@
         bottomView="decade"
         format="yyyy"
         [formatPlaceholder]="{
-          year: ' ',
+          year: 'columns.year' | translate,
           month: '',
           day: '',
           hour: '',
@@ -86,7 +91,7 @@
         class="x-datepicker-sm"
       >
       </kendo-datepicker>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
       <kendo-textbox
@@ -98,7 +103,7 @@
     <kendo-formfield>
       <kendo-label
         [for]="costAccType"
-        text="Költségszámítási típus"
+        [text]="'form.costAccType' | translate"
       ></kendo-label>
       <kendo-combobox
         #costAccType
@@ -110,20 +115,20 @@
         (valueChange)="costAccTypeChange($event)"
         class="x-combobox-sm"
       >
-        <ng-template kendoComboBoxNoDataTemplate>
-          Nincs megjelenítendő adat
-        </ng-template>
       </kendo-combobox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield>
-      <kendo-label [for]="descr" text="Leírás"></kendo-label>
+      <kendo-label
+        [for]="descr"
+        [text]="'form.descr' | translate"
+      ></kendo-label>
       <kendo-textbox
         #descr
         formControlName="descr"
         class="x-textbox-sm"
       ></kendo-textbox>
-      <kendo-formerror>Kötelező mező</kendo-formerror>
+      <kendo-formerror translate>form.required</kendo-formerror>
     </kendo-formfield>
     <!-- hidden submit button in order to get work the submit event on enter -->
     <button type="submit" hidden></button>
@@ -135,8 +140,9 @@
       icon="cancel"
       (click)="onCancel()"
       class="x-btn-light click-light"
+      translate
     >
-      Mégsem
+      form.cancel
     </button>
     <button
       type="submit"
@@ -144,8 +150,9 @@
       icon="save"
       class="x-btn-primary click-primary"
       (click)="onSave()"
+      translate
     >
-      Mentés
+      form.save
     </button>
   </kendo-dialog-actions>
 </kendo-dialog>

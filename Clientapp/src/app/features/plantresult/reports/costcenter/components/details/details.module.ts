@@ -9,6 +9,7 @@ import { CondFormatModule } from 'src/app/shared/components/cond-format/cond-for
 import { NavigationModule } from '@progress/kendo-angular-navigation';
 import { ReportService } from 'src/app/shared/services/report.service';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [CostCenterDetailsComponent],
@@ -22,6 +23,7 @@ import { RouterModule } from '@angular/router';
     CondFormatModule,
     NavigationModule,
     RouterModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [CostCenterDetailsComponent],

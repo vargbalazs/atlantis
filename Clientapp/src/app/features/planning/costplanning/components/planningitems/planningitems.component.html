@@ -1,9 +1,8 @@
-<div class="component-header">Költségtervezés</div>
+<div class="component-header" translate>sidebar.costPlanning</div>
 <div class="grid">
   <kendo-grid
     [kendoGridBinding]="gridData.data"
     [sortable]="true"
-    [groupable]="true"
     [resizable]="true"
     (add)="addHandler()"
     [group]="groups"
@@ -17,16 +16,18 @@
         class="x-btn-primary click-primary"
         icon="filter"
         (click)="showFilterForm()"
+        translate
       >
-        Költséghely választás
+        form.selectCostCenter
       </button>
       <button
         kendoGridAddCommand
         class="x-btn-primary click-primary"
         icon="file"
         *ngIf="filtered"
+        translate
       >
-        Új
+        form.new
       </button>
       <button
         kendoGridExcelCommand
@@ -43,20 +44,24 @@
     ></kendo-grid-column>
     <kendo-grid-column
       field="costGroup.name"
-      title="Költségcsoport"
+      [title]="'columns.costGroup' | translate"
       [width]="65"
     ></kendo-grid-column>
     <kendo-grid-column
       field="costAccount.accountNumber"
-      title="Főkönyvi szám"
+      [title]="'columns.accountNumber' | translate"
       [width]="65"
     ></kendo-grid-column>
     <kendo-grid-column
       field="costAccount.name"
-      title="Megnevezés"
+      [title]="'columns.name' | translate"
       [width]="65"
     ></kendo-grid-column>
-    <kendo-grid-column field="itemName" title="Tervtétel" [width]="65">
+    <kendo-grid-column
+      field="itemName"
+      [title]="'form.planningPosition' | translate"
+      [width]="65"
+    >
       <ng-template kendoGridCellTemplate let-dataItem>
         <div class="item-name-container">
           <span>{{ dataItem.itemName }}</span>
@@ -71,19 +76,19 @@
     </kendo-grid-column>
     <kendo-grid-column
       field="amountInCurrency"
-      title="Összeg id. pnem-ben"
+      [title]="'form.amountInCurrency' | translate"
       format="{0:n0}"
       [style]="{ 'text-align': 'right' }"
       [width]="65"
     ></kendo-grid-column>
     <kendo-grid-column
       field="currency.isoCode"
-      title="Pénznem"
+      [title]="'form.currency' | translate"
       [width]="65"
     ></kendo-grid-column>
     <kendo-grid-column
       field="amount"
-      title="Összeg váll. pnem-ben"
+      [title]="'form.amount' | translate"
       format="{0:n0}"
       [style]="{ 'text-align': 'right' }"
       [width]="65"
@@ -98,9 +103,17 @@
         }}</span>
       </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column field="distribution" title="Elosztás" [width]="65">
+    <kendo-grid-column
+      field="distribution"
+      [title]="'form.distribution' | translate"
+      [width]="65"
+    >
       <ng-template kendoGridCellTemplate let-dataItem>
-        {{ dataItem.distribution ? "Egyéni" : "Egyenlő" }}
+        {{
+          dataItem.distribution
+            ? ("form.individualDistr" | translate)
+            : ("form.equalDistr" | translate)
+        }}
       </ng-template>
     </kendo-grid-column>
     <kendo-grid-column
@@ -129,9 +142,6 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
     <kendo-grid-excel
       fileName="Items.xlsx"
       [collapsible]="true"

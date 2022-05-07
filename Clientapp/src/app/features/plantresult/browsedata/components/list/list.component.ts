@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { BreadCrumbItem } from '@progress/kendo-angular-navigation';
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
@@ -40,7 +41,8 @@ export class BrowseDataComponent implements OnInit {
   constructor(
     private router: Router,
     private loaderService: LoaderService,
-    private browseDataService: BrowseDataService
+    private browseDataService: BrowseDataService,
+    private translateService: TranslateService
   ) {
     this.state = this.router.getCurrentNavigation()?.extras.state;
     if (this.state) {
@@ -49,13 +51,16 @@ export class BrowseDataComponent implements OnInit {
       if (this.state.origin === 'costcenter') {
         this.costCenter = <CostCenter>this.state.costCenter;
         this.costAccount = <CostAccount>this.state.costAccount;
-        this.navItems[0].text = 'Áttekintő';
+        this.navItems[0].text = this.translateService.instant(
+          'breadCrumb.overview'
+        );
         this.navItems[1].text = this.costCenter.code;
         this.navItems[2].text = this.costAccount.accountNumber;
       }
       if (this.state.origin === 'plantpl') {
         this.costAccount = <CostAccount>this.state.costAccount;
-        this.navItems[0].text = 'Gyári eredménykimutatás';
+        this.navItems[0].text =
+          this.translateService.instant('sidebar.plantPl');
         this.navItems[1].text = this.costAccount.accountNumber;
         this.navItems.pop();
       }

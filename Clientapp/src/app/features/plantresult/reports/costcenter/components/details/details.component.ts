@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { BreadCrumbItem } from '@progress/kendo-angular-navigation';
 import { CostCenter } from 'src/app/features/masterdata/planning/costcenter/models/costcenter.model';
@@ -34,7 +35,7 @@ export class CostCenterDetailsComponent implements OnInit {
   state: any;
   navItems: BreadCrumbItem[] = [
     {
-      text: 'Áttekintő',
+      text: this.translateService.instant('breadCrumb.overview'),
     },
     {
       text: '',
@@ -47,7 +48,8 @@ export class CostCenterDetailsComponent implements OnInit {
     private router: Router,
     private reportService: ReportService,
     private loaderService: LoaderService,
-    private costCenterReportService: CostCenterReportService
+    private costCenterReportService: CostCenterReportService,
+    private translateService: TranslateService
   ) {
     this.state = this.router.getCurrentNavigation()?.extras.state;
     this.costCenter = <CostCenter>this.state.costCenter;

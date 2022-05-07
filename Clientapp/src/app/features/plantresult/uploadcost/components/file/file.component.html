@@ -1,6 +1,9 @@
 <ng-container [formGroup]="file">
   <kendo-formfield>
-    <kendo-label [for]="fileName" text="Fájl tallózása"></kendo-label>
+    <kendo-label
+      [for]="fileName"
+      [text]="'form.browseFile' | translate"
+    ></kendo-label>
     <kendo-upload
       #fileName
       [autoUpload]="false"
@@ -11,11 +14,13 @@
       formControlName="fileName"
     >
     </kendo-upload>
-    <kendo-formerror *ngIf="file.controls.fileName.errors?.required"
-      >Kötelező mező</kendo-formerror
+    <kendo-formerror *ngIf="file.controls.fileName.errors?.required" translate
+      >form.required</kendo-formerror
     >
-    <kendo-formerror *ngIf="file.controls.fileName.errors?.invalidExtension"
-      >Hibás fájlformátum</kendo-formerror
+    <kendo-formerror
+      *ngIf="file.controls.fileName.errors?.invalidExtension"
+      translate
+      >form.wrongFileFormat</kendo-formerror
     >
   </kendo-formfield>
 </ng-container>

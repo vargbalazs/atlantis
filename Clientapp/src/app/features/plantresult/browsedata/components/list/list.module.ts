@@ -9,6 +9,7 @@ import { FilterModule } from 'src/app/shared/components/filter/filter.module';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { NavigationModule } from '@progress/kendo-angular-navigation';
 import { BrowseDataService } from '../../services/browsedata.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [BrowseDataComponent],
@@ -22,6 +23,7 @@ import { BrowseDataService } from '../../services/browsedata.service';
     FilterModule,
     ExcelModule,
     NavigationModule,
+    TranslateModule,
   ],
   providers: [BrowseDataService],
   exports: [BrowseDataComponent],

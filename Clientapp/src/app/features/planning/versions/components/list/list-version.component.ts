@@ -6,6 +6,7 @@ import { MsgDialogService } from 'src/app/shared/services/msgdialog.service';
 import { PlanningVersionService } from '../../services/version.service';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'versions',
@@ -21,7 +22,8 @@ export class PlanningVersionComponent
     notificationService: NotificationService,
     protected versionService: PlanningVersionService,
     loaderService: LoaderService,
-    private customNotificationService: CustomNotificationService
+    private customNotificationService: CustomNotificationService,
+    private translateService: TranslateService
   ) {
     super(msgDialogService, notificationService, versionService, loaderService);
   }
@@ -41,17 +43,22 @@ export class PlanningVersionComponent
     this.dialogType = 'danger';
     this.msgDialogService
       .showDialog(
-        'Tervverzió',
-        'Valóban meg szeretnéd változtatni a tervverzió státuszát?',
-        [{ text: 'Nem' }, { text: 'Igen', primary: true }]
+        this.translateService.instant('dialog.planVersion'),
+        this.translateService.instant('dialog.verStatusChange'),
+        [
+          { text: this.translateService.instant('dialog.no') },
+          { text: this.translateService.instant('dialog.yes'), primary: true },
+        ]
       )
       .result.subscribe((result) => {
         const dialogResult = JSON.parse(JSON.stringify(result));
         if (dialogResult.primary) {
-          dataItem.status = 1;
+          dataItem.status = Number(!dataItem.status);
           this.versionService.update(dataItem).subscribe(() => {
             this.customNotificationService.showNotification(
-              'A státusz sikeresen módosításra került',
+              this.translateService.instant(
+                'notifications.statusChangedSuccess'
+              ),
               3000,
               'success'
             );

@@ -11,8 +11,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
 import { CondFormatModule } from 'src/app/shared/components/cond-format/cond-format.module';
 import { NavigationModule } from '@progress/kendo-angular-navigation';
 import { RouterModule } from '@angular/router';
-import { ReportService } from 'src/app/shared/services/report.service';
-import { CostCenterReportService } from '../../services/costcenter-report.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [CostCenterOverviewComponent],
@@ -29,6 +28,7 @@ import { CostCenterReportService } from '../../services/costcenter-report.servic
     CondFormatModule,
     NavigationModule,
     RouterModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [CostCenterOverviewComponent],

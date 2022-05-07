@@ -1,4 +1,4 @@
-<div class="component-header">Könyvelési adatok tallózása</div>
+<div class="component-header" translate>sidebar.browseBookings</div>
 <kendo-breadcrumb
   [items]="navItems"
   (itemClick)="onNavItemClick($event)"
@@ -20,8 +20,9 @@
         icon="filter"
         (click)="showFilterForm()"
         *ngIf="!state?.filterEntity"
+        translate
       >
-        Szűrés
+        form.filter
       </button>
       <button
         kendoGridExcelCommand
@@ -32,19 +33,23 @@
     </ng-template>
     <kendo-grid-column
       field="costCenter"
-      title="Költséghely"
+      [title]="'columns.costCenter' | translate"
       [width]="110"
     ></kendo-grid-column>
     <kendo-grid-column
       field="accountNumber"
-      title="Főkönyvi szám"
+      [title]="'columns.accountNumber' | translate"
       [width]="120"
     ></kendo-grid-column>
-    <kendo-grid-column field="accountName" title="Megnevezés" [width]="170">
+    <kendo-grid-column
+      field="accountName"
+      [title]="'columns.name' | translate"
+      [width]="170"
+    >
     </kendo-grid-column>
     <kendo-grid-column
       field="amount"
-      title="Bizonylatösszeg"
+      [title]="'columns.invoiceAmount' | translate"
       format="{0:n2}"
       [width]="130"
       [style]="{ 'text-align': 'right' }"
@@ -52,54 +57,66 @@
     ></kendo-grid-column>
     <kendo-grid-column
       field="currency"
-      title="Pénznem"
+      [title]="'form.currency' | translate"
       [width]="85"
     ></kendo-grid-column>
     <kendo-grid-column
       field="transAmount"
-      title="Tranz. tösszeg"
+      [title]="'columns.transAmount' | translate"
       format="{0:n2}"
       [width]="115"
       [style]="{ 'text-align': 'right' }"
       filter="numeric"
     ></kendo-grid-column>
-    <kendo-grid-column field="transCur" title="Trans. pnem" [width]="100">
+    <kendo-grid-column
+      field="transCur"
+      [title]="'columns.transCurr' | translate"
+      [width]="100"
+    >
     </kendo-grid-column>
-    <kendo-grid-column field="bookingNr" title="Könyvelési szám" [width]="125">
+    <kendo-grid-column
+      field="bookingNr"
+      [title]="'columns.bookingNr' | translate"
+      [width]="125"
+    >
     </kendo-grid-column>
     <kendo-grid-column
       field="refNr"
-      title="Bizonylatszám"
+      [title]="'columns.refNr' | translate"
       [width]="120"
     ></kendo-grid-column>
-    <kendo-grid-column field="partnerObj" title="Partnerobjektum" [width]="130">
+    <kendo-grid-column
+      field="partnerObj"
+      [title]="'columns.partnerObj' | translate"
+      [width]="130"
+    >
     </kendo-grid-column>
     <kendo-grid-column
       field="partnerObjName"
-      title="Partnerobj. megnevezés"
+      [title]="'columns.partnerObjName' | translate"
       [width]="170"
     >
     </kendo-grid-column>
     <kendo-grid-column
       field="contAccNumb"
-      title="Ellenkönyv. számla"
+      [title]="'columns.contAccNumb' | translate"
       [width]="140"
     >
     </kendo-grid-column>
     <kendo-grid-column
       field="contAccName"
-      title="Ellenkönyv. szla. megnev."
+      [title]="'columns.contAccName' | translate"
       [width]="180"
     >
     </kendo-grid-column>
     <kendo-grid-column
       field="period"
-      title="Periódus"
+      [title]="'form.period' | translate"
       [width]="85"
     ></kendo-grid-column>
     <kendo-grid-column
       field="bookingDate"
-      title="Könyvelési dátum"
+      [title]="'columns.bookingDate' | translate"
       format="{0:d}"
       [width]="165"
       filter="date"
@@ -109,9 +126,9 @@
           [column]="column"
           [filter]="filter"
           [formatPlaceholder]="{
-            year: 'Év',
-            month: 'Hónap',
-            day: 'Nap',
+            year: 'columns.year' | translate,
+            month: 'columns.month' | translate,
+            day: 'columns.day' | translate,
             hour: '',
             minute: '',
             second: ''
@@ -122,7 +139,7 @@
     </kendo-grid-column>
     <kendo-grid-column
       field="docDate"
-      title="Bizonylatdátum"
+      [title]="'columns.docDate' | translate"
       format="{0:d}"
       [width]="165"
     >
@@ -131,9 +148,9 @@
           [column]="column"
           [filter]="filter"
           [formatPlaceholder]="{
-            year: 'Év',
-            month: 'Hónap',
-            day: 'Nap',
+            year: 'columns.year' | translate,
+            month: 'columns.month' | translate,
+            day: 'columns.day' | translate,
             hour: '',
             minute: '',
             second: ''
@@ -144,7 +161,7 @@
     </kendo-grid-column>
     <kendo-grid-column
       field="postingDate"
-      title="Rögzítve"
+      [title]="'columns.postingDate' | translate"
       format="{0:d}"
       [width]="165"
     >
@@ -153,9 +170,9 @@
           [column]="column"
           [filter]="filter"
           [formatPlaceholder]="{
-            year: 'Év',
-            month: 'Hónap',
-            day: 'Nap',
+            year: 'columns.year' | translate,
+            month: 'columns.month' | translate,
+            day: 'columns.day' | translate,
             hour: '',
             minute: '',
             second: ''
@@ -166,12 +183,9 @@
     </kendo-grid-column>
     <kendo-grid-column
       field="userName"
-      title="Felhasználó"
+      [title]="'appbar.user' | translate"
       [width]="105"
     ></kendo-grid-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
     <kendo-grid-excel
       fileName="Items.xlsx"
       [collapsible]="true"

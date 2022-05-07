@@ -1,11 +1,12 @@
-<div class="component-header">Gyári költségek feltöltése</div>
+<div class="component-header" translate>sidebar.uploadPlantCosts</div>
 <button
   kendoButton
   [primary]="true"
   class="x-btn-primary click-primary start-wizard"
   (click)="start()"
+  translate
 >
-  Varázsló indítása
+  form.startWizard
 </button>
 <kendo-dialog
   [width]="560"
@@ -14,7 +15,7 @@
   (close)="closeWizard()"
 >
   <kendo-dialog-titlebar class="x-bg-primary x-font">
-    Gyári költségek feltöltése
+    {{ "sidebar.uploadPlantCosts" | translate }}
   </kendo-dialog-titlebar>
   <kendo-stepper
     #stepper
@@ -48,8 +49,9 @@
       class="x-btn-light click-light"
       *ngIf="currentStep !== 0"
       (click)="prev()"
+      translate
     >
-      Vissza
+      form.back
     </button>
     <button
       kendoButton
@@ -57,8 +59,9 @@
       class="x-btn-primary click-primary"
       (click)="next()"
       *ngIf="currentStep !== 3"
+      translate
     >
-      Következő
+      form.next
     </button>
     <button
       kendoButton
@@ -66,8 +69,9 @@
       class="x-btn-primary click-primary"
       (click)="submit()"
       *ngIf="currentStep === 3"
+      translate
     >
-      Feltöltés
+      form.upload
     </button>
     <loading-overlay
       [visible]="loadingOverlayVisible | async"

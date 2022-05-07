@@ -14,6 +14,7 @@ import { ContextMenuModule } from '@progress/kendo-angular-menu';
 import { CreateEditTaskModule } from '../../../../../shared/components/task/task.module';
 import { TaskService } from '../../../../../shared/services/task.service';
 import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialog/confirmdialog-style.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [CostPlanningItemsComponent],
@@ -31,6 +32,7 @@ import { ConfirmDialogStyleModule } from 'src/app/shared/directives/confirmdialo
     CreateEditTaskModule,
     ExcelModule,
     ConfirmDialogStyleModule,
+    TranslateModule,
   ],
   providers: [CostPlanningService, TaskService],
   exports: [CostPlanningItemsComponent],

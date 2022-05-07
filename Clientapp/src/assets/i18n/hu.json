@@ -49,6 +49,7 @@
     "userNameAlreadyExists": "Ez a felhasználónév nem elérhető",
     "wrongEmailFormat": "Hibás e-mail formátum",
     "emailAlreadyExists": "Ez az e-mail cím nem elérhető",
+    "wrongFileFormat": "Hibás fájlformátum",
     "close": "Bezár",
     "edit": "Szerkesztés",
     "cancel": "Mégsem",
@@ -60,6 +61,7 @@
     "version": "Verzió",
     "comment": "Egyéb megjegyzés",
     "back": "Vissza",
+    "next": "Következő",
     "filter": "Szűrés",
     "newPosition": "Új tétel",
     "versions": "Verziók",
@@ -103,7 +105,26 @@
     "capName": "Kapacitásnév",
     "capUnit": "Kapacitásegység",
     "capUnitName": "Egység megnevezés",
-    "salesProduct": "Értékesített termék"
+    "salesProduct": "Értékesített termék",
+    "planningPosition": "Tervtétel",
+    "currency": "Pénznem",
+    "amount": "Összeg váll. pnem-ben",
+    "distribution": "Elosztás módja",
+    "individualDistr": "Egyéni",
+    "equalDistr": "Egyenlő",
+    "selectCostCenter": "Költséghely választás",
+    "amountInCurrency": "Összeg id. pnem-ben",
+    "costAssign": "Költségek hozzárendelése",
+    "amountZero": "Összeg",
+    "closed": "Lezárt",
+    "expandCollapse": "Kibontás / összezárás",
+    "browseFile": "Fájl tallózása",
+    "file": "Fájl",
+    "allRequiredDataCollected": "A varázsló minden szükséges adatot összegyűjtött. Az adatok feltöltéséhez kattints a",
+    "upload": "Feltöltés",
+    "uploadButtonSuffix": "gombra.",
+    "startWizard": "Varázsló indítása",
+    "dataFile": "Adatállomány"
   },
   "notifications": {
     "forgotPwdEmailSent": "Az új jelszót kiküldtük a megadott e-mail címre.",
@@ -114,7 +135,10 @@
     "unknownError": "Ismeretlen eredetű hiba. Lépj kapcsolatba a rendszer üzemeltetőjével.",
     "saveSuccess": "Adatok sikeresen mentve",
     "deleteSuccess": "A kiválasztott elem sikeresen törölve lett",
-    "copySuccess": "A másolás sikeresen megtörtént"
+    "copySuccess": "A másolás sikeresen megtörtént",
+    "taskAddedSuccess": "Az új feladat sikeresen rögzítve lett",
+    "taskEditedSuccess": "A feladat sikeresen módosítva lett",
+    "statusChangedSuccess": "A státusz sikeresen módosításra került"
   },
   "about": {
     "descr": "Controlling szoftver tervezéshez, előrejelzéshez, terv-tény elemzéshez",
@@ -139,7 +163,10 @@
     "onlyOneDefaultLang": "Csak egy alapértelmezett nyelv létezhet",
     "oneDefaultLang": "Egy alapértelmezett nyelvnek lennie kell",
     "costCenterAlreadyInUse": "A kiválasztott költséghely már használatban van",
-    "costCentersNot100": "A felosztandó költséghelyeknek 100%-ot kell kiadniuk"
+    "costCentersNot100": "A felosztandó költséghelyeknek 100%-ot kell kiadniuk",
+    "sumDoesntMatch": "A havi összegek összesenje nem egyezik a megadott éves összeggel",
+    "planVersion": "Tervverzió",
+    "verStatusChange": "Valóban meg szeretnéd változtatni a tervverzió státuszát?"
   },
   "headers": {
     "registeredUsers": "Regisztrált felhasználók",
@@ -175,11 +202,26 @@
     "fixRate": "Fix egységdíj",
     "savedVersions": "Mentett verziók",
     "month": "Hónap",
+    "day": "Nap",
     "product": "Termék",
     "unit": "Egység",
     "lang": "Nyelv",
     "plantArea": "Gyáregység",
-    "usedForPersPlanningShort": "Létszámterv. haszn."
+    "usedForPersPlanningShort": "Létszámterv. haszn.",
+    "invoiceAmount": "Bizonylatösszeg",
+    "transAmount": "Tranz. tösszeg",
+    "transCurr": "Trans. pnem",
+    "bookingNr": "Könyvelési szám",
+    "refNr": "Bizonylatszám",
+    "partnerObj": "Partnerobjektum",
+    "partnerObjName": "Partnerobj. megnevezés",
+    "contAccNumb": "Ellenkönyv. számla",
+    "contAccName": "Ellenkönyv. szla. megnev.",
+    "bookingDate": "Könyvelési dátum",
+    "docDate": "Bizonylatdátum",
+    "postingDate": "Rögzítve",
+    "variance": "Eltérés",
+    "cumulative": "Halmozott"
   },
   "appbar": {
     "search": "Keresés...",
@@ -239,5 +281,12 @@
     "costPlanning": "Költségtervezés",
     "hcPlanning": "Létszámtervezés",
     "capPlanning": "Kapacitástervezés"
+  },
+  "contextMenu": {
+    "addTask": "Feladat hozzáadása",
+    "editTask": "Feladat szerkesztése"
+  },
+  "breadCrumb": {
+    "overview": "Áttekintő"
   }
 }

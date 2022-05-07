@@ -110,7 +110,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
         const module: ModuleInterface = {
           name: this.item.text,
           routePath: this.item.routePath,
-          icon: 'calendar-date',
+          icon: 'calendar',
           date: new Date(),
           translateId: this.item.translateId,
         };

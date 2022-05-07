@@ -40,9 +40,11 @@ export class HomeService {
     const visitedItems = <ModuleInterface[]>(
       JSON.parse(localStorage.getItem('visitedItems')!)
     );
-    visitedItems.forEach(
-      (item) => (item.name = this.translateService.instant(item.translateId!))
-    );
+    if (visitedItems) {
+      visitedItems.forEach(
+        (item) => (item.name = this.translateService.instant(item.translateId!))
+      );
+    }
     return visitedItems ? visitedItems : [];
   }
 

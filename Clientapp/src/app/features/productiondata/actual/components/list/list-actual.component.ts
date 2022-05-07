@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
 import { ActProdData } from 'src/app/features/productiondata/actual/models/act-prod-data.model';
 import { FilterEntity } from 'src/app/shared/models/filter.model';
@@ -28,7 +29,8 @@ export class ActProdDataComponent implements OnInit {
     private formBuilder: FormBuilder,
     private actProdDataService: ActProdDataService,
     private notificationService: CustomNotificationService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private translateService: TranslateService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -107,7 +109,7 @@ export class ActProdDataComponent implements OnInit {
           };
           console.log('finished');
           this.notificationService.showNotification(
-            'Adatok sikeresen mentve',
+            this.translateService.instant('notifications.saveSuccess'),
             3000,
             'success'
           );

@@ -1,4 +1,4 @@
-<div class="component-header">Költséghelyi áttekintő</div>
+<div class="component-header" translate>sidebar.costOverview</div>
 <div class="grid">
   <kendo-grid
     [kendoGridBinding]="gridData.data"
@@ -11,8 +11,9 @@
         class="x-btn-primary click-primary"
         icon="filter"
         (click)="showFilterForm()"
+        translate
       >
-        Költséghely választás
+        form.selectCostCenter
       </button>
       <button
         kendoGridExcelCommand
@@ -21,13 +22,19 @@
         *ngIf="filtered"
       ></button>
     </ng-template>
-    <kendo-grid-column-group title="Költséghely">
-      <kendo-grid-column field="plant.code" title="Gyár"></kendo-grid-column>
+    <kendo-grid-column-group [title]="'columns.costCenter' | translate">
+      <kendo-grid-column
+        field="plant.code"
+        [title]="'columns.plant' | translate"
+      ></kendo-grid-column>
       <kendo-grid-column
         field="plantArea.code"
-        title="Gyáregység"
+        [title]="'columns.plantArea' | translate"
       ></kendo-grid-column>
-      <kendo-grid-column field="costCenter.code" title="Költséghely">
+      <kendo-grid-column
+        field="costCenter.code"
+        [title]="'columns.costCenter' | translate"
+      >
         <ng-template kendoGridCellTemplate let-dataItem>
           <a
             [routerLink]="['details']"
@@ -43,11 +50,15 @@
       </kendo-grid-column>
       <kendo-grid-column
         field="costCenter.name"
-        title="Megnevezés"
+        [title]="'columns.name' | translate"
       ></kendo-grid-column>
     </kendo-grid-column-group>
     <kendo-grid-column-group
-      [title]="reportMonths.actMonth ? reportMonths.actMonth : 'Év/hónap'"
+      [title]="
+        reportMonths.actMonth
+          ? reportMonths.actMonth
+          : ('columns.year' | translate) + '/' + ('columns.month' | translate)
+      "
     >
       <kendo-grid-column
         field="budget"
@@ -62,7 +73,7 @@
       </kendo-grid-column>
       <kendo-grid-column
         field="actual"
-        title="Tény"
+        [title]="'columns.actual' | translate"
         format="{0:n0}"
         [style]="{ 'text-align': 'right' }"
         [footerStyle]="{ 'text-align': 'right' }"
@@ -73,7 +84,7 @@
       </kendo-grid-column>
       <kendo-grid-column
         field="monthDiff"
-        title="Eltérés"
+        [title]="'columns.variance' | translate"
         format="{0:n0}"
         [style]="{ 'text-align': 'right' }"
         [footerStyle]="{ 'text-align': 'right' }"
@@ -87,7 +98,11 @@
       </kendo-grid-column>
     </kendo-grid-column-group>
     <kendo-grid-column-group
-      [title]="reportMonths.cumMonth ? reportMonths.cumMonth : 'Halmozott'"
+      [title]="
+        reportMonths.cumMonth
+          ? reportMonths.cumMonth
+          : ('columns.cumulative' | translate)
+      "
     >
       <kendo-grid-column
         field="cumBudget"
@@ -102,7 +117,7 @@
       </kendo-grid-column>
       <kendo-grid-column
         field="cumActual"
-        title="Tény"
+        [title]="'columns.actual' | translate"
         format="{0:n0}"
         [style]="{ 'text-align': 'right' }"
         [footerStyle]="{ 'text-align': 'right' }"
@@ -113,7 +128,7 @@
       </kendo-grid-column>
       <kendo-grid-column
         field="cumDiff"
-        title="Eltérés"
+        [title]="'columns.variance' | translate"
         format="{0:n0}"
         [style]="{ 'text-align': 'right' }"
         [footerStyle]="{ 'text-align': 'right' }"
@@ -126,9 +141,6 @@
         </ng-template>
       </kendo-grid-column>
     </kendo-grid-column-group>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
     <kendo-grid-excel
       fileName="Items.xlsx"
       [collapsible]="true"

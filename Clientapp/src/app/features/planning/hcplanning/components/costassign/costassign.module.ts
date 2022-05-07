@@ -11,6 +11,7 @@ import { PopupModule } from '@progress/kendo-angular-popup';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/loading-overlay.module';
 import { PopupAnchorModule } from 'src/app/shared/directives/popup.anchor-target.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [CostAssignComponent],
@@ -26,6 +27,7 @@ import { PopupAnchorModule } from 'src/app/shared/directives/popup.anchor-target
     InputsModule,
     LoadingOverlayModule,
     PopupAnchorModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [CostAssignComponent],

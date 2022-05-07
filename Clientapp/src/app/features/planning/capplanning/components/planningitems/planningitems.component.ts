@@ -6,6 +6,7 @@ import { FilterEntity } from 'src/app/shared/models/filter.model';
 import { CustomNotificationService } from 'src/app/shared/services/notification.service';
 import { CapPlanningService } from '../../services/capplanning.service';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'cap-planningitems',
@@ -26,7 +27,8 @@ export class CapPlanningItemsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private capPlanningService: CapPlanningService,
     private notificationService: CustomNotificationService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private translateService: TranslateService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -107,7 +109,7 @@ export class CapPlanningItemsComponent implements OnInit {
           this.gridData = { data: planningItems, total: planningItems.length };
           console.log('finished');
           this.notificationService.showNotification(
-            'Adatok sikeresen mentve',
+            this.translateService.instant('notifications.saveSuccess'),
             3000,
             'success'
           );

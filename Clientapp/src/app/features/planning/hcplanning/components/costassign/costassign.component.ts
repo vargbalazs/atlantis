@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { GridComponent } from '@progress/kendo-angular-grid';
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
 import { LoaderService } from 'src/app/shared/services/loader.service';
@@ -46,7 +47,8 @@ export class CostAssignComponent {
     private msgDialogService: MsgDialogService,
     private hcPlanningService: HcPlanningService,
     private customNotificationService: CustomNotificationService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private translateService: TranslateService
   ) {
     this.createFormGroup = this.createFormGroup.bind(this);
   }
@@ -137,9 +139,12 @@ export class CostAssignComponent {
   removeHandler({ dataItem }: { dataItem: CostAssign }) {
     this.msgDialogService
       .showDialog(
-        'Átterhelés',
-        'Valóban törölni szeretnéd a kiválasztott elemet?',
-        [{ text: 'Nem' }, { text: 'Igen', primary: true }]
+        this.translateService.instant('sidebar.hcPlanning'),
+        this.translateService.instant('dialog.confirmDelete'),
+        [
+          { text: this.translateService.instant('dialog.no') },
+          { text: this.translateService.instant('dialog.yes'), primary: true },
+        ]
       )
       .result.subscribe((result) => {
         const dialogResult = JSON.parse(JSON.stringify(result));
@@ -195,7 +200,7 @@ export class CostAssignComponent {
           assigned: this.costAssigns.length > 0,
         });
         this.customNotificationService.showNotification(
-          'Az adatok sikeresen mentésre kerültek',
+          this.translateService.instant('notifications.saveSuccess'),
           3000,
           'success'
         );

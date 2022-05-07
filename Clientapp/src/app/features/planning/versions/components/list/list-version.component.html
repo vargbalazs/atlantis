@@ -1,4 +1,4 @@
-<div class="component-header">Tervverziók</div>
+<div class="component-header" translate>sidebar.planningVersions</div>
 <div class="grid">
   <kendo-grid
     [kendoGridBinding]="gridData.data"
@@ -12,8 +12,9 @@
         kendoGridAddCommand
         class="x-btn-primary click-primary"
         icon="file"
+        translate
       >
-        Új
+        form.new
       </button>
     </ng-template>
     <kendo-grid-column
@@ -23,23 +24,36 @@
     ></kendo-grid-column>
     <kendo-grid-column
       field="year"
-      title="Év"
+      [title]="'columns.year' | translate"
       format="d"
       filter="numeric"
     ></kendo-grid-column>
     <kendo-grid-column
       field="costAccType.name"
-      title="Költségszámítási típus"
+      [title]="'form.costAccType' | translate"
     ></kendo-grid-column>
-    <kendo-grid-column field="descr" title="Leírás"></kendo-grid-column>
-    <kendo-grid-column field="plant.code" title="Gyár"></kendo-grid-column>
+    <kendo-grid-column
+      field="descr"
+      [title]="'form.descr' | translate"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="plant.code"
+      [title]="'columns.plant' | translate"
+    ></kendo-grid-column>
     <kendo-grid-column
       field="company.name"
-      title="Gazdasági egység"
+      [title]="'columns.company' | translate"
     ></kendo-grid-column>
-    <kendo-grid-column field="status" title="Státusz">
+    <kendo-grid-column
+      field="status"
+      [title]="'columns.userStatus' | translate"
+    >
       <ng-template kendoGridCellTemplate let-dataItem>
-        {{ dataItem.status === 1 ? "Lezárt" : "Aktív" }}
+        {{
+          dataItem.status === 1
+            ? ("form.closed" | translate)
+            : ("user.active" | translate)
+        }}
       </ng-template>
     </kendo-grid-column>
     <kendo-grid-command-column [width]="70">
@@ -66,9 +80,6 @@
         ></kendo-icon>
       </ng-template>
     </kendo-grid-command-column>
-    <ng-template kendoGridNoRecordsTemplate>
-      Nincs megjelenítendő adat
-    </ng-template>
   </kendo-grid>
 </div>
 <ce-version

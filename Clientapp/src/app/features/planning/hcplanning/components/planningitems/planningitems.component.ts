@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  DoCheck,
+  IterableDiffers,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
 import { HcPlanningItem } from '../../models/hcplanningitem.model';
 import { FilterEntity } from 'src/app/shared/models/filter.model';
@@ -16,13 +22,13 @@ import { CostGroup } from 'src/app/features/masterdata/planning/costgroup/models
 import { Job } from 'src/app/features/masterdata/general/job/models/job.model';
 import { CostAccount } from 'src/app/features/masterdata/planning/costaccount/models/costaccount.model';
 import { CostAssign } from '../../models/costassign.model';
-import { costAssigns } from './costassigns';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { TaskType } from 'src/app/shared/enums/tasktype.enum';
 import { CostGroupService } from 'src/app/features/masterdata/planning/costgroup/services/costgroup.service';
 import { JobService } from 'src/app/features/masterdata/general/job/services/job.service';
 import { CostAccountService } from 'src/app/features/masterdata/planning/costaccount/services/costaccount.service';
 import { TaskStatus } from 'src/app/shared/enums/taskstatus.enum';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'hc-planningitems',
@@ -34,7 +40,7 @@ import { TaskStatus } from 'src/app/shared/enums/taskstatus.enum';
 })
 export class HcPlanningItemsComponent
   extends Crud<HcPlanningItem>
-  implements OnInit
+  implements OnInit, DoCheck
 {
   filterEntity!: FilterEntity;
   filterEntityInput!: FilterEntity;
@@ -51,19 +57,19 @@ export class HcPlanningItemsComponent
   groups!: GroupDescriptor[];
   contextMenuItems: any[] = [
     {
-      text: 'Feladat hozzáadása',
+      text: this.translateService.instant('contextMenu.addTask'),
       icon: 'file',
       tag: 'newTask',
       disabled: false,
     },
     {
-      text: 'Feladat szerkesztése',
+      text: this.translateService.instant('contextMenu.editTask'),
       icon: 'edit',
       tag: 'editTask',
       disabled: false,
     },
     {
-      text: 'Költségek hozzárendelése',
+      text: this.translateService.instant('form.costAssign'),
       icon: 'dollar',
       tag: 'costAssign',
       disabled: false,
@@ -74,6 +80,7 @@ export class HcPlanningItemsComponent
   costAssigns!: CostAssign[];
   isMsgDialog = true;
   dialogType = 'danger';
+  differ: any;
 
   @ViewChild('grid') grid!: GridComponent;
   @ViewChild('gridmenu') gridContextMenu!: ContextMenuComponent;
@@ -86,7 +93,9 @@ export class HcPlanningItemsComponent
     private taskService: TaskService,
     private costGroupService: CostGroupService,
     private jobService: JobService,
-    private costAccountService: CostAccountService
+    private costAccountService: CostAccountService,
+    private differs: IterableDiffers,
+    private translateService: TranslateService
   ) {
     super(
       msgDialogService,
@@ -94,12 +103,22 @@ export class HcPlanningItemsComponent
       hcPlanningService,
       loaderService
     );
+    this.differ = differs.find([]).create(null!);
   }
 
   ngOnInit() {
     this.gridData = { data: [], total: 0 };
     this.aggregates = this.generateAggregatesArray();
     this.groups = [{ field: 'costGroup.name', aggregates: this.aggregates }];
+  }
+
+  ngDoCheck() {
+    const change = this.differ.diff(this.gridData.data);
+    if (change) {
+      setTimeout(() => {
+        this.grid.autoFitColumns();
+      }, 0);
+    }
   }
 
   showFilterForm() {
@@ -217,13 +236,13 @@ export class HcPlanningItemsComponent
       }, 0);
       if (this.isNew) {
         this.showNotification(
-          'Az új feladat sikeresen rögzítve lett',
+          this.translateService.instant('notifications.taskAddedSuccess'),
           3000,
           'success'
         );
       } else {
         this.showNotification(
-          'A feladat sikeresen módosítva lett',
+          this.translateService.instant('notifications.taskEditedSuccess'),
           3000,
           'success'
         );
@@ -241,7 +260,7 @@ export class HcPlanningItemsComponent
         }
       });
       this.showNotification(
-        'A feladat sikeresen módosítva lett',
+        this.translateService.instant('notifications.taskEditedSuccess'),
         3000,
         'success'
       );

@@ -11,6 +11,7 @@ import { FileModule } from '../file/file.module';
 import { OverviewModule } from '../overview/overview.module';
 import { UploadFileModule } from '../upload-file/upload-file.module';
 import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/loading-overlay.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [WizardComponent],
@@ -27,6 +28,7 @@ import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/
     OverviewModule,
     UploadFileModule,
     LoadingOverlayModule,
+    TranslateModule,
   ],
   providers: [],
   exports: [WizardComponent],
