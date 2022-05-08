@@ -125,9 +125,7 @@ export class BrowseDataComponent implements OnInit {
         this.convertBookingsDate(bookings);
         this.gridData = { data: bookings, total: bookings.length };
         this.filtered = true;
-        console.log('finished');
       });
-    console.log('filtering...');
   }
 
   onNavItemClick(item: BreadCrumbItem): void {

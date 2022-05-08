@@ -125,12 +125,10 @@ export class OtherCostsComponent implements OnInit {
           this.costSaved(sender, rowIndex);
         });
       }
-      console.log('saving...');
     }
   }
 
   costSaved(sender: GridComponent, rowIndex: number) {
-    console.log('finished');
     sender.closeRow(rowIndex);
     this.notificationService.showNotification(
       this.translateService.instant('notifications.saveSuccess'),

@@ -161,9 +161,7 @@ export class ProvkComponent extends Crud<Provk> implements OnInit {
         this.maxDate = new Date(this.year, 11, 1);
         this.company = this.provks[0].company!;
         this.plant = this.provks[0].plant!;
-        console.log('finished');
       });
-    console.log('filtering...');
   }
 
   addNewVersion(provk: Provk) {

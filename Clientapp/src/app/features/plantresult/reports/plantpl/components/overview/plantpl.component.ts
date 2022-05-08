@@ -111,7 +111,6 @@ export class PlantPlOverviewComponent implements OnInit {
         this.filtered = true;
         this.reportMonths = this.reportService.setMonthHeader(filterEntity);
         this.sums = this.reportService.calculateSums(plantPl);
-        console.log('finished');
       });
   }
 

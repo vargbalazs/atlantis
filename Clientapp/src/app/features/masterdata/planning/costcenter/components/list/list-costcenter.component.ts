@@ -54,6 +54,11 @@ export class CostCenterComponent extends Crud<CostCenter> implements OnInit {
 
   saveHandlerCopyCostCenter(copyCostCenter: CopyEntity) {
     this.copyCostCenter = undefined!;
+    this.msgDialogService.showDialog(
+      'Atlantis',
+      this.translateService.instant('dialog.notAccessible'),
+      [{ text: 'Ok', primary: true }]
+    );
     // this.loadingOverlayVisible=true;
     // this.copyService
     //   .costCentersAlreadyExist(copyCostCenter)
@@ -77,14 +82,12 @@ export class CostCenterComponent extends Crud<CostCenter> implements OnInit {
     //       });
     //     }
     //   });
-    setTimeout(() => {
-      console.log('finished');
-      this.showNotification(
-        this.translateService.instant('notifications.copySuccess'),
-        3000,
-        'success'
-      );
-    }, 1500);
-    console.log('copying...');
+    // setTimeout(() => {
+    //   this.showNotification(
+    //     this.translateService.instant('notifications.copySuccess'),
+    //     3000,
+    //     'success'
+    //   );
+    // }, 1500);
   }
 }

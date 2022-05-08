@@ -137,9 +137,7 @@ export class CostPlanningItemsComponent
         this.grid.autoFitColumns();
       }, 0);
       this.filtered = true;
-      console.log('finished');
     });
-    console.log('filtering...');
   }
 
   checkSum(costPlanningItem: CostPlanningItem): Observable<boolean> {
@@ -243,7 +241,6 @@ export class CostPlanningItemsComponent
         );
       }
     });
-    console.log('task saving...');
   }
 
   taskDone(task: Task) {

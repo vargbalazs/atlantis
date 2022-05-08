@@ -54,6 +54,11 @@ export class CapGroupComponent extends Crud<CapGroup> implements OnInit {
 
   saveHandlerCopyCapGroup(copyCapGroup: CopyEntity) {
     this.copyCapGroup = undefined!;
+    this.msgDialogService.showDialog(
+      'Atlantis',
+      this.translateService.instant('dialog.notAccessible'),
+      [{ text: 'Ok', primary: true }]
+    );
     // this.loadingOverlayVisible=true;
     // this.copyService
     //   .capGroupsAlreadyExist(copyCapGroup)
@@ -77,14 +82,12 @@ export class CapGroupComponent extends Crud<CapGroup> implements OnInit {
     //       });
     //     }
     //   });
-    setTimeout(() => {
-      console.log('finished');
-      this.showNotification(
-        this.translateService.instant('notifications.copySuccess'),
-        3000,
-        'success'
-      );
-    }, 1500);
-    console.log('copying...');
+    // setTimeout(() => {
+    //   this.showNotification(
+    //     this.translateService.instant('notifications.copySuccess'),
+    //     3000,
+    //     'success'
+    //   );
+    // }, 1500);
   }
 }

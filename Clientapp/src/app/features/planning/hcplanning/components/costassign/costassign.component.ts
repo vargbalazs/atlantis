@@ -193,7 +193,6 @@ export class CostAssignComponent {
     this.hcPlanningService
       .saveCostAssigns(this.costAssigns, this.hcPlanningItem.id!)
       .subscribe(() => {
-        console.log('finished');
         this.closeForm();
         this.save.emit({
           hcPlanningItemId: this.hcPlanningItem.id!,
@@ -205,6 +204,5 @@ export class CostAssignComponent {
           'success'
         );
       });
-    console.log('saving...');
   }
 }

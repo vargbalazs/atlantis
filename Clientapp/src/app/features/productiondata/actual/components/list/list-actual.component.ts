@@ -82,9 +82,7 @@ export class ActProdDataComponent implements OnInit {
       filterEntity.year?.getFullYear()!
     ).subscribe((actProdData) => {
       this.gridData = { data: actProdData, total: actProdData.length };
-      console.log('finished');
     });
-    console.log('filtering...');
   }
 
   saveHandler({
@@ -107,7 +105,6 @@ export class ActProdDataComponent implements OnInit {
             data: actualProdData,
             total: actualProdData.length,
           };
-          console.log('finished');
           this.notificationService.showNotification(
             this.translateService.instant('notifications.saveSuccess'),
             3000,
@@ -115,7 +112,6 @@ export class ActProdDataComponent implements OnInit {
           );
         });
       });
-      console.log('saving...');
     }
   }
 

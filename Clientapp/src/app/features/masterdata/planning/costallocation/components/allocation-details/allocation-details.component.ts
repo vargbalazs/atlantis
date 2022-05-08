@@ -275,7 +275,6 @@ export class AllocationDetailsComponent {
           this.costAllocation.id!
         )
         .subscribe(() => {
-          console.log('finished');
           this.closeForm();
           this.customNotificationService.showNotification(
             this.translateService.instant('notifications.saveSuccess'),
@@ -283,7 +282,6 @@ export class AllocationDetailsComponent {
             'success'
           );
         });
-      console.log('saving...');
     }
   }
 }

@@ -10,7 +10,7 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PopupModule } from '@progress/kendo-angular-popup';
 import { InputsModule } from '@progress/kendo-angular-inputs';
-import { PopupAnchorModule } from 'src/app/shared/directives/popup.anchor-target.module';
+import { PopupAnchorModule } from 'src/app/shared/directives/popup-anchor/popup.anchor-target.module';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { TranslateModule } from '@ngx-translate/core';
 

@@ -55,6 +55,11 @@ export class CostAccountComponent extends Crud<CostAccount> implements OnInit {
 
   saveHandlerCopyCostAccount(copyCostAccount: CopyEntity) {
     this.copyCostAccount = undefined!;
+    this.msgDialogService.showDialog(
+      'Atlantis',
+      this.translateService.instant('dialog.notAccessible'),
+      [{ text: 'Ok', primary: true }]
+    );
     // this.loadingOverlayVisible = true;
     // this.copyService
     //   .costCentersAlreadyExist(copyCostAccount)
@@ -78,14 +83,12 @@ export class CostAccountComponent extends Crud<CostAccount> implements OnInit {
     //       });
     //     }
     //   });
-    setTimeout(() => {
-      console.log('finished');
-      this.showNotification(
-        this.translateService.instant('notifications.copySuccess'),
-        3000,
-        'success'
-      );
-    }, 1500);
-    console.log('copying...');
+    // setTimeout(() => {
+    //   this.showNotification(
+    //     this.translateService.instant('notifications.copySuccess'),
+    //     3000,
+    //     'success'
+    //   );
+    // }, 1500);
   }
 }

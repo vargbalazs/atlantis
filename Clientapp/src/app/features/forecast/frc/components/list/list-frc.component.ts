@@ -103,8 +103,6 @@ export class FrcComponent extends Crud<Frc> implements OnInit {
         this.company = this.frcs[0].company!;
         this.plant = this.frcs[0].plant!;
         this.costAccType = this.frcs[0].costAccType!;
-        console.log('finished');
       });
-    console.log('filtering...');
   }
 }

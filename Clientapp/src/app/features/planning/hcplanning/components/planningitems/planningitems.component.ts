@@ -166,9 +166,7 @@ export class HcPlanningItemsComponent
         this.grid.autoFitColumns();
       }, 0);
       this.filtered = true;
-      console.log('finished');
     });
-    console.log('filtering...');
   }
 
   onCellClick(e: any): void {
@@ -249,7 +247,6 @@ export class HcPlanningItemsComponent
         );
       }
     });
-    console.log('task saving...');
   }
 
   taskDone(task: Task) {

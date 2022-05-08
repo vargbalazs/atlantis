@@ -83,9 +83,7 @@ export class CapPlanningItemsComponent implements OnInit {
     ).subscribe((planningItems) => {
       this.gridData = { data: planningItems, total: planningItems.length };
       this.costAccTypeId = filterEntity.costAccTypeId!;
-      console.log('finished');
     });
-    console.log('filtering...');
   }
 
   saveHandler({
@@ -107,7 +105,6 @@ export class CapPlanningItemsComponent implements OnInit {
           this.costAccTypeId
         ).subscribe((planningItems) => {
           this.gridData = { data: planningItems, total: planningItems.length };
-          console.log('finished');
           this.notificationService.showNotification(
             this.translateService.instant('notifications.saveSuccess'),
             3000,
@@ -115,7 +112,6 @@ export class CapPlanningItemsComponent implements OnInit {
           );
         });
       });
-      console.log('saving...');
     }
   }
 

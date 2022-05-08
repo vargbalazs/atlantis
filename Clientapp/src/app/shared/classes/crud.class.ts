@@ -57,7 +57,6 @@ export abstract class Crud<T extends { id?: number }> {
   save(entity: T) {
     if (this.isNew) {
       this.repositoryService.add!(entity).subscribe((id) => {
-        console.log('finished');
         entity.id = id;
         this.gridData.data = [...this.gridData.data, entity];
         this.showNotification(
@@ -66,10 +65,8 @@ export abstract class Crud<T extends { id?: number }> {
           'success'
         );
       });
-      console.log('saving...');
     } else {
       this.repositoryService.update!(entity).subscribe((id) => {
-        console.log('finished');
         this.gridData.data = this.gridData.data.map((item) =>
           item.id === entity.id ? entity : item
         );
@@ -79,7 +76,6 @@ export abstract class Crud<T extends { id?: number }> {
           'success'
         );
       });
-      console.log('saving...');
     }
   }
 
@@ -125,7 +121,6 @@ export abstract class Crud<T extends { id?: number }> {
   remove(entity: T) {
     // call a service to remove the item
     this.repositoryService.delete!(entity.id!).subscribe((id) => {
-      console.log('finished');
       // remove the item from grid
       this.gridData.data = this.gridData.data.filter(
         (item) => item.id !== entity.id
@@ -136,7 +131,6 @@ export abstract class Crud<T extends { id?: number }> {
         'success'
       );
     });
-    console.log('deleting...');
   }
 
   cancelHandler() {

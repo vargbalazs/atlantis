@@ -5,7 +5,7 @@ import { GridModule } from '@progress/kendo-angular-grid';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PopupModule } from '@progress/kendo-angular-popup';
-import { PopupAnchorModule } from 'src/app/shared/directives/popup.anchor-target.module';
+import { PopupAnchorModule } from 'src/app/shared/directives/popup-anchor/popup.anchor-target.module';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { LoadingOverlayModule } from 'src/app/shared/components/loading-overlay/loading-overlay.module';
 import { ProvkService } from '../../services/provk.service';

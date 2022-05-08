@@ -99,13 +99,11 @@ export class HcComponent implements OnInit {
       );
       this.editing = false;
       sender.closeRow(rowIndex);
-      console.log('finished');
       this.notificationService.showNotification(
         this.translateService.instant('notifications.saveSuccess'),
         3000,
         'success'
       );
-      console.log('saving...');
     }
   }
 

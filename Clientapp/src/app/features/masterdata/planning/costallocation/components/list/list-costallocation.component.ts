@@ -95,6 +95,11 @@ export class CostAllocationComponent
 
   saveHandlerCopyAllocation(copyAllocation: CopyEntity) {
     this.copyAllocation = undefined!;
+    this.msgDialogService.showDialog(
+      'Atlantis',
+      this.translateService.instant('dialog.notAccessible'),
+      [{ text: 'Ok', primary: true }]
+    );
     // this.copyService
     //   .allocationsAlreadyExist(copyAllocation)
     //   .subscribe((result) => {
@@ -117,14 +122,12 @@ export class CostAllocationComponent
     //       });
     //     }
     //   });
-    setTimeout(() => {
-      console.log('finished');
-      this.showNotification(
-        this.translateService.instant('notifications.copySuccess'),
-        3000,
-        'success'
-      );
-    }, 1500);
-    console.log('copying...');
+    // setTimeout(() => {
+    //   this.showNotification(
+    //     this.translateService.instant('notifications.copySuccess'),
+    //     3000,
+    //     'success'
+    //   );
+    // }, 1500);
   }
 }

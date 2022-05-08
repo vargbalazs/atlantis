@@ -82,7 +82,6 @@ export class CostCenterOverviewComponent implements OnInit {
       filterEntity.costCenterId,
       filterEntity
     );
-    console.log('filtering...');
   }
 
   loadCostCenterOverview(
@@ -104,7 +103,6 @@ export class CostCenterOverviewComponent implements OnInit {
         this.filtered = true;
         this.reportMonths = this.reportService.setMonthHeader(filterEntity);
         this.sums = this.reportService.calculateSums(overview);
-        console.log('finished');
       });
   }
 }
