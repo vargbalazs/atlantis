@@ -28,8 +28,9 @@ export class LocaleService {
   constructor(private translateService: TranslateService) {}
 
   setLocale(language: string) {
+    // edge provides only 'hu', that's why we use 'indexOf'
     const locale = this.supportedLocales.find(
-      (locale) => locale.language === language
+      (locale) => locale.language.indexOf(language) >= 0
     );
     registerLocaleData(locale?.localeImport);
     this.translateService.use(language.substring(0, 2));

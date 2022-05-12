@@ -91,7 +91,7 @@ export class SideBarService {
       clonedItems.push(Object.assign({}, item));
     });
     clonedItems.forEach(
-      (item) => (item.text = this.translateService.instant(item.text))
+      (item) => (item.text = this.translateService.instant(item.translateId!))
     );
     return clonedItems;
   }
@@ -193,7 +193,7 @@ export class SideBarService {
       (val, ind, arr) => arr.findIndex((item) => item.id === val.id) === ind
     );
     mergedItems.forEach(
-      (item) => (item.text = this.translateService.instant(item.text))
+      (item) => (item.text = this.translateService.instant(item.translateId!))
     );
     return mergedItems;
   }
@@ -201,7 +201,7 @@ export class SideBarService {
   // translate the hierarchycal data
   translateItemsRecursively(items: drawerItem[]) {
     items.forEach((item) => {
-      item.text = this.translateService.instant(item.text);
+      item.text = this.translateService.instant(item.translateId!);
       if (item.children) this.translateItemsRecursively(item.children);
     });
   }

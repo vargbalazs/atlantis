@@ -39,8 +39,10 @@ export class AppComponent implements OnInit {
 
     // check locale and set it appr.
     if (
+      // edge provides only 'hu', that's why we use 'indexOf'
       !this.localeService.supportedLocales.some(
-        (locale) => locale.language === this.localeService.browserLocale
+        (locale) =>
+          locale.language.indexOf(this.localeService.browserLocale) >= 0
       )
     ) {
       this.msgDialogService.showDialog(

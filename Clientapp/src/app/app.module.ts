@@ -21,7 +21,6 @@ import { ConfirmDialogStyleModule } from './shared/directives/confirmdialog/conf
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { IntlModule } from '@progress/kendo-angular-intl';
 import { LocaleProvider } from './core/providers/locale.provider';
-import { TranslateModule } from '@ngx-translate/core';
 import { HomeModule } from './features/home/home.module';
 import { MessageService } from '@progress/kendo-angular-l10n';
 import { ComponentMessagesService } from './core/services/comp-messages.service';
@@ -47,7 +46,6 @@ import { NgxTranslateModule } from './core/i18n/translate.module';
     ConfirmDialogStyleModule,
     DialogModule,
     IntlModule,
-    // TranslateModule.forRoot(),
     NgxTranslateModule,
   ],
   providers: [

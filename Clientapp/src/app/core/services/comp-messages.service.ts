@@ -3,6 +3,7 @@ import { kendoDeMessages } from '../i18n/kendo-de.messages';
 import { kendoHuMessages } from '../i18n/kendo-hu.messages';
 import { kendoEnMessages } from '../i18n/kendo-en.messages';
 import { TranslatedLang } from '../interfaces/translated-lang.interface';
+import { Injectable } from '@angular/core';
 
 const translatedLanguages: TranslatedLang[] = [
   kendoHuMessages,
@@ -10,6 +11,7 @@ const translatedLanguages: TranslatedLang[] = [
   kendoEnMessages,
 ];
 
+@Injectable()
 export class ComponentMessagesService extends MessageService {
   public set language(value: string) {
     const translatedLang = translatedLanguages.find(
