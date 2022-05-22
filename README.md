@@ -13,3 +13,4 @@ Bemerkungen:
 - zur Authentifizierung wird jwt verwendet
 - das App hat auch einen Admin-Bereich
 - es wurde so viel, wie möglich ausgelagert und wiederverwendet (siehe 'shared' Ordner)
+- Testdaten sind im Jahr 2021 angelegt
